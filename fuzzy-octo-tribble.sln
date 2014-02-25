@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Web
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fuzzy-octo-tribble", "fuzzy-octo-tribble\fuzzy-octo-tribble.csproj", "{958B553C-CC4C-451E-83A8-2420277FDA0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerDataClasses", "..\PlayerModels\PlayerDataClasses.csproj", "{55723EB1-5BD0-4CCA-9A7E-F3279C06C3F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDataClasses", "GameDataClasses\GameDataClasses.csproj", "{E9EC1A30-2F1E-444C-A55F-B4DA987AC0BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{958B553C-CC4C-451E-83A8-2420277FDA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{958B553C-CC4C-451E-83A8-2420277FDA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{958B553C-CC4C-451E-83A8-2420277FDA0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55723EB1-5BD0-4CCA-9A7E-F3279C06C3F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55723EB1-5BD0-4CCA-9A7E-F3279C06C3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55723EB1-5BD0-4CCA-9A7E-F3279C06C3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55723EB1-5BD0-4CCA-9A7E-F3279C06C3F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9EC1A30-2F1E-444C-A55F-B4DA987AC0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9EC1A30-2F1E-444C-A55F-B4DA987AC0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9EC1A30-2F1E-444C-A55F-B4DA987AC0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9EC1A30-2F1E-444C-A55F-B4DA987AC0BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

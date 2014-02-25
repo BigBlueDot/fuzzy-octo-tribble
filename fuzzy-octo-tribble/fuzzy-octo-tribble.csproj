@@ -187,6 +187,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402252002268_InitialCreate.cs" />
+    <Compile Include="Migrations\201402252002268_InitialCreate.Designer.cs">
+      <DependentUpon>201402252002268_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -307,6 +312,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlayerModels\PlayerDataClasses.csproj">
+      <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
+      <Name>PlayerDataClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameDataClasses\GameDataClasses.csproj">
+      <Project>{e9ec1a30-2f1e-444c-a55f-b4da987ac0bc}</Project>
+      <Name>GameDataClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201402252002268_InitialCreate.resx">
+      <DependentUpon>201402252002268_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

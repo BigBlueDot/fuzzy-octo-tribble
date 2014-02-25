@@ -25,6 +25,7 @@ namespace fuzzy_octo_tribble.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public PlayerModels.PlayerModel player { get; set; }
     }
 
     public class RegisterExternalLoginModel

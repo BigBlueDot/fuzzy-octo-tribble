@@ -31,5 +31,10 @@ namespace GameDataClasses
             this.player = player;
             rootMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
         }
+
+        public MapDataClasses.ClientMap getClientRootMap()
+        {
+            return MapDataClasses.MapDataManager.getClientMap(rootMap);
+        }
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9EC1A30-2F1E-444C-A55F-B4DA987AC0BC}</ProjectGuid>
+    <ProjectGuid>{7E5C6982-C5B2-48ED-A9F2-422CDC70ED04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GameDataClasses</RootNamespace>
-    <AssemblyName>GameDataClasses</AssemblyName>
+    <RootNamespace>MapDataClasses</RootNamespace>
+    <AssemblyName>MapDataClasses</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,22 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game.cs" />
-    <Compile Include="IGameInteractions.cs" />
+    <Compile Include="ClientMap.cs" />
+    <Compile Include="ClientMapSquare.cs" />
+    <Compile Include="MapDataManager.cs" />
+    <Compile Include="MapInteraction.cs" />
+    <Compile Include="MapModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\PlayerModels\PlayerDataClasses.csproj">
-      <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
-      <Name>PlayerDataClasses</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MapDataClasses\MapDataClasses.csproj">
-      <Project>{7e5c6982-c5b2-48ed-a9f2-422cdc70ed04}</Project>
-      <Name>MapDataClasses</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GamePlayerClasses\" />
+    <Compile Include="TutorialMapGenerators\EnsembleVillageGenerator.cs" />
+    <Compile Include="TutorialMapGenerators\IVillageGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

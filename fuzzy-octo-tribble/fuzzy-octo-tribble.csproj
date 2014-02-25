@@ -191,6 +191,10 @@
     <Compile Include="Migrations\201402252002268_InitialCreate.Designer.cs">
       <DependentUpon>201402252002268_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402252032584_InitTwo.cs" />
+    <Compile Include="Migrations\201402252032584_InitTwo.Designer.cs">
+      <DependentUpon>201402252032584_InitTwo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -326,6 +330,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201402252002268_InitialCreate.resx">
       <DependentUpon>201402252002268_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402252032584_InitTwo.resx">
+      <DependentUpon>201402252032584_InitTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

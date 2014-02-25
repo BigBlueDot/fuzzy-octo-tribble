@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using fuzzy_octo_tribble.Filters;
 using fuzzy_octo_tribble.Models;
+using PlayerModels;
 
 namespace fuzzy_octo_tribble.Controllers
 {
@@ -80,6 +81,15 @@ namespace fuzzy_octo_tribble.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    
+                    //Initialize userProfile
+                    using (UsersContext db = new UsersContext())
+                    {
+                        UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+                        user.player = PlayerDataManager.initPlayerModel();
+                        db.SaveChanges();
+                    }
+
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
@@ -270,7 +280,7 @@ namespace fuzzy_octo_tribble.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName, player = PlayerDataManager.initPlayerModel() });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

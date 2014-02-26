@@ -44,6 +44,16 @@ namespace GameDataClasses
             return cp;
         }
 
+        public MapDataClasses.MapInteraction getInteraction(int x, int y)
+        {
+            if (Math.Abs(player.rootX - x) + Math.Abs(player.rootY - y) > 1)
+            {
+                return new MapDataClasses.MapInteraction() { hasDialog = false };
+            }
+
+            return MapDataClasses.MapDataManager.getMapInteraction(x, y, rootMap);
+        }
+
         public void moveLeft()
         {
             if (player.rootX == 0 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX - 1, player.rootY]))

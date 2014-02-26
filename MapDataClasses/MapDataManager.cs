@@ -101,9 +101,9 @@ namespace MapDataClasses
             }
         }
 
-        public static MapInteraction getMapInteraction(string name, int x, int y, MapModel mm)
+        public static MapInteraction getMapInteraction(int x, int y, MapModel mm)
         {
-            switch (name)
+            switch (mm.name)
             {
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getInteraction(mm, x, y);

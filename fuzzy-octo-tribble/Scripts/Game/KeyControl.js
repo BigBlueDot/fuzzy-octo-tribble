@@ -70,6 +70,9 @@
             else if (dialogMode && e.keyCode == 90) {
                 FuzzyOctoTribble.DialogBox.nextDialog();
             }
+            else if (canMove && e.keyCode == 90) {
+                FuzzyOctoTribble.InteractionHandler.getInteraction();
+            }
         });
     });
 

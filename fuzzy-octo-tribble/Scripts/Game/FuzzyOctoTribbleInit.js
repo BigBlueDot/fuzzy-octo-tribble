@@ -2,6 +2,7 @@
     $.ajax("Game/GetMap", {
         success: function (data) {
             FuzzyOctoTribble.Camera.setMap(data);
+            FuzzyOctoTribble.InteractionHandler.setMap(data);
             FuzzyOctoTribble.Movement = FuzzyOctoTribble.MovementConstructor(data);
             FuzzyOctoTribble.KeyControl = FuzzyOctoTribble.KeyControlConstructor();
 

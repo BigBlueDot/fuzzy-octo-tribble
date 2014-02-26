@@ -54,14 +54,16 @@ namespace MapDataClasses.TutorialMapGenerators
             MapInteraction mi = new MapInteraction();
             if(mm.map[x,y] == "Rest")
             {
-                mi.text = "Would you like to rest?";
+                mi.hasDialog = true;
+                mi.dialog = "Would you like to rest?";
                 mi.options = new List<string>();
                 mi.options.Add("Yes");
                 mi.options.Add("No");
             }
             else if(mm.map[x,y] == "Quest")
             {
-                mi.text = "What quest would you like to do?";
+                mi.hasDialog = true;
+                mi.dialog = "What quest would you like to do?";
                 mi.options = new List<string>();
                 mi.options.Add("NEED TO FILL THIS IN");
                 mi.options.Add("NEED TO FILL THIS IN 2");

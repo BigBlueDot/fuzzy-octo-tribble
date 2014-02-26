@@ -265,6 +265,10 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\Game\Empty.png" />
     <Content Include="Images\Game\Player.png" />
+    <Content Include="Images\Game\PlayerDown.png" />
+    <Content Include="Images\Game\PlayerLeft.png" />
+    <Content Include="Images\Game\PlayerRight.png" />
+    <Content Include="Images\Game\PlayerUp.png" />
     <Content Include="Images\Game\Quest.png" />
     <Content Include="Images\Game\Rest.png" />
     <Content Include="Images\Game\Wall.png" />
@@ -272,6 +276,7 @@
     <Content Include="Scripts\Game\DialogBox.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribble.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribbleInit.js" />
+    <Content Include="Scripts\Game\Interaction.js" />
     <Content Include="Scripts\Game\KeyControl.js" />
     <Content Include="Scripts\Game\MaintainState.js" />
     <Content Include="Scripts\Game\Movement.js" />

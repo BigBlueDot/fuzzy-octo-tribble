@@ -38,6 +38,14 @@ namespace fuzzy_octo_tribble.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetInteraction(int x, int y)
+        {
+            Game game = checkGame();
+
+            return Json(game.getInteraction(x, y), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public void MoveLeft()
         {
             Game game = checkGame();

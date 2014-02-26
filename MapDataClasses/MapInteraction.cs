@@ -8,7 +8,8 @@ namespace MapDataClasses
 {
     public class MapInteraction
     {
-        public string text { get; set; }
+        public bool hasDialog { get; set; }
+        public string dialog { get; set; }
         public List<string> options { get; set; }
     }
 }

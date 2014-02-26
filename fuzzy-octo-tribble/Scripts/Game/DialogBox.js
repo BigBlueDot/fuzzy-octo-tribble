@@ -30,9 +30,8 @@
                 dialogQueue.push(dialog);
             }
             $innerDialog.empty();
-            $dialogContainer.show(400, function () {
-                FuzzyOctoTribble.KeyControl.setDialogMode();
-
+            FuzzyOctoTribble.KeyControl.setDialogMode();
+            $dialogContainer.show(0, function () {
                 var writer = dialogQueue[0].split(' ');
                 var showArrow = false;
                 for (var i = 0; i < writer.length; i++) {

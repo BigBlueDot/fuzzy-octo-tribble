@@ -65,6 +65,7 @@
             }
 
             FuzzyOctoTribble.DialogBox.drawDialog();
+            FuzzyOctoTribble.Menu.drawMenu();
         }
     }
 

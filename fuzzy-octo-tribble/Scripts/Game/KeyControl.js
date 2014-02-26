@@ -4,7 +4,9 @@
     var interval = 300;
     var map = currentMap;
     var canMove = true;
+    var canMenu = true;
     var dialogMode = false;
+    var menuMode = false;
 
     var clearTimers = function () {
         clearTimeout(timer37);
@@ -73,6 +75,9 @@
             else if (canMove && e.keyCode == 90) {
                 FuzzyOctoTribble.InteractionHandler.getInteraction();
             }
+            else if (canMenu && e.keyCode == 77) {
+                FuzzyOctoTribble.Menu.toggleMenu();
+            }
         });
     });
 
@@ -82,12 +87,25 @@
 
     that.setDialogMode = function (canMoveVar) {
         canMove = canMoveVar;
+        canMenu = false;
         dialogMode = true;
     }
 
     that.cancelDialogMode = function () {
         canMove = true;
+        canMenu = true;
         dialogMode = false;
+    }
+
+    that.setMenuMode = function () {
+        canMove = false;
+        dialogMode = false;
+        menuMode = true;
+    }
+
+    that.cancelMenuMode = function () {
+        menuMode = false;
+        canMove = true;
     }
 
     return that;

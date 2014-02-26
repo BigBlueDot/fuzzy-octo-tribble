@@ -4,6 +4,9 @@
     var calcPlayer = function () {
         $.ajax("Game/GetPlayer", {
             success: function (data) {
+                if (!FuzzyOctoTribble.PlayerDirection) {
+                    FuzzyOctoTribble.PlayerDirection = 4;
+                }
                 FuzzyOctoTribble.Player = data;
                 FuzzyOctoTribble.Camera.setPlayer(FuzzyOctoTribble.Player);
                 FuzzyOctoTribble.Camera.draw();

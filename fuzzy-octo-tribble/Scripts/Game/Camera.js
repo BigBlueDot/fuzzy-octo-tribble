@@ -41,7 +41,18 @@
                 for (var y = topIndex; y < (topIndex) + (drawCountHeight * 2) + 2; y++) {
                     if (x >= 0 && y >= 0 && x < map.mapSquares.length && y < map.mapSquares[0].length) {
                         if (x == playerCoordinates.x && y == playerCoordinates.y) {
-                            drawSquare("/Images/Game/Player.png", drawX, drawY);
+                            if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
+                                drawSquare("/Images/Game/PlayerDown.png", drawX, drawY);
+                            }
+                            else if (FuzzyOctoTribble.PlayerDirection === 1) {
+                                drawSquare("/Images/Game/PlayerLeft.png", drawX, drawY);
+                            }
+                            else if (FuzzyOctoTribble.PlayerDirection === 2) {
+                                drawSquare("/Images/Game/PlayerUp.png", drawX, drawY);
+                            }
+                            else if (FuzzyOctoTribble.PlayerDirection === 3) {
+                                drawSquare("/Images/Game/PlayerRight.png", drawX, drawY);
+                            }
                         }
                         else {
                             drawSquare(map.mapSquares[x][y].imageUrl, drawX, drawY);

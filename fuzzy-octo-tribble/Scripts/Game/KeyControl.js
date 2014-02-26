@@ -78,6 +78,16 @@
             else if (canMenu && e.keyCode == 77) {
                 FuzzyOctoTribble.Menu.toggleMenu();
             }
+
+            if (menuMode && e.keyCode === 38) {
+                FuzzyOctoTribble.Menu.selectUp();
+            }
+            else if (menuMode && e.keyCode === 40) {
+                FuzzyOctoTribble.Menu.selectDown();
+            }
+            else if (menuMode && e.keyCode === 90) {
+                FuzzyOctoTribble.Menu.selectCurrent();
+            }
         });
     });
 
@@ -92,9 +102,16 @@
     }
 
     that.cancelDialogMode = function () {
-        canMove = true;
-        canMenu = true;
-        dialogMode = false;
+        if (menuMode) {
+            canMove = false;
+            canMenu = true;
+            dialogMode = false;
+        }
+        else {
+            canMove = true;
+            canMenu = true;
+            dialogMode = false;
+        }
     }
 
     that.setMenuMode = function () {

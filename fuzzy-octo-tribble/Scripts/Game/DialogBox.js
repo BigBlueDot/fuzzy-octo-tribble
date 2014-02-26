@@ -86,6 +86,10 @@
         $('.game-window').append($dialogContainer);
     }
 
+    $(document).ready(function () {
+        that.drawDialog();
+    });
+
     $(window).resize(function (e) {
         that.resizeDialog();
     });

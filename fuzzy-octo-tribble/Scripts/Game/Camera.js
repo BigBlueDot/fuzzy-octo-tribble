@@ -11,7 +11,7 @@
             'left': x + 'px',
             'background-image': 'url(' + url + ")"
         });
-        $('.game-window').append($square);
+        $('.game-map').append($square);
     }
 
     that.setMap = function (newMap) {
@@ -23,9 +23,9 @@
 
     that.draw = function () {
         if (map && playerCoordinates) {
-            $('.game-window').empty();
-            var height = $('.game-window').height();
-            var width = $('.game-window').width();
+            $('.game-map').empty();
+            var height = $('.game-map').height();
+            var width = $('.game-map').width();
             var centerX = (width / 2) - 20;
             var centerY = (height / 2) - 20;
             var offsetHeight = centerY % 40;
@@ -63,9 +63,6 @@
                 drawY = -offsetHeight;
                 drawX += 40;
             }
-
-            FuzzyOctoTribble.DialogBox.drawDialog();
-            FuzzyOctoTribble.Menu.drawMenu();
         }
     }
 

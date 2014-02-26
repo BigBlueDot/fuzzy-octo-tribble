@@ -7,11 +7,68 @@
     var $menuTitleItem = $(document.createElement('div'));
     $menuTitleItem.addClass('menu-item menu-title text-font');
     $menuTitleItem.text('Menu');
+
+    var $menuCharactersItem = $(document.createElement('div'));
+    $menuCharactersItem.addClass('menu-item text-font');
+    $menuCharactersItem.text('Characters');
+    $menuCharactersItem.on('click', function () { selectItem($menuCharactersItem); });
+
+    var $menuPartiesItem = $(document.createElement('div'));
+    $menuPartiesItem.addClass('menu-item text-font');
+    $menuPartiesItem.text('Parties');
+    $menuPartiesItem.on('click', function () { selectItem($menuPartiesItem); });
+
+    var $menuQuestsItem = $(document.createElement('div'));
+    $menuQuestsItem.addClass('menu-item text-font');
+    $menuQuestsItem.text('Quests');
+    $menuQuestsItem.on('click', function () { selectItem($menuQuestsItem); });
+
+    var $menuConfigurationItem = $(document.createElement('div'));
+    $menuConfigurationItem.addClass('menu-item text-font');
+    $menuConfigurationItem.text('Configuration');
+    $menuConfigurationItem.on('click', function () { selectItem($menuConfigurationItem); });
     
     $menu.append($menuTitleItem);
+    $menu.append($menuCharactersItem);
+    $menu.append($menuPartiesItem);
+    $menu.append($menuQuestsItem);
+    $menu.append($menuConfigurationItem);
     $menu.hide();
 
+    var selectedMenuItem = 0;
+    var menuItems = [];
+    menuItems.push($menuCharactersItem);
+    menuItems.push($menuPartiesItem);
+    menuItems.push($menuQuestsItem);
+    menuItems.push($menuConfigurationItem);
+
+    var applySelect = function () {
+        $('.menu-item-selected').removeClass('menu-item-selected');
+        menuItems[selectedMenuItem].addClass('menu-item-selected');
+    }
+
+    var defaultSelect = function () {
+        selectedMenuItem = 0;
+        applySelect();
+    }
+
+    var selectItem = function ($menuItem) {
+        switch ($menuItem.text()) {
+            case 'Characters':
+                break;
+            case 'Parties':
+                break;
+            case 'Quests':
+                break;
+            case 'Configuration':
+                break;
+            default:
+                break;
+        }
+    }
+
     that.toggleMenu = function () {
+        defaultSelect();
         if ($menu.is(':visible')) {
             FuzzyOctoTribble.KeyControl.cancelMenuMode();
         }
@@ -21,9 +78,31 @@
         $menu.toggle();
     }
 
+    that.selectUp = function () {
+        if (selectedMenuItem != 0) {
+            selectedMenuItem--;
+            applySelect();
+        }
+    }
+
+    that.selectDown = function () {
+        if (selectedMenuItem != menuItems.length - 1) {
+            selectedMenuItem++;
+            applySelect();
+        }
+    }
+
+    that.selectCurrent = function () {
+        selectItem(menuItems[selectedMenuItem]);
+    }
+
     that.drawMenu = function () {
         $('.game-window').append($menu);
     }
+
+    $(document).ready(function () {
+        that.drawMenu();
+    });
 
     return that;
 })();

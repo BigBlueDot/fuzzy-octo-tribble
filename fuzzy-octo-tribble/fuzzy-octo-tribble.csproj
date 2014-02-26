@@ -205,6 +205,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Game.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -262,6 +263,14 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\Game\Empty.png" />
+    <Content Include="Images\Game\Player.png" />
+    <Content Include="Images\Game\Quest.png" />
+    <Content Include="Images\Game\Rest.png" />
+    <Content Include="Images\Game\Wall.png" />
+    <Content Include="Scripts\Game\Camera.js" />
+    <Content Include="Scripts\Game\FuzzyOctoTribble.js" />
+    <Content Include="Scripts\Game\FuzzyOctoTribbleInit.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -331,6 +340,10 @@
     <ProjectReference Include="..\GameDataClasses\GameDataClasses.csproj">
       <Project>{e9ec1a30-2f1e-444c-a55f-b4da987ac0bc}</Project>
       <Name>GameDataClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MapDataClasses\MapDataClasses.csproj">
+      <Project>{7e5c6982-c5b2-48ed-a9f2-422cdc70ed04}</Project>
+      <Name>MapDataClasses</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

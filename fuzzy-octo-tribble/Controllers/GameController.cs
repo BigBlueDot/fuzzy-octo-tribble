@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace fuzzy_octo_tribble.Controllers
 {
@@ -25,7 +26,15 @@ namespace fuzzy_octo_tribble.Controllers
         {
             Game game = checkGame();
 
-            return Json(game.getClientRootMap());
+            return Json(game.getClientRootMap(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetPlayer()
+        {
+            Game game = checkGame();
+
+            return Json(game.getClientPlayer(), JsonRequestBehavior.AllowGet);
         }
 
         private Game checkGame()
@@ -34,7 +43,8 @@ namespace fuzzy_octo_tribble.Controllers
             {
                 using (UsersContext db = new UsersContext())
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == User.Identity.Name.ToLower());
+                    UserProfile user = db.UserProfiles.Include(up => up.player)
+                        .FirstOrDefault(u => u.UserName.ToLower() == User.Identity.Name.ToLower());
                     Session["Game"] = new GameDataClasses.Game(user.player);
                 }
             }

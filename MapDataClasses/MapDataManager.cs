@@ -11,7 +11,11 @@ namespace MapDataClasses
         public static ClientMap getClientMap(MapModel mm)
         {
             ClientMap cm = new ClientMap();
-            cm.mapSquares = new ClientMapSquare[mm.map.GetLength(0), mm.map.GetLength(1)];
+            cm.mapSquares = new ClientMapSquare[mm.map.GetLength(0)][];
+            for (var i = 0; i < cm.mapSquares.Length; i++)
+            {
+                cm.mapSquares[i] = new ClientMapSquare[mm.map.GetLength(1)];
+            }
             cm.name = mm.name;
             for (var x = 0; x < mm.map.GetLength(0); x++)
             {
@@ -20,19 +24,19 @@ namespace MapDataClasses
                     switch (mm.map[x, y])
                     {
                         case "Empty":
-                            cm.mapSquares[x, y] = new ClientMapSquare() { imageUrl = "/images/empty.png", isInteractable = false, isTraversable = true };
+                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/empty.png", isInteractable = false, isTraversable = true };
                             break;
                         case "Rest":
-                            cm.mapSquares[x, y] = new ClientMapSquare() { imageUrl = "/images/rest.png", isInteractable = true, isTraversable = false };
+                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/rest.png", isInteractable = true, isTraversable = false };
                             break;
                         case "Quest":
-                            cm.mapSquares[x, y] = new ClientMapSquare() { imageUrl = "/images/quest.png", isInteractable = true, isTraversable = false };
+                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/quest.png", isInteractable = true, isTraversable = false };
                             break;
                         case "Wall":
-                            cm.mapSquares[x, y] = new ClientMapSquare() { imageUrl = "/images/wall.png", isInteractable = false, isTraversable = false };
+                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/wall.png", isInteractable = false, isTraversable = false };
                             break;
                         default:
-                            cm.mapSquares[x, y] = new ClientMapSquare() { imageUrl = "/images/empty.png", isInteractable = false, isTraversable = true };
+                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/empty.png", isInteractable = false, isTraversable = true };
                             break;
                     }
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameDataClasses.GamePlayerClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,12 @@ namespace GameDataClasses
         public MapDataClasses.ClientMap getClientRootMap()
         {
             return MapDataClasses.MapDataManager.getClientMap(rootMap);
+        }
+
+        public ClientPlayer getClientPlayer()
+        {
+            ClientPlayer cp = new ClientPlayer() { x = player.rootX, y = player.rootY };
+            return cp;
         }
     }
 }

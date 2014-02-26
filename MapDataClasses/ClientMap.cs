@@ -11,6 +11,6 @@ namespace MapDataClasses
     public class ClientMap
     {
         public string name { get; set; }
-        public ClientMapSquare[,] mapSquares { get; set; }
+        public ClientMapSquare[][] mapSquares { get; set; }
     }
 }

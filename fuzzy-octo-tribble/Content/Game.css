@@ -1,0 +1,18 @@
+﻿.game-window {
+    left:10px;
+    right:10px;
+    top:10px;
+    bottom:10px;
+    width:auto;
+    height:auto;
+    position:absolute;
+    border: solid 2px black;
+    overflow:hidden;
+    background-color:#C0C0C0;
+}
+
+.map-square {
+    position:absolute;
+    height:40px;
+    width:40px;
+}

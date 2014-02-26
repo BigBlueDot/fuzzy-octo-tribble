@@ -11,29 +11,29 @@
     }
 
     var moveLeft = function () {
-        console.log("Move Left" + (new Date()).getMilliseconds());
         FuzzyOctoTribble.Player.x -= 1;
+        $.ajax("Game/MoveLeft");
         FuzzyOctoTribble.Camera.draw();
         clearTimers();
         timer37 = setTimeout(moveLeft, interval);
     }
     var moveUp = function () {
-        console.log("Move Up" + (new Date()).getMilliseconds());
         FuzzyOctoTribble.Player.y -= 1;
+        $.ajax("Game/MoveUp");
         FuzzyOctoTribble.Camera.draw();
         clearTimers();
         timer38 = setTimeout(moveUp, interval);
     }
     var moveRight = function () {
-        console.log("Move Right" + (new Date()).getMilliseconds());
         FuzzyOctoTribble.Player.x += 1;
+        $.ajax("Game/MoveRight");
         FuzzyOctoTribble.Camera.draw();
         clearTimers();
         timer39 = setTimeout(moveRight, interval);
     }
     var moveDown = function () {
-        console.log("Move Down" + (new Date()).getMilliseconds());
         FuzzyOctoTribble.Player.y += 1;
+        $.ajax("Game/MoveDown");
         FuzzyOctoTribble.Camera.draw();
         clearTimers();
         timer40 = setTimeout(moveDown, interval);

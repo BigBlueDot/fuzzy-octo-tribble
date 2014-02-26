@@ -43,5 +43,25 @@ namespace GameDataClasses
             ClientPlayer cp = new ClientPlayer() { x = player.rootX, y = player.rootY };
             return cp;
         }
+
+        public void moveLeft()
+        {
+            player.rootX -= 1;
+        }
+
+        public void moveUp()
+        {
+            player.rootY -= 1;
+        }
+
+        public void moveRight()
+        {
+            player.rootX += 1;
+        }
+
+        public void moveDown()
+        {
+            player.rootY += 1;
+        }
     }
 }

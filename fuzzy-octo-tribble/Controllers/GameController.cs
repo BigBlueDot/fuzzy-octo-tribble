@@ -37,6 +37,34 @@ namespace fuzzy_octo_tribble.Controllers
             return Json(game.getClientPlayer(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public void MoveLeft()
+        {
+            Game game = checkGame();
+            game.moveLeft();
+        }
+
+        [HttpGet]
+        public void MoveUp()
+        {
+            Game game = checkGame();
+            game.moveUp();
+        }
+
+        [HttpGet]
+        public void MoveRight()
+        {
+            Game game = checkGame();
+            game.moveRight();
+        }
+
+        [HttpGet]
+        public void MoveDown()
+        {
+            Game game = checkGame();
+            game.moveDown();
+        }
+
         private Game checkGame()
         {
             if (Session["Game"] == null) //Init game if not already

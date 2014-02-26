@@ -53,12 +53,7 @@
                 drawX += 40;
             }
 
-            //for (var x = 0; x < Math.ceil(width / 40) ; x++) {
-            //    drawSquare("/Images/Game/Empty.png", x * 40, (height / 2) - 20);
-            //}
-            //for (var y = 0; y < Math.ceil(height / 40) ; y++) {
-            //    drawSquare("/Images/Game/Empty.png", (width / 2) - 20, y * 40);
-            //}
+            FuzzyOctoTribble.DialogBox.drawDialog();
         }
     }
 

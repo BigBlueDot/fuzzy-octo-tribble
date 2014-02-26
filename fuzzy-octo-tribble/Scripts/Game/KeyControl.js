@@ -3,6 +3,8 @@
     var timer37, timer38, timer39, timer40;
     var interval = 300;
     var map = currentMap;
+    var canMove = true;
+    var dialogMode = false;
 
     var clearTimers = function () {
         clearTimeout(timer37);
@@ -34,16 +36,16 @@
 
     $(document).ready(function () {
         $(document).keydown(function (e) {
-            if (e.keyCode == 37 && !timer37) { //left
+            if (e.keyCode == 37 && !timer37 && canMove) { //left
                 moveLeft();
             }
-            else if (e.keyCode == 38 && !timer38) { //up
+            else if (e.keyCode == 38 && !timer38 && canMove) { //up
                 moveUp();
             }
-            else if (e.keyCode == 39 && !timer39) { //right
+            else if (e.keyCode == 39 && !timer39 && canMove) { //right
                 moveRight();
             }
-            else if (e.keyCode == 40 && !timer40) { //down
+            else if (e.keyCode == 40 && !timer40 && canMove) { //down
                 moveDown();
             }
         });
@@ -65,8 +67,25 @@
                 clearTimeout(timer40);
                 timer40 = false;
             }
+            else if (dialogMode && e.keyCode == 90) {
+                FuzzyOctoTribble.DialogBox.nextDialog();
+            }
         });
     });
+
+    that.setMovementMode = function () {
+        canMove = true;
+    }
+
+    that.setDialogMode = function (canMoveVar) {
+        canMove = canMoveVar;
+        dialogMode = true;
+    }
+
+    that.cancelDialogMode = function () {
+        canMove = true;
+        dialogMode = false;
+    }
 
     return that;
 }

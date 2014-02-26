@@ -16,3 +16,20 @@
     height:40px;
     width:40px;
 }
+
+.text-font {
+    font-size: 26px;
+    font-family: 'Chau Philomene One', sans-serif;
+}
+
+.dialog-container {
+    position:absolute;
+    right: 20px;
+    left: 20px;
+    top: 65%;
+    bottom:10%;
+    background-color:#FFFFFF;
+    border: solid 2px black;
+    padding: 5px;
+    overflow:hidden;
+}

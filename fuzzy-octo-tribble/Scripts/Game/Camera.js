@@ -13,8 +13,6 @@
         });
         $('.game-window').append($square);
     }
-    
-
 
     that.setMap = function (newMap) {
         map = newMap;

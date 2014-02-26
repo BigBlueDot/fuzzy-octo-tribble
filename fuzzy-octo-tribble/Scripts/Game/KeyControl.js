@@ -1,7 +1,8 @@
-﻿FuzzyOctoTribble.KeyControl = (function () {
+﻿FuzzyOctoTribble.KeyControlConstructor = function (currentMap) {
     var that = {};
     var timer37, timer38, timer39, timer40;
     var interval = 300;
+    var map = currentMap;
 
     var clearTimers = function () {
         clearTimeout(timer37);
@@ -11,30 +12,22 @@
     }
 
     var moveLeft = function () {
-        FuzzyOctoTribble.Player.x -= 1;
-        $.ajax("Game/MoveLeft");
-        FuzzyOctoTribble.Camera.draw();
+        FuzzyOctoTribble.Movement.moveLeft();
         clearTimers();
         timer37 = setTimeout(moveLeft, interval);
     }
     var moveUp = function () {
-        FuzzyOctoTribble.Player.y -= 1;
-        $.ajax("Game/MoveUp");
-        FuzzyOctoTribble.Camera.draw();
+        FuzzyOctoTribble.Movement.moveUp();
         clearTimers();
         timer38 = setTimeout(moveUp, interval);
     }
     var moveRight = function () {
-        FuzzyOctoTribble.Player.x += 1;
-        $.ajax("Game/MoveRight");
-        FuzzyOctoTribble.Camera.draw();
+        FuzzyOctoTribble.Movement.moveRight();
         clearTimers();
         timer39 = setTimeout(moveRight, interval);
     }
     var moveDown = function () {
-        FuzzyOctoTribble.Player.y += 1;
-        $.ajax("Game/MoveDown");
-        FuzzyOctoTribble.Camera.draw();
+        FuzzyOctoTribble.Movement.moveDown();
         clearTimers();
         timer40 = setTimeout(moveDown, interval);
     }
@@ -76,4 +69,4 @@
     });
 
     return that;
-})();
+}

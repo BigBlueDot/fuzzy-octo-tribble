@@ -46,21 +46,37 @@ namespace GameDataClasses
 
         public void moveLeft()
         {
+            if (player.rootX == 0 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX - 1, player.rootY]))
+            {
+                return;
+            }
             player.rootX -= 1;
         }
 
         public void moveUp()
         {
+            if (player.rootY == 0 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX, player.rootY - 1]))
+            {
+                return;
+            }
             player.rootY -= 1;
         }
 
         public void moveRight()
         {
+            if (player.rootX == rootMap.map.GetLength(0) - 1 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX + 1, player.rootY]))
+            {
+                return;
+            }
             player.rootX += 1;
         }
 
         public void moveDown()
         {
+            if (player.rootY == rootMap.map.GetLength(1) || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX, player.rootY + 1]))
+            {
+                return;
+            }
             player.rootY += 1;
         }
     }

@@ -21,28 +21,66 @@ namespace MapDataClasses
             {
                 for (var y = 0; y < mm.map.GetLength(1); y++)
                 {
-                    switch (mm.map[x, y])
-                    {
-                        case "Empty":
-                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/empty.png", isInteractable = false, isTraversable = true };
-                            break;
-                        case "Rest":
-                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/rest.png", isInteractable = true, isTraversable = false };
-                            break;
-                        case "Quest":
-                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/quest.png", isInteractable = true, isTraversable = false };
-                            break;
-                        case "Wall":
-                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/wall.png", isInteractable = false, isTraversable = false };
-                            break;
-                        default:
-                            cm.mapSquares[x][y] = new ClientMapSquare() { imageUrl = "/images/game/empty.png", isInteractable = false, isTraversable = true };
-                            break;
-                    }
+                    cm.mapSquares[x][y] = new ClientMapSquare() { 
+                        imageUrl = getImageURL(mm.map[x, y]), 
+                        isInteractable = getInteractable(mm.map[x, y]), 
+                        isTraversable = getTraversable(mm.map[x, y]) 
+                    };
                 }
             }
 
             return cm;
+        }
+
+        public static string getImageURL(string mapSquare)
+        {
+            switch (mapSquare)
+            {
+                case "Empty":
+                    return "/images/game/empty.png";
+                case "Rest":
+                    return "/images/game/rest.png";
+                case "Quest":
+                    return "/images/game/quest.png";
+                case "Wall":
+                    return "/images/game/wall.png";
+                default:
+                    return "/images/game/empty.png";
+            }
+        }
+
+        public static bool getInteractable(string mapSquare)
+        {
+            switch (mapSquare)
+            {
+                case "Empty":
+                    return false;
+                case "Rest":
+                    return true;
+                case "Quest":
+                    return true;
+                case "Wall":
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool getTraversable(string mapSquare)
+        {
+            switch (mapSquare)
+            {
+                case "Empty":
+                    return true;
+                case "Rest":
+                    return false;
+                case "Quest":
+                    return false;
+                case "Wall":
+                    return false;
+                default:
+                    return false;
+            }
         }
 
         public static List<string> getMapNames()

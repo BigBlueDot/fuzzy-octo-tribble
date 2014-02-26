@@ -20,11 +20,15 @@
 
     that.showDialog = function (dialog) {
         if (dialogActive) {
-            dialogQueue.push(dialog);
+            if (dialog) {
+                dialogQueue.push(dialog);
+            }
         }
         else {
             dialogActive = true;
-            dialogQueue.push(dialog);
+            if (dialog) {
+                dialogQueue.push(dialog);
+            }
             $innerDialog.empty();
             $dialogContainer.show(400, function () {
                 FuzzyOctoTribble.KeyControl.setDialogMode();
@@ -68,13 +72,15 @@
     }
 
     that.resizeDialog = function () {
-        if (dialogQueue[0]) {
-            dialogQueue[0] = displayedText + ' ' + dialogQueue[0];
-        } else {
-            dialogQueue[0] = displayedText;
-        }
+        if (dialogActive) {
+            if (dialogQueue[0]) {
+                dialogQueue[0] = displayedText + ' ' + dialogQueue[0];
+            } else {
+                dialogQueue[0] = displayedText;
+            }
 
-        that.nextDialog();
+            that.nextDialog();
+        }
     }
 
     that.drawDialog = function () {

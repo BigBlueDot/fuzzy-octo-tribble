@@ -2,6 +2,10 @@
     var that = {};
     var map = currentMap;
 
+    that.setMap = function (currentMap) {
+        map = currentMap;
+    }
+
     that.moveLeft = function () {
         if (FuzzyOctoTribble.Player.x == 0 || !map.mapSquares[FuzzyOctoTribble.Player.x - 1][FuzzyOctoTribble.Player.y].isTraversable) {
             return;

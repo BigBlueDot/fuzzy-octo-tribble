@@ -65,6 +65,8 @@
                 currentMode = "characters";
                 break;
             case 'Parties':
+                FuzzyOctoTribble.PartyScreen.show();
+                currentMode = "parties";
                 break;
             case 'Quests':
                 break;
@@ -80,6 +82,7 @@
         if ($menu.is(':visible')) {
             FuzzyOctoTribble.KeyControl.cancelMenuMode();
             FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
+            FuzzyOctoTribble.PartyScreen.hide();
             currentMode = "menu";
         }
         else {
@@ -100,6 +103,9 @@
             case 'characters':
                 FuzzyOctoTribble.CharacterScreen.scrollUp();
                 break;
+            case 'parties':
+                FuzzyOctoTribble.PartyScreen.scrollUp();
+                break;
         }
     }
 
@@ -113,6 +119,9 @@
                 break;
             case 'characters':
                 FuzzyOctoTribble.CharacterScreen.scrollDown();
+                break;
+            case 'parties':
+                FuzzyOctoTribble.PartyScreen.scrollDown();
                 break;
         }
     }
@@ -128,6 +137,10 @@
                 break;
             case 'characters':
                 FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
+                currentMode = "menu";
+                break;
+            case 'parties':
+                FuzzyOctoTribble.PartyScreen.hide();
                 currentMode = "menu";
                 break;
         }

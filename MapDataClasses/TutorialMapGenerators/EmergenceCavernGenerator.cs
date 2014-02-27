@@ -29,6 +29,8 @@ namespace MapDataClasses.TutorialMapGenerators
             MapModel mm = new MapModel();
             mm.name = "Emergence Cavern";
             mm.map = new string[50, 40];
+            mm.startX = 25;
+            mm.startY = 38;
             for (var x = 0; x < 50; x++)
             {
                 for (var y = 0; y < 40; y++)

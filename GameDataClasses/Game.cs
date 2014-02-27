@@ -37,6 +37,8 @@ namespace GameDataClasses
         void MapDataManager_onLoadMap(object sender, MapDataClasses.MapDataClasses.MapSelectedEventArgs e)
         {
             rootMap = MapDataClasses.MapDataManager.createMap(e.mapName);
+            player.rootX = rootMap.startX;
+            player.rootY = rootMap.startY;
         }
 
         public MapDataClasses.ClientMap getClientRootMap()

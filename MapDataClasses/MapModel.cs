@@ -15,5 +15,7 @@ namespace MapDataClasses
         public int uniq { get; set; }
         public string name { get; set; }
         public string[,] map { get; set; }
+        public int startX { get; set; }
+        public int startY { get; set; }
     }
 }

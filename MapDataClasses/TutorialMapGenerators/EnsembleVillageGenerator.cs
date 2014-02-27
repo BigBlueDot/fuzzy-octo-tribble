@@ -29,6 +29,8 @@ namespace MapDataClasses.TutorialMapGenerators
             MapModel mm = new MapModel();
             mm.name = "Ensemble Village";
             mm.map = new string[10, 10];
+            mm.startX = 5;
+            mm.startY = 5;
             for (var x = 0; x < 10; x++)
             {
                 for (var y = 0; y < 10; y++)

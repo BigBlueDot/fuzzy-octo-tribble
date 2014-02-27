@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201402262315457_CharacterModelUpdates.Designer.cs">
       <DependentUpon>201402262315457_CharacterModelUpdates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402272019375_DefaultMapPosition.cs" />
+    <Compile Include="Migrations\201402272019375_DefaultMapPosition.Designer.cs">
+      <DependentUpon>201402272019375_DefaultMapPosition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -385,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201402262315457_CharacterModelUpdates.resx">
       <DependentUpon>201402262315457_CharacterModelUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402272019375_DefaultMapPosition.resx">
+      <DependentUpon>201402272019375_DefaultMapPosition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

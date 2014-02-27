@@ -1,6 +1,8 @@
 ﻿FuzzyOctoTribble.Menu = (function () {
     var that = {};
 
+    var currentMode = 'menu';
+
     var $menu = $(document.createElement('div'));
     $menu.addClass('menu-container');
 
@@ -55,6 +57,8 @@
     var selectItem = function ($menuItem) {
         switch ($menuItem.text()) {
             case 'Characters':
+                FuzzyOctoTribble.CharacterScreen.showCharacterScreen();
+                currentMode = "characters";
                 break;
             case 'Parties':
                 break;
@@ -71,6 +75,8 @@
         defaultSelect();
         if ($menu.is(':visible')) {
             FuzzyOctoTribble.KeyControl.cancelMenuMode();
+            FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
+            currentMode = "menu";
         }
         else {
             FuzzyOctoTribble.KeyControl.setMenuMode();
@@ -79,21 +85,47 @@
     }
 
     that.selectUp = function () {
-        if (selectedMenuItem != 0) {
-            selectedMenuItem--;
-            applySelect();
+        switch (currentMode) {
+            case 'menu':
+                if (selectedMenuItem != 0) {
+                    selectedMenuItem--;
+                    applySelect();
+                }
+                break;
+            case 'characters':
+                FuzzyOctoTribble.CharacterScreen.scrollUp();
+                break;
         }
     }
 
     that.selectDown = function () {
-        if (selectedMenuItem != menuItems.length - 1) {
-            selectedMenuItem++;
-            applySelect();
+        switch (currentMode) {
+            case 'menu':
+                if (selectedMenuItem != menuItems.length - 1) {
+                    selectedMenuItem++;
+                    applySelect();
+                }
+                break;
+            case 'characters':
+                FuzzyOctoTribble.CharacterScreen.scrollDown();
+                break;
         }
     }
 
     that.selectCurrent = function () {
         selectItem(menuItems[selectedMenuItem]);
+    }
+
+    that.cancel = function () {
+        switch (currentMode) {
+            case 'menu':
+                that.toggleMenu();
+                break;
+            case 'characters':
+                FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
+                currentMode = "menu";
+                break;
+        }
     }
 
     that.drawMenu = function () {

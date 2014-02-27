@@ -200,6 +200,14 @@
     <Compile Include="Migrations\201402252216270_InitThree.Designer.cs">
       <DependentUpon>201402252216270_InitThree.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402262303000_CharacterName.cs" />
+    <Compile Include="Migrations\201402262303000_CharacterName.Designer.cs">
+      <DependentUpon>201402262303000_CharacterName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201402262315457_CharacterModelUpdates.cs" />
+    <Compile Include="Migrations\201402262315457_CharacterModelUpdates.Designer.cs">
+      <DependentUpon>201402262315457_CharacterModelUpdates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,6 +281,7 @@
     <Content Include="Images\Game\Rest.png" />
     <Content Include="Images\Game\Wall.png" />
     <Content Include="Scripts\Game\Camera.js" />
+    <Content Include="Scripts\Game\CharacterScreen.js" />
     <Content Include="Scripts\Game\DialogBox.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribble.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribbleInit.js" />
@@ -365,6 +374,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201402252216270_InitThree.resx">
       <DependentUpon>201402252216270_InitThree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402262303000_CharacterName.resx">
+      <DependentUpon>201402262303000_CharacterName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402262315457_CharacterModelUpdates.resx">
+      <DependentUpon>201402262315457_CharacterModelUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

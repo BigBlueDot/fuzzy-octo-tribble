@@ -80,6 +80,9 @@ namespace fuzzy_octo_tribble.Controllers
                 using (UsersContext db = new UsersContext())
                 {
                     UserProfile user = db.UserProfiles.Include(up => up.player)
+                        .Include(up => up.player.characters)
+                        .Include(up => up.player.characters.Select(c => c.characterClasses))
+                        .Include(up => up.player.characters.Select(c => c.stats))
                         .FirstOrDefault(u => u.UserName.ToLower() == User.Identity.Name.ToLower());
                     Session["Game"] = new GameDataClasses.Game(user.player);
                 }

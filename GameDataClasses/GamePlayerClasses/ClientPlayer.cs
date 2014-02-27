@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayerModels.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace GameDataClasses.GamePlayerClasses
     {
         public int x { get; set; }
         public int y { get; set; }
+        public List<CharacterModel> characters { get; set; }
     }
 }

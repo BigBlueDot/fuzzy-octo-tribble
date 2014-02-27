@@ -81,6 +81,39 @@
         background-color:inherit;
     }
 
+.character-screen {
+    top:20%;
+    bottom:20%;
+    left:20%;
+    right:20%;
+    background-color:#FFFFFF;
+    border: solid 2px black;
+    padding: 15px;
+    overflow: hidden;
+    position:absolute;
+}
+
+.character-screen-item {
+    width:100%;
+    text-overflow:ellipsis;
+    padding-top:15px;
+    padding-left:5px;
+    height:45px;
+    cursor: pointer;
+}
+
+    .character-screen-item:hover {
+        background-color:#C0C0C0;
+    }
+    
+.character-screen-item-selected.character-screen-item {
+    background-color: #767676;
+}
+
+    .character-screen-item-selected.character-screen-item:hover {
+        background-color: #575757;
+    }
+
 @media (max-width: 500px) {
     .text-font {
         font-size: 20px;
@@ -95,6 +128,17 @@
         padding-top: 10px;
         padding-left: 3px;
         height: 35px;
+    }
+
+    .character-screen {
+        top: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .character-screen-item {
+        height:auto;
     }
 }
 
@@ -112,5 +156,16 @@
         padding-top: 5px;
         padding-left: 1px;
         height: 25px;
+    }
+
+    .character-screen {
+        top: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .character-screen-item {
+        height:auto;
     }
 }

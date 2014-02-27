@@ -88,6 +88,9 @@
             else if (menuMode && e.keyCode === 90) {
                 FuzzyOctoTribble.Menu.selectCurrent();
             }
+            else if (menuMode && e.keyCode == 88) {
+                FuzzyOctoTribble.Menu.cancel();
+            }
         });
     });
 

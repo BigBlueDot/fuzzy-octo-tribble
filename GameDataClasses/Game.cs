@@ -40,7 +40,7 @@ namespace GameDataClasses
 
         public ClientPlayer getClientPlayer()
         {
-            ClientPlayer cp = new ClientPlayer() { x = player.rootX, y = player.rootY };
+            ClientPlayer cp = new ClientPlayer() { x = player.rootX, y = player.rootY, characters = player.characters };
             return cp;
         }
 

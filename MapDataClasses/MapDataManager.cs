@@ -102,6 +102,8 @@ namespace MapDataClasses
             {
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMap();
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMap();
                 default:
                     return new MapModel();
             }
@@ -113,6 +115,8 @@ namespace MapDataClasses
             {
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getInteraction(mm, x, y);
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getInteraction(mm, x, y);
                 default:
                     return new MapInteraction();
             }
@@ -124,6 +128,9 @@ namespace MapDataClasses
             {
                 case "Ensemble Village":
                     TutorialMapGenerators.EnsembleVillageGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
+                    break;
+                case "Emergence Cavern":
+                    TutorialMapGenerators.EmergenceCavernGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
                     break;
                 default:
                     break;

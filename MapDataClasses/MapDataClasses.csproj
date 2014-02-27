@@ -46,6 +46,7 @@
     <Compile Include="MapInteraction.cs" />
     <Compile Include="MapModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TutorialMapGenerators\EmergenceCavernGenerator.cs" />
     <Compile Include="TutorialMapGenerators\EnsembleVillageGenerator.cs" />
     <Compile Include="TutorialMapGenerators\IVillageGenerator.cs" />
   </ItemGroup>

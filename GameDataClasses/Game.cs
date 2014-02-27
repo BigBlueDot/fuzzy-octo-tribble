@@ -31,6 +31,12 @@ namespace GameDataClasses
         {
             this.player = player;
             rootMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
+            MapDataClasses.MapDataManager.onLoadMap += MapDataManager_onLoadMap;
+        }
+
+        void MapDataManager_onLoadMap(object sender, MapDataClasses.MapDataClasses.MapSelectedEventArgs e)
+        {
+            rootMap = MapDataClasses.MapDataManager.createMap(e.mapName);
         }
 
         public MapDataClasses.ClientMap getClientRootMap()
@@ -53,6 +59,11 @@ namespace GameDataClasses
             }
 
             return MapDataClasses.MapDataManager.getMapInteraction(x, y, rootMap);
+        }
+
+        public void setOptionInteraction(int x, int y, string option)
+        {
+            MapDataClasses.MapDataManager.interactWithMap(player.rootMap, x, y, rootMap, option);
         }
 
         public void moveLeft()

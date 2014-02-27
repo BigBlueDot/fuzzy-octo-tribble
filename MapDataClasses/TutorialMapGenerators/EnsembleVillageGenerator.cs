@@ -22,6 +22,8 @@ namespace MapDataClasses.TutorialMapGenerators
             }
         }
 
+        public event MapDataManager.LoadMapEventHandler onSelectMap;
+
         public MapModel getMap()
         {
             MapModel mm = new MapModel();
@@ -83,8 +85,13 @@ namespace MapDataClasses.TutorialMapGenerators
 
         public void performInteraction(MapModel mm, int x, int y, string selectedOption)
         {
-            //Do logic for determining what to do
-            //This may need to be event driven (i.e. fire onRemoveGold and onRestoreHealth and onRestoreMP
+            if (mm.map[x, y] == "DungeonMaster")
+            {
+                if (selectedOption == "Emergence Cavern")
+                {
+                    onSelectMap(this, new MapDataClasses.MapSelectedEventArgs() { mapName="Emergence Cavern" });
+                }
+            }
         }
     }
 }

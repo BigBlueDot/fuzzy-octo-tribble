@@ -22,6 +22,8 @@ namespace MapDataClasses.TutorialMapGenerators
             }
         }
 
+        public event MapDataManager.LoadMapEventHandler onSelectMap;
+
         public MapModel getMap()
         {
             MapModel mm = new MapModel();

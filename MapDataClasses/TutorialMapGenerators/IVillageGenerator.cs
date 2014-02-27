@@ -11,5 +11,6 @@ namespace MapDataClasses.TutorialMapGenerators
         MapModel getMap();
         MapInteraction getInteraction(MapModel mm, int x, int y);
         void performInteraction(MapModel mm, int x, int y, string selectedOption);
+        event MapDataManager.LoadMapEventHandler onSelectMap;
     }
 }

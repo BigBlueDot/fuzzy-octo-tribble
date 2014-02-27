@@ -46,6 +46,14 @@ namespace fuzzy_octo_tribble.Controllers
         }
 
         [HttpGet]
+        public void OptionInteract(int x, int y, string option)
+        {
+            Game game = checkGame();
+
+            game.setOptionInteraction(x, y, option);
+        }
+
+        [HttpGet]
         public void MoveLeft()
         {
             Game game = checkGame();

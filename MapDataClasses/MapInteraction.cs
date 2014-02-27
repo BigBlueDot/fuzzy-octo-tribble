@@ -12,5 +12,6 @@ namespace MapDataClasses
         public string dialog { get; set; }
         public bool hasOptions { get; set; }
         public List<string> options { get; set; }
+        public bool selectParty { get; set; }
     }
 }

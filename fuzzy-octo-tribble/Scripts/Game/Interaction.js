@@ -41,7 +41,12 @@ FuzzyOctoTribble.InteractionHandler = (function () {
                 if (data.hasOptions) {
                     FuzzyOctoTribble.OptionDialog.show(data.dialog, data.options, function (selected) {
                         //Get further information from server
+                        $.ajax("Game/OptionInteract?x=" + x + "&y=" + y + "&option=" + selected, 
+                            {
+                                success: function () {
 
+                                }
+                            });
                     });
                 }
                 else if (data.hasDialog) {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapDataClasses.MapDataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,23 @@ namespace MapDataClasses
 {
     public class MapDataManager
     {
+        public delegate void LoadMapEventHandler(object sender, MapSelectedEventArgs e);
+        public static event LoadMapEventHandler onLoadMap;
+
+        static MapDataManager()
+        {
+            TutorialMapGenerators.EnsembleVillageGenerator.Implementation.onSelectMap += Implementation_onSelectMap;
+            TutorialMapGenerators.EmergenceCavernGenerator.Implementation.onSelectMap += Implementation_onSelectMap;
+        }
+
+        static void Implementation_onSelectMap(object sender, MapSelectedEventArgs e)
+        {
+            if (onLoadMap != null)
+            {
+                onLoadMap(sender, e);
+            }
+        }
+
         public static ClientMap getClientMap(MapModel mm)
         {
             ClientMap cm = new ClientMap();
@@ -93,6 +111,7 @@ namespace MapDataClasses
         {
             List<string> results = new List<string>();
             results.Add("Ensemble Village");
+            results.Add("Emergence Cavern");
             return results;
         }
 

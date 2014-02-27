@@ -44,6 +44,10 @@
     menuItems.push($menuQuestsItem);
     menuItems.push($menuConfigurationItem);
 
+    var $goldDisplay = $(document.createElement('div'));
+    $goldDisplay.addClass('gold-display text-font');
+    $goldDisplay.hide();
+
     var applySelect = function () {
         $('.menu-item-selected').removeClass('menu-item-selected');
         menuItems[selectedMenuItem].addClass('menu-item-selected');
@@ -82,6 +86,7 @@
             FuzzyOctoTribble.KeyControl.setMenuMode();
         }
         $menu.toggle();
+        $goldDisplay.toggle();
     }
 
     that.selectUp = function () {
@@ -128,8 +133,13 @@
         }
     }
 
+    that.setPlayer = function (newPlayer) {
+        $goldDisplay.text(newPlayer.gp + ' GP');
+    }
+
     that.drawMenu = function () {
         $('.game-window').append($menu);
+        $('.game-window').append($goldDisplay);
     }
 
     $(document).ready(function () {

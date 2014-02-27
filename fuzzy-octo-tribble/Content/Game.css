@@ -63,7 +63,17 @@
     .menu-item:hover {
         background-color:#C0C0C0;
     }
-    
+
+.gold-display {
+    bottom: 10px;
+    left: 10px;
+    height:40px;
+    width: 20%;
+    position:absolute;
+    background: #FFFFFF;
+    border: 2px solid black;
+    padding-left:10px;
+}    
 
 .menu-item-selected.menu-item {
     background-color: #767676;
@@ -140,6 +150,11 @@
     .character-screen-item {
         height:auto;
     }
+
+    .gold-display {
+        height: 30px;
+        width: 40%;
+    }    
 }
 
 @media (max-width: 400px) {
@@ -168,4 +183,9 @@
     .character-screen-item {
         height:auto;
     }
+
+    .gold-display {
+        height: 25px;
+        width: 45%;
+    } 
 }

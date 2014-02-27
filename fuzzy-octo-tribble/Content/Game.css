@@ -108,7 +108,7 @@
     text-overflow:ellipsis;
     padding-top:15px;
     padding-left:5px;
-    height:45px;
+    min-height:45px;
     cursor: pointer;
 }
 
@@ -124,13 +124,13 @@
         background-color: #575757;
     }
 
-@media (max-width: 500px) {
+@media (max-width: 850px) {
     .text-font {
         font-size: 20px;
     }
 
     .menu-container {
-        left: 70%;
+        left: 60%;
         padding: 10px;
     }
 
@@ -148,7 +148,7 @@
     }
 
     .character-screen-item {
-        height:auto;
+        min-height:55px;
     }
 
     .gold-display {
@@ -163,7 +163,7 @@
     }
     
     .menu-container {
-        left: 60%;
+        left: 50%;
         padding: 5px;
     }
 
@@ -182,6 +182,7 @@
 
     .character-screen-item {
         height:auto;
+        min-height:45px;
     }
 
     .gold-display {

@@ -14,6 +14,9 @@
     }
     
     var showOptions = function (options) {
+        $menu.empty();
+        items = [];
+        currentSelection = 0;
         FuzzyOctoTribble.KeyControl.setOptionDialogMode();
 
         for (var i = 0; i < options.length; i++) {

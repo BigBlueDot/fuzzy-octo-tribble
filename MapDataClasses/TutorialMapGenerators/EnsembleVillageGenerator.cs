@@ -72,10 +72,10 @@ namespace MapDataClasses.TutorialMapGenerators
             else if (mm.map[x, y] == "DungeonMaster")
             {
                 mi.hasDialog = true;
+                mi.hasOptions = true;
                 mi.dialog = "What dungeon would you like to go to?";
                 mi.options = new List<string>();
-                mi.options.Add("NEED TO FILL THIS IN");
-                mi.options.Add("NEED TO FILL THIS IN 2");
+                mi.options.Add("Emergence Cavern");
             }
 
             return mi;

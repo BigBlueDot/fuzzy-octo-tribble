@@ -10,6 +10,7 @@ namespace MapDataClasses
     {
         public bool hasDialog { get; set; }
         public string dialog { get; set; }
+        public bool hasOptions { get; set; }
         public List<string> options { get; set; }
     }
 }

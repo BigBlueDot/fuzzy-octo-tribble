@@ -292,6 +292,7 @@
     <Content Include="Scripts\Game\MaintainState.js" />
     <Content Include="Scripts\Game\Menu.js" />
     <Content Include="Scripts\Game\Movement.js" />
+    <Content Include="Scripts\Game\OptionDialog.js" />
     <Content Include="Scripts\Game\PartyScreen.js" />
     <Content Include="Scripts\Game\QuestScreen.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />

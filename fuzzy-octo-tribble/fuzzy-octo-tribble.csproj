@@ -271,6 +271,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\Game\Dungeon.png" />
     <Content Include="Images\Game\Empty.png" />
     <Content Include="Images\Game\Player.png" />
     <Content Include="Images\Game\PlayerDown.png" />
@@ -282,6 +283,7 @@
     <Content Include="Images\Game\Wall.png" />
     <Content Include="Scripts\Game\Camera.js" />
     <Content Include="Scripts\Game\CharacterScreen.js" />
+    <Content Include="Scripts\Game\ConfigurationScreen.js" />
     <Content Include="Scripts\Game\DialogBox.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribble.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribbleInit.js" />
@@ -290,6 +292,8 @@
     <Content Include="Scripts\Game\MaintainState.js" />
     <Content Include="Scripts\Game\Menu.js" />
     <Content Include="Scripts\Game\Movement.js" />
+    <Content Include="Scripts\Game\PartyScreen.js" />
+    <Content Include="Scripts\Game\QuestScreen.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -398,7 +402,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>55828</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:64563/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

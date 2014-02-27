@@ -45,6 +45,7 @@ namespace MapDataClasses.TutorialMapGenerators
 
             mm.map[2, 2] = "Rest";
             mm.map[2, 4] = "Quest";
+            mm.map[4, 2] = "DungeonMaster";
 
             return mm;
         }
@@ -64,6 +65,14 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 mi.hasDialog = true;
                 mi.dialog = "What quest would you like to do?";
+                mi.options = new List<string>();
+                mi.options.Add("NEED TO FILL THIS IN");
+                mi.options.Add("NEED TO FILL THIS IN 2");
+            }
+            else if (mm.map[x, y] == "DungeonMaster")
+            {
+                mi.hasDialog = true;
+                mi.dialog = "What dungeon would you like to go to?";
                 mi.options = new List<string>();
                 mi.options.Add("NEED TO FILL THIS IN");
                 mi.options.Add("NEED TO FILL THIS IN 2");

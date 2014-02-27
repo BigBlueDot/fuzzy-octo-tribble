@@ -44,6 +44,8 @@ namespace MapDataClasses
                     return "/images/game/quest.png";
                 case "Wall":
                     return "/images/game/wall.png";
+                case "DungeonMaster":
+                    return "/images/game/dungeon.png";
                 default:
                     return "/images/game/empty.png";
             }
@@ -61,6 +63,8 @@ namespace MapDataClasses
                     return true;
                 case "Wall":
                     return false;
+                case "DungeonMaster":
+                    return true;
                 default:
                     return false;
             }
@@ -77,6 +81,8 @@ namespace MapDataClasses
                 case "Quest":
                     return false;
                 case "Wall":
+                    return false;
+                case "DungeonMaster":
                     return false;
                 default:
                     return false;

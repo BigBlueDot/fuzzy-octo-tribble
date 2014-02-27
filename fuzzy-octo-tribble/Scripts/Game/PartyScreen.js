@@ -2,7 +2,7 @@
     var that = {};
 
     var $partyScreen = $(document.createElement('div'));
-    $partyScreen.addClass('character-screen');
+    $partyScreen.addClass('character-screen text-font');
     $partyScreen.text('Party Screen');
     $partyScreen.hide();
     $(document).ready(function () {

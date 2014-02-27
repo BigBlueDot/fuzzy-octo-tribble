@@ -69,6 +69,8 @@
                 currentMode = "parties";
                 break;
             case 'Quests':
+                FuzzyOctoTribble.QuestScreen.show();
+                currentMode = "quests";
                 break;
             case 'Configuration':
                 break;
@@ -83,6 +85,7 @@
             FuzzyOctoTribble.KeyControl.cancelMenuMode();
             FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
             FuzzyOctoTribble.PartyScreen.hide();
+            FuzzyOctoTribble.QuestScreen.hide();
             currentMode = "menu";
         }
         else {
@@ -106,6 +109,9 @@
             case 'parties':
                 FuzzyOctoTribble.PartyScreen.scrollUp();
                 break;
+            case 'quests':
+                FuzzyOctoTribble.QuestScreen.scrollUp();
+                break;
         }
     }
 
@@ -122,6 +128,9 @@
                 break;
             case 'parties':
                 FuzzyOctoTribble.PartyScreen.scrollDown();
+                break;
+            case 'quests':
+                FuzzyOctoTribble.QuestScreen.scrollDown();
                 break;
         }
     }
@@ -141,6 +150,10 @@
                 break;
             case 'parties':
                 FuzzyOctoTribble.PartyScreen.hide();
+                currentMode = "menu";
+                break;
+            case 'quests':
+                FuzzyOctoTribble.QuestScreen.hide();
                 currentMode = "menu";
                 break;
         }

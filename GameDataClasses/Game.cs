@@ -65,7 +65,7 @@ namespace GameDataClasses
 
         public void setOptionInteraction(int x, int y, string option)
         {
-            MapDataClasses.MapDataManager.interactWithMap(player.rootMap, x, y, rootMap, option);
+            MapDataClasses.MapDataManager.interactWithMap(rootMap.name, x, y, rootMap, option);
         }
 
         public void moveLeft()

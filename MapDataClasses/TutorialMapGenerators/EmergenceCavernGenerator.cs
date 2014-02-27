@@ -29,8 +29,8 @@ namespace MapDataClasses.TutorialMapGenerators
             MapModel mm = new MapModel();
             mm.name = "Emergence Cavern";
             mm.map = new string[50, 40];
-            mm.startX = 25;
-            mm.startY = 38;
+            mm.startX = 26;
+            mm.startY = 37;
             for (var x = 0; x < 50; x++)
             {
                 for (var y = 0; y < 40; y++)
@@ -89,19 +89,38 @@ namespace MapDataClasses.TutorialMapGenerators
                 mm.map[x, 10] = "Wall";
             }
 
+            mm.map[26, 38] = "Exit";
+
             return mm;
         }
 
         public MapInteraction getInteraction(MapModel mm, int x, int y)
         {
             //No interactions at the moment
-            return new MapInteraction();
+            MapInteraction mi = new MapInteraction();
+            if (mm.map[x, y] == "Exit")
+            {
+                mi.hasDialog = true;
+                mi.hasOptions = true;
+                mi.dialog = "Would you like to leave this dungeon?";
+                mi.options = new List<string>();
+                mi.options.Add("Yes");
+                mi.options.Add("No");
+            }
+            return mi;
         }
 
         public void performInteraction(MapModel mm, int x, int y, string selectedOption)
         {
             //Do logic for determining what to do
             //This may need to be event driven (i.e. fire onRemoveGold and onRestoreHealth and onRestoreMP
+            if (mm.map[x, y] == "Exit")
+            {
+                if (selectedOption == "Yes")
+                {
+                    onSelectMap(this, new MapDataClasses.MapSelectedEventArgs() { mapName = "Ensemble Village" });
+                }
+            }
         }
     }
 }

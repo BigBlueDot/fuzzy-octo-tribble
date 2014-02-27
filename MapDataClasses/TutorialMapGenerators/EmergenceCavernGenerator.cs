@@ -35,58 +35,58 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 for (var y = 0; y < 40; y++)
                 {
-                    mm.map[x, y] = "Empty";
+                    mm.map[x, y] = "CaveEmpty";
                 }
-                mm.map[x, 0] = "Wall";
-                mm.map[x, 39] = "Wall";
+                mm.map[x, 0] = "CaveWall";
+                mm.map[x, 39] = "CaveWall";
             }
 
             for (var y = 0; y < 40; y++)
             {
-                mm.map[0, y] = "Wall";
-                mm.map[49, y] = "Wall";
+                mm.map[0, y] = "CaveWall";
+                mm.map[49, y] = "CaveWall";
             }
 
             //Draw walls
             for (var x = 0; x < 25; x++)
             {
-                mm.map[x, 34] = "Wall";
+                mm.map[x, 34] = "CaveWall";
             }
 
             for (var x = 28; x < 44; x++)
             {
-                mm.map[x, 34] = "Wall";
+                mm.map[x, 34] = "CaveWall";
             }
 
             for (var y = 34; y >= 25; y--)
             {
-                mm.map[24, y] = "Wall";
-                mm.map[28, y] = "Wall";
+                mm.map[24, y] = "CaveWall";
+                mm.map[28, y] = "CaveWall";
                 if (y % 2 == 0)
                 {
-                    mm.map[23, y] = "Wall";
-                    mm.map[29, y] = "Wall";
+                    mm.map[23, y] = "CaveWall";
+                    mm.map[29, y] = "CaveWall";
                 }
             }
 
             for (var x = 24; x < 28; x++)
             {
-                mm.map[x, 25] = "Wall";
+                mm.map[x, 25] = "CaveWall";
             }
 
             for (var y = 34; y >= 10; y--)
             {
-                mm.map[42, y] = "Wall";
-                mm.map[47, y] = "Wall";
+                mm.map[42, y] = "CaveWall";
+                mm.map[47, y] = "CaveWall";
                 if (y % 2 == 0)
                 {
-                    mm.map[41, y] = "Wall";
-                    mm.map[48, y] = "Wall";
+                    mm.map[41, y] = "CaveWall";
+                    mm.map[48, y] = "CaveWall";
                 }
             }
             for (var x = 42; x < 47; x++)
             {
-                mm.map[x, 10] = "Wall";
+                mm.map[x, 10] = "CaveWall";
             }
 
             mm.map[26, 38] = "Exit";

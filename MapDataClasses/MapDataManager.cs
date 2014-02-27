@@ -56,12 +56,16 @@ namespace MapDataClasses
             {
                 case "Empty":
                     return "/images/game/empty.png";
+                case "CaveEmpty":
+                    return "/images/game/CaveEmpty.png";
                 case "Rest":
                     return "/images/game/rest.png";
                 case "Quest":
                     return "/images/game/quest.png";
                 case "Wall":
                     return "/images/game/wall.png";
+                case "CaveWall":
+                    return "/images/game/cavewall.png";
                 case "DungeonMaster":
                     return "/images/game/dungeon.png";
                 case "Exit":
@@ -77,11 +81,15 @@ namespace MapDataClasses
             {
                 case "Empty":
                     return false;
+                case "CaveEmpty":
+                    return false;
                 case "Rest":
                     return true;
                 case "Quest":
                     return true;
                 case "Wall":
+                    return false;
+                case "CaveWall":
                     return false;
                 case "DungeonMaster":
                     return true;
@@ -98,11 +106,15 @@ namespace MapDataClasses
             {
                 case "Empty":
                     return true;
+                case "CaveEmpty":
+                    return true;
                 case "Rest":
                     return false;
                 case "Quest":
                     return false;
                 case "Wall":
+                    return false;
+                case "CaveWall":
                     return false;
                 case "DungeonMaster":
                     return false;

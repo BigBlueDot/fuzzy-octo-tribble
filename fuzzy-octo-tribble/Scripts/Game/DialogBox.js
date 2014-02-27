@@ -3,6 +3,7 @@
     var dialogActive = false;
     var dialogQueue = [];
     var displayedText = "";
+    var doneQueue = [];
 
     var $dialogContainer = $(document.createElement('div'));
     $dialogContainer.addClass('dialog-container text-font');
@@ -18,7 +19,10 @@
     $next.hide();
     $dialogContainer.append($next);
 
-    that.showDialog = function (dialog) {
+    that.showDialog = function (dialog, onDone) {
+        if (onDone) {
+            doneQueue.push(onDone);
+        }
         if (dialogActive) {
             if (dialog) {
                 dialogQueue.push(dialog);
@@ -66,6 +70,10 @@
         }
         else {
             $dialogContainer.hide();
+            for (var i = 0; i < doneQueue.length; i++) {
+                doneQueue[i]();
+            }
+            doneQueue = [];
             FuzzyOctoTribble.KeyControl.cancelDialogMode();
         }
     }

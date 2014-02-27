@@ -7,6 +7,7 @@
     var canMenu = true;
     var dialogMode = false;
     var menuMode = false;
+    var optionDialogMode = false;
 
     var clearTimers = function () {
         clearTimeout(timer37);
@@ -53,6 +54,9 @@
         });
 
         $(document).keyup(function (e) {
+
+
+
             if (e.keyCode == 37) { //left
                 clearTimeout(timer37);
                 timer37 = false;
@@ -69,14 +73,28 @@
                 clearTimeout(timer40);
                 timer40 = false;
             }
-            else if (dialogMode && e.keyCode == 90) {
-                FuzzyOctoTribble.DialogBox.nextDialog();
-            }
             else if (canMove && e.keyCode == 90) {
                 FuzzyOctoTribble.InteractionHandler.getInteraction();
             }
             else if (canMenu && e.keyCode == 77) {
                 FuzzyOctoTribble.Menu.toggleMenu();
+            }
+
+            if (optionDialogMode && e.keyCode === 38) {
+                FuzzyOctoTribble.OptionDialog.selectUp();
+            }
+            else if (optionDialogMode && e.keyCode === 40) {
+                FuzzyOctoTribble.OptionDialog.selectDown();
+            }
+            else if (optionDialogMode && e.keyCode === 90) {
+                FuzzyOctoTribble.OptionDialog.selectCurrent();
+            }
+            else if (optionDialogMode && e.keyCode == 88) {
+                FuzzyOctoTribble.OptionDialog.cancel();
+            }
+
+            if (dialogMode && e.keyCode == 90) {
+                FuzzyOctoTribble.DialogBox.nextDialog();
             }
 
             if (menuMode && e.keyCode === 38) {
@@ -110,6 +128,11 @@
             canMenu = true;
             dialogMode = false;
         }
+        else if (optionDialogMode) {
+            canMove = false;
+            canMenu = false;
+            dialogMode = false;
+        }
         else {
             canMove = true;
             canMenu = true;
@@ -125,6 +148,18 @@
 
     that.cancelMenuMode = function () {
         menuMode = false;
+        canMove = true;
+    }
+
+    that.setOptionDialogMode = function () {
+        canMove = false;
+        dialogMode = false;
+        menuMode = false;
+        optionDialogMode = true;
+    }
+
+    that.cancelOptionDialogMode = function () {
+        optionDialogMode = false;
         canMove = true;
     }
 

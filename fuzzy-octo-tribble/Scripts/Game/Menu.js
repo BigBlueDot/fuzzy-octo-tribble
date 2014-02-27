@@ -59,24 +59,31 @@
     }
 
     var selectItem = function ($menuItem) {
-        switch ($menuItem.text()) {
-            case 'Characters':
-                FuzzyOctoTribble.CharacterScreen.showCharacterScreen();
-                currentMode = "characters";
+        switch(currentMode) {
+            case 'menu':
+                switch ($menuItem.text()) {
+                    case 'Characters':
+                        FuzzyOctoTribble.CharacterScreen.showCharacterScreen();
+                        currentMode = "characters";
+                        break;
+                    case 'Parties':
+                        FuzzyOctoTribble.PartyScreen.show();
+                        currentMode = "parties";
+                        break;
+                    case 'Quests':
+                        FuzzyOctoTribble.QuestScreen.show();
+                        currentMode = "quests";
+                        break;
+                    case 'Configuration':
+                        FuzzyOctoTribble.ConfigurationScreen.show();
+                        currentMode = "configuration";
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 'Parties':
-                FuzzyOctoTribble.PartyScreen.show();
-                currentMode = "parties";
-                break;
-            case 'Quests':
-                FuzzyOctoTribble.QuestScreen.show();
-                currentMode = "quests";
-                break;
-            case 'Configuration':
-                FuzzyOctoTribble.ConfigurationScreen.show();
-                currentMode = "configuration";
-                break;
-            default:
+            case 'characters':
+                FuzzyOctoTribble.CharacterScreen.selectCurrent();
                 break;
         }
     }
@@ -154,8 +161,13 @@
                 that.toggleMenu();
                 break;
             case 'characters':
-                FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
-                currentMode = "menu";
+                if (FuzzyOctoTribble.CharacterScreen.canHandleCancel()) {
+                    FuzzyOctoTribble.CharacterScreen.cancel()
+                }
+                else {
+                    FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
+                    currentMode = "menu";
+                }
                 break;
             case 'parties':
                 FuzzyOctoTribble.PartyScreen.hide();

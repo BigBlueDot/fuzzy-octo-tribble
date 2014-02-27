@@ -73,6 +73,8 @@
                 currentMode = "quests";
                 break;
             case 'Configuration':
+                FuzzyOctoTribble.ConfigurationScreen.show();
+                currentMode = "configuration";
                 break;
             default:
                 break;
@@ -86,6 +88,7 @@
             FuzzyOctoTribble.CharacterScreen.hideCharacterScreen();
             FuzzyOctoTribble.PartyScreen.hide();
             FuzzyOctoTribble.QuestScreen.hide();
+            FuzzyOctoTribble.ConfigurationScreen.hide();
             currentMode = "menu";
         }
         else {
@@ -112,6 +115,9 @@
             case 'quests':
                 FuzzyOctoTribble.QuestScreen.scrollUp();
                 break;
+            case 'configuration':
+                FuzzyOctoTribble.ConfigurationScreen.scrollUp();
+                break;
         }
     }
 
@@ -131,6 +137,9 @@
                 break;
             case 'quests':
                 FuzzyOctoTribble.QuestScreen.scrollDown();
+                break;
+            case 'configuration':
+                FuzzyOctoTribble.ConfigurationScreen.scrollDown();
                 break;
         }
     }
@@ -154,6 +163,10 @@
                 break;
             case 'quests':
                 FuzzyOctoTribble.QuestScreen.hide();
+                currentMode = "menu";
+                break;
+            case 'configuration':
+                FuzzyOctoTribble.ConfigurationScreen.hide();
                 currentMode = "menu";
                 break;
         }

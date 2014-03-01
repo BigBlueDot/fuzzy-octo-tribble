@@ -39,18 +39,19 @@ FuzzyOctoTribble.InteractionHandler = (function () {
         $.ajax("Game/GetInteraction?x=" + x + "&y=" + y, {
             success: function (data) {
                 if (data.hasOptions) {
-                    FuzzyOctoTribble.OptionDialog.show(data.dialog, data.options, function (selected) {
-                        //Get further information from server
-                        $.ajax("Game/OptionInteract?x=" + x + "&y=" + y + "&option=" + selected, 
-                            {
-                                success: function () {
+                    //BBD:  Code is currently deprecated.  Will add back if needed
+                    //FuzzyOctoTribble.OptionDialog.show(data.dialog, data.options, function (selected) {
+                    //    //Get further information from server
+                    //    $.ajax("Game/OptionInteract?x=" + x + "&y=" + y + "&option=" + selected, 
+                    //        {
+                    //            success: function () {
 
-                                }
-                            });
-                    });
+                    //            }
+                    //        });
+                    //});
                 }
                 else if (data.hasDialog) {
-                    FuzzyOctoTribble.DialogBox.showDialog(data.dialog);
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(data.dialog));
                 }
             }
         });

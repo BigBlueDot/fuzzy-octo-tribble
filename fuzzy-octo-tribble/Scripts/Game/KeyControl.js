@@ -10,94 +10,40 @@
     $(document).ready(function () {
         $(document).keydown(function (e) {
             if (e.keyCode == 37) { //left
-                if (currentController().pressLeft) {
-                    currentController().pressLeft();
-                }
+                that.pressLeft();
             }
             else if (e.keyCode == 38) { //up
-                if (currentController().pressUp) {
-                    currentController().pressUp();
-                }
+                that.pressUp();
             }
             else if (e.keyCode == 39) { //right
-                if (currentController().pressRight) {
-                    currentController().pressRight();
-                }
+                that.pressRight();
             }
             else if (e.keyCode == 40) { //down
-                if (currentController().pressDown) {
-                    currentController().pressDown();
-                }
+                that.pressDown();
             }
         });
 
         $(document).keyup(function (e) {
             if (e.keyCode == 37) { //left
-                if (currentController().releaseLeft) {
-                    currentController().releaseLeft();
-                }
+                that.releaseLeft();
             }
             else if (e.keyCode == 38) { //up
-                if (currentController().releaseUp) {
-                    currentController().releaseUp();
-                }
+                that.releaseUp();
             }
             else if (e.keyCode == 39) { //right
-                if (currentController().releaseRight) {
-                    currentController().releaseRight();
-                }
+                that.releaseRight();
             }
             else if (e.keyCode == 40) { //down
-                if (currentController().releaseDown) {
-                    currentController().releaseDown();
-                }
+                that.releaseDown();
             }
             else if (e.keyCode == 90) {
-                if (currentController().confirm) {
-                    currentController().confirm();
-                }
+                that.confirm();
             }
             else if (e.keyCode == 77) {
-                if (currentController().menu) {
-                    currentController().menu();
-                }
+                that.menu();
             }
             else if (e.keyCode == 88) {
-                if (currentController().cancel) {
-                    currentController().cancel();
-                }
-            }
-
-            if (false) {
-                if (optionDialogMode && e.keyCode === 38) {
-                    FuzzyOctoTribble.OptionDialog.selectUp();
-                }
-                else if (optionDialogMode && e.keyCode === 40) {
-                    FuzzyOctoTribble.OptionDialog.selectDown();
-                }
-                else if (optionDialogMode && e.keyCode === 90) {
-                    FuzzyOctoTribble.OptionDialog.selectCurrent();
-                }
-                else if (optionDialogMode && e.keyCode == 88) {
-                    FuzzyOctoTribble.OptionDialog.cancel();
-                }
-
-                if (dialogMode && e.keyCode == 90) {
-                    FuzzyOctoTribble.DialogBox.nextDialog();
-                }
-
-                if (menuMode && e.keyCode === 38) {
-                    FuzzyOctoTribble.Menu.selectUp();
-                }
-                else if (menuMode && e.keyCode === 40) {
-                    FuzzyOctoTribble.Menu.selectDown();
-                }
-                else if (menuMode && e.keyCode === 90) {
-                    FuzzyOctoTribble.Menu.selectCurrent();
-                }
-                else if (menuMode && e.keyCode == 88) {
-                    FuzzyOctoTribble.Menu.cancel();
-                }
+                that.cancel();
             }
         });
     });
@@ -108,6 +54,73 @@
             controllers.pop();
         }
     }
+
+    that.pressLeft = function () {
+        if (currentController().pressLeft) {
+            currentController().pressLeft();
+        }
+    }
+
+    that.pressUp = function () {
+        if (currentController().pressUp) {
+            currentController().pressUp();
+        }
+    }
+    
+    that.pressRight = function () {
+        if (currentController().pressRight) {
+            currentController().pressRight();
+        }
+    }
+
+    that.pressDown = function () {
+        if (currentController().pressDown) {
+            currentController().pressDown();
+        }
+    }
+
+    that.releaseLeft = function () {
+        if (currentController().releaseLeft) {
+            currentController().releaseLeft();
+        }
+    }
+
+    that.releaseUp = function () {
+        if (currentController().releaseUp) {
+            currentController().releaseUp();
+        }
+    }
+
+    that.releaseDown = function () {
+        if (currentController().releaseDown) {
+            currentController().releaseDown();
+        }
+    }
+
+    that.releaseRight = function () {
+        if (currentController().releaseRight) {
+            currentController().releaseRight();
+        }
+    }
+
+    that.confirm = function () {
+        if (currentController().confirm) {
+            currentController().confirm();
+        }
+    }
+
+    that.cancel = function () {
+        if (currentController().cancel) {
+            currentController().cancel();
+        }
+    }
+
+    that.menu = function () {
+        if (currentController().menu) {
+            currentController().menu();
+        }
+    }
+        
 
     return that;
 }

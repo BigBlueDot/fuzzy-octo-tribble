@@ -89,19 +89,31 @@ FuzzyOctoTribble.MenuHandler = (function () {
             {
                 text: "Parties",
                 selected: function () {
-
+                    var $screen = $(document.createElement('div'));
+                    $screen.text('Parties Screen');
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl($screen, true, function () {
+                        FuzzyOctoTribble.KeyControl.menu();
+                    }));
                 }
             },
             {
                 text: "Quests",
                 selected: function () {
-
+                    var $screen = $(document.createElement('div'));
+                    $screen.text('Quests Screen');
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl($screen, true, function () {
+                        FuzzyOctoTribble.KeyControl.menu();
+                    }));
                 }
             },
             {
                 text: "Configuration",
                 selected: function () {
-
+                    var $screen = $(document.createElement('div'));
+                    $screen.text('Configuration Screen');
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl($screen, true, function () {
+                        FuzzyOctoTribble.KeyControl.menu();
+                    }));
                 }
             }
         ],

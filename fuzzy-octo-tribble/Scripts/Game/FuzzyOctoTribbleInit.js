@@ -7,6 +7,12 @@
             FuzzyOctoTribble.KeyControl = FuzzyOctoTribble.KeyControlConstructor();
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Movement);
 
+
+            //Example Display Screen
+            //var $questScreen = $(document.createElement('div'));
+            //$questScreen.text('Quest Screen');
+            //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl($questScreen));
+
             //Example Menu
             //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Menu([{
             //    text: "Option 1",

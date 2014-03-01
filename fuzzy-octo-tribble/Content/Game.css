@@ -91,7 +91,7 @@
         background-color:inherit;
     }
 
-.character-screen {
+.popup-screen {
     top:20%;
     bottom:20%;
     left:20%;
@@ -103,7 +103,7 @@
     position:absolute;
 }
 
-.character-screen-item {
+.popup-screen-item {
     width:100%;
     text-overflow:ellipsis;
     padding-top:15px;
@@ -112,15 +112,15 @@
     cursor: pointer;
 }
 
-    .character-screen-item:hover {
+    .popup-screen-item:hover {
         background-color:#C0C0C0;
     }
     
-.character-screen-item-selected.character-screen-item {
+.popup-screen-item-selected.popup-screen-item {
     background-color: #767676;
 }
 
-    .character-screen-item-selected.character-screen-item:hover {
+    .popup-screen-item-selected.popup-screen-item:hover {
         background-color: #575757;
     }
 
@@ -140,14 +140,14 @@
         height: 35px;
     }
 
-    .character-screen {
+    .popup-screen {
         top: 10px;
         bottom: 10px;
         left: 10px;
         right: 10px;
     }
 
-    .character-screen-item {
+    .popup-screen-item {
         min-height:55px;
     }
 
@@ -173,14 +173,14 @@
         height: 25px;
     }
 
-    .character-screen {
+    .popup-screen {
         top: 10px;
         bottom: 10px;
         left: 10px;
         right: 10px;
     }
 
-    .character-screen-item {
+    .popup-screen-item {
         height:auto;
         min-height:45px;
     }

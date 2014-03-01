@@ -7,6 +7,21 @@
             FuzzyOctoTribble.KeyControl = FuzzyOctoTribble.KeyControlConstructor();
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Movement);
 
+            //Example ScreenSelect
+            //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenSelectControl([
+            //    {
+            //        content: $(document.createElement('div')).text('Option 1'),
+            //        select: function () {
+            //            alert("Option 1 selected");
+            //        }
+            //    },
+            //    {
+            //        content: $(document.createElement('div')).text('Option 2'),
+            //        select: function () {
+            //            alert("Option 2 selected");
+            //        }
+            //    }
+            //    ]));
 
             //Example Display Screen
             //var $questScreen = $(document.createElement('div'));

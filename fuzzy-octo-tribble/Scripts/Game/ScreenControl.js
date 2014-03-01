@@ -1,6 +1,6 @@
 ﻿FuzzyOctoTribble.ScreenControl = function ($content, closeOnMenu, onCloseMenu) {
     var that = {};
-    $content.addClass('character-screen text-font')
+    $content.addClass('popup-screen text-font')
 
     $('.game-window').append($content);
 

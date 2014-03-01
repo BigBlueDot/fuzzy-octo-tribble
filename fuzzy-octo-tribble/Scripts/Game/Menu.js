@@ -83,7 +83,7 @@ FuzzyOctoTribble.MenuHandler = (function () {
             {
                 text: "Characters",
                 selected: function () {
-                    //TODO:  Show screeens
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getScreen())
                 }
             },
             {

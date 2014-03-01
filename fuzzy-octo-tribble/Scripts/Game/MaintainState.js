@@ -9,6 +9,7 @@
                 }
                 FuzzyOctoTribble.Player = data;
                 FuzzyOctoTribble.Camera.setPlayer(FuzzyOctoTribble.Player);
+                FuzzyOctoTribble.MenuHandler.setPlayer(FuzzyOctoTribble.Player);
                 FuzzyOctoTribble.CharacterScreenCreator.setCharacters(FuzzyOctoTribble.Player.characters);
                 FuzzyOctoTribble.Camera.draw();
                 setTimeout(calcPlayer, 5000);

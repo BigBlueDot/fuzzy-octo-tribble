@@ -1,7 +1,12 @@
-﻿FuzzyOctoTribble.Menu = function (items, closeOnMenu, header) {
+﻿FuzzyOctoTribble.Menu = function (spec, my) {
     var that = {};
     var selectedMenuItem = 0;
     menuItems = [];
+    var items = spec.items;
+    var closeOnMenu = spec.closeOnMenu;
+    var header = spec.header;
+    var additionalDisplays = spec.additionalDisplays || [];
+    my = my || {};
 
     var selectItem = function(index) {
         items[index].selected();
@@ -28,6 +33,9 @@
     }
 
     $('.game-window').append($menu);
+    for (var i = 0; i < additionalDisplays.length; i++) {
+        $('.game-window').append(additionalDisplays[i]);
+    }
     
     var applySelect = function () {
         $('.menu-item-selected').removeClass('menu-item-selected');
@@ -59,6 +67,9 @@
 
     that.cancel = function () {
         $menu.remove();
+        for (var i = 0; i < additionalDisplays.length; i++) {
+            additionalDisplays[i].remove();
+        }
         if (that.onComplete) {
             that.onComplete();
         }
@@ -77,9 +88,17 @@
 
 FuzzyOctoTribble.MenuHandler = (function () {
     var that = {};
+    var $goldDisplay = $(document.createElement('div'));
+    $goldDisplay.addClass('gold-display text-font');
+
+    that.setPlayer = function (newPlayer) {
+        $goldDisplay.text(newPlayer.gp + ' GP');
+    }
 
     that.createHubMenu = function () {
-        return FuzzyOctoTribble.Menu([
+
+        return FuzzyOctoTribble.Menu({
+            items:[
             {
                 text: "Characters",
                 selected: function () {
@@ -116,9 +135,11 @@ FuzzyOctoTribble.MenuHandler = (function () {
                     }));
                 }
             }
-        ],
-        true,
-        "Menu");
+            ],
+            closeOnMenu: true,
+            header: "Menu",
+            additionalDisplays: [$goldDisplay]
+        });
     }
 
     return that;

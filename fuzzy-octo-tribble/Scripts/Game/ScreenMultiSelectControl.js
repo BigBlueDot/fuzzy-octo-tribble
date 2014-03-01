@@ -6,6 +6,7 @@
     var onCloseMenu = spec.onCloseMenu;
     var onSelectComplete = spec.onSelectComplete;
     var selectedItems = [];
+    my = my || {};
     for (var i = 0; i < items.length; i++) {
         var currentIndex = i;
         items[i].content.data('index', i);

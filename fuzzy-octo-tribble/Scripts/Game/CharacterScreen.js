@@ -85,8 +85,12 @@
     }
 
     that.getScreen = function () {
-        return FuzzyOctoTribble.ScreenSelectControl(characterItems, true, function () {
-            FuzzyOctoTribble.KeyControl.menu();
+        return FuzzyOctoTribble.ScreenSelectControl({
+            items: characterItems,
+            closeOnMenu: true,
+            onCloseMenu: function () {
+                FuzzyOctoTribble.KeyControl.menu();
+            }
         });
     }
 

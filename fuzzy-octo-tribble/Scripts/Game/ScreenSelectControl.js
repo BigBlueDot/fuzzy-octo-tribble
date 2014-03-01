@@ -3,6 +3,7 @@
     var items = spec.items;
     var closeOnMenu = spec.closeOnMenu;
     var onCloseMenu = spec.onCloseMenu;
+    my = my || {};
 
     $screenSelect = $(document.createElement('div'));
     $screenSelect.addClass('popup-screen');

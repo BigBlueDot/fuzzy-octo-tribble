@@ -49,7 +49,7 @@
             }
             else if (e.keyCode == 40) { //down
                 if (currentController().releaseDown) {
-                    currentController().releaseRight();
+                    currentController().releaseDown();
                 }
             }
             else if (e.keyCode == 90) {

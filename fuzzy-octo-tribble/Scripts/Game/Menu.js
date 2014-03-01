@@ -1,4 +1,118 @@
-﻿FuzzyOctoTribble.Menu = (function () {
+﻿FuzzyOctoTribble.Menu = function (items, closeOnMenu, header) {
+    var that = {};
+    var selectedMenuItem = 0;
+    menuItems = [];
+
+    var selectItem = function(index) {
+        items[index].selected();
+    }
+
+    var $menu = $(document.createElement('div'));
+    $menu.addClass('menu-container');
+    
+    if (header) {
+        var $menuTitleItem = $(document.createElement('div'));
+        $menuTitleItem.addClass('menu-item menu-title text-font');
+        $menuTitleItem.text(header);
+        $menu.append($menuTitleItem);
+    }
+
+    for (var i = 0; i < items.length; i++) {
+        var $menuItem = $(document.createElement('div'));
+        $menuItem.addClass('menu-item text-font');
+        $menuItem.text(items[i].text);
+        $menuItem.data('index', i);
+        $menuItem.on('click', function () { items[$(this).data('index')].selected(); });
+        $menu.append($menuItem);
+        menuItems.push($menuItem);
+    }
+
+    $('.game-window').append($menu);
+    
+    var applySelect = function () {
+        $('.menu-item-selected').removeClass('menu-item-selected');
+        menuItems[selectedMenuItem].addClass('menu-item-selected');
+    }
+
+    var defaultSelect = function () {
+        selectedMenuItem = 0;
+        applySelect();
+    }
+
+    that.releaseUp = function () {
+        if (selectedMenuItem != 0) {
+            selectedMenuItem--;
+            applySelect();
+        }
+    }
+
+    that.releaseDown = function () {
+        if (selectedMenuItem != menuItems.length - 1) {
+            selectedMenuItem++;
+            applySelect();
+        }
+    }
+
+    that.confirm = function () {
+        selectItem(selectedMenuItem);
+    }
+
+    that.cancel = function () {
+        $menu.remove();
+        if (that.onComplete) {
+            that.onComplete();
+        }
+    }
+
+    that.menu = function () {
+        if (closeOnMenu) {
+            that.cancel();
+        }
+    }
+
+    defaultSelect();
+
+    return that;
+}
+
+FuzzyOctoTribble.MenuHandler = (function () {
+    var that = {};
+
+    that.createHubMenu = function () {
+        return FuzzyOctoTribble.Menu([
+            {
+                text: "Characters",
+                selected: function () {
+                    //TODO:  Show screeens
+                }
+            },
+            {
+                text: "Parties",
+                selected: function () {
+
+                }
+            },
+            {
+                text: "Quests",
+                selected: function () {
+
+                }
+            },
+            {
+                text: "Configuration",
+                selected: function () {
+
+                }
+            }
+        ],
+        true,
+        "Menu");
+    }
+
+    return that;
+})();
+
+FuzzyOctoTribble.HubMenu = (function () {
     var that = {};
 
     var currentMode = 'menu';

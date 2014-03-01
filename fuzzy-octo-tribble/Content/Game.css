@@ -124,6 +124,42 @@
         background-color: #575757;
     }
 
+.popup-screen-item-checked.popup-screen-item {
+    background-color: #1B9AE8;
+}
+
+.popup-screen-item-checked.popup-screen-item-selected.popup-screen-item {
+    background-color: #137CBD;
+}
+
+    .popup-screen-item-checked.popup-screen-item:hover {
+        background-color: #41708D;
+    }
+
+.multi-select-done {
+    height:auto;
+    width:auto;
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    border: solid 2px black;
+    padding: 15px;
+    background-color:#FFFFFF;
+    cursor:pointer;
+}
+
+    .multi-select-done:hover {
+        background-color: #41708D;
+    }
+
+.popup-screen-item-selected.multi-select-done {
+    background-color: #767676;
+}
+
+    .popup-screen-item-selected.multi-select-done:hover {
+        background-color: #575757;
+    }
+
 @media (max-width: 850px) {
     .text-font {
         font-size: 20px;

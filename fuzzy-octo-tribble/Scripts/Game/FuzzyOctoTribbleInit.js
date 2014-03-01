@@ -7,8 +7,34 @@
             FuzzyOctoTribble.KeyControl = FuzzyOctoTribble.KeyControlConstructor();
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Movement);
 
+            //Example ScreenMultiSelect
+            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenMultiSelectControl({
+                items: [
+                    {
+                        content: $(document.createElement('div')).text('Option 1'),
+                        value: 'Option 1'
+                    },
+                    {
+                        content: $(document.createElement('div')).text('Option 2'),
+                            value: 'Option 2'
+                    },
+                    {
+                        content: $(document.createElement('div')).text('Option 3'),
+                            value: 'Option 3'
+                    },
+                    {
+                        content: $(document.createElement('div')).text('Option 4'),
+                        value: 'Option 4'
+                    }
+                ],
+                maxSelectCount: 2,
+                onSelectComplete: function (items) {
+                    alert(items.join(', '));
+                }
+            }));
+
             //Example ScreenSelect
-            //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenSelectControl([
+            //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenSelectControl({items:[
             //    {
             //        content: $(document.createElement('div')).text('Option 1'),
             //        select: function () {
@@ -21,7 +47,7 @@
             //            alert("Option 2 selected");
             //        }
             //    }
-            //    ]));
+            //    ]}));
 
             //Example Display Screen
             //var $questScreen = $(document.createElement('div'));

@@ -1,5 +1,8 @@
-﻿FuzzyOctoTribble.ScreenSelectControl = function (items, closeOnMenu, onCloseMenu) {
+﻿FuzzyOctoTribble.ScreenSelectControl = function (spec, my) {
     var that = {};
+    var items = spec.items;
+    var closeOnMenu = spec.closeOnMenu;
+    var onCloseMenu = spec.onCloseMenu;
 
     $screenSelect = $(document.createElement('div'));
     $screenSelect.addClass('popup-screen');
@@ -72,6 +75,9 @@
 
     that.cancel = function () {
         $screenSelect.remove();
+        if (my.cancel) {
+            my.cancel();
+        }
         that.onComplete();
     }
     
@@ -80,6 +86,11 @@
             that.cancel();
             onCloseMenu();
         }
+    }
+
+    that.hideScreen = function () {
+        $screenSelect.remove();
+        that.onComplete();
     }
 
     applySelect();

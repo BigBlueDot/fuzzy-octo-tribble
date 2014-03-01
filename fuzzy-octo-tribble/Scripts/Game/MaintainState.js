@@ -1,6 +1,8 @@
 ﻿FuzzyOctoTribble.MaintainState = (function () {
     var that = {};
 
+    var playerTimer;
+
     var calcPlayer = function () {
         $.ajax("Game/GetPlayer", {
             success: function (data) {
@@ -12,7 +14,7 @@
                 FuzzyOctoTribble.MenuHandler.setPlayer(FuzzyOctoTribble.Player);
                 FuzzyOctoTribble.CharacterScreenCreator.setCharacters(FuzzyOctoTribble.Player.characters);
                 FuzzyOctoTribble.Camera.draw();
-                setTimeout(calcPlayer, 5000);
+                playerTimer = setTimeout(calcPlayer, 5000);
             }
         });
     }
@@ -33,7 +35,9 @@
     }
 
     that.updateMap = function () {
+        clearTimeout(playerTimer);
         calcMap();
+        calcPlayer();
     }
 
     return that;

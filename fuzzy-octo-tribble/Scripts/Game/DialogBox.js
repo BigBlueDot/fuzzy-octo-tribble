@@ -1,13 +1,10 @@
-﻿FuzzyOctoTribble.DialogBox = (function () {
+﻿FuzzyOctoTribble.DialogBox = function (dialogContent) {
     var that = {};
-    var dialogActive = false;
-    var dialogQueue = [];
+    var dialog = dialogContent
     var displayedText = "";
-    var doneQueue = [];
 
     var $dialogContainer = $(document.createElement('div'));
     $dialogContainer.addClass('dialog-container text-font');
-    $dialogContainer.hide();
     var $innerDialog = $(document.createElement('div'));
     $dialogContainer.append($innerDialog);
     var $next = $(document.createElement('div'));
@@ -18,89 +15,66 @@
     $next.css('font-size', '30px');
     $next.hide();
     $dialogContainer.append($next);
+    $('.game-window').append($dialogContainer);
 
-    that.showDialog = function (dialog, onDone) {
-        if (onDone) {
-            doneQueue.push(onDone);
-        }
-        if (dialogActive) {
-            if (dialog) {
-                dialogQueue.push(dialog);
+    var showDialog = function () {
+        $innerDialog.empty();
+        var writer = dialog.split(' ');
+        var showArrow = false;
+        for (var i = 0; i < writer.length; i++) {
+            var currentText = $innerDialog.text();
+            $innerDialog.text(currentText + ' ' + writer[i]);
+            if ($innerDialog.innerHeight() > $dialogContainer.height()) {
+                $innerDialog.text(currentText);
+                writer.splice(0, i);
+                showArrow = true;
+                dialog = writer.join(' ');
+                break;
             }
+        }
+
+        displayedText = $innerDialog.text();
+
+        if (showArrow) {
+            $next.show();
         }
         else {
-            dialogActive = true;
-            if (dialog) {
-                dialogQueue.push(dialog);
-            }
-            $innerDialog.empty();
-            FuzzyOctoTribble.KeyControl.setDialogMode();
-            $dialogContainer.show(0, function () {
-                var writer = dialogQueue[0].split(' ');
-                var showArrow = false;
-                for (var i = 0; i < writer.length; i++) {
-                    var currentText = $innerDialog.text();
-                    $innerDialog.text(currentText + ' ' + writer[i]);
-                    if ($innerDialog.innerHeight() > $dialogContainer.height()) {
-                        $innerDialog.text(currentText);
-                        writer.splice(0, i);
-                        showArrow = true;
-                        dialogQueue[0] = writer.join(' ');
-                        break;
-                    }
-                }
-
-                displayedText = $innerDialog.text();
-
-                if (showArrow || dialogQueue[1]) {
-                    $next.show();
-                }
-                else {
-                    $next.hide();
-                    dialogQueue.shift();
-                }
-            });
+            $next.hide();
+            dialog = '';
         }
+
     }
 
-    that.nextDialog = function () {
-        dialogActive = false;
-        if (dialogQueue[0]) {
-            that.showDialog();
+    var nextDialog = function () {
+        if (dialog) {
+            showDialog();
         }
         else {
-            $dialogContainer.hide();
-            for (var i = 0; i < doneQueue.length; i++) {
-                doneQueue[i]();
+            $dialogContainer.remove();
+            $(window).unbind('resize', resizeDialog);
+            if (that.onComplete) {
+                that.onComplete();
             }
-            doneQueue = [];
-            FuzzyOctoTribble.KeyControl.cancelDialogMode();
         }
     }
 
-    that.resizeDialog = function () {
-        if (dialogActive) {
-            if (dialogQueue[0]) {
-                dialogQueue[0] = displayedText + ' ' + dialogQueue[0];
-            } else {
-                dialogQueue[0] = displayedText;
-            }
-
-            that.nextDialog();
+    resizeDialog = function () {
+        if (dialog) {
+            dialog = displayedText + ' ' + dialog;
+        } else {
+            dialog = displayedText;
         }
+
+        nextDialog();
     }
 
-    that.drawDialog = function () {
-        $('.game-window').append($dialogContainer);
+    $(window).bind('resize', resizeDialog);
+
+    that.confirm = function () {
+        nextDialog();
     }
 
-    $(document).ready(function () {
-        that.drawDialog();
-    });
-
-    $(window).resize(function (e) {
-        that.resizeDialog();
-    });
+    showDialog();
 
     return that;
-})();
+}

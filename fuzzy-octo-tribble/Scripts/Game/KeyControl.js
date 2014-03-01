@@ -57,12 +57,12 @@
                     currentController().confirm();
                 }
             }
-            else if (canMenu && e.keyCode == 77) {
+            else if (e.keyCode == 77) {
                 if (currentController().menu) {
                     currentController().menu();
                 }
             }
-            else if (optionDialogMode && e.keyCode == 88) {
+            else if (e.keyCode == 88) {
                 if (currentController().cancel) {
                     currentController().cancel();
                 }
@@ -104,7 +104,7 @@
 
     that.addController = function(controller) {
         controllers.push(controller);
-        controller.onClose = function () {
+        controller.onComplete = function () {
             controllers.pop();
         }
     }

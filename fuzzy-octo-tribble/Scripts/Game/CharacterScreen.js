@@ -48,7 +48,8 @@
                 FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI), true, function () {
                     FuzzyOctoTribble.KeyControl.menu();
                 }));
-            }
+            },
+            value: name
         });
     }
 
@@ -91,6 +92,14 @@
             onCloseMenu: function () {
                 FuzzyOctoTribble.KeyControl.menu();
             }
+        });
+    }
+
+    that.getPartySelectScreen = function (maxSelectCount, onSelectComplete) {
+        return FuzzyOctoTribble.ScreenMultiSelectControl({
+            items: characterItems,
+            onSelectComplete: onSelectComplete,
+            maxSelectCount: maxSelectCount
         });
     }
 

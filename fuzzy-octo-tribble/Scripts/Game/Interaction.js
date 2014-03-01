@@ -49,6 +49,17 @@ FuzzyOctoTribble.InteractionHandler = (function () {
                                 selectedDungeon = currentText;
 
                                 //Will choose party here
+                                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartySelectScreen(
+                                    data.maxPartySize,
+                                    function (items) {
+                                        FuzzyOctoTribble.KeyControl.cancel(); //Close out the dungeon selector
+                                        if (items.length !== 0) { //Don't do anything if they didn't pick anyone for the party, just close out
+                                            //alert("Dungeon: " + selectedDungeon + " party:  " + items.join(', '));
+                                            //Send the selected values to the server to load the dungeon:
+
+                                        }
+                                    }
+                                    ));
                             }
                         });
                     }

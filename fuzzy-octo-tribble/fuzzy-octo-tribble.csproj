@@ -290,7 +290,6 @@
     <Content Include="Images\Game\Wall.png" />
     <Content Include="Scripts\Game\Camera.js" />
     <Content Include="Scripts\Game\CharacterScreen.js" />
-    <Content Include="Scripts\Game\ConfigurationScreen.js" />
     <Content Include="Scripts\Game\DialogBox.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribble.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribbleInit.js" />
@@ -300,8 +299,9 @@
     <Content Include="Scripts\Game\Menu.js" />
     <Content Include="Scripts\Game\Movement.js" />
     <Content Include="Scripts\Game\OptionDialog.js" />
-    <Content Include="Scripts\Game\PartyScreen.js" />
-    <Content Include="Scripts\Game\QuestScreen.js" />
+    <Content Include="Scripts\Game\ScreenControl.js" />
+    <Content Include="Scripts\Game\ScreenMultiSelectControl.js" />
+    <Content Include="Scripts\Game\ScreenSelectControl.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

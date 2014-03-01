@@ -38,6 +38,9 @@ FuzzyOctoTribble.InteractionHandler = (function () {
         
         $.ajax("Game/GetInteraction?x=" + x + "&y=" + y, {
             success: function (data) {
+                if (data.isDungeon) {
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(data.dialog));
+                }
                 if (data.hasOptions) {
                     //BBD:  Code is currently deprecated.  Will add back if needed
                     //FuzzyOctoTribble.OptionDialog.show(data.dialog, data.options, function (selected) {

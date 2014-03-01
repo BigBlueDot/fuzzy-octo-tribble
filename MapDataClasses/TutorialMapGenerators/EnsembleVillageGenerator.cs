@@ -75,11 +75,13 @@ namespace MapDataClasses.TutorialMapGenerators
             }
             else if (mm.map[x, y] == "DungeonMaster")
             {
+                mi = new DungeonSelectInteraction();
                 mi.hasDialog = true;
                 mi.hasOptions = true;
                 mi.dialog = "What dungeon would you like to go to?";
                 mi.options = new List<string>();
                 mi.options.Add("Emergence Cavern");
+                ((DungeonSelectInteraction)mi).maxPartySize = 1;
             }
 
             return mi;

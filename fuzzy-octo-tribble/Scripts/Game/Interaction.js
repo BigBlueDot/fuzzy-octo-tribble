@@ -42,26 +42,46 @@ FuzzyOctoTribble.InteractionHandler = (function () {
                     var dungeonItems = [];
                     var selectedDungeon = "";
                     for (var i = 0; i < data.options.length; i++) {
-                        var currentText = data.options[i];
-                        dungeonItems.push({
-                            text: currentText,
-                            selected: function () {
-                                selectedDungeon = currentText;
+                        var createDungeonItem = function (text, value) {
+                            dungeonItems.push({
+                                text: text,
+                                selected: function () {
+                                    selectedDungeon = value;
 
-                                //Will choose party here
-                                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartySelectScreen(
-                                    data.maxPartySize,
-                                    function (items) {
-                                        FuzzyOctoTribble.KeyControl.cancel(); //Close out the dungeon selector
-                                        if (items.length !== 0) { //Don't do anything if they didn't pick anyone for the party, just close out
-                                            //alert("Dungeon: " + selectedDungeon + " party:  " + items.join(', '));
-                                            //Send the selected values to the server to load the dungeon:
-
+                                    //Will choose party here
+                                    if (!data.isExit) {
+                                        FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartySelectScreen(
+                                            data.maxPartySize,
+                                            function (items) {
+                                                FuzzyOctoTribble.KeyControl.cancel(); //Close out the dungeon selector
+                                                if (items.length !== 0) { //Don't do anything if they didn't pick anyone for the party, just close out
+                                                    //Send the selected values to the server to load the dungeon:
+                                                    $.ajax("Game/SetDungeon?x=" + x + "&y=" + y + "&dungeonName=" + selectedDungeon + "&party=" + items.join(','),
+                                                        {
+                                                            success: function () {
+                                                                FuzzyOctoTribble.MaintainState.updateMap();
+                                                            }
+                                                        });
+                                                }
+                                            }
+                                            ));
+                                    }
+                                    else {
+                                        //Send the selected values to the server to load the dungeon:
+                                        FuzzyOctoTribble.KeyControl.cancel(); //Close out the selector
+                                        if (selectedDungeon) {
+                                            $.ajax("Game/SetDungeon?x=" + x + "&y=" + y + "&dungeonName=" + selectedDungeon + "&party=",
+                                                {
+                                                    success: function () {
+                                                        FuzzyOctoTribble.MaintainState.updateMap();
+                                                    }
+                                                });
                                         }
                                     }
-                                    ));
-                            }
-                        });
+                                }
+                            });
+                        }
+                        createDungeonItem(data.options[i].text, data.options[i].value);
                     }
 
                     FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({
@@ -72,18 +92,6 @@ FuzzyOctoTribble.InteractionHandler = (function () {
                             }));
                         }
                     }));
-                }
-                if (data.hasOptions) {
-                    //BBD:  Code is currently deprecated.  Will add back if needed
-                    //FuzzyOctoTribble.OptionDialog.show(data.dialog, data.options, function (selected) {
-                    //    //Get further information from server
-                    //    $.ajax("Game/OptionInteract?x=" + x + "&y=" + y + "&option=" + selected, 
-                    //        {
-                    //            success: function () {
-
-                    //            }
-                    //        });
-                    //});
                 }
                 else if (data.hasDialog) {
                     FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(

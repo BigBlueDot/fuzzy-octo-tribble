@@ -22,8 +22,6 @@ namespace MapDataClasses.TutorialMapGenerators
             }
         }
 
-        public event MapDataManager.LoadMapEventHandler onSelectMap;
-
         public MapModel getMap()
         {
             MapModel mm = new MapModel();
@@ -96,18 +94,32 @@ namespace MapDataClasses.TutorialMapGenerators
 
         public MapInteraction getInteraction(MapModel mm, int x, int y)
         {
-            //No interactions at the moment
             MapInteraction mi = new MapInteraction();
             if (mm.map[x, y] == "Exit")
             {
+                mi = new DungeonSelectInteraction();
                 mi.hasDialog = true;
                 mi.hasOptions = true;
                 mi.dialog = "Would you like to leave this dungeon?";
-                mi.options = new List<string>();
-                mi.options.Add("Yes");
-                mi.options.Add("No");
+                mi.options = new List<MapOption>();
+                mi.options.Add(new MapOption() { text = "Yes", value = "Ensemble Village" });
+                mi.options.Add(new MapOption() { text = "No", value = "" });
+                ((DungeonSelectInteraction)mi).isExit = true;
             }
             return mi;
+        }
+
+        public bool validateDungeonSelection(MapModel mm, int x, int y, string selectedDungeon)
+        {
+            if (mm.map[x, y] == "Exit")
+            {
+                if (selectedDungeon == "Ensemble Village")
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void performInteraction(MapModel mm, int x, int y, string selectedOption)
@@ -118,7 +130,7 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 if (selectedOption == "Yes")
                 {
-                    onSelectMap(this, new MapDataClasses.MapSelectedEventArgs() { mapName = "Ensemble Village" });
+
                 }
             }
         }

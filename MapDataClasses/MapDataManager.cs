@@ -9,21 +9,9 @@ namespace MapDataClasses
 {
     public class MapDataManager
     {
-        public delegate void LoadMapEventHandler(object sender, MapSelectedEventArgs e);
-        public static event LoadMapEventHandler onLoadMap;
-
         static MapDataManager()
         {
-            TutorialMapGenerators.EnsembleVillageGenerator.Implementation.onSelectMap += Implementation_onSelectMap;
-            TutorialMapGenerators.EmergenceCavernGenerator.Implementation.onSelectMap += Implementation_onSelectMap;
-        }
 
-        static void Implementation_onSelectMap(object sender, MapSelectedEventArgs e)
-        {
-            if (onLoadMap != null)
-            {
-                onLoadMap(sender, e);
-            }
         }
 
         public static ClientMap getClientMap(MapModel mm)
@@ -159,18 +147,31 @@ namespace MapDataClasses
             }
         }
 
-        public static void interactWithMap(string name, int x, int y, MapModel mm, string selectedOption)
+        public static bool validateDungeonSelection(string name, int x, int y, MapModel mm, string selectedDungeon)
         {
             switch (name)
             {
                 case "Ensemble Village":
-                    TutorialMapGenerators.EnsembleVillageGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
-                    break;
+                    return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
                 case "Emergence Cavern":
-                    TutorialMapGenerators.EmergenceCavernGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
-                    break;
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
                 default:
-                    break;
+                    return false;
+            }
+        }
+
+        public static void interactWithMap(string name, int x, int y, MapModel mm, string selectedOption)
+        {
+            switch (name)
+            {
+                //case "Ensemble Village":
+                //    TutorialMapGenerators.EnsembleVillageGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
+                //    break;
+                //case "Emergence Cavern":
+                //    TutorialMapGenerators.EmergenceCavernGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
+                //    break;
+                //default:
+                //    break;
             }
         }
     }

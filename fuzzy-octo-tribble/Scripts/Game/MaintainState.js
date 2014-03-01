@@ -23,13 +23,16 @@
                 FuzzyOctoTribble.Camera.setMap(data);
                 FuzzyOctoTribble.Movement.setMap(data);
                 FuzzyOctoTribble.InteractionHandler.setMap(data);
-                setTimeout(calcMap, 5000);
             }
         });
     }
 
     that.start = function () {
         calcPlayer();
+        calcMap();
+    }
+
+    that.updateMap = function () {
         calcMap();
     }
 

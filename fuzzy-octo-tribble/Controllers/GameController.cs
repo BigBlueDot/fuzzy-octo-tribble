@@ -54,6 +54,15 @@ namespace fuzzy_octo_tribble.Controllers
         }
 
         [HttpGet]
+        public void SetDungeon(int x, int y, string dungeonName, string party)
+        {
+            Game game = checkGame();
+
+            string[] partyNames = party.Split(',');
+            game.loadDungeon(x, y, dungeonName, partyNames);
+        }
+
+        [HttpGet]
         public void MoveLeft()
         {
             Game game = checkGame();

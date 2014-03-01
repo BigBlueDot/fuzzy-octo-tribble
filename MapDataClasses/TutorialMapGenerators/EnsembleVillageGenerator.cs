@@ -22,8 +22,6 @@ namespace MapDataClasses.TutorialMapGenerators
             }
         }
 
-        public event MapDataManager.LoadMapEventHandler onSelectMap;
-
         public MapModel getMap()
         {
             MapModel mm = new MapModel();
@@ -61,17 +59,11 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 mi.hasDialog = true;
                 mi.dialog = "Would you like to rest?";
-                mi.options = new List<string>();
-                mi.options.Add("Yes");
-                mi.options.Add("No");
             }
             else if(mm.map[x,y] == "Quest")
             {
                 mi.hasDialog = true;
                 mi.dialog = "What quest would you like to do?";
-                mi.options = new List<string>();
-                mi.options.Add("NEED TO FILL THIS IN");
-                mi.options.Add("NEED TO FILL THIS IN 2");
             }
             else if (mm.map[x, y] == "DungeonMaster")
             {
@@ -79,23 +71,25 @@ namespace MapDataClasses.TutorialMapGenerators
                 mi.hasDialog = true;
                 mi.hasOptions = true;
                 mi.dialog = "What dungeon would you like to go to?";
-                mi.options = new List<string>();
-                mi.options.Add("Emergence Cavern");
+                mi.options = new List<MapOption>();
+                mi.options.Add(new MapOption() { text = "Emergence Cavern", value = "Emergence Cavern" });
                 ((DungeonSelectInteraction)mi).maxPartySize = 1;
             }
 
             return mi;
         }
 
-        public void performInteraction(MapModel mm, int x, int y, string selectedOption)
+        public bool validateDungeonSelection(MapModel mm, int x, int y, string selectedDungeon)
         {
             if (mm.map[x, y] == "DungeonMaster")
             {
-                if (selectedOption == "Emergence Cavern")
+                if (selectedDungeon == "Emergence Cavern")
                 {
-                    onSelectMap(this, new MapDataClasses.MapSelectedEventArgs() { mapName="Emergence Cavern" });
+                    return true;
                 }
             }
+
+            return false;
         }
     }
 }

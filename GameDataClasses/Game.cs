@@ -31,14 +31,6 @@ namespace GameDataClasses
         {
             this.player = player;
             rootMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
-            MapDataClasses.MapDataManager.onLoadMap += MapDataManager_onLoadMap;
-        }
-
-        void MapDataManager_onLoadMap(object sender, MapDataClasses.MapDataClasses.MapSelectedEventArgs e)
-        {
-            rootMap = MapDataClasses.MapDataManager.createMap(e.mapName);
-            player.rootX = rootMap.startX;
-            player.rootY = rootMap.startY;
         }
 
         public MapDataClasses.ClientMap getClientRootMap()
@@ -61,6 +53,20 @@ namespace GameDataClasses
             }
 
             return MapDataClasses.MapDataManager.getMapInteraction(x, y, rootMap);
+        }
+
+        public void loadDungeon(int x, int y, string dungeonName, string[] party)
+        {
+            if (MapDataClasses.MapDataManager.validateDungeonSelection(rootMap.name, x, y, rootMap, dungeonName))
+            {
+                //Verify that the dungeon selection is legitimate
+                rootMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                player.rootX = rootMap.startX;
+                player.rootY = rootMap.startY;
+
+                //Create party and set to default
+
+            }
         }
 
         public void setOptionInteraction(int x, int y, string option)

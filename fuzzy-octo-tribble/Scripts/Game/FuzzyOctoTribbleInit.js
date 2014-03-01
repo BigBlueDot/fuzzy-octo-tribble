@@ -73,7 +73,7 @@
             //}], true, 'Menu Header'));
 
             //Example Dialog
-            //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox("This is some text, let's see if it works.  I am going to add a lot more text here so that it will have to do a next button since I did not test this properly before.  Hopefully it works. :)  But man, it requires a lot of text before it moves onto the next page whenever the screen is large.  I think I will just type random characters and see what happens. Okay?  Here goes: ;lkasdjhf;oiahs;ogih a;lskdfjlk ahsdjg kahsgl khaldjgkn la;jhgl;ks ahdfvjs ad;lfas;lkd fh;lska jdf klansdfk jashdfl kjh"));
+            //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({ dialogContent: "This is some text, let's see if it works.  I am going to add a lot more text here so that it will have to do a next button since I did not test this properly before.  Hopefully it works. :)  But man, it requires a lot of text before it moves onto the next page whenever the screen is large.  I think I will just type random characters and see what happens. Okay?  Here goes: ;lkasdjhf;oiahs;ogih a;lskdfjlk ahsdjg kahsgl khaldjgkn la;jhgl;ks ahdfvjs ad;lfas;lkd fh;lska jdf klansdfk jashdfl kjh"}));
 
             //Example OptionDialog
             //FuzzyOctoTribble.OptionDialog.show("HEY ARE YOU READY TO START THE GAME WHAT WHAT", ['Something', 'Bob', 'Dungoen 3'], function (selected) { alert(selected); });

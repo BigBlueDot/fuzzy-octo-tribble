@@ -1,7 +1,9 @@
-﻿FuzzyOctoTribble.DialogBox = function (dialogContent) {
+﻿FuzzyOctoTribble.DialogBox = function (spec, my) {
     var that = {};
-    var dialog = dialogContent
+    var dialog = spec.dialogContent;
+    var onComplete = spec.onComplete;
     var displayedText = "";
+    my = my || {};
 
     var $dialogContainer = $(document.createElement('div'));
     $dialogContainer.addClass('dialog-container text-font');
@@ -54,6 +56,9 @@
             $(window).unbind('resize', resizeDialog);
             if (that.onComplete) {
                 that.onComplete();
+            }
+            if (onComplete) {
+                onComplete();
             }
         }
     }

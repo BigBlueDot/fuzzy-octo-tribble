@@ -39,9 +39,13 @@
     that.show = function (dialog, options, onItemSelected) {
         onSelected = onItemSelected;
         if (dialog) {
-            FuzzyOctoTribble.DialogBox.showDialog(dialog, function () {
-                showOptions(options, onSelected);
-            });
+            FuzzyOctoTribble.DialogBox.showDialog(
+                {
+                    dialogContent: dialog,
+                    onComplete: function () {
+                        showOptions(options, onSelected);
+                    }
+                });
         }
         else {
             showOptions(options, onSelected);

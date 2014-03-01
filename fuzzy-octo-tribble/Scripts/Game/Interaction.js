@@ -39,7 +39,28 @@ FuzzyOctoTribble.InteractionHandler = (function () {
         $.ajax("Game/GetInteraction?x=" + x + "&y=" + y, {
             success: function (data) {
                 if (data.isDungeon) {
-                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(data.dialog));
+                    var dungeonItems = [];
+                    var selectedDungeon = "";
+                    for (var i = 0; i < data.options.length; i++) {
+                        var currentText = data.options[i];
+                        dungeonItems.push({
+                            text: currentText,
+                            selected: function () {
+                                selectedDungeon = currentText;
+
+                                //Will choose party here
+                            }
+                        });
+                    }
+
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({
+                        dialogContent: data.dialog,
+                        onComplete: function () {
+                            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Menu({
+                                items: dungeonItems                            
+                            }));
+                        }
+                    }));
                 }
                 if (data.hasOptions) {
                     //BBD:  Code is currently deprecated.  Will add back if needed
@@ -54,7 +75,10 @@ FuzzyOctoTribble.InteractionHandler = (function () {
                     //});
                 }
                 else if (data.hasDialog) {
-                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(data.dialog));
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(
+                        {
+                            dialogContent: data.dialog
+                        }));
                 }
             }
         });

@@ -1,166 +1,112 @@
 ﻿FuzzyOctoTribble.KeyControlConstructor = function (currentMap) {
     var that = {};
-    var timer37, timer38, timer39, timer40;
-    var interval = 300;
     var map = currentMap;
-    var canMove = true;
-    var canMenu = true;
-    var dialogMode = false;
-    var menuMode = false;
-    var optionDialogMode = false;
+    var controllers = [];
 
-    var clearTimers = function () {
-        clearTimeout(timer37);
-        clearTimeout(timer38);
-        clearTimeout(timer39);
-        clearTimeout(timer40);
-    }
-
-    var moveLeft = function () {
-        FuzzyOctoTribble.Movement.moveLeft();
-        clearTimers();
-        timer37 = setTimeout(moveLeft, interval);
-    }
-    var moveUp = function () {
-        FuzzyOctoTribble.Movement.moveUp();
-        clearTimers();
-        timer38 = setTimeout(moveUp, interval);
-    }
-    var moveRight = function () {
-        FuzzyOctoTribble.Movement.moveRight();
-        clearTimers();
-        timer39 = setTimeout(moveRight, interval);
-    }
-    var moveDown = function () {
-        FuzzyOctoTribble.Movement.moveDown();
-        clearTimers();
-        timer40 = setTimeout(moveDown, interval);
+    var currentController = function() {
+        return controllers[controllers.length -1];
     }
 
     $(document).ready(function () {
         $(document).keydown(function (e) {
-            if (e.keyCode == 37 && !timer37 && canMove) { //left
-                moveLeft();
+            if (e.keyCode == 37) { //left
+                if (currentController().pressLeft) {
+                    currentController().pressLeft();
+                }
             }
-            else if (e.keyCode == 38 && !timer38 && canMove) { //up
-                moveUp();
+            else if (e.keyCode == 38) { //up
+                if (currentController().pressUp) {
+                    currentController().pressUp();
+                }
             }
-            else if (e.keyCode == 39 && !timer39 && canMove) { //right
-                moveRight();
+            else if (e.keyCode == 39) { //right
+                if (currentController().pressRight) {
+                    currentController().pressRight();
+                }
             }
-            else if (e.keyCode == 40 && !timer40 && canMove) { //down
-                moveDown();
+            else if (e.keyCode == 40) { //down
+                if (currentController().pressDown) {
+                    currentController().pressDown();
+                }
             }
         });
 
         $(document).keyup(function (e) {
-
-
-
             if (e.keyCode == 37) { //left
-                clearTimeout(timer37);
-                timer37 = false;
+                if (currentController().releaseLeft) {
+                    currentController().releaseLeft();
+                }
             }
             else if (e.keyCode == 38) { //up
-                clearTimeout(timer38);
-                timer38 = false;
+                if (currentController().releaseUp) {
+                    currentController().releaseUp();
+                }
             }
             else if (e.keyCode == 39) { //right
-                clearTimeout(timer39);
-                timer39 = false;
+                if (currentController().releaseRight) {
+                    currentController().releaseRight();
+                }
             }
             else if (e.keyCode == 40) { //down
-                clearTimeout(timer40);
-                timer40 = false;
+                if (currentController().releaseDown) {
+                    currentController().releaseRight();
+                }
             }
-            else if (canMove && e.keyCode == 90) {
-                FuzzyOctoTribble.InteractionHandler.getInteraction();
+            else if (e.keyCode == 90) {
+                if (currentController().confirm) {
+                    currentController().confirm();
+                }
             }
             else if (canMenu && e.keyCode == 77) {
-                FuzzyOctoTribble.Menu.toggleMenu();
-            }
-
-            if (optionDialogMode && e.keyCode === 38) {
-                FuzzyOctoTribble.OptionDialog.selectUp();
-            }
-            else if (optionDialogMode && e.keyCode === 40) {
-                FuzzyOctoTribble.OptionDialog.selectDown();
-            }
-            else if (optionDialogMode && e.keyCode === 90) {
-                FuzzyOctoTribble.OptionDialog.selectCurrent();
+                if (currentController().menu) {
+                    currentController().menu();
+                }
             }
             else if (optionDialogMode && e.keyCode == 88) {
-                FuzzyOctoTribble.OptionDialog.cancel();
+                if (currentController().cancel) {
+                    currentController().cancel();
+                }
             }
 
-            if (dialogMode && e.keyCode == 90) {
-                FuzzyOctoTribble.DialogBox.nextDialog();
-            }
+            if (false) {
+                if (optionDialogMode && e.keyCode === 38) {
+                    FuzzyOctoTribble.OptionDialog.selectUp();
+                }
+                else if (optionDialogMode && e.keyCode === 40) {
+                    FuzzyOctoTribble.OptionDialog.selectDown();
+                }
+                else if (optionDialogMode && e.keyCode === 90) {
+                    FuzzyOctoTribble.OptionDialog.selectCurrent();
+                }
+                else if (optionDialogMode && e.keyCode == 88) {
+                    FuzzyOctoTribble.OptionDialog.cancel();
+                }
 
-            if (menuMode && e.keyCode === 38) {
-                FuzzyOctoTribble.Menu.selectUp();
-            }
-            else if (menuMode && e.keyCode === 40) {
-                FuzzyOctoTribble.Menu.selectDown();
-            }
-            else if (menuMode && e.keyCode === 90) {
-                FuzzyOctoTribble.Menu.selectCurrent();
-            }
-            else if (menuMode && e.keyCode == 88) {
-                FuzzyOctoTribble.Menu.cancel();
+                if (dialogMode && e.keyCode == 90) {
+                    FuzzyOctoTribble.DialogBox.nextDialog();
+                }
+
+                if (menuMode && e.keyCode === 38) {
+                    FuzzyOctoTribble.Menu.selectUp();
+                }
+                else if (menuMode && e.keyCode === 40) {
+                    FuzzyOctoTribble.Menu.selectDown();
+                }
+                else if (menuMode && e.keyCode === 90) {
+                    FuzzyOctoTribble.Menu.selectCurrent();
+                }
+                else if (menuMode && e.keyCode == 88) {
+                    FuzzyOctoTribble.Menu.cancel();
+                }
             }
         });
     });
 
-    that.setMovementMode = function () {
-        canMove = true;
-    }
-
-    that.setDialogMode = function (canMoveVar) {
-        canMove = canMoveVar;
-        canMenu = false;
-        dialogMode = true;
-    }
-
-    that.cancelDialogMode = function () {
-        if (menuMode) {
-            canMove = false;
-            canMenu = true;
-            dialogMode = false;
+    that.addController = function(controller) {
+        controllers.push(controller);
+        controller.onClose = function () {
+            controllers.pop();
         }
-        else if (optionDialogMode) {
-            canMove = false;
-            canMenu = false;
-            dialogMode = false;
-        }
-        else {
-            canMove = true;
-            canMenu = true;
-            dialogMode = false;
-        }
-    }
-
-    that.setMenuMode = function () {
-        canMove = false;
-        dialogMode = false;
-        menuMode = true;
-    }
-
-    that.cancelMenuMode = function () {
-        menuMode = false;
-        canMove = true;
-    }
-
-    that.setOptionDialogMode = function () {
-        canMove = false;
-        dialogMode = false;
-        menuMode = false;
-        optionDialogMode = true;
-    }
-
-    that.cancelOptionDialogMode = function () {
-        optionDialogMode = false;
-        canMove = true;
     }
 
     return that;

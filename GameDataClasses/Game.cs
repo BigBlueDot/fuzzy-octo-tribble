@@ -1,7 +1,9 @@
-﻿using GameDataClasses.GamePlayerClasses;
+﻿using fuzzy_octo_tribble.Models;
+using GameDataClasses.GamePlayerClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,8 +12,12 @@ namespace GameDataClasses
     public class Game
     {
         //needs to store the player and any active maps
-        private PlayerModels.PlayerModel player;
-        private MapDataClasses.MapModel rootMap;
+        public PlayerModels.PlayerModel player { get; set; }
+        private MapDataClasses.MapModel currentMap;
+        private string userName;
+        private UserProfile user;
+        private UsersContext db;
+
         private int x
         {
             get
@@ -27,15 +33,23 @@ namespace GameDataClasses
             }
         }
 
-        public Game(PlayerModels.PlayerModel player)
+        public Game(string userName, UsersContext db)
         {
-            this.player = player;
-            rootMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
+            this.user = db.UserProfiles.Include(up => up.player)
+                    .Include(up => up.player.characters)
+                    .Include(up => up.player.characters.Select(c => c.characterClasses))
+                    .Include(up => up.player.characters.Select(c => c.stats))
+                    .Include(up => up.player.parties)
+                .FirstOrDefault(u => u.UserName.ToLower() == userName);
+            this.player = user.player;
+            currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
+            this.userName = userName;
+            this.db = db;
         }
 
         public MapDataClasses.ClientMap getClientRootMap()
         {
-            return MapDataClasses.MapDataManager.getClientMap(rootMap);
+            return MapDataClasses.MapDataManager.getClientMap(currentMap);
         }
 
         public ClientPlayer getClientPlayer()
@@ -52,31 +66,53 @@ namespace GameDataClasses
                 return new MapDataClasses.MapInteraction() { hasDialog = false };
             }
 
-            return MapDataClasses.MapDataManager.getMapInteraction(x, y, rootMap);
+            return MapDataClasses.MapDataManager.getMapInteraction(x, y, currentMap);
         }
 
         public void loadDungeon(int x, int y, string dungeonName, string[] party)
         {
-            if (MapDataClasses.MapDataManager.validateDungeonSelection(rootMap.name, x, y, rootMap, dungeonName))
+            if (MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
             {
                 //Verify that the dungeon selection is legitimate
-                rootMap = MapDataClasses.MapDataManager.createMap(dungeonName);
-                player.rootX = rootMap.startX;
-                player.rootY = rootMap.startY;
+                currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                player.rootX = currentMap.startX;
+                player.rootY = currentMap.startY;
 
                 //Create party and set to default
+                PlayerModels.Models.PartyModel pm = new PlayerModels.Models.PartyModel();
+                pm.x = currentMap.startX;
+                pm.y = currentMap.startY;
+                pm.location = currentMap;
+                pm.maxSize = party.Length;
+                pm.characters = new List<int>();
+                foreach (string s in party)
+                {
+                    foreach (PlayerModels.Models.CharacterModel cm in player.characters)
+                    {
+                        if (cm.name == s)
+                        {
+                            pm.characters.Add(cm.uniq);
+                        }
+                    }
+                }
 
+                player.parties.Add(pm);
+
+
+                player.copyTo(user.player);
+
+                db.SaveChanges();
             }
         }
 
         public void setOptionInteraction(int x, int y, string option)
         {
-            MapDataClasses.MapDataManager.interactWithMap(rootMap.name, x, y, rootMap, option);
+            MapDataClasses.MapDataManager.interactWithMap(currentMap.name, x, y, currentMap, option);
         }
 
         public void moveLeft()
         {
-            if (player.rootX == 0 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX - 1, player.rootY]))
+            if (player.rootX == 0 || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX - 1, player.rootY]))
             {
                 return;
             }
@@ -85,7 +121,7 @@ namespace GameDataClasses
 
         public void moveUp()
         {
-            if (player.rootY == 0 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX, player.rootY - 1]))
+            if (player.rootY == 0 || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX, player.rootY - 1]))
             {
                 return;
             }
@@ -94,7 +130,7 @@ namespace GameDataClasses
 
         public void moveRight()
         {
-            if (player.rootX == rootMap.map.GetLength(0) - 1 || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX + 1, player.rootY]))
+            if (player.rootX == currentMap.map.GetLength(0) - 1 || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX + 1, player.rootY]))
             {
                 return;
             }
@@ -103,7 +139,7 @@ namespace GameDataClasses
 
         public void moveDown()
         {
-            if (player.rootY == rootMap.map.GetLength(1) || !MapDataClasses.MapDataManager.getTraversable(rootMap.map[player.rootX, player.rootY + 1]))
+            if (player.rootY == currentMap.map.GetLength(1) || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX, player.rootY + 1]))
             {
                 return;
             }

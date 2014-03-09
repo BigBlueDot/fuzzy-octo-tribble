@@ -192,33 +192,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201402252002268_InitialCreate.cs" />
-    <Compile Include="Migrations\201402252002268_InitialCreate.Designer.cs">
-      <DependentUpon>201402252002268_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402252032584_InitTwo.cs" />
-    <Compile Include="Migrations\201402252032584_InitTwo.Designer.cs">
-      <DependentUpon>201402252032584_InitTwo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402252216270_InitThree.cs" />
-    <Compile Include="Migrations\201402252216270_InitThree.Designer.cs">
-      <DependentUpon>201402252216270_InitThree.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402262303000_CharacterName.cs" />
-    <Compile Include="Migrations\201402262303000_CharacterName.Designer.cs">
-      <DependentUpon>201402262303000_CharacterName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402262315457_CharacterModelUpdates.cs" />
-    <Compile Include="Migrations\201402262315457_CharacterModelUpdates.Designer.cs">
-      <DependentUpon>201402262315457_CharacterModelUpdates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402272019375_DefaultMapPosition.cs" />
-    <Compile Include="Migrations\201402272019375_DefaultMapPosition.Designer.cs">
-      <DependentUpon>201402272019375_DefaultMapPosition.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403040406234_PartyUpdae.cs" />
-    <Compile Include="Migrations\201403040406234_PartyUpdae.Designer.cs">
-      <DependentUpon>201403040406234_PartyUpdae.cs</DependentUpon>
+    <Compile Include="Migrations\201403091845035_Initial.cs" />
+    <Compile Include="Migrations\201403091845035_Initial.Designer.cs">
+      <DependentUpon>201403091845035_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -386,26 +362,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201402252002268_InitialCreate.resx">
-      <DependentUpon>201402252002268_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402252032584_InitTwo.resx">
-      <DependentUpon>201402252032584_InitTwo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402252216270_InitThree.resx">
-      <DependentUpon>201402252216270_InitThree.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402262303000_CharacterName.resx">
-      <DependentUpon>201402262303000_CharacterName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402262315457_CharacterModelUpdates.resx">
-      <DependentUpon>201402262315457_CharacterModelUpdates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402272019375_DefaultMapPosition.resx">
-      <DependentUpon>201402272019375_DefaultMapPosition.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403040406234_PartyUpdae.resx">
-      <DependentUpon>201403040406234_PartyUpdae.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403091845035_Initial.resx">
+      <DependentUpon>201403091845035_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

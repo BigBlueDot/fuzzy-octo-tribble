@@ -84,15 +84,15 @@ namespace GameDataClasses
                 pm.y = currentMap.startY;
                 pm.location = currentMap;
                 pm.maxSize = party.Length;
-                pm.characters = new List<int>();
+                pm.characters = new List<PlayerModels.Models.PartyCharacterModel>();
                 foreach (string s in party)
                 {
                     foreach (PlayerModels.Models.CharacterModel cm in player.characters)
                     {
                         if (cm.name == s)
                         {
-                            pm.characters.Add(cm.uniq);
-                        }
+                            pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq });
+                        } 
                     }
                 }
 

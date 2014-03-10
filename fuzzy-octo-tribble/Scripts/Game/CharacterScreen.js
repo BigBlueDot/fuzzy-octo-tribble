@@ -1,8 +1,9 @@
 ﻿FuzzyOctoTribble.CharacterScreenCreator = (function () {
     var that = {};
     var characterItems = [];
+    var currentPartyItems = [];
 
-    that.setCharacters = function (characters) {
+    that.setCharacters = function (characters, currentParty) {
         characterItems = [];
         for (var i = 0; i < characters.length; i++) {
             var character = characters[i];
@@ -12,7 +13,21 @@
                     currentCharacterClass = character.characterClasses[i];
                 }
             }
-            createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility);
+
+            characterItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility));
+        }
+
+        currentPartyItems = [];
+        for (var i = 0; i < currentParty.length; i++) {
+            var character = currentParty[i];
+            var currentCharacterClass;
+            for (var j = 0; j < character.characterClasses.length; j++) {
+                if (character.characterClasses[i].className === character.currentClass) {
+                    currentCharacterClass = character.characterClasses[i];
+                }
+            }
+
+            currentPartyItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility));
         }
     }
 
@@ -42,7 +57,7 @@
         $characterItem.append($characterLeft);
         $characterItem.append($characterRight);
 
-        characterItems.push({
+        return {
             content: $characterItem,
             select: function () {
                 FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI), true, function () {
@@ -50,7 +65,7 @@
                 }));
             },
             value: name
-        });
+        };
     }
 
     var createCharacterDetailScreen = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI) {
@@ -100,6 +115,16 @@
             items: characterItems,
             onSelectComplete: onSelectComplete,
             maxSelectCount: maxSelectCount
+        });
+    }
+
+    that.getPartyCharacters = function () {
+        return FuzzyOctoTribble.ScreenSelectControl({
+            items: currentPartyItems,
+            closeOnMenu: true,
+            onCloseMenu: function () {
+                FuzzyOctoTribble.KeyControl.menu();
+            }
         });
     }
 

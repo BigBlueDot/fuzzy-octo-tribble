@@ -128,7 +128,7 @@
     }
 
     that.menu = function () {
-        FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.MenuHandler.createHubMenu());
+        FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.MenuHandler.getMenu());
     }
 
     return that;

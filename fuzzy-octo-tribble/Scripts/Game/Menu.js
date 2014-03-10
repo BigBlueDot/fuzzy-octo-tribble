@@ -88,17 +88,27 @@
 
 FuzzyOctoTribble.MenuHandler = (function () {
     var that = {};
+    var isDungeon = false;
     var $goldDisplay = $(document.createElement('div'));
     $goldDisplay.addClass('gold-display text-font');
 
-    that.setPlayer = function (newPlayer) {
-        $goldDisplay.text(newPlayer.gp + ' GP');
+
+    var createDungeonMenu = function () {
+        return FuzzyOctoTribble.Menu({
+            items: [
+                    {
+                        text: "Characters",
+                        selected: function () {
+                            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartyCharacters())
+                        }
+                    }
+                ]
+        });
     }
 
-    that.createHubMenu = function () {
-
+    var createHubMenu = function () {
         return FuzzyOctoTribble.Menu({
-            items:[
+            items: [
             {
                 text: "Characters",
                 selected: function () {
@@ -140,6 +150,23 @@ FuzzyOctoTribble.MenuHandler = (function () {
             header: "Menu",
             additionalDisplays: [$goldDisplay]
         });
+    }
+
+    that.setIsDungeon = function (isDungeonVar) {
+        isDungeon = isDungeonVar;
+    }
+
+    that.setPlayer = function (newPlayer) {
+        $goldDisplay.text(newPlayer.gp + ' GP');
+    }
+
+    that.getMenu = function () {
+        if (isDungeon) {
+            return createDungeonMenu();
+        }
+        else {
+            return createHubMenu();
+        }
     }
 
     return that;

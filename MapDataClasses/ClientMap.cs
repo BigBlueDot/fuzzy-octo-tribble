@@ -12,5 +12,6 @@ namespace MapDataClasses
     {
         public string name { get; set; }
         public ClientMapSquare[][] mapSquares { get; set; }
+        public bool isDungeon { get; set; }
     }
 }

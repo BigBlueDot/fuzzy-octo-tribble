@@ -40,6 +40,7 @@ namespace GameDataClasses
                     .Include(up => up.player.characters.Select(c => c.characterClasses))
                     .Include(up => up.player.characters.Select(c => c.stats))
                     .Include(up => up.player.parties)
+                    .Include(up => up.player.parties.Select(c => c.characters))
                 .FirstOrDefault(u => u.UserName.ToLower() == userName);
             this.player = user.player;
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
@@ -54,12 +55,25 @@ namespace GameDataClasses
 
         public MapDataClasses.ClientMap getClientRootMap()
         {
-            return MapDataClasses.MapDataManager.getClientMap(currentMap);
+            MapDataClasses.ClientMap map = MapDataClasses.MapDataManager.getClientMap(currentMap);
+            map.isDungeon = isInDungeon();
+            return map;
         }
 
         public ClientPlayer getClientPlayer()
         {
-            ClientPlayer cp = new ClientPlayer() { gp = player.gp, x = player.rootX, y = player.rootY, characters = player.characters };
+            List<int> currentPartyCharacters = new List<int>();
+            foreach (PlayerModels.Models.PartyModel pm in player.parties)
+            {
+                if (pm.uniq == player.activeParty)
+                {
+                    foreach (PlayerModels.Models.PartyCharacterModel pcm in pm.characters)
+                    {
+                        currentPartyCharacters.Add(pcm.characterUniq);
+                    }
+                }
+            }
+            ClientPlayer cp = new ClientPlayer() { gp = player.gp, x = player.rootX, y = player.rootY, characters = player.characters, currentPartyCharacters = currentPartyCharacters };
 
             return cp;
         }

@@ -47,6 +47,11 @@ namespace GameDataClasses
             this.db = db;
         }
 
+        public bool isInDungeon()
+        {
+            return this.player.activeParty != 0;
+        }
+
         public MapDataClasses.ClientMap getClientRootMap()
         {
             return MapDataClasses.MapDataManager.getClientMap(currentMap);

@@ -90,6 +90,13 @@ namespace fuzzy_octo_tribble.Controllers
             game.moveDown();
         }
 
+        [HttpGet]
+        public JsonResult isInDungeon()
+        {
+            Game game = checkGame();
+            return Json(new { isInDungeon = game.isInDungeon() }, JsonRequestBehavior.AllowGet);
+        }
+
         private Game checkGame()
         {
             if (Session["Game"] == null) //Init game if not already

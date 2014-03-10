@@ -76,37 +76,69 @@ namespace GameDataClasses
 
         public void loadDungeon(int x, int y, string dungeonName, string[] party)
         {
+            //Verify that the dungeon selection is legitimate
             if (MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
             {
-                //Verify that the dungeon selection is legitimate
-                currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
-                player.rootX = currentMap.startX;
-                player.rootY = currentMap.startY;
-
-                //Create party and set to default
-                PlayerModels.Models.PartyModel pm = new PlayerModels.Models.PartyModel();
-                pm.x = currentMap.startX;
-                pm.y = currentMap.startY;
-                pm.location = currentMap;
-                pm.maxSize = party.Length;
-                pm.characters = new List<PlayerModels.Models.PartyCharacterModel>();
-                foreach (string s in party)
+                if (isInDungeon())
                 {
-                    foreach (PlayerModels.Models.CharacterModel cm in player.characters)
+                    //Need to disband the party that is currently being used
+                    currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                    player.rootX = currentMap.startX;
+                    player.rootY = currentMap.startY;
+                    player.rootMap = dungeonName;
+
+                    var currentParty = new PlayerModels.Models.PartyModel();
+                    foreach (PlayerModels.Models.PartyModel pm in player.parties)
                     {
-                        if (cm.name == s)
+                        if (pm.uniq == player.activeParty)
                         {
-                            pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq });
-                        } 
+                            currentParty = pm;
+                        }
                     }
+
+                    if (player.parties.Contains(currentParty))
+                    {
+                        player.parties.Remove(currentParty);
+                    }
+
+                    player.activeParty = 0;
+
+                    db.SaveChanges();
+                }
+                else
+                {
+                    currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                    player.rootX = currentMap.startX;
+                    player.rootY = currentMap.startY;
+                    player.rootMap = dungeonName;
+
+                    //Create party and set to default
+                    PlayerModels.Models.PartyModel pm = new PlayerModels.Models.PartyModel();
+                    pm.x = currentMap.startX;
+                    pm.y = currentMap.startY;
+                    pm.location = currentMap;
+                    pm.maxSize = party.Length;
+                    pm.characters = new List<PlayerModels.Models.PartyCharacterModel>();
+                    foreach (string s in party)
+                    {
+                        foreach (PlayerModels.Models.CharacterModel cm in player.characters)
+                        {
+                            if (cm.name == s)
+                            {
+                                pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq });
+                            }
+                        }
+                    }
+
+                    player.parties.Add(pm);
+
+                    player.copyTo(user.player);
+                    db.SaveChanges();
+                    player.activeParty = pm.uniq;
+                    player.copyTo(user.player);
+                    db.SaveChanges();
                 }
 
-                player.parties.Add(pm);
-
-
-                player.copyTo(user.player);
-
-                db.SaveChanges();
             }
         }
 

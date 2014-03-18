@@ -196,6 +196,10 @@
     <Compile Include="Migrations\201403091845035_Initial.Designer.cs">
       <DependentUpon>201403091845035_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201403180451213_CombatModels.cs" />
+    <Compile Include="Migrations\201403180451213_CombatModels.Designer.cs">
+      <DependentUpon>201403180451213_CombatModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -364,6 +368,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201403091845035_Initial.resx">
       <DependentUpon>201403091845035_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403180451213_CombatModels.resx">
+      <DependentUpon>201403180451213_CombatModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

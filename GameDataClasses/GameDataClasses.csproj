@@ -48,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
+    <Compile Include="GameCombatClasses\CombatGame.cs" />
+    <Compile Include="GameCombatClasses\CombatNPC.cs" />
+    <Compile Include="GameCombatClasses\CombatPC.cs" />
     <Compile Include="GamePlayerClasses\ClientPlayer.cs" />
     <Compile Include="IGameInteractions.cs" />
     <Compile Include="Models\AccountModels.cs" />

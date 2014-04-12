@@ -18,5 +18,20 @@ namespace GameDataClasses.GameCombatClasses
             pcs = new List<CombatPC>();
             npcs = new List<CombatNPC>();
         }
+
+        private void Init(List<PlayerModels.Models.CharacterModel> characters)
+        {
+            currentTime = 0;
+            turnOrders = new CombatTurnOrder();
+            foreach (PlayerModels.Models.CharacterModel cm in characters)
+            {
+                CombatPC pc = new CombatPC();
+
+                pc.characterUniq = cm.uniq;
+                pc.stats = new CombatStats();
+                pc.stats.maxHP = cm.stats.maxHP;
+            }
+
+        }
     }
 }

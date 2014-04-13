@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201403180451213_CombatModels.Designer.cs">
       <DependentUpon>201403180451213_CombatModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404131743134_PreFixCombatMigration.cs" />
+    <Compile Include="Migrations\201404131743134_PreFixCombatMigration.Designer.cs">
+      <DependentUpon>201404131743134_PreFixCombatMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -277,6 +281,8 @@
     <Content Include="Images\Game\Wall.png" />
     <Content Include="Scripts\Game\Camera.js" />
     <Content Include="Scripts\Game\CharacterScreen.js" />
+    <Content Include="Scripts\Game\Combat\CombatControl.js" />
+    <Content Include="Scripts\Game\Combat\CombatScreen.js" />
     <Content Include="Scripts\Game\DialogBox.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribble.js" />
     <Content Include="Scripts\Game\FuzzyOctoTribbleInit.js" />
@@ -375,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403180451213_CombatModels.resx">
       <DependentUpon>201403180451213_CombatModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404131743134_PreFixCombatMigration.resx">
+      <DependentUpon>201404131743134_PreFixCombatMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

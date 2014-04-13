@@ -4,8 +4,48 @@
             FuzzyOctoTribble.Camera.setMap(data);
             FuzzyOctoTribble.InteractionHandler.setMap(data);
             FuzzyOctoTribble.Movement = FuzzyOctoTribble.MovementConstructor(data);
+            FuzzyOctoTribble.CombatControlCreator = FuzzyOctoTribble.CombatControlCreatorConstructor();
             FuzzyOctoTribble.KeyControl = FuzzyOctoTribble.KeyControlConstructor();
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Movement);
+
+            //Example Combat init screen
+            FuzzyOctoTribble.CombatScreenCreator.loadCommand(["Attack", "Guard", "Flee"]);
+            FuzzyOctoTribble.CombatScreenCreator.loadInitialScreen({
+                allies: [{
+                    name: "Scott Pilgrim",
+                    hp: 30,
+                    mp: 2,
+                    maxHP: 30,
+                    maxMP: 2
+                }, {
+                    name: "Ada Lovelace",
+                    hp: 30,
+                    mp: 2,
+                    maxHP: 30,
+                    maxMP: 2
+                }],
+                enemies: [{
+                    name: "Goblin A",
+                    hp: 30,
+                    mp: 2,
+                    maxHP: 30,
+                    maxMP: 2
+                },
+                {
+                    name: "Goblin B",
+                    hp: 30,
+                    mp: 2,
+                    maxHP: 30,
+                    maxMP: 2
+                }, {
+                    name: "Goblin C",
+                    hp: 30,
+                    mp: 2,
+                    maxHP: 30,
+                    maxMP: 2
+
+                }]
+            });
 
             //Example ScreenMultiSelect
             //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenMultiSelectControl({

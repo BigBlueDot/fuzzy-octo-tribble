@@ -160,6 +160,22 @@
         background-color: #575757;
     }
 
+.character-display-screen {
+    height:240px;
+    width:200px;
+    position:absolute;
+    bottom:20px;
+    background-color:#FFFFFF;
+    border: solid 2px black;
+    padding: 5px;
+    overflow:hidden;
+}
+
+    .character-display-screen.enemy {
+        top:20px;
+        bottom:auto;
+    }
+
 @media (max-width: 850px) {
     .text-font {
         font-size: 20px;

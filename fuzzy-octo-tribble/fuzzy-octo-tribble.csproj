@@ -356,6 +356,10 @@
       <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
       <Name>PlayerDataClasses</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CombatDataClasses\CombatDataClasses.csproj">
+      <Project>{72befa10-0a0c-40c1-af8b-640cf4e9dfe3}</Project>
+      <Name>CombatDataClasses</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameDataClasses\GameDataClasses.csproj">
       <Project>{e9ec1a30-2f1e-444c-a55f-b4da987ac0bc}</Project>
       <Name>GameDataClasses</Name>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using CombatDataClasses.Interfaces;
 
 namespace fuzzy_octo_tribble.Controllers
 {
@@ -107,6 +108,20 @@ namespace fuzzy_octo_tribble.Controllers
             }
 
             return ((Game)Session["Game"]);
+        }
+
+        [HttpGet]
+        public JsonResult getCommands(int characterUniq)
+        {
+            Game game = checkGame();
+            return Json(game.getCommands(characterUniq), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getStatus()
+        {
+            Game game = checkGame();
+            return Json(game.getStatus(), JsonRequestBehavior.AllowGet);
         }
     }
 }

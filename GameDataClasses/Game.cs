@@ -6,10 +6,11 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using CombatDataClasses.Interfaces;
 
 namespace GameDataClasses
 {
-    public class Game
+    public class Game : ICombat
     {
         //needs to store the player and any active maps
         public PlayerModels.PlayerModel player { get; set; }
@@ -17,6 +18,8 @@ namespace GameDataClasses
         private string userName;
         private UserProfile user;
         private UsersContext db;
+        private CombatDataClasses.CombatDirector combatDirector;
+        private ICombat combat;
 
         private int x
         {
@@ -46,6 +49,9 @@ namespace GameDataClasses
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
             this.userName = userName;
             this.db = db;
+
+            combatDirector = new CombatDataClasses.CombatDirector();
+            combat = combatDirector.getCombat(); //Combat will be generated when combat is entered, not here in final version
         }
 
         public bool isInDungeon()
@@ -195,6 +201,16 @@ namespace GameDataClasses
                 return;
             }
             player.rootY += 1;
+        }
+
+        public List<ICommand> getCommands(int characterUniq)
+        {
+            return combat.getCommands(characterUniq);
+        }
+
+        public ICombatStatus getStatus()
+        {
+            return combat.getStatus();
         }
     }
 }

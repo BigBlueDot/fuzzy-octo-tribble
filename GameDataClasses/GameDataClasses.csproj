@@ -66,6 +66,10 @@
       <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
       <Name>PlayerDataClasses</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CombatDataClasses\CombatDataClasses.csproj">
+      <Project>{72befa10-0a0c-40c1-af8b-640cf4e9dfe3}</Project>
+      <Name>CombatDataClasses</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapDataClasses\MapDataClasses.csproj">
       <Project>{7e5c6982-c5b2-48ed-a9f2-422cdc70ed04}</Project>
       <Name>MapDataClasses</Name>

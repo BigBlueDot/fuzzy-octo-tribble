@@ -9,13 +9,15 @@ namespace CombatDataClasses
 {
     public class CombatDirector
     {
-        ICombatFactory factory;
+        private ICombatFactory factory;
 
         public CombatDirector()
         {
-            //Load dummy controls for now
+            //Default to dummy factory
             factory = new DummyImplementation.DummyCombatFactory();
         }
+
+        //TODO:  Add a constructor that takes in pointers to current party, loads enemies etc.
 
         public ICombat getCombat()
         {

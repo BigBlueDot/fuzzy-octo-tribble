@@ -18,6 +18,9 @@ namespace CombatDataClasses.DummyImplementation
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Attack", false, 0));
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Guard " + characterUniq.ToString(), false, 0));
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Flee", false, 0));
+            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Heal", false, 0));
+            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Destroy", false, 0));
+            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Game Over", false, 0));
 
             return returnValue;
         }
@@ -44,6 +47,25 @@ namespace CombatDataClasses.DummyImplementation
                 List<IEffect> effectsList = new List<IEffect>();
                 effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 1, string.Empty, 5));
                 effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "All characters have taken damage!", 0));
+                return generateCombatStatus(effectsList, 5);
+            }
+            else if (command.commandName == "Heal")
+            {
+                List<IEffect> effectsList = new List<IEffect>();
+                effectsList.Add(new DummyEffect(EffectTypes.HealDamage, 1, string.Empty, 5));
+                effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "Healed!", 0));
+                return generateCombatStatus(effectsList, 5);
+            }
+            else if (command.commandName == "Destroy")
+            {
+                List<IEffect> effectsList = new List<IEffect>();
+                effectsList.Add(new DummyEffect(EffectTypes.DestroyCharacter, 1, string.Empty, 5));
+                return generateCombatStatus(effectsList, 5);
+            }
+            else if (command.commandName == "Game Over")
+            {
+                List<IEffect> effectsList = new List<IEffect>();
+                effectsList.Add(new DummyEffect(EffectTypes.GameOver, 1, string.Empty, 5));
                 return generateCombatStatus(effectsList, 5);
             }
             else

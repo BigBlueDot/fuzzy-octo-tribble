@@ -51,6 +51,9 @@
     }
 
     var processEffects = function (effects) {
+        if (effects.length === 0) {
+            return;
+        }
         var currentEffect = effects.shift();
         switch (currentEffect.type) {
             case 0: //Simple Message effects
@@ -67,11 +70,26 @@
             case 1: //Deal damage to target
                 var targetUniq = currentEffect.targetUniq;
                 var damage = currentEffect.value;
-                FuzzyOctoTribble.CombatScreenCreator.damageAnimation(damage, targetUniq);
+                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('-' + damage, targetUniq, '#FF0000', 24);
                 processEffects(effects);
                 break;
-            case 4:
+            case 2: //Heal the target
+                var targetUniq = currentEffect.targetUniq;
+                var heal = currentEffect.value;
+                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('+' + heal, targetUniq, '#00FF00', 24);
+                processEffects(effects);
+                break;
+            case 3: //Destroy the character
+                var targetUniq = currentEffect.targetUniq;
+                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('DEFEATED', targetUniq, '#FF0000', 30);
+                processEffects(effects);
+                break;
+            case 4: //Combat has ended
                 FuzzyOctoTribble.KeyControl.removeCombat();
+                break;
+            case 5: //Game over
+                FuzzyOctoTribble.CombatScreenCreator.gameOverAnimation();
+                processEffects(effects);
                 break;
 
         }

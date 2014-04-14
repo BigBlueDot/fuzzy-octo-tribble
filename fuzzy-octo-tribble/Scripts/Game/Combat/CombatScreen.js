@@ -17,17 +17,35 @@
         return $characterDisplay;
     }
 
-    that.damageAnimation = function (value, uniq) {
+    that.numberAnimation = function (value, uniq, color, size) {
         var $damageWindow = $(document.createElement('div'));
         $damageWindow.addClass('text-font');
-        $damageWindow.text("-" + value);
-        $damageWindow.css('color', '#FF0000');
+        $damageWindow.text(value);
+        $damageWindow.css('color', color);
+        $damageWindow.css('font-size', size);
         $damageWindow.css('position', 'absolute');
         $damageWindow.css('top', (characterWindows[uniq].position().top + 10) + 'px');
         $damageWindow.css('left', (characterWindows[uniq].position().left + 140) + 'px');
         $('.game-window').append($damageWindow);
         $damageWindow.animate({ height: 'toggle', opacity: 'toggle' }, 2000, 'swing', function () {
             $damageWindow.remove();
+        });
+    }
+
+    that.gameOverAnimation = function () {
+        var $gameOverWindow = $(document.createElement('div'));
+        $gameOverWindow.addClass('text-font');
+        $gameOverWindow.text("Game Over");
+        $gameOverWindow.css('color', "#FF0000");
+        $gameOverWindow.css('text-align', 'center');
+        $gameOverWindow.css('font-size', "60px");
+        $gameOverWindow.css('position', 'absolute');
+        $gameOverWindow.css('top', (($(window).height() / 2) - 15) + 'px');
+        $gameOverWindow.css('left', '10px');
+        $gameOverWindow.css('right', '10px');
+        $('.game-window').append($gameOverWindow);
+        $gameOverWindow.animate({ height: 'toggle', opacity: 'toggle' }, 5000, 'swing', function () {
+            $gameOverWindow.remove();
         });
     }
 

@@ -10,9 +10,9 @@
 
             //Example Combat init screen
             //FuzzyOctoTribble.CombatScreenCreator.loadCommand(["Attack", "Guard", "Flee"]);
-            FuzzyOctoTribble.CombatAccess.getState(function (data) {
-                FuzzyOctoTribble.CombatControlCreator.create(data);
-            });
+            //FuzzyOctoTribble.CombatAccess.getState(function (data) {
+            //    FuzzyOctoTribble.CombatControlCreator.create(data);
+            //});
             //FuzzyOctoTribble.CombatControlCreator.create({
             //    commands: ["Attack", "Guard", "Flee"],
             //    allies: [{

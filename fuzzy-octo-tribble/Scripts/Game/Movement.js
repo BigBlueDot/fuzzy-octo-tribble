@@ -22,7 +22,13 @@
             return;
         }
         FuzzyOctoTribble.Player.x -= 1;
-        $.ajax("Game/MoveLeft");
+        $.ajax("Game/MoveLeft", {
+            success: function (data) {
+                if (data === 1) { //Combat
+                    FuzzyOctoTribble.CombatAccess.startCombat();
+                }
+            }
+        });
         FuzzyOctoTribble.Camera.draw();
         timer37 = setTimeout(moveLeft, interval);
     }

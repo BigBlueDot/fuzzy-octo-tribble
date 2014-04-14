@@ -16,5 +16,11 @@
         })
     }
 
+    that.startCombat = function () {
+        that.getState(function (data) {
+            FuzzyOctoTribble.CombatControlCreator.create(data);
+        });
+    }
+
     return that;
 })();

@@ -57,7 +57,9 @@
     <Compile Include="GameCombatClasses\CombatTurnOrder.cs" />
     <Compile Include="GameCombatClasses\CombatTurnOrderCharacter.cs" />
     <Compile Include="GamePlayerClasses\ClientPlayer.cs" />
+    <Compile Include="GameRNG.cs" />
     <Compile Include="IGameInteractions.cs" />
+    <Compile Include="MapEvent.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

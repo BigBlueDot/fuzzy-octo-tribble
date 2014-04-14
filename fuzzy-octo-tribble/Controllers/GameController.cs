@@ -64,31 +64,31 @@ namespace fuzzy_octo_tribble.Controllers
         }
 
         [HttpGet]
-        public void MoveLeft()
+        public JsonResult MoveLeft()
         {
             Game game = checkGame();
-            game.moveLeft();
+            return Json(game.moveLeft(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public void MoveUp()
+        public JsonResult MoveUp()
         {
             Game game = checkGame();
-            game.moveUp();
+            return Json(game.moveUp(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public void MoveRight()
+        public JsonResult MoveRight()
         {
             Game game = checkGame();
-            game.moveRight();
+            return Json(game.moveRight(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public void MoveDown()
+        public JsonResult MoveDown()
         {
             Game game = checkGame();
-            game.moveDown();
+            return Json(game.moveDown(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

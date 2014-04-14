@@ -20,6 +20,10 @@ namespace GameDataClasses
         private UsersContext db;
         private CombatDataClasses.CombatDirector combatDirector;
         private ICombat combat;
+        private int combatCountdown;
+        private GameRNG rng;
+        private int combatMinNumber = 7; //This will probably be calculated by the map later
+        private int combatMaxNumber = 15;
 
         private int x
         {
@@ -49,6 +53,8 @@ namespace GameDataClasses
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
             this.userName = userName;
             this.db = db;
+            this.rng = new GameRNG();
+            this.combatCountdown = rng.getNumber(combatMinNumber, combatMaxNumber);
 
             combatDirector = new CombatDataClasses.CombatDirector();
             combat = combatDirector.getCombat(); //Combat will be generated when combat is entered, not here in final version
@@ -167,40 +173,55 @@ namespace GameDataClasses
             MapDataClasses.MapDataManager.interactWithMap(currentMap.name, x, y, currentMap, option);
         }
 
-        public void moveLeft()
+        public MapEvent moveLeft()
         {
-            if (player.rootX == 0 || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX - 1, player.rootY]))
+            if (player.rootX == 0)
             {
-                return;
+                return MapEvent.Nothing;
             }
-            player.rootX -= 1;
+            return move(player.rootX - 1, player.rootY);
         }
 
-        public void moveUp()
+        public MapEvent moveUp()
         {
-            if (player.rootY == 0 || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX, player.rootY - 1]))
+            if (player.rootY == 0)
             {
-                return;
+                return MapEvent.Nothing;
             }
-            player.rootY -= 1;
+            return move(player.rootX, player.rootY - 1);
         }
 
-        public void moveRight()
+        public MapEvent moveRight()
         {
-            if (player.rootX == currentMap.map.GetLength(0) - 1 || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX + 1, player.rootY]))
+            if (player.rootX == currentMap.map.GetLength(0) - 1)
             {
-                return;
+                return MapEvent.Nothing;
             }
-            player.rootX += 1;
+            return move(player.rootX + 1, player.rootY);
         }
 
-        public void moveDown()
+        public MapEvent moveDown()
         {
-            if (player.rootY == currentMap.map.GetLength(1) || !MapDataClasses.MapDataManager.getTraversable(currentMap.map[player.rootX, player.rootY + 1]))
+            if (player.rootY == currentMap.map.GetLength(1))
             {
-                return;
+                return MapEvent.Nothing;
             }
-            player.rootY += 1;
+            return move(player.rootX, player.rootY + 1);
+        }
+
+        private MapEvent move(int newX, int newY)
+        {
+            if (!MapDataClasses.MapDataManager.getTraversable(currentMap.map[newX, newY]))
+            {
+                return MapEvent.Nothing;
+            }
+            player.rootX = newX;
+            player.rootY = newY;
+            if (isCombat())
+            {
+                return MapEvent.CombatEntered;
+            }
+            return MapEvent.Nothing;
         }
 
         public List<ICommand> getCommands()
@@ -211,6 +232,18 @@ namespace GameDataClasses
         public ICombatStatus getStatus()
         {
             return combat.getStatus();
+        }
+
+        private bool isCombat()
+        {
+            combatCountdown--;
+            if (combatCountdown == 0)
+            {
+                combatCountdown = rng.getNumber(combatMinNumber, combatMaxNumber);
+                return true;
+            }
+
+            return false;
         }
     }
 }

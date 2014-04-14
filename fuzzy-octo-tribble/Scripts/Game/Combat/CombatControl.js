@@ -104,6 +104,7 @@
         $('.game-window').append($detailScreen);
 
         that.isCombat = true;
+        that.isDetailWindow = true;
 
         that.close = function () {
             that.cancel();

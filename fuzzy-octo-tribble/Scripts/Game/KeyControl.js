@@ -62,6 +62,23 @@
         }
     }
 
+    that.removeWindows = function (windowType) {
+        var windowsToRemove = [];
+        for (var i = 0; i < controllers.length; i++) {
+            if (controllers[i][windowType] && controllers[i][windowType] === true) {
+                windowsToRemove.push(i);
+            }
+        }
+
+        for (var i = windowsToRemove.length - 1; i >= 0; i--) {
+            if (controllers[windowsToRemove[i]].close) {
+                controllers[windowsToRemove[i]].close();
+            }
+
+            controllers.splice(windowsToRemove[i], 1);
+        }
+    }
+
     that.addController = function (controller) {
         if (controllers.length !== 0 && controllers[controllers.length - 1].clearCurrentControl) {
             controllers[controllers.length - 1].clearCurrentControl();

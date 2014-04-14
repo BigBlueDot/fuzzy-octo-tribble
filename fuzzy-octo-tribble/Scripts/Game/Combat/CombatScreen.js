@@ -28,6 +28,7 @@
         }
         $characterDisplay.on('click', function () {
             var $detailScreen = that.getDetailedScreen(character);
+            FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
         });
         characterWindows[character.uniq] = $characterDisplay;

@@ -9,8 +9,9 @@
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Movement);
 
             //Example Combat init screen
-            FuzzyOctoTribble.CombatScreenCreator.loadCommand(["Attack", "Guard", "Flee"]);
-            FuzzyOctoTribble.CombatScreenCreator.loadInitialScreen({
+            //FuzzyOctoTribble.CombatScreenCreator.loadCommand(["Attack", "Guard", "Flee"]);
+            FuzzyOctoTribble.CombatControlCreator.create({
+                commands: ["Attack", "Guard", "Flee"],
                 allies: [{
                     name: "Scott Pilgrim",
                     hp: 30,

@@ -10,7 +10,7 @@
         $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + " / " + character.maxMP));
         $characterDisplay.on('click', function () {
             var $detailScreen = that.getDetailedScreen(character);
-            $('.game-window').append($detailScreen);
+            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
         });
         return $characterDisplay;
     }
@@ -18,19 +18,22 @@
     that.loadInitialScreen = function (spec, my) {
         allies = spec.allies;
         enemies = spec.enemies;
+        var $content = $(document.createElement('div'));
 
         for (var i = 0; i < allies.length; i++) {
             var $characterDisplay = getCharacterWindow(allies[i]);
             $characterDisplay.css('left', (20 + (230 * i)).toString() + "px");
-            $('.game-window').append($characterDisplay);
+            $content.append($characterDisplay);
         }
 
         for (var i = 0; i < enemies.length; i++) {
             var $characterDisplay = getCharacterWindow(enemies[i]);
             $characterDisplay.addClass('enemy');
             $characterDisplay.css('left', (20 + (230 * i)).toString() + "px");
-            $('.game-window').append($characterDisplay);
+            $content.append($characterDisplay);
         }
+
+        return $content;
     }
     
     that.getDetailedScreen = function (character) {

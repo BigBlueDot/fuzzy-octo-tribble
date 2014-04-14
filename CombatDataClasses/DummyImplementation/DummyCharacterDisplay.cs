@@ -9,7 +9,7 @@ namespace CombatDataClasses.DummyImplementation
 {
     public class DummyCharacterDisplay : ICharacterDisplay
     {
-        public DummyCharacterDisplay(string name, int hp, int maxHP, int mp, int maxMP, List<IStatusDisplay> statuses)
+        public DummyCharacterDisplay(string name, int hp, int maxHP, int mp, int maxMP, List<IStatusDisplay> statuses, int uniq)
         {
             _name = name;
             _hp = hp;
@@ -17,6 +17,7 @@ namespace CombatDataClasses.DummyImplementation
             _mp = mp;
             _maxMP = maxMP;
             _statuses = statuses;
+            _uniq = uniq;
         }
 
         private string _name;
@@ -70,6 +71,14 @@ namespace CombatDataClasses.DummyImplementation
             get
             {
                 return _statuses;
+            }
+        }
+
+        private int _uniq;
+        public int uniq
+        {
+            get {
+                return _uniq;
             }
         }
     }

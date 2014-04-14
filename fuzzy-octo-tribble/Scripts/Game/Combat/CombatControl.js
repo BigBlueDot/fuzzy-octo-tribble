@@ -52,19 +52,28 @@
 
     var processEffects = function (effects) {
         var currentEffect = effects.shift();
-        if (currentEffect.type === 0) { //Simple Message effects
-            var messageSpec = {};
-            messageSpec.dialogContent = currentEffect.message;
-            messageSpec.onComplete = function () {
-                if (effects.length !== 0) {
-                    processEffects(effects);
+        switch (currentEffect.type) {
+            case 0: //Simple Message effects
+                var messageSpec = {};
+                messageSpec.dialogContent = currentEffect.message;
+                messageSpec.onComplete = function () {
+                    if (effects.length !== 0) {
+                        processEffects(effects);
+                    }
                 }
-            }
 
-            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(messageSpec, {}));
-        }
-        if (currentEffect.type === 4) {
-            FuzzyOctoTribble.KeyControl.removeCombat();
+                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(messageSpec, {}));
+                break;
+            case 1: //Deal damage to target
+                var targetUniq = currentEffect.targetUniq;
+                var damage = currentEffect.value;
+                FuzzyOctoTribble.CombatScreenCreator.damageAnimation(damage, targetUniq);
+                processEffects(effects);
+                break;
+            case 4:
+                FuzzyOctoTribble.KeyControl.removeCombat();
+                break;
+
         }
     }
 

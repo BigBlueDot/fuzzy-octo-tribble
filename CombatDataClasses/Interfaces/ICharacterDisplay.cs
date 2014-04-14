@@ -13,6 +13,7 @@ namespace CombatDataClasses.Interfaces
         int maxHP { get;  }
         int mp { get;  }
         int maxMP { get; }
+        int uniq { get; }
         IEnumerable<IStatusDisplay> statuses { get; }
     }
 }

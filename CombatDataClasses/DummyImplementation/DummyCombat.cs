@@ -25,7 +25,7 @@ namespace CombatDataClasses.DummyImplementation
         public ICombatStatus getStatus()
         {
             List<IEffect> effectsList = new List<IEffect>();
-            effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "This is a combat message", 0));
+            effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A horde of Goblins has appeared!", 0));
             List<ICharacterDisplay> characterDisplays = new List<ICharacterDisplay>();
             characterDisplays.Add(new DummyCharacterDisplay("Scott Pilgrim", 30, 30, 2, 2, new List<IStatusDisplay>()));
             characterDisplays.Add(new DummyCharacterDisplay("Ada Lovelace", 35, 35, 3, 3, new List<IStatusDisplay>()));

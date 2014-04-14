@@ -17,6 +17,9 @@
 
     var $menu = $(document.createElement('div'));
     $menu.addClass('menu-container');
+    if (spec.additionalClasses) {
+        $menu.addClass(spec.additionalClasses);
+    }
     
     if (header) {
         var $menuTitleItem = $(document.createElement('div'));

@@ -70,7 +70,7 @@
         allies = spec.allies;
         enemies = spec.enemies;
         var $content = $(document.createElement('div'));
-        $content.addClass('combat-initial-screen');
+        $content.addClass('combat-initial-screen combat-screen');
 
         for (var i = 0; i < allies.length; i++) {
             var $characterDisplay = getCharacterWindow(allies[i]);
@@ -90,7 +90,7 @@
     
     that.getDetailedScreen = function (character) {
         var $detailScreen = $(document.createElement('div'));
-        $detailScreen.addClass('popup-screen text-font character-detail-screen');
+        $detailScreen.addClass('popup-screen text-font character-detail-screen combat-screen');
 
         var $nameLvl = $(document.createElement('div'));
         $nameLvl.text(character.name + " Level " + character.lvl);

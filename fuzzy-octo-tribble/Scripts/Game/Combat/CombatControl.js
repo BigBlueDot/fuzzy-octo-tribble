@@ -43,7 +43,8 @@
             items: items,
             closeOnMenu: true,
             header: currentCharacter + ":",
-            isCombat: true
+            isCombat: true,
+            additionalClasses: 'combat-screen'
         }
         var my = {};
 
@@ -124,7 +125,7 @@
     that.createBaseScreen = function (allies, enemies, commands, currentCharacter) {
         var that = {};
 
-        $('.combat-initial-screen').remove();
+        $('.combat-screen').remove();
         var $initialScreen = FuzzyOctoTribble.CombatScreenCreator.loadInitialScreen({
             allies: allies,
             enemies: enemies

@@ -12,7 +12,6 @@ namespace CombatDataClasses.DummyImplementation
         public List<ICommand> getCommands()
         {
             //Get next player characters commands
-            int characterUniq = 1;
             List<ICommand> returnValue = new List<ICommand>();
 
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Attack", false, 0));

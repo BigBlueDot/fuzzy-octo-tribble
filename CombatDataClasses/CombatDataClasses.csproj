@@ -53,6 +53,7 @@
     <Compile Include="Interfaces\ICombatStatus.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\IEffect.cs" />
+    <Compile Include="Interfaces\SelectedCommand.cs" />
     <Compile Include="Interfaces\IStatusDisplay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -48,6 +48,20 @@
         });
     });
 
+    that.removeCombat = function () {
+        if (controllers.length !== 0) {
+            while (controllers[controllers.length - 1].isCombat) {
+                if (controllers[controllers.length - 1].close) {
+                    controllers[controllers.length - 1].isCombat = false;
+                    controllers[controllers.length - 1].close();
+                }
+                else {
+                    break;
+                }
+            }
+        }
+    }
+
     that.addController = function (controller) {
         if (controllers.length !== 0 && controllers[controllers.length - 1].clearCurrentControl) {
             controllers[controllers.length - 1].clearCurrentControl();

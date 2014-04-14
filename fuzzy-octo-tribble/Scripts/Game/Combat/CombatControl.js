@@ -1,20 +1,43 @@
 ﻿FuzzyOctoTribble.CombatControlCreatorConstructor = function () {
     var that = {};
 
+    var createCommand = function (currentCommand) {
+        var item = {
+            text: currentCommand.name,
+            selected: function () {
+                var command = {};
+                command.commandName = currentCommand.name;
+                command.hasSubCommand = false;
+                command.subCommand = {};
+                command.targets = [];
+                $.ajax({
+                    type: 'POST',
+                    url: 'Game/executeCommand',
+                    cache: false,
+                    data: JSON.stringify(command),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        processEffects(data.effects);
+                    }
+                });
+
+            }
+        }
+        return item;
+    }
+
     var createCommandSelectionScreen = function (commands, currentCharacter) {
         var items = [];
         for (var i = 0; i < commands.length; i++) {
-            items.push({
-                text: commands[i].name,
-                selected: function () {
-
-                }
-            });
+            var currentCommand = commands[i];
+            items.push(createCommand(currentCommand));
         }
         var spec = {
             items: items,
             closeOnMenu: true,
-            header: currentCharacter + ":"
+            header: currentCharacter + ":",
+            isCombat: true
         }
         var my = {};
 
@@ -34,6 +57,9 @@
 
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(messageSpec, {}));
         }
+        if (currentEffect.type === 4) {
+            FuzzyOctoTribble.KeyControl.removeCombat();
+        }
     }
 
     that.createCommandSelectionScreen = createCommandSelectionScreen;
@@ -43,9 +69,17 @@
 
         $('.game-window').append($detailScreen);
 
+        that.isCombat = true;
+
+        that.close = function () {
+            that.cancel();
+        }
+
         that.cancel = function () {
             $detailScreen.remove();
-            that.onComplete();
+            if (that.onComplete) {
+                that.onComplete();
+            }
         }
 
         that.menu = function () {
@@ -62,6 +96,15 @@
         });
 
         $('.game-window').append($initialScreen);
+
+        that.isCombat = true;
+
+        that.close = function () {
+            $initialScreen.remove();
+            if (that.onComplete) {
+                that.onComplete();
+            }
+        }
 
         that.pressLeft = function () {
 
@@ -116,6 +159,10 @@
         if (spec.effects.length !== 0) {
             processEffects(spec.effects);
         }
+    }
+    
+    that.endCombat = function () {
+
     }
 
     return that;

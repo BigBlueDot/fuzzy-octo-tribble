@@ -234,6 +234,11 @@ namespace GameDataClasses
             return combat.getStatus();
         }
 
+        public ICombatStatus executeCommand(SelectedCommand command)
+        {
+            return combat.executeCommand(command);
+        }
+
         private bool isCombat()
         {
             combatCountdown--;

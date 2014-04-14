@@ -5,6 +5,9 @@
     var items = spec.items;
     var closeOnMenu = spec.closeOnMenu;
     var header = spec.header;
+    if (spec.isCombat) {
+        that.isCombat = true;
+    }
     var additionalDisplays = spec.additionalDisplays || [];
     my = my || {};
 
@@ -45,6 +48,10 @@
     var defaultSelect = function () {
         selectedMenuItem = 0;
         applySelect();
+    }
+
+    that.close = function () {
+        that.cancel();
     }
 
     that.releaseUp = function () {

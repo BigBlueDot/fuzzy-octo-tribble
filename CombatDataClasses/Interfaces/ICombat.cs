@@ -10,5 +10,6 @@ namespace CombatDataClasses.Interfaces
     {
         List<ICommand> getCommands();
         ICombatStatus getStatus();
+        ICombatStatus executeCommand(SelectedCommand command);
     }
 }

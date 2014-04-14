@@ -7,8 +7,25 @@
         var $characterDisplay = $(document.createElement('div'));
         $characterDisplay.addClass('character-display-screen text-font');
         $characterDisplay.append($(document.createElement('div')).text(character.name));
+        $characterDisplay.append($(document.createElement('div')).text('Attack Order: ' + character.turnOrder));
         $characterDisplay.append($(document.createElement('div')).text("HP: " + character.hp + " / " + character.maxHP));
         $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + " / " + character.maxMP));
+        switch (character.turnOrder) {
+            case 1:
+                $characterDisplay.css('border-color', '#ffd700');
+                break;
+            case 2:
+                $characterDisplay.css('border-color', '#C4AEAD ');
+                break;
+            case 3:
+                $characterDisplay.css('border-color', '#cd7f32');
+                break;
+        }
+        if (character.hp <= 0) {
+            $characterDisplay.css('border-color', '#ff0000');
+            $characterDisplay.css('background-color', '#000000');
+            $characterDisplay.css('color', '#ffffff');
+        }
         $characterDisplay.on('click', function () {
             var $detailScreen = that.getDetailedScreen(character);
             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));

@@ -15,7 +15,7 @@ namespace CombatDataClasses.DummyImplementation
             int characterUniq = 1;
             List<ICommand> returnValue = new List<ICommand>();
 
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Attack " + characterUniq.ToString(), false, 0));
+            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Attack", false, 0));
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Guard " + characterUniq.ToString(), false, 0));
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Flee", false, 0));
 
@@ -26,7 +26,7 @@ namespace CombatDataClasses.DummyImplementation
         {
             List<IEffect> effectsList = new List<IEffect>();
             effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A horde of Goblins has appeared!", 0));
-            return generateCombatStatus(effectsList);
+            return generateCombatStatus(effectsList, 0);
         }
 
         public ICombatStatus executeCommand(SelectedCommand command)
@@ -37,22 +37,30 @@ namespace CombatDataClasses.DummyImplementation
                 List<IEffect> effectsList = new List<IEffect>();
                 effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "You have escaped successfully!", 0));
                 effectsList.Add(new DummyEffect(EffectTypes.CombatEnded, 0, string.Empty, 0));
-                return generateCombatStatus(effectsList);
+                return generateCombatStatus(effectsList, 0);
             }
-            else {
+            else if (command.commandName == "Attack")
+            {
+                List<IEffect> effectsList = new List<IEffect>();
+                effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "All characters have taken damage!", 0));
+                effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 1, string.Empty, 5));
+                return generateCombatStatus(effectsList, 5);
+            }
+            else
+            {
                 return getStatus();
             }
         }
 
-        private ICombatStatus generateCombatStatus(List<IEffect> effectsList)
+        private ICombatStatus generateCombatStatus(List<IEffect> effectsList, int healthDecrease)
         {
             List<ICharacterDisplay> characterDisplays = new List<ICharacterDisplay>();
-            characterDisplays.Add(new DummyCharacterDisplay("Scott Pilgrim", 30, 30, 2, 2, new List<IStatusDisplay>()));
-            characterDisplays.Add(new DummyCharacterDisplay("Ada Lovelace", 35, 35, 3, 3, new List<IStatusDisplay>()));
+            characterDisplays.Add(new DummyCharacterDisplay("Scott Pilgrim", 30 - healthDecrease, 30, 2, 2, new List<IStatusDisplay>()));
+            characterDisplays.Add(new DummyCharacterDisplay("Ada Lovelace", 35 - healthDecrease, 35, 3, 3, new List<IStatusDisplay>()));
             List<ICharacterDisplay> npcDisplays = new List<ICharacterDisplay>();
-            npcDisplays.Add(new DummyCharacterDisplay("Goblin", 30, 30, 2, 2, new List<IStatusDisplay>()));
-            npcDisplays.Add(new DummyCharacterDisplay("Boss Goblin", 50, 50, 2, 2, new List<IStatusDisplay>()));
-            npcDisplays.Add(new DummyCharacterDisplay("Goblin", 30, 30, 2, 2, new List<IStatusDisplay>()));
+            npcDisplays.Add(new DummyCharacterDisplay("Goblin", 30 - healthDecrease, 30, 2, 2, new List<IStatusDisplay>()));
+            npcDisplays.Add(new DummyCharacterDisplay("Boss Goblin", 50 - healthDecrease, 50, 2, 2, new List<IStatusDisplay>()));
+            npcDisplays.Add(new DummyCharacterDisplay("Goblin", 30 - healthDecrease, 30, 2, 2, new List<IStatusDisplay>()));
             ICombatStatus combatStatus = new DummyCombatStatus("Scott Pilgrim", effectsList, characterDisplays, npcDisplays);
             return combatStatus;
         }

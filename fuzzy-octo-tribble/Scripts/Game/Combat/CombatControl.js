@@ -18,7 +18,13 @@
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        processEffects(data.effects);
+                        fullData = data;
+                        $.ajax("Game/getCommands", {
+                            success: function (commandData) {
+                                fullData.commands = commandData;
+                                that.create(fullData);
+                            }
+                        });
                     }
                 });
 
@@ -90,6 +96,8 @@
 
     that.createBaseScreen = function (allies, enemies, commands, currentCharacter) {
         var that = {};
+
+        $('.combat-initial-screen').remove();
         var $initialScreen = FuzzyOctoTribble.CombatScreenCreator.loadInitialScreen({
             allies: allies,
             enemies: enemies
@@ -159,10 +167,6 @@
         if (spec.effects.length !== 0) {
             processEffects(spec.effects);
         }
-    }
-    
-    that.endCombat = function () {
-
     }
 
     return that;

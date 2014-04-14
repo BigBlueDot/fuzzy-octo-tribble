@@ -19,6 +19,7 @@
         allies = spec.allies;
         enemies = spec.enemies;
         var $content = $(document.createElement('div'));
+        $content.addClass('combat-initial-screen');
 
         for (var i = 0; i < allies.length; i++) {
             var $characterDisplay = getCharacterWindow(allies[i]);

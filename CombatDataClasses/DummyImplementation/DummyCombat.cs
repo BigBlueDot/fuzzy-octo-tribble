@@ -13,13 +13,17 @@ namespace CombatDataClasses.DummyImplementation
         {
             //Get next player characters commands
             List<ICommand> returnValue = new List<ICommand>();
+            List<ICommand> magicList = new List<ICommand>();
+            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Fireball", true, 1));
+            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Heal", true, 1));
 
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Attack", false, 0));
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Guard", false, 0));
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Flee", false, 0));
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Heal", false, 0));
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Destroy", false, 0));
-            returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Game Over", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Attack", false, 0));
+            returnValue.Add(new DummyCommand(true, magicList, false, 0, "Magic", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Guard", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Flee", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Heal", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Destroy", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Game Over", false, 0));
 
             return returnValue;
         }
@@ -48,6 +52,27 @@ namespace CombatDataClasses.DummyImplementation
                 effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "All characters have taken damage!", 0));
                 return generateCombatStatus(effectsList, 5);
             }
+            else if (command.commandName == "Magic")
+            {
+                if (command.subCommand.commandName == "Fireball")
+                {
+                    List<IEffect> effectsList = new List<IEffect>();
+                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 1, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 2, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 3, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 4, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 5, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A gigantic fireball damages all combatants!", 0));
+                    return generateCombatStatus(effectsList, 5);
+                }
+                else if (command.subCommand.commandName == "Heal")
+                {
+                    List<IEffect> effectsList = new List<IEffect>();
+                    effectsList.Add(new DummyEffect(EffectTypes.HealDamage, 1, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A holy light heals a character at random.", 0));
+                    return generateCombatStatus(effectsList, 5);
+                }
+            }
             else if (command.commandName == "Heal")
             {
                 List<IEffect> effectsList = new List<IEffect>();
@@ -73,10 +98,7 @@ namespace CombatDataClasses.DummyImplementation
                 effectsList.Add(new DummyEffect(EffectTypes.GameOver, 1, string.Empty, 5));
                 return generateCombatStatus(effectsList, 5);
             }
-            else
-            {
-                return getStatus();
-            }
+            return getStatus();
         }
 
         private ICombatStatus generateCombatStatus(List<IEffect> effectsList, int healthDecrease)

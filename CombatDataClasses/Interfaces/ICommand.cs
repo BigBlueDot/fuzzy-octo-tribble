@@ -8,6 +8,7 @@ namespace CombatDataClasses.Interfaces
 {
     public interface ICommand
     {
+        bool hasChildCommands { get; }
         List<ICommand> childCommands { get; }
         bool limitedUsage { get; }
         int uses { get; }

@@ -1,43 +1,60 @@
 ﻿FuzzyOctoTribble.CombatControlCreatorConstructor = function () {
     var that = {};
 
-    var createCommand = function (currentCommand) {
+    var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
+        var executeFinalCommand = function (cmd) {
+            $.ajax({
+                type: 'POST',
+                url: 'Game/executeCommand',
+                cache: false,
+                data: JSON.stringify(cmd),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    fullData = data;
+                    $.ajax("Game/getCommands", {
+                        success: function (commandData) {
+                            fullData.commands = commandData;
+                            that.create(fullData);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (!sendingCommand) {
+            var sendingCommand = {};
+        }
+        if (!onComplete) {
+            var onComplete = function () {
+                executeFinalCommand(sendingCommand);
+            }
+        }
+
         var item = {
             text: currentCommand.name,
             selected: function () {
-                var command = {};
-                command.commandName = currentCommand.name;
-                command.hasSubCommand = false;
-                command.subCommand = {};
-                command.targets = [];
-                $.ajax({
-                    type: 'POST',
-                    url: 'Game/executeCommand',
-                    cache: false,
-                    data: JSON.stringify(command),
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        fullData = data;
-                        $.ajax("Game/getCommands", {
-                            success: function (commandData) {
-                                fullData.commands = commandData;
-                                that.create(fullData);
-                            }
-                        });
-                    }
-                });
+                sendingCommand.commandName = currentCommand.name;
+                sendingCommand.hasSubCommand = false;
+                sendingCommand.subCommand = {};
+                sendingCommand.targets = [];
 
+                if (currentCommand.hasChildCommands) {
+                    FuzzyOctoTribble.KeyControl.addController(createCommandSelectionScreen(currentCommand.childCommands, currentCharacter, sendingCommand.subCommand, onComplete));
+                }
+                else {
+                    onComplete();
+                }
             }
         }
         return item;
     }
 
-    var createCommandSelectionScreen = function (commands, currentCharacter) {
+    var createCommandSelectionScreen = function (commands, currentCharacter, sendingCommand, onComplete) {
         var items = [];
         for (var i = 0; i < commands.length; i++) {
             var currentCommand = commands[i];
-            items.push(createCommand(currentCommand));
+            items.push(createCommand(currentCommand, currentCharacter, sendingCommand, onComplete));
         }
         var spec = {
             items: items,

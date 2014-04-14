@@ -31,8 +31,16 @@
             }
         }
 
+        var commandText;
+        if (currentCommand.mpNeeded) {
+            commandText = currentCommand.mpCost + ' MP - ' + currentCommand.name;
+        }
+        else {
+            commandText = currentCommand.name;
+        }
+
         var item = {
-            text: currentCommand.name,
+            text: commandText,
             selected: function () {
                 sendingCommand.commandName = currentCommand.name;
                 sendingCommand.hasSubCommand = false;

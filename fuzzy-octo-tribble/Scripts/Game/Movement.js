@@ -15,6 +15,12 @@
         timer40 = false;
     }
 
+    var checkSuccess = function (data) {
+        if (data === 1) { //Combat
+            FuzzyOctoTribble.CombatAccess.startCombat();
+        }
+    }
+
     var moveLeft = function () {
         FuzzyOctoTribble.PlayerDirection = 1;
         if (FuzzyOctoTribble.Player.x == 0 || !map.mapSquares[FuzzyOctoTribble.Player.x - 1][FuzzyOctoTribble.Player.y].isTraversable) {
@@ -23,11 +29,7 @@
         }
         FuzzyOctoTribble.Player.x -= 1;
         $.ajax("Game/MoveLeft", {
-            success: function (data) {
-                if (data === 1) { //Combat
-                    FuzzyOctoTribble.CombatAccess.startCombat();
-                }
-            }
+            success: checkSuccess
         });
         FuzzyOctoTribble.Camera.draw();
         timer37 = setTimeout(moveLeft, interval);
@@ -40,7 +42,9 @@
             return;
         }
         FuzzyOctoTribble.Player.y -= 1;
-        $.ajax("Game/MoveUp");
+        $.ajax("Game/MoveUp", {
+            success: checkSuccess
+        });
         FuzzyOctoTribble.Camera.draw();
         timer38 = setTimeout(moveUp, interval);
     }
@@ -52,7 +56,9 @@
             return;
         }
         FuzzyOctoTribble.Player.x += 1;
-        $.ajax("Game/MoveRight");
+        $.ajax("Game/MoveRight", {
+            success: checkSuccess
+        });
         FuzzyOctoTribble.Camera.draw();
         timer39 = setTimeout(moveRight, interval);
     }
@@ -64,7 +70,9 @@
             return;
         }
         FuzzyOctoTribble.Player.y += 1;
-        $.ajax("Game/MoveDown");
+        $.ajax("Game/MoveDown", {
+            success: checkSuccess
+        });
         FuzzyOctoTribble.Camera.draw();
         timer40 = setTimeout(moveDown, interval);
     }
@@ -135,6 +143,10 @@
 
     that.menu = function () {
         FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.MenuHandler.getMenu());
+    }
+
+    that.clearCurrentControl = function () {
+        clearTimers();
     }
 
     return that;

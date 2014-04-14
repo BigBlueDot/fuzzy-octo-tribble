@@ -48,7 +48,10 @@
         });
     });
 
-    that.addController = function(controller) {
+    that.addController = function (controller) {
+        if (controllers.length !== 0 && controllers[controllers.length - 1].clearCurrentControl) {
+            controllers[controllers.length - 1].clearCurrentControl();
+        }
         controllers.push(controller);
         controller.onComplete = function () {
             controllers.pop();

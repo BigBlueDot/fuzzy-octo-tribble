@@ -203,9 +203,9 @@ namespace GameDataClasses
             player.rootY += 1;
         }
 
-        public List<ICommand> getCommands(int characterUniq)
+        public List<ICommand> getCommands()
         {
-            return combat.getCommands(characterUniq);
+            return combat.getCommands();
         }
 
         public ICombatStatus getStatus()

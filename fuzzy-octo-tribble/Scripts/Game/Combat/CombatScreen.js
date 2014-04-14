@@ -59,25 +59,5 @@
         return $detailScreen
     }
 
-    that.loadCommand = function (commands) {
-        var items = [];
-        for (var i = 0; i < commands.length; i++) {
-            items.push({
-                text: commands[i],
-                selected: function () {
-
-                }
-            });
-        }
-        var spec = {
-            items: items,
-            closeOnMenu: true,
-            header: "Choose:"
-        }
-        var my = {};
-
-        FuzzyOctoTribble.Menu(spec, my);
-    }
-
     return that;
 })();

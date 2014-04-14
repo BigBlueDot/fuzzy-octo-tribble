@@ -111,10 +111,10 @@ namespace fuzzy_octo_tribble.Controllers
         }
 
         [HttpGet]
-        public JsonResult getCommands(int characterUniq)
+        public JsonResult getCommands()
         {
             Game game = checkGame();
-            return Json(game.getCommands(characterUniq), JsonRequestBehavior.AllowGet);
+            return Json(game.getCommands(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

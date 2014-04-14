@@ -8,7 +8,7 @@ namespace CombatDataClasses.Interfaces
 {
     public interface ICombat
     {
-        List<ICommand> getCommands(int characterUniq);
+        List<ICommand> getCommands();
         ICombatStatus getStatus();
     }
 }

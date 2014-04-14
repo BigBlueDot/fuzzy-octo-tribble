@@ -6,7 +6,7 @@
         var items = [];
         for (var i = 0; i < commands.length; i++) {
             items.push({
-                text: commands[i],
+                text: commands[i].name,
                 selected: function () {
 
                 }
@@ -97,7 +97,7 @@
     }
 
     that.create = function (spec, my) {
-        FuzzyOctoTribble.KeyControl.addController(that.createBaseScreen(spec.allies, spec.enemies, spec.commands));
+        FuzzyOctoTribble.KeyControl.addController(that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands));
         FuzzyOctoTribble.KeyControl.addController(that.createCommandSelectionScreen(spec.commands));
     }
 

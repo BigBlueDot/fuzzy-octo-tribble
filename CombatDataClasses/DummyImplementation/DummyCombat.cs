@@ -9,8 +9,10 @@ namespace CombatDataClasses.DummyImplementation
 {
     public class DummyCombat : ICombat
     {
-        public List<ICommand> getCommands(int characterUniq)
+        public List<ICommand> getCommands()
         {
+            //Get next player characters commands
+            int characterUniq = 1;
             List<ICommand> returnValue = new List<ICommand>();
 
             returnValue.Add(new DummyCommand(new List<ICommand>(), false, 0, "Attack " + characterUniq.ToString(), false, 0));
@@ -26,7 +28,10 @@ namespace CombatDataClasses.DummyImplementation
             effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "This is a combat message", 0));
             List<ICharacterDisplay> characterDisplays = new List<ICharacterDisplay>();
             characterDisplays.Add(new DummyCharacterDisplay("Scott Pilgrim", 30, 30, 2, 2, new List<IStatusDisplay>()));
+            characterDisplays.Add(new DummyCharacterDisplay("Ada Lovelace", 35, 35, 3, 3, new List<IStatusDisplay>()));
             List<ICharacterDisplay> npcDisplays = new List<ICharacterDisplay>();
+            npcDisplays.Add(new DummyCharacterDisplay("Goblin", 30, 30, 2, 2, new List<IStatusDisplay>()));
+            npcDisplays.Add(new DummyCharacterDisplay("Boss Goblin", 50, 50, 2, 2, new List<IStatusDisplay>()));
             npcDisplays.Add(new DummyCharacterDisplay("Goblin", 30, 30, 2, 2, new List<IStatusDisplay>()));
             ICombatStatus combatStatus = new DummyCombatStatus("Scott Pilgrim", effectsList, characterDisplays, npcDisplays);
             return combatStatus;

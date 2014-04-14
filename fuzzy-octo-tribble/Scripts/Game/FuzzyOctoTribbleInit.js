@@ -10,43 +10,46 @@
 
             //Example Combat init screen
             //FuzzyOctoTribble.CombatScreenCreator.loadCommand(["Attack", "Guard", "Flee"]);
-            FuzzyOctoTribble.CombatControlCreator.create({
-                commands: ["Attack", "Guard", "Flee"],
-                allies: [{
-                    name: "Scott Pilgrim",
-                    hp: 30,
-                    mp: 2,
-                    maxHP: 30,
-                    maxMP: 2
-                }, {
-                    name: "Ada Lovelace",
-                    hp: 30,
-                    mp: 2,
-                    maxHP: 30,
-                    maxMP: 2
-                }],
-                enemies: [{
-                    name: "Goblin A",
-                    hp: 30,
-                    mp: 2,
-                    maxHP: 30,
-                    maxMP: 2
-                },
-                {
-                    name: "Goblin B",
-                    hp: 30,
-                    mp: 2,
-                    maxHP: 30,
-                    maxMP: 2
-                }, {
-                    name: "Goblin C",
-                    hp: 30,
-                    mp: 2,
-                    maxHP: 30,
-                    maxMP: 2
-
-                }]
+            FuzzyOctoTribble.CombatAccess.getState(function (data) {
+                FuzzyOctoTribble.CombatControlCreator.create(data);
             });
+            //FuzzyOctoTribble.CombatControlCreator.create({
+            //    commands: ["Attack", "Guard", "Flee"],
+            //    allies: [{
+            //        name: "Scott Pilgrim",
+            //        hp: 30,
+            //        mp: 2,
+            //        maxHP: 30,
+            //        maxMP: 2
+            //    }, {
+            //        name: "Ada Lovelace",
+            //        hp: 30,
+            //        mp: 2,
+            //        maxHP: 30,
+            //        maxMP: 2
+            //    }],
+            //    enemies: [{
+            //        name: "Goblin A",
+            //        hp: 30,
+            //        mp: 2,
+            //        maxHP: 30,
+            //        maxMP: 2
+            //    },
+            //    {
+            //        name: "Goblin B",
+            //        hp: 30,
+            //        mp: 2,
+            //        maxHP: 30,
+            //        maxMP: 2
+            //    }, {
+            //        name: "Goblin C",
+            //        hp: 30,
+            //        mp: 2,
+            //        maxHP: 30,
+            //        maxMP: 2
+
+            //    }]
+            //});
 
             //Example ScreenMultiSelect
             //FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenMultiSelectControl({

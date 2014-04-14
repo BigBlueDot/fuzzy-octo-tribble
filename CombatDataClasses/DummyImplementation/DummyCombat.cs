@@ -14,16 +14,16 @@ namespace CombatDataClasses.DummyImplementation
             //Get next player characters commands
             List<ICommand> returnValue = new List<ICommand>();
             List<ICommand> magicList = new List<ICommand>();
-            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Fireball", true, 1));
-            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Heal", true, 1));
+            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Fireball", true, 1));
+            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Heal", true, 1));
 
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Attack", false, 0));
-            returnValue.Add(new DummyCommand(true, magicList, false, 0, "Magic", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Guard", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Flee", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Heal", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Destroy", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, "Game Over", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0));
+            returnValue.Add(new DummyCommand(true, magicList, false, 0, 0, "Magic", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Heal", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), true, 2, 3, "Destroy", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Game Over", false, 0));
 
             return returnValue;
         }

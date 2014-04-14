@@ -12,6 +12,7 @@ namespace CombatDataClasses.Interfaces
         List<ICommand> childCommands { get; }
         bool limitedUsage { get; }
         int uses { get; }
+        int totalUses { get; }
         string name { get;  }
         bool mpNeeded { get;  }
         int mpCost { get;  }

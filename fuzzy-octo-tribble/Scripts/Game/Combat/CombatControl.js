@@ -32,11 +32,12 @@
         }
 
         var commandText;
+        commandText = currentCommand.name;
         if (currentCommand.mpNeeded) {
             commandText = currentCommand.mpCost + ' MP - ' + currentCommand.name;
         }
-        else {
-            commandText = currentCommand.name;
+        if (currentCommand.limitedUsage) {
+            commandText += " " + currentCommand.uses + "/" + currentCommand.totalUses;
         }
 
         var item = {

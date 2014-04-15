@@ -1,7 +1,7 @@
 ﻿FuzzyOctoTribble.Menu = function (spec, my) {
     var that = {};
     var selectedMenuItem = 0;
-    menuItems = [];
+    var menuItems = [];
     var items = spec.items;
     var closeOnMenu = spec.closeOnMenu;
     var header = spec.header;
@@ -48,7 +48,7 @@
     }
     
     var applySelect = function () {
-        $('.menu-item-selected').removeClass('menu-item-selected');
+        $menu.find('.menu-item-selected').removeClass('menu-item-selected');
         menuItems[selectedMenuItem].addClass('menu-item-selected');
     }
 

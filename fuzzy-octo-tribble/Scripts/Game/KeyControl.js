@@ -89,9 +89,15 @@
         controller.hasCurrentControl = true;
         controllers.push(controller);
         controller.onComplete = function () {
-            controllers.pop();
+            var lastController = controllers.pop();
+            if (lastController.clearCurrentControl) {
+                lastController.clearCurrentControl();
+            }
             if (controllers.length !== 0) {
                 controllers[controllers.length - 1].hasCurrentControl = true;
+                if (controllers[controllers.length - 1].onCurrentControl) {
+                    controllers[controllers.length - 1].onCurrentControl();
+                }
             }
         }
     }

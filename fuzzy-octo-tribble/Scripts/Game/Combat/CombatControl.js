@@ -3,6 +3,7 @@
 
     var selectingTarget = false;
     var onTargetSelected;
+    var $currentDefaultScreen;
 
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
@@ -54,8 +55,10 @@
 
                 if (currentCommand.hasTarget) {
                     selectingTarget = true;
+                    $currentDefaultScreen.onCurrentControl();
                     onTargetSelected = function (characterUniq) {
                         sendingCommand.targets.push(characterUniq);
+                        $currentDefaultScreen.clearCurrentControl();
                         onComplete();
                     }
                 }
@@ -199,6 +202,14 @@
             }
         }
 
+        that.onCurrentControl = function () {
+            $initialScreen.find('.character-display-screen').css('cursor', 'pointer');
+        }
+
+        that.clearCurrentControl = function () {
+            $initialScreen.find('.character-display-screen').css('cursor', 'initial');
+        }
+
         that.pressLeft = function () {
 
         }
@@ -247,7 +258,8 @@
     }
 
     that.create = function (spec, my) {
-        FuzzyOctoTribble.KeyControl.addController(that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter));
+        $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
+        FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
         FuzzyOctoTribble.KeyControl.addController(that.createCommandSelectionScreen(spec.commands, spec.currentCharacter));
         if (spec.effects.length !== 0) {
             processEffects(spec.effects);

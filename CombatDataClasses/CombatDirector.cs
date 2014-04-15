@@ -17,9 +17,9 @@ namespace CombatDataClasses
             factory = new DummyImplementation.DummyCombatFactory();
         }
 
-        public CombatDirector(PlayerModels.PlayerModel playerModel)
+        public CombatDirector(PlayerModels.PlayerModel playerModel, string initialMap, Func<int> randomNumberGenerator)
         {
-            factory = new LiveImplementation.CombatFactory(playerModel);
+            factory = new LiveImplementation.CombatFactory(playerModel, initialMap, randomNumberGenerator);
         }
 
         //TODO:  Add a constructor that takes in pointers to current party, loads enemies etc.
@@ -27,6 +27,11 @@ namespace CombatDataClasses
         public ICombat getCombat()
         {
             return factory.generateCombat();
+        }
+
+        public void setMap(string map)
+        {
+
         }
     }
 }

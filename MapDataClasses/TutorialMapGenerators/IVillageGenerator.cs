@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapDataClasses.MapDataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,9 @@ namespace MapDataClasses.TutorialMapGenerators
     {
         MapModel getMap();
         MapInteraction getInteraction(MapModel mm, int x, int y);
+        int getMinCombatCount();
+        int getMaxCombatCount();
+        int getRandomEncounterCount();
+        List<Enemy> getRandomEncounter(int selection);
     }
 }

@@ -134,5 +134,27 @@ namespace MapDataClasses.TutorialMapGenerators
                 }
             }
         }
+
+        public int getMinCombatCount()
+        {
+            return 7;
+        }
+
+        public int getMaxCombatCount()
+        {
+            return 14;
+        }
+
+        public int getRandomEncounterCount()
+        {
+            return 1;
+        }
+
+        public List<MapDataClasses.Enemy> getRandomEncounter(int selection)
+        {
+            List<MapDataClasses.Enemy> enemies = new List<MapDataClasses.Enemy>();
+            enemies.Add(new MapDataClasses.Enemy() { name = "Goblin", maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5 });
+            return enemies;
+        }
     }
 }

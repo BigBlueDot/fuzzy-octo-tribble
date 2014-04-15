@@ -54,9 +54,9 @@ namespace GameDataClasses
             this.userName = userName;
             this.db = db;
             this.rng = new GameRNG();
-            this.combatCountdown = rng.getNumber(combatMinNumber, combatMaxNumber);
+            this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
-            combatDirector = new CombatDataClasses.CombatDirector(this.player);
+            combatDirector = new CombatDataClasses.CombatDirector(this.player, currentMap.name, () => { return rng.getNumber(1, MapDataClasses.MapDataManager.getRandomEncounterCount(currentMap.name)); });
             combat = combatDirector.getCombat(); //Combat will be generated when combat is entered, not here in final version
         }
 
@@ -105,6 +105,7 @@ namespace GameDataClasses
             //Verify that the dungeon selection is legitimate
             if (MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
             {
+                this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
                 if (isInDungeon())
                 {
                     //Need to disband the party that is currently being used
@@ -244,7 +245,7 @@ namespace GameDataClasses
             combatCountdown--;
             if (combatCountdown == 0)
             {
-                combatCountdown = rng.getNumber(combatMinNumber, combatMaxNumber);
+                this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
                 return true;
             }
 

@@ -72,6 +72,10 @@
       <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
       <Name>PlayerDataClasses</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MapDataClasses\MapDataClasses.csproj">
+      <Project>{7e5c6982-c5b2-48ed-a9f2-422cdc70ed04}</Project>
+      <Name>MapDataClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -160,19 +160,71 @@ namespace MapDataClasses
             }
         }
 
-        public static void interactWithMap(string name, int x, int y, MapModel mm, string selectedOption)
+        public static int getMinCombatCount(string name)
         {
             switch (name)
             {
-                //case "Ensemble Village":
-                //    TutorialMapGenerators.EnsembleVillageGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
-                //    break;
-                //case "Emergence Cavern":
-                //    TutorialMapGenerators.EmergenceCavernGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
-                //    break;
-                //default:
-                //    break;
+                case "Ensemble Village":
+                    return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMinCombatCount();
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCount();
+                default:
+                    return 0;
             }
+        }
+
+        public static int getMaxCombatCount(string name)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMaxCombatCount();
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMaxCombatCount();
+                default:
+                    return 0;
+            }
+        }
+
+        public static int getRandomEncounterCount(string name)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getRandomEncounterCount();
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCount();
+                default:
+                    return 0;
+            }
+        }
+
+        public static List<Enemy> getRandomEncounter(string name, int selection)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getRandomEncounter(selection);
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounter(selection);
+                default:
+                    return new List<Enemy>();
+            }
+        }
+
+        public static void interactWithMap(string name, int x, int y, MapModel mm, string selectedOption)
+        {
+            //switch (name)
+            //{
+            //    //case "Ensemble Village":
+            //    //    TutorialMapGenerators.EnsembleVillageGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
+            //    //    break;
+            //    //case "Emergence Cavern":
+            //    //    TutorialMapGenerators.EmergenceCavernGenerator.Implementation.performInteraction(mm, x, y, selectedOption);
+            //    //    break;
+            //    //default:
+            //    //    break;
+            //}
         }
     }
 }

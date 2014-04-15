@@ -16,7 +16,7 @@ namespace CombatDataClasses.LiveImplementation
         private PlayerModels.PlayerModel playerModel;
         private List<IEffect> currentEffects;
 
-        public Combat(PlayerModels.PlayerModel playerModel)
+        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection)
         {
             int currentUniq = 1;
             this.playerModel = playerModel;
@@ -85,9 +85,13 @@ namespace CombatDataClasses.LiveImplementation
             //    this.pcs.Add(cd);
             //    currentUniq++;
             //}
-            this.npcs.Add(new CharacterDisplay("Goblin", 30, 30, 2, 2, new List<IStatusDisplay>(), currentUniq++, 4));
-            this.npcs.Add(new CharacterDisplay("Boss Goblin", 50, 50, 2, 2, new List<IStatusDisplay>(), currentUniq++, 2));
-            this.npcs.Add(new CharacterDisplay("Goblin", 0, 30, 2, 2, new List<IStatusDisplay>(), currentUniq++, 5));
+
+            List<MapDataClasses.MapDataClasses.Enemy> enemies = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
+            foreach (MapDataClasses.MapDataClasses.Enemy enemy in enemies)
+            {
+                this.npcs.Add(new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq));
+                currentUniq++;
+            }
         }
         
         public List<ICommand> getCommands()

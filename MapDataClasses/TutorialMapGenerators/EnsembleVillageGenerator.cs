@@ -91,5 +91,25 @@ namespace MapDataClasses.TutorialMapGenerators
 
             return false;
         }
+
+        public int getMinCombatCount()
+        {
+            return 0;
+        }
+
+        public int getMaxCombatCount()
+        {
+            return 0;
+        }
+
+        public int getRandomEncounterCount()
+        {
+            return 0;
+        }
+
+        public List<MapDataClasses.Enemy> getRandomEncounter(int selection)
+        {
+            return new List<MapDataClasses.Enemy>();
+        }
     }
 }

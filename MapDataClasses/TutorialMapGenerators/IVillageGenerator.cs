@@ -14,6 +14,6 @@ namespace MapDataClasses.TutorialMapGenerators
         int getMinCombatCount();
         int getMaxCombatCount();
         int getRandomEncounterCount();
-        List<Enemy> getRandomEncounter(int selection);
+        Encounter getRandomEncounter(int selection);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapDataClasses.MapDataClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -107,9 +108,9 @@ namespace MapDataClasses.TutorialMapGenerators
             return 0;
         }
 
-        public List<MapDataClasses.Enemy> getRandomEncounter(int selection)
+        public Encounter getRandomEncounter(int selection)
         {
-            return new List<MapDataClasses.Enemy>();
+            return new Encounter();
         }
     }
 }

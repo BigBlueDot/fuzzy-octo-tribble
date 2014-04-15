@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ClientMap.cs" />
     <Compile Include="ClientMapSquare.cs" />
+    <Compile Include="MapDataClasses\Encounter.cs" />
     <Compile Include="MapDataClasses\Enemy.cs" />
     <Compile Include="MapDataClasses\MapSelectedEventArgs.cs" />
     <Compile Include="MapDataManager.cs" />

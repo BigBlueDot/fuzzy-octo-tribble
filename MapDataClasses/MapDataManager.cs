@@ -199,7 +199,7 @@ namespace MapDataClasses
             }
         }
 
-        public static List<Enemy> getRandomEncounter(string name, int selection)
+        public static Encounter getRandomEncounter(string name, int selection)
         {
             switch (name)
             {
@@ -208,7 +208,7 @@ namespace MapDataClasses
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounter(selection);
                 default:
-                    return new List<Enemy>();
+                    return new Encounter();
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using CombatDataClasses.Interfaces;
+using MapDataClasses.MapDataClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,9 +67,6 @@ namespace CombatDataClasses.LiveImplementation
                     stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel() { hp = hp, mp = mp },
                 });
                 currentUniq++;
-
-                currentEffects = new List<IEffect>();
-                currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have entered combat.", 0));
             }
 
             playerModel.currentCombat = new PlayerModels.CombatDataModels.CombatModel();
@@ -86,12 +84,15 @@ namespace CombatDataClasses.LiveImplementation
             //    currentUniq++;
             //}
 
-            List<MapDataClasses.MapDataClasses.Enemy> enemies = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
-            foreach (MapDataClasses.MapDataClasses.Enemy enemy in enemies)
+            Encounter encounter = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
+            foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
             {
                 this.npcs.Add(new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq));
                 currentUniq++;
             }
+
+            currentEffects = new List<IEffect>();
+            currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
         }
         
         public List<ICommand> getCommands()

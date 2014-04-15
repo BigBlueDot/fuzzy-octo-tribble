@@ -9,7 +9,7 @@ namespace CombatDataClasses.DummyImplementation
 {
     public class DummyCommand : ICommand
     {
-        public DummyCommand(bool hasChildCommands, List<ICommand> childCommands, bool limitedUsage, int uses, int totalUses, string name, bool mpNeeded, int mpCost)
+        public DummyCommand(bool hasChildCommands, List<ICommand> childCommands, bool limitedUsage, int uses, int totalUses, string name, bool mpNeeded, int mpCost, bool hasTarget)
         {
             _hasChildCommands = hasChildCommands;
             _childCommands = childCommands;
@@ -19,6 +19,7 @@ namespace CombatDataClasses.DummyImplementation
             _name = name;
             _mpNeeded = mpNeeded;
             _mpCost = mpCost;
+            _hasTarget = hasTarget;
         }
 
         private bool _hasChildCommands;
@@ -90,6 +91,15 @@ namespace CombatDataClasses.DummyImplementation
             get
             {
                 return _mpCost;
+            }
+        }
+
+        private bool _hasTarget;
+        public bool hasTarget
+        {
+            get
+            {
+                return _hasTarget;
             }
         }
     }

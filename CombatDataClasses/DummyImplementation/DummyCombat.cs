@@ -14,16 +14,16 @@ namespace CombatDataClasses.DummyImplementation
             //Get next player characters commands
             List<ICommand> returnValue = new List<ICommand>();
             List<ICommand> magicList = new List<ICommand>();
-            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Fireball", true, 1));
-            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Heal", true, 1));
+            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Fireball", true, 1, true));
+            magicList.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Heal", true, 1, true));
 
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0));
-            returnValue.Add(new DummyCommand(true, magicList, false, 0, 0, "Magic", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Heal", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), true, 2, 3, "Destroy", false, 0));
-            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Game Over", false, 0));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true));
+            returnValue.Add(new DummyCommand(true, magicList, false, 0, 0, "Magic", false, 0, false));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Heal", false, 0, false));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), true, 2, 3, "Destroy", false, 0, false));
+            returnValue.Add(new DummyCommand(false, new List<ICommand>(), false, 0, 0, "Game Over", false, 0, false));
 
             return returnValue;
         }
@@ -38,6 +38,11 @@ namespace CombatDataClasses.DummyImplementation
         public ICombatStatus executeCommand(SelectedCommand command)
         {
             //The non-dummy implementation will probably be handled in a separate class
+            int target = 1;
+            if (command.targets != null && command.targets.Count != 0)
+            {
+                target = command.targets[0];
+            }
             if (command.commandName == "Flee")
             {
                 List<IEffect> effectsList = new List<IEffect>();
@@ -48,28 +53,25 @@ namespace CombatDataClasses.DummyImplementation
             else if (command.commandName == "Attack")
             {
                 List<IEffect> effectsList = new List<IEffect>();
-                effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 1, string.Empty, 5));
-                effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "All characters have taken damage!", 0));
+                effectsList.Add(new DummyEffect(EffectTypes.DealDamage, target, string.Empty, 5));
+                effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "Damage has been dealt!", 0));
                 return generateCombatStatus(effectsList, 5);
             }
             else if (command.commandName == "Magic")
             {
+                target = command.subCommand.targets[0];
                 if (command.subCommand.commandName == "Fireball")
                 {
                     List<IEffect> effectsList = new List<IEffect>();
-                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 1, string.Empty, 5));
-                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 2, string.Empty, 5));
-                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 3, string.Empty, 5));
-                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 4, string.Empty, 5));
-                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, 5, string.Empty, 5));
-                    effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A gigantic fireball damages all combatants!", 0));
+                    effectsList.Add(new DummyEffect(EffectTypes.DealDamage, target, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A gigantic fireball damages the target!", 0));
                     return generateCombatStatus(effectsList, 5);
                 }
                 else if (command.subCommand.commandName == "Heal")
                 {
                     List<IEffect> effectsList = new List<IEffect>();
-                    effectsList.Add(new DummyEffect(EffectTypes.HealDamage, 1, string.Empty, 5));
-                    effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A holy light heals a character at random.", 0));
+                    effectsList.Add(new DummyEffect(EffectTypes.HealDamage, target, string.Empty, 5));
+                    effectsList.Add(new DummyEffect(EffectTypes.Message, 0, "A holy light heals a character.", 0));
                     return generateCombatStatus(effectsList, 5);
                 }
             }
@@ -89,7 +91,7 @@ namespace CombatDataClasses.DummyImplementation
             else if (command.commandName == "Destroy")
             {
                 List<IEffect> effectsList = new List<IEffect>();
-                effectsList.Add(new DummyEffect(EffectTypes.DestroyCharacter, 1, string.Empty, 5));
+                effectsList.Add(new DummyEffect(EffectTypes.DestroyCharacter, target, string.Empty, 5));
                 return generateCombatStatus(effectsList, 5);
             }
             else if (command.commandName == "Game Over")

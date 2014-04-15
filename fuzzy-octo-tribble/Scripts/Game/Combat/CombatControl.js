@@ -1,8 +1,12 @@
 ﻿FuzzyOctoTribble.CombatControlCreatorConstructor = function () {
     var that = {};
 
+    var selectingTarget = false;
+    var onTargetSelected;
+
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
+            selectingTarget = false;
             $.ajax({
                 type: 'POST',
                 url: 'Game/executeCommand',
@@ -48,7 +52,14 @@
                 sendingCommand.subCommand = {};
                 sendingCommand.targets = [];
 
-                if (currentCommand.hasChildCommands) {
+                if (currentCommand.hasTarget) {
+                    selectingTarget = true;
+                    onTargetSelected = function (characterUniq) {
+                        sendingCommand.targets.push(characterUniq);
+                        onComplete();
+                    }
+                }
+                else if (currentCommand.hasChildCommands) {
                     FuzzyOctoTribble.KeyControl.addController(createCommandSelectionScreen(currentCommand.childCommands, currentCharacter, sendingCommand.subCommand, onComplete));
                 }
                 else {
@@ -152,24 +163,23 @@
     that.createBaseScreen = function (allies, enemies, commands, currentCharacter) {
         var that = {};
 
-        for (var i = 0; i < allies.length; i++) {
-            allies[i].selected = function (character) {
-                if (that.hasCurrentControl) {
-                    var $detailScreen = FuzzyOctoTribble.CombatScreenCreator.getDetailedScreen(character);
-                    FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
-                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
-                }
+        var onCharacterSelect = function (character) {
+            if (selectingTarget) {
+                onTargetSelected(character.uniq);
+            }
+            else if (that.hasCurrentControl) {
+                var $detailScreen = FuzzyOctoTribble.CombatScreenCreator.getDetailedScreen(character);
+                FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
+                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
             }
         }
 
+        for (var i = 0; i < allies.length; i++) {
+            allies[i].selected = onCharacterSelect;
+        }
+
         for (var i = 0; i < enemies.length; i++) {
-            enemies[i].selected = function (character) {
-                if (that.hasCurrentControl) {
-                    var $detailScreen = FuzzyOctoTribble.CombatScreenCreator.getDetailedScreen(character);
-                    FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
-                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
-                }
-            }
+            enemies[i].selected = onCharacterSelect;
         }
 
         $('.combat-screen').remove();

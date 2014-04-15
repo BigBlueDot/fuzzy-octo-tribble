@@ -17,6 +17,11 @@ namespace CombatDataClasses
             factory = new DummyImplementation.DummyCombatFactory();
         }
 
+        public CombatDirector(PlayerModels.PlayerModel playerModel)
+        {
+            factory = new LiveImplementation.CombatFactory(playerModel);
+        }
+
         //TODO:  Add a constructor that takes in pointers to current party, loads enemies etc.
 
         public ICombat getCombat()

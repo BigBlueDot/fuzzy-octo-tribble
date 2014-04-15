@@ -56,7 +56,7 @@ namespace GameDataClasses
             this.rng = new GameRNG();
             this.combatCountdown = rng.getNumber(combatMinNumber, combatMaxNumber);
 
-            combatDirector = new CombatDataClasses.CombatDirector();
+            combatDirector = new CombatDataClasses.CombatDirector(this.player);
             combat = combatDirector.getCombat(); //Combat will be generated when combat is entered, not here in final version
         }
 
@@ -151,7 +151,7 @@ namespace GameDataClasses
                         {
                             if (cm.name == s)
                             {
-                                pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq });
+                                pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq, hp = cm.stats.maxHP, mp = cm.stats.maxMP });
                             }
                         }
                     }

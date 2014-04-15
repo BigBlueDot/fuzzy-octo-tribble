@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201404131743134_PreFixCombatMigration.Designer.cs">
       <DependentUpon>201404131743134_PreFixCombatMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404152154550_CombatUpdate.cs" />
+    <Compile Include="Migrations\201404152154550_CombatUpdate.Designer.cs">
+      <DependentUpon>201404152154550_CombatUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -385,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404131743134_PreFixCombatMigration.resx">
       <DependentUpon>201404131743134_PreFixCombatMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404152154550_CombatUpdate.resx">
+      <DependentUpon>201404152154550_CombatUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

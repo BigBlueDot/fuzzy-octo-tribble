@@ -55,7 +55,23 @@
     <Compile Include="Interfaces\IEffect.cs" />
     <Compile Include="Interfaces\SelectedCommand.cs" />
     <Compile Include="Interfaces\IStatusDisplay.cs" />
+    <Compile Include="LiveImplementation\CharacterDisplay.cs" />
+    <Compile Include="LiveImplementation\Combat.cs" />
+    <Compile Include="LiveImplementation\CombatFactory.cs" />
+    <Compile Include="LiveImplementation\CombatStatus.cs" />
+    <Compile Include="LiveImplementation\Command.cs" />
+    <Compile Include="LiveImplementation\Effect.cs" />
+    <Compile Include="LiveImplementation\StatusDisplay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlayerModels\PlayerDataClasses.csproj">
+      <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
+      <Name>PlayerDataClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

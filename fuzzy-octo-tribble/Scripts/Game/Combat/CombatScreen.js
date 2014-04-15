@@ -27,9 +27,9 @@
             $characterDisplay.css('color', '#ffffff');
         }
         $characterDisplay.on('click', function () {
-            var $detailScreen = that.getDetailedScreen(character);
-            FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
-            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
+            if (character.selected) {
+                character.selected(character);
+            }
         });
         characterWindows[character.uniq] = $characterDisplay;
         return $characterDisplay;

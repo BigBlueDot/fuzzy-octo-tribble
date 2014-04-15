@@ -11,7 +11,7 @@
     var additionalDisplays = spec.additionalDisplays || [];
     my = my || {};
 
-    var selectItem = function(index) {
+    var selectItem = function (index) {
         items[index].selected();
     }
 
@@ -33,7 +33,11 @@
         $menuItem.addClass('menu-item text-font');
         $menuItem.text(items[i].text);
         $menuItem.data('index', i);
-        $menuItem.on('click', function () { items[$(this).data('index')].selected(); });
+        $menuItem.on('click', function () {
+            if (that.hasCurrentControl) {
+                items[$(this).data('index')].selected();
+            }
+        });
         $menu.append($menuItem);
         menuItems.push($menuItem);
     }

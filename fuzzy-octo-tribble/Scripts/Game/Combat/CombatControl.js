@@ -152,6 +152,26 @@
     that.createBaseScreen = function (allies, enemies, commands, currentCharacter) {
         var that = {};
 
+        for (var i = 0; i < allies.length; i++) {
+            allies[i].selected = function (character) {
+                if (that.hasCurrentControl) {
+                    var $detailScreen = FuzzyOctoTribble.CombatScreenCreator.getDetailedScreen(character);
+                    FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
+                }
+            }
+        }
+
+        for (var i = 0; i < enemies.length; i++) {
+            enemies[i].selected = function (character) {
+                if (that.hasCurrentControl) {
+                    var $detailScreen = FuzzyOctoTribble.CombatScreenCreator.getDetailedScreen(character);
+                    FuzzyOctoTribble.KeyControl.removeWindows('isDetailWindow');
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CombatControlCreator.createCharacterDetailScreen($detailScreen));
+                }
+            }
+        }
+
         $('.combat-screen').remove();
         var $initialScreen = FuzzyOctoTribble.CombatScreenCreator.loadInitialScreen({
             allies: allies,

@@ -80,12 +80,19 @@
     }
 
     that.addController = function (controller) {
-        if (controllers.length !== 0 && controllers[controllers.length - 1].clearCurrentControl) {
-            controllers[controllers.length - 1].clearCurrentControl();
+        if (controllers.length !== 0) {
+            controllers[controllers.length - 1].hasCurrentControl = false;
+            if (controllers[controllers.length - 1].clearCurrentControl) {
+                controllers[controllers.length - 1].clearCurrentControl();
+            }
         }
+        controller.hasCurrentControl = true;
         controllers.push(controller);
         controller.onComplete = function () {
             controllers.pop();
+            if (controllers.length !== 0) {
+                controllers[controllers.length - 1].hasCurrentControl = true;
+            }
         }
     }
 

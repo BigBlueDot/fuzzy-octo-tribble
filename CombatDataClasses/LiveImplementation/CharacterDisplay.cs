@@ -21,6 +21,11 @@ namespace CombatDataClasses.LiveImplementation
             _turnOrder = turnOrder;
         }
 
+        public void setTurnOrder(int turnOrder)
+        {
+            _turnOrder = turnOrder;
+        }
+
         private string _name;
         public string name
         {

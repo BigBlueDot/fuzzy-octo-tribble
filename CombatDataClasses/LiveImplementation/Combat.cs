@@ -13,17 +13,19 @@ namespace CombatDataClasses.LiveImplementation
         private int currentCharacterUniq;
         private Dictionary<int, CharacterDisplay> pcs;
         private Dictionary<int, int> uniqBridge;
-        private List<CharacterDisplay> npcs;
+        private Dictionary<int, CharacterDisplay> npcs;
+        private List<PlayerModels.CombatDataModels.CombatNPCModel> combatNPCModels;
         private PlayerModels.PlayerModel playerModel;
         private List<IEffect> currentEffects;
+        private List<PlayerModels.CombatDataModels.CombatPCModel> combatCharacterModels;
 
-        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection)
+        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator)
         {
             int currentUniq = 1;
             this.playerModel = playerModel;
             uniqBridge = new Dictionary<int, int>();
             pcs = new Dictionary<int, CharacterDisplay>();
-            npcs = new List<CharacterDisplay>();
+            npcs = new Dictionary<int, CharacterDisplay>();
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -32,7 +34,7 @@ namespace CombatDataClasses.LiveImplementation
                 characterUniqs.Add(pcm.characterUniq);
             }
             List<PlayerModels.Models.CharacterModel> characterModels = PlayerModels.PlayerDataManager.getCurrentParty(playerModel, characterUniqs);
-            List<PlayerModels.CombatDataModels.CombatPCModel> combatCharacterModels = new List<PlayerModels.CombatDataModels.CombatPCModel>();
+            combatCharacterModels = new List<PlayerModels.CombatDataModels.CombatPCModel>();
 
             foreach (int characterUniq in characterUniqs)
             {
@@ -42,22 +44,28 @@ namespace CombatDataClasses.LiveImplementation
                 int mp = 0;
                 int maxMP = 0;
                 int turnOrder = 0;
+                int agi = 0;
                 uniqBridge.Add(currentUniq, characterUniq);
 
                 foreach (PlayerModels.Models.CharacterModel cm in characterModels)
                 {
-                    name = cm.name;
-                    maxHP = cm.stats.maxHP;
-                    maxMP = cm.stats.maxMP;
+                    if (cm.uniq == characterUniq)
+                    {
+                        name = cm.name;
+                        maxHP = cm.stats.maxHP;
+                        maxMP = cm.stats.maxMP;
+                        agi = cm.stats.agility;
+                    }
                 }
 
                 foreach (PlayerModels.Models.PartyCharacterModel pcm in partyCharacterModels)
                 {
-                    hp = pcm.hp;
-                    mp = pcm.mp;
+                    if (pcm.characterUniq == characterUniq)
+                    {
+                        hp = pcm.hp;
+                        mp = pcm.mp;
+                    }
                 }
-
-                turnOrder = currentUniq;
 
                 pcs.Add(characterUniq, new CharacterDisplay(name, hp, maxHP, mp, maxMP, new List<IStatusDisplay>(), currentUniq, turnOrder));
                 combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatPCModel()
@@ -65,6 +73,8 @@ namespace CombatDataClasses.LiveImplementation
                     characterUniq = characterUniq,
                     mods = new List<PlayerModels.CombatDataModels.CombatModificationsModel>(),
                     stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel() { hp = hp, mp = mp },
+                    nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), agi),
+                    combatUniq = currentUniq
                 });
                 currentUniq++;
             }
@@ -85,14 +95,30 @@ namespace CombatDataClasses.LiveImplementation
             //}
 
             Encounter encounter = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
+            combatNPCModels = new List<PlayerModels.CombatDataModels.CombatNPCModel>();
             foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
             {
-                this.npcs.Add(new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq));
+                this.npcs.Add(currentUniq, new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq));
+                this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatNPCModel()
+                {
+                    enemyName = enemy.name,
+                    stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel()
+                    {
+                        hp = enemy.maxHP,
+                        mp = enemy.maxMP
+                    },
+                    nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), enemy.agility),
+                    combatUniq = currentUniq
+                });
+
                 currentUniq++;
             }
+            playerModel.currentCombat.npcs = combatNPCModels;
 
             currentEffects = new List<IEffect>();
             currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
+
+            calculateTurnOrder();
         }
         
         public List<ICommand> getCommands()
@@ -110,13 +136,63 @@ namespace CombatDataClasses.LiveImplementation
             foreach(int key in pcs.Keys) {
                 pcDisplays.Add(pcs[key]);
             }
+            List<ICharacterDisplay> npcDisplays = new List<ICharacterDisplay>();
+            foreach (int key in npcs.Keys)
+            {
+                npcDisplays.Add(npcs[key]);
+            }
 
-            return new CombatStatus("INCOMPLETE", currentEffects, pcDisplays, npcs);
+            return new CombatStatus("INCOMPLETE", currentEffects, pcDisplays, npcDisplays);
         }
 
         public ICombatStatus executeCommand(SelectedCommand command)
         {
             throw new NotImplementedException();
+        }
+
+        private int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)
+        {
+            return startTime + ((int)(60 * ((Math.Log10(agi) / (abilityCoefficient * 2 * Math.Log10(10))))));
+        }
+
+        private void calculateTurnOrder()
+        {
+            List<int> usedUniqs = new List<int>();
+            for (int i = 0; i < npcs.Count + pcs.Count; i++)
+            {
+                int currentFastestUniq = 1;
+                int fastestTime = int.MaxValue;
+                bool isPC = false;
+                foreach (PlayerModels.CombatDataModels.CombatNPCModel npc in combatNPCModels)
+                {
+                    if (!usedUniqs.Contains(npc.combatUniq) && npc.nextAttackTime < fastestTime)
+                    {
+                        currentFastestUniq = npc.combatUniq;
+                        fastestTime = npc.nextAttackTime;
+                        isPC = false;
+                    }
+                }
+
+                foreach (PlayerModels.CombatDataModels.CombatPCModel pc in combatCharacterModels)
+                {
+                    if (!usedUniqs.Contains(pc.combatUniq) && pc.nextAttackTime < fastestTime)
+                    {
+                        currentFastestUniq = pc.combatUniq;
+                        fastestTime = pc.nextAttackTime;
+                        isPC = true;
+                    }
+                }
+
+                usedUniqs.Add(currentFastestUniq);
+                if (isPC)
+                {
+                    pcs[uniqBridge[currentFastestUniq]].setTurnOrder(i + 1);
+                }
+                else
+                {
+                    npcs[currentFastestUniq].setTurnOrder(i + 1);
+                }
+            }
         }
     }
 }

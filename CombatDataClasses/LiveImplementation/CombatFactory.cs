@@ -12,16 +12,18 @@ namespace CombatDataClasses.LiveImplementation
         private PlayerModels.PlayerModel playerModel;
         private string map;
         private Func<int> randomNumberGenerator;
-        public CombatFactory(PlayerModels.PlayerModel playerModel, string map, Func<int> randomNumberGenerator)
+        private Func<float> initiativeCalculator;
+        public CombatFactory(PlayerModels.PlayerModel playerModel, string map, Func<int> randomNumberGenerator, Func<float> initiativeCalculator)
         {
             this.playerModel = playerModel;
             this.map = map;
             this.randomNumberGenerator = randomNumberGenerator;
+            this.initiativeCalculator = initiativeCalculator;
         }
 
         public ICombat generateCombat()
         {
-            return new Combat(playerModel, map, randomNumberGenerator());
+            return new Combat(playerModel, map, randomNumberGenerator(), initiativeCalculator);
         }
     }
 }

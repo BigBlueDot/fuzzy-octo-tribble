@@ -11,6 +11,7 @@ namespace GameDataClasses.GameCombatClasses
         public CombatStats stats { get; set; }
         public List<CombatModifier> modifiers { get; set; }
         public CombatNPCStats npcStats { get; set; }
+        public int nextAttackTime { get; set; } 
 
         public CombatNPC()
         {

@@ -37,5 +37,9 @@ namespace GameDataClasses
             return random.Next(min - 1, max + 1);
         }
 
+        public float calculateIntiative()
+        {
+            return 0.5f + (float)random.NextDouble();
+        }
     }
 }

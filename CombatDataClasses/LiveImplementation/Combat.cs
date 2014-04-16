@@ -385,6 +385,18 @@ namespace CombatDataClasses.LiveImplementation
         {
             int livingPcs = checkCharacterListDeath(pcs);
             int livingNpcs = checkCharacterListDeath(npcs);
+
+            if (livingPcs == 0)
+            {
+                currentEffects.Remove(currentEffects[currentEffects.Count - 1]); //Remove the last effect, as it will be an end turn effect
+                currentEffects.Add(new Effect(EffectTypes.GameOver, 0, "", 0));
+                currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have been defeated!", 0));
+            }
+            else if (livingNpcs == 0)
+            {
+                currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have emerged victorious!", 0));
+                currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+            }
         }
 
 
@@ -393,6 +405,7 @@ namespace CombatDataClasses.LiveImplementation
             calculateTurnOrder();
 
             calculateTurn(true);
+            checkDeath();
             return getStatus();
         }
     }

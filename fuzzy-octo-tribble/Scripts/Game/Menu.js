@@ -4,6 +4,7 @@
     var menuItems = [];
     var items = spec.items;
     var closeOnMenu = spec.closeOnMenu;
+    var delayShow = spec.delayShow;
     var header = spec.header;
     if (spec.isCombat) {
         that.isCombat = true;
@@ -41,11 +42,6 @@
         $menu.append($menuItem);
         menuItems.push($menuItem);
     }
-
-    $('.game-window').append($menu);
-    for (var i = 0; i < additionalDisplays.length; i++) {
-        $('.game-window').append(additionalDisplays[i]);
-    }
     
     var applySelect = function () {
         $menu.find('.menu-item-selected').removeClass('menu-item-selected');
@@ -55,6 +51,13 @@
     var defaultSelect = function () {
         selectedMenuItem = 0;
         applySelect();
+    }
+
+    that.show = function () {
+        $('.game-window').append($menu);
+        for (var i = 0; i < additionalDisplays.length; i++) {
+            $('.game-window').append(additionalDisplays[i]);
+        }
     }
 
     that.close = function () {
@@ -93,6 +96,10 @@
         if (closeOnMenu) {
             that.cancel();
         }
+    }
+
+    if (!delayShow) {
+        that.show();
     }
 
     defaultSelect();

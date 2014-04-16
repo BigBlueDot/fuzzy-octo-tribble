@@ -23,6 +23,7 @@ namespace CombatDataClasses.Interfaces
         HealDamage,
         DestroyCharacter,
         CombatEnded,
-        GameOver
+        GameOver,
+        ShowCommand
     }
 }

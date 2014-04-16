@@ -3,7 +3,7 @@
 
     var selectingTarget = false;
     var onTargetSelected;
-    var $currentDefaultScreen;
+    var $currentDefaultScreen, $currentCommandScreen;
 
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
@@ -84,7 +84,8 @@
             closeOnMenu: true,
             header: currentCharacter + ":",
             isCombat: true,
-            additionalClasses: 'combat-screen'
+            additionalClasses: 'combat-screen',
+            delayShow: true
         }
         var my = {};
 
@@ -130,6 +131,11 @@
                 break;
             case 5: //Game over
                 FuzzyOctoTribble.CombatScreenCreator.gameOverAnimation();
+                processEffects(effects);
+                break;
+            case 6: //Show Command Screen
+                $currentCommandScreen.show();
+                FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
                 processEffects(effects);
                 break;
 
@@ -251,7 +257,9 @@
         }
 
         that.menu = function () {
-            FuzzyOctoTribble.KeyControl.addController(createCommandSelectionScreen(commands, currentCharacter));
+            $currentCommandScreen = createCommandSelectionScreen(commands, currentCharacter);
+            $currentCommandScreen.show();
+            FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
         }
 
         return that;
@@ -260,7 +268,7 @@
     that.create = function (spec, my) {
         $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
         FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
-        FuzzyOctoTribble.KeyControl.addController(that.createCommandSelectionScreen(spec.commands, spec.currentCharacter));
+        $currentCommandScreen = that.createCommandSelectionScreen(spec.commands, spec.currentCharacter);
         if (spec.effects.length !== 0) {
             processEffects(spec.effects);
         }

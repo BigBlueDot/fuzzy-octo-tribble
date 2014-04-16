@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201404152154550_CombatUpdate.Designer.cs">
       <DependentUpon>201404152154550_CombatUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404160138439_CombatUpdate2.cs" />
+    <Compile Include="Migrations\201404160138439_CombatUpdate2.Designer.cs">
+      <DependentUpon>201404160138439_CombatUpdate2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -392,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404152154550_CombatUpdate.resx">
       <DependentUpon>201404152154550_CombatUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404160138439_CombatUpdate2.resx">
+      <DependentUpon>201404160138439_CombatUpdate2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

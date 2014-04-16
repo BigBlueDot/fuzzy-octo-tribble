@@ -123,6 +123,7 @@ namespace CombatDataClasses.LiveImplementation
             currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
 
             calculateTurnOrder();
+            calculateTurn(false);
         }
         
         public List<ICommand> getCommands()
@@ -204,6 +205,17 @@ namespace CombatDataClasses.LiveImplementation
                     npcs[currentFastestUniq].setTurnOrder(i + 1);
                 }
             }
+        }
+
+        private void calculateTurn(bool killPreviousTurn)
+        {
+            //This is where all the stuff is calculated until the player's next move
+            if (killPreviousTurn)
+            {
+                currentEffects.Clear();
+            }
+
+            currentEffects.Add(new Effect(EffectTypes.ShowCommand, 0, string.Empty, 0));
         }
     }
 }

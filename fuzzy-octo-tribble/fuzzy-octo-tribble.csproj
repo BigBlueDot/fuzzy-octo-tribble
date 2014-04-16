@@ -192,25 +192,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201403091845035_Initial.cs" />
-    <Compile Include="Migrations\201403091845035_Initial.Designer.cs">
-      <DependentUpon>201403091845035_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403180451213_CombatModels.cs" />
-    <Compile Include="Migrations\201403180451213_CombatModels.Designer.cs">
-      <DependentUpon>201403180451213_CombatModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404131743134_PreFixCombatMigration.cs" />
-    <Compile Include="Migrations\201404131743134_PreFixCombatMigration.Designer.cs">
-      <DependentUpon>201404131743134_PreFixCombatMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404152154550_CombatUpdate.cs" />
-    <Compile Include="Migrations\201404152154550_CombatUpdate.Designer.cs">
-      <DependentUpon>201404152154550_CombatUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404160138439_CombatUpdate2.cs" />
-    <Compile Include="Migrations\201404160138439_CombatUpdate2.Designer.cs">
-      <DependentUpon>201404160138439_CombatUpdate2.cs</DependentUpon>
+    <Compile Include="Migrations\201404162212130_Initial.cs" />
+    <Compile Include="Migrations\201404162212130_Initial.Designer.cs">
+      <DependentUpon>201404162212130_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -385,20 +369,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403091845035_Initial.resx">
-      <DependentUpon>201403091845035_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403180451213_CombatModels.resx">
-      <DependentUpon>201403180451213_CombatModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404131743134_PreFixCombatMigration.resx">
-      <DependentUpon>201404131743134_PreFixCombatMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404152154550_CombatUpdate.resx">
-      <DependentUpon>201404152154550_CombatUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404160138439_CombatUpdate2.resx">
-      <DependentUpon>201404160138439_CombatUpdate2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404162212130_Initial.resx">
+      <DependentUpon>201404162212130_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

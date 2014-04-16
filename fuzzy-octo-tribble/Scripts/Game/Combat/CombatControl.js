@@ -4,6 +4,7 @@
     var selectingTarget = false;
     var onTargetSelected;
     var $currentDefaultScreen, $currentCommandScreen;
+    var gameOver = false;
 
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
@@ -130,9 +131,13 @@
                 break;
             case 4: //Combat has ended
                 FuzzyOctoTribble.KeyControl.removeCombat();
+                if (gameOver) {
+                    FuzzyOctoTribble.MaintainState.updateMap();
+                }
                 break;
             case 5: //Game over
                 FuzzyOctoTribble.CombatScreenCreator.gameOverAnimation();
+                gameOver = true;
                 processEffects(effects);
                 break;
             case 6: //Show Command Screen

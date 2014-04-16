@@ -13,17 +13,24 @@ namespace CombatDataClasses.LiveImplementation
         private string map;
         private Func<int> randomNumberGenerator;
         private Func<float> initiativeCalculator;
-        public CombatFactory(PlayerModels.PlayerModel playerModel, string map, Func<int> randomNumberGenerator, Func<float> initiativeCalculator)
+        private Action onGameOver;
+        public CombatFactory(PlayerModels.PlayerModel playerModel, string map, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver)
         {
             this.playerModel = playerModel;
             this.map = map;
             this.randomNumberGenerator = randomNumberGenerator;
             this.initiativeCalculator = initiativeCalculator;
+            this.onGameOver = onGameOver;
+        }
+
+        public void setMap(string map)
+        {
+            this.map = map;
         }
 
         public ICombat generateCombat()
         {
-            return new Combat(playerModel, map, randomNumberGenerator(), initiativeCalculator);
+            return new Combat(playerModel, map, randomNumberGenerator(), initiativeCalculator, onGameOver);
         }
     }
 }

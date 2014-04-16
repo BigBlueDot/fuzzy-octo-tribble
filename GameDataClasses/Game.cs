@@ -56,7 +56,22 @@ namespace GameDataClasses
             this.rng = new GameRNG();
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
-            combatDirector = new CombatDataClasses.CombatDirector(this.player, currentMap.name, () => { return rng.getNumber(1, MapDataClasses.MapDataManager.getRandomEncounterCount(currentMap.name)); }, () => { return rng.calculateIntiative(); });
+            combatDirector = new CombatDataClasses.CombatDirector(this.player, 
+                currentMap.name, 
+                () => { 
+                    return rng.getNumber(1, MapDataClasses.MapDataManager.getRandomEncounterCount(currentMap.name)); 
+                }, 
+                () => { 
+                    return rng.calculateIntiative(); 
+                },
+                () => {
+                    setMap(MapDataClasses.MapDataManager.getHubMap(player.rootMap), true); 
+                    this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
+                    currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
+                    player.rootX = currentMap.startX;
+                    player.rootY = currentMap.startY;
+                }
+                );
         }
 
         public bool isInDungeon()
@@ -99,10 +114,10 @@ namespace GameDataClasses
             return MapDataClasses.MapDataManager.getMapInteraction(x, y, currentMap);
         }
 
-        public void loadDungeon(int x, int y, string dungeonName, string[] party)
+        public void loadDungeon(int x, int y, string dungeonName, string[] party, bool combat = false)
         {
             //Verify that the dungeon selection is legitimate
-            if (MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
+            if (combat || MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
             {
                 this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
                 if (isInDungeon())
@@ -111,7 +126,7 @@ namespace GameDataClasses
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
-                    player.rootMap = dungeonName;
+                    setMap(dungeonName);
 
                     var currentParty = new PlayerModels.Models.PartyModel();
                     foreach (PlayerModels.Models.PartyModel pm in player.parties)
@@ -136,7 +151,7 @@ namespace GameDataClasses
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
-                    player.rootMap = dungeonName;
+                    setMap(dungeonName);
 
                     //Create party and set to default
                     PlayerModels.Models.PartyModel pm = new PlayerModels.Models.PartyModel();
@@ -247,14 +262,24 @@ namespace GameDataClasses
 
         private bool isCombat()
         {
-            combatCountdown--;
-            if (combatCountdown == 0)
+            if (MapDataClasses.MapDataManager.isCombatMap(player.rootMap))
             {
-                this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
-                return true;
+                combatCountdown--;
+                if (combatCountdown <= 0)
+                {
+                    this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        private void setMap(string newMap, bool isCombat = false)
+        {
+            player.rootMap = newMap;
+            combatDirector.setMap(newMap);
+            loadDungeon(0, 0, newMap, new string[0], isCombat);
         }
     }
 }

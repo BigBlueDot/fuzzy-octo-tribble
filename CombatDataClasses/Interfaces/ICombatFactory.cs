@@ -9,5 +9,6 @@ namespace CombatDataClasses.Interfaces
     public interface ICombatFactory
     {
         ICombat generateCombat();
+        void setMap(string map);
     }
 }

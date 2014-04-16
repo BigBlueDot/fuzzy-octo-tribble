@@ -9,7 +9,8 @@ namespace fuzzy_octo_tribble.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            ContextKey = "fuzzy_octo_tribble.Models.UsersContext";
         }
 
         protected override void Seed(fuzzy_octo_tribble.Models.UsersContext context)

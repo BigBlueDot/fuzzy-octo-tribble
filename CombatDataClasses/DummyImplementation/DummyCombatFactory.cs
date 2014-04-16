@@ -15,5 +15,10 @@ namespace CombatDataClasses.DummyImplementation
 
             return returnValue;
         }
+
+        void ICombatFactory.setMap(string map)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

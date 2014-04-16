@@ -23,8 +23,9 @@ namespace CombatDataClasses.LiveImplementation
         private List<CombatCharacterModel> combatCharacterModels; //These are stored so they can be updated
         private List<CombatCharacterModel> combatNPCModels;
         private CombatData combatData;
+        private Action onGameOver;
 
-        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator)
+        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver)
         {
             int currentUniq = 1;
             this.playerModel = playerModel;
@@ -32,6 +33,7 @@ namespace CombatDataClasses.LiveImplementation
             pcs = new Dictionary<int, FullCombatCharacter>();
             npcs = new Dictionary<int, FullCombatCharacter>();
             currentCharacter = new FullCombatCharacter();
+            this.onGameOver = onGameOver;
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -391,6 +393,8 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Remove(currentEffects[currentEffects.Count - 1]); //Remove the last effect, as it will be an end turn effect
                 currentEffects.Add(new Effect(EffectTypes.GameOver, 0, "", 0));
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have been defeated!", 0));
+                currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                onGameOver();
             }
             else if (livingNpcs == 0)
             {

@@ -121,6 +121,32 @@ namespace MapDataClasses
             return results;
         }
 
+        public static string getHubMap(string name)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return "Ensemble Village";
+                case "Emergence Cavern":
+                    return "Ensemble Village";
+                default:
+                    return "Ensemble Village";
+            }
+        }
+
+        public static bool isCombatMap(string name)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return false;
+                case "Emergence Cavern":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static MapModel createMap(string name)
         {
             switch (name)

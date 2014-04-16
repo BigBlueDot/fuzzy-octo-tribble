@@ -240,6 +240,11 @@ namespace GameDataClasses
             return combat.executeCommand(command);
         }
 
+        public ICombatStatus nextTurn()
+        {
+            return combat.nextTurn();
+        }
+
         private bool isCombat()
         {
             combatCountdown--;

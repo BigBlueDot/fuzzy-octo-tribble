@@ -238,6 +238,7 @@ namespace CombatDataClasses.LiveImplementation
             }
             Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
             currentEffects = cmdExecute(source, targets, combatData);
+            currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
             return getStatus();
         }
 
@@ -328,6 +329,7 @@ namespace CombatDataClasses.LiveImplementation
                 {
                     currentEffects.Add(e);
                 }
+                currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
             }
         }
 
@@ -360,6 +362,14 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             return null;
+        }
+
+
+        public ICombatStatus nextTurn()
+        {
+            calculateTurnOrder();
+            calculateTurn(true);
+            return getStatus();
         }
     }
 }

@@ -41,6 +41,7 @@ namespace CombatDataClasses.ClassProcessor
                         List<IEffect> effects = new List<IEffect>();
                         int dmg = (int)((source.strength * 5 / target[0].vitality));
                         effects.Add(new Effect(EffectTypes.DealDamage, target[0].combatUniq, string.Empty, dmg));
+                        effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target[0].name + " for " + dmg.ToString() + " damage!", 0));
                         target[0].hp -= dmg;
                         GeneralProcessor.calculateNextAttackTime(source, 1.0f);
                         return effects;

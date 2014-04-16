@@ -24,6 +24,7 @@ namespace CombatDataClasses.Interfaces
         DestroyCharacter,
         CombatEnded,
         GameOver,
-        ShowCommand
+        ShowCommand,
+        TurnEnded
     }
 }

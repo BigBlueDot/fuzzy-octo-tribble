@@ -115,5 +115,11 @@ namespace CombatDataClasses.DummyImplementation
             ICombatStatus combatStatus = new DummyCombatStatus("Scott Pilgrim", effectsList, characterDisplays, npcDisplays);
             return combatStatus;
         }
+
+
+        public ICombatStatus nextTurn()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

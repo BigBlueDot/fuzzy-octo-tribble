@@ -140,6 +140,9 @@
                 FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
                 processEffects(effects);
                 break;
+            case 7: //End turn
+                FuzzyOctoTribble.CombatAccess.continueCombat();
+                break;
 
         }
     }

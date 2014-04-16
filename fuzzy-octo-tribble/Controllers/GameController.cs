@@ -124,6 +124,13 @@ namespace fuzzy_octo_tribble.Controllers
             return Json(game.getStatus(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult nextTurn()
+        {
+            Game game = checkGame();
+            return Json(game.nextTurn(), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult executeCommand(SelectedCommand command)
         {

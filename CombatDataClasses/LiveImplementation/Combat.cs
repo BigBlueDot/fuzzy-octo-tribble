@@ -1,4 +1,5 @@
-﻿using CombatDataClasses.ClassProcessor;
+﻿using CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing;
+using CombatDataClasses.ClassProcessor;
 using CombatDataClasses.Interfaces;
 using MapDataClasses.MapDataClasses;
 using PlayerModels.CombatDataModels;
@@ -13,6 +14,7 @@ namespace CombatDataClasses.LiveImplementation
     public class Combat : ICombat
     {
         private FullCombatCharacter currentCharacter;
+        private bool currentCharacterIsPC;
         private Dictionary<int, int> uniqBridge;
         private PlayerModels.PlayerModel playerModel;
         private List<IEffect> currentEffects;
@@ -279,6 +281,7 @@ namespace CombatDataClasses.LiveImplementation
                         if (i == 0)
                         {
                             currentCharacter = npc;
+                            currentCharacterIsPC = false;
                         }
                     }
                 }
@@ -294,6 +297,7 @@ namespace CombatDataClasses.LiveImplementation
                         if (i == 0)
                         {
                             currentCharacter = pc;
+                            currentCharacterIsPC = true;
                         }
                     }
                 }
@@ -318,7 +322,28 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Clear();
             }
 
-            currentEffects.Add(new Effect(EffectTypes.ShowCommand, 0, string.Empty, 0));
+            if (currentCharacterIsPC)
+            {
+                currentEffects.Add(new Effect(EffectTypes.ShowCommand, 0, string.Empty, 0));
+            }
+            else
+            {
+                List<IEffect> enemyEffects = BasicAbilityProcessing.getCommand(currentCharacter, getAllPcsAsList(), combatData);
+                foreach (IEffect e in enemyEffects)
+                {
+                    currentEffects.Add(e);
+                }
+            }
+        }
+
+        private List<FullCombatCharacter> getAllPcsAsList()
+        {
+            List<FullCombatCharacter> characters = new List<FullCombatCharacter>();
+            foreach (int key in pcs.Keys)
+            {
+                characters.Add(pcs[key]);
+            }
+            return characters;
         }
 
         private FullCombatCharacter getTarget(int targetCombatUniq)

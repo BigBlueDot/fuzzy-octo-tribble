@@ -261,7 +261,7 @@ namespace CombatDataClasses.LiveImplementation
         private void calculateTurnOrder()
         {
             List<int> usedUniqs = new List<int>();
-            for (int i = 0; i < npcs.Count + pcs.Count; i++)
+            for (int i = 0; i < checkCharacterListDeath(npcs) + checkCharacterListDeath(pcs); i++)
             {
                 int currentFastestUniq = 1;
                 int fastestTime = int.MaxValue;
@@ -364,10 +364,34 @@ namespace CombatDataClasses.LiveImplementation
             return null;
         }
 
+        private int checkCharacterListDeath(Dictionary<int, FullCombatCharacter> characters)
+        {
+            int livingCount = characters.Count;
+            foreach (int key in characters.Keys)
+            {
+                if (characters[key].hp <= 0)
+                {
+                    characters[key].hp = 0;
+                    characters[key].turnOrder = 0;
+                    characters[key].nextAttackTime = int.MaxValue;
+                    livingCount--;
+                }
+            }
+
+            return livingCount;
+        }
+
+        private void checkDeath()
+        {
+            int livingPcs = checkCharacterListDeath(pcs);
+            int livingNpcs = checkCharacterListDeath(npcs);
+        }
+
 
         public ICombatStatus nextTurn()
         {
             calculateTurnOrder();
+
             calculateTurn(true);
             return getStatus();
         }

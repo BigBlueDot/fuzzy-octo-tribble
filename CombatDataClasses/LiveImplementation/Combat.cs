@@ -20,6 +20,7 @@ namespace CombatDataClasses.LiveImplementation
         private Dictionary<int, FullCombatCharacter> npcs;
         private List<CombatCharacterModel> combatCharacterModels; //These are stored so they can be updated
         private List<CombatCharacterModel> combatNPCModels;
+        private CombatData combatData;
 
         public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator)
         {
@@ -173,6 +174,7 @@ namespace CombatDataClasses.LiveImplementation
 
             calculateTurnOrder();
             calculateTurn(false);
+            combatData = new CombatData();
         }
         
         public List<ICommand> getCommands()
@@ -216,9 +218,24 @@ namespace CombatDataClasses.LiveImplementation
         public ICombatStatus executeCommand(SelectedCommand command)
         {
             FullCombatCharacter source = currentCharacter;
-            FullCombatCharacter target = getTarget(command.targets[0]);
-            Func<FullCombatCharacter, FullCombatCharacter, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
-            currentEffects = cmdExecute(source, target);
+            List<FullCombatCharacter> targets = new List<FullCombatCharacter>();
+            if (command.targets != null)
+            {
+                foreach (int uniq in command.targets)
+                {
+                    FullCombatCharacter target = getTarget(command.targets[0]);
+                    targets.Add(target);
+                }
+            }
+            if (targets.Count == 0) //Pass in all enemies if no single target was selected
+            {
+                foreach (int key in npcs.Keys)
+                {
+                    targets.Add(npcs[key]);
+                }
+            }
+            Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
+            currentEffects = cmdExecute(source, targets, combatData);
             return getStatus();
         }
 

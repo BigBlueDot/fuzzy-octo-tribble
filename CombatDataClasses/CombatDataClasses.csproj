@@ -60,6 +60,7 @@
     <Compile Include="Interfaces\IStatusDisplay.cs" />
     <Compile Include="LiveImplementation\CharacterDisplay.cs" />
     <Compile Include="LiveImplementation\Combat.cs" />
+    <Compile Include="LiveImplementation\CombatData.cs" />
     <Compile Include="LiveImplementation\CombatFactory.cs" />
     <Compile Include="LiveImplementation\CombatStatus.cs" />
     <Compile Include="LiveImplementation\Command.cs" />

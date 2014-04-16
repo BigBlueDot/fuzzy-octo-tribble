@@ -14,10 +14,10 @@ namespace CombatDataClasses.LiveImplementation
         private Dictionary<int, CharacterDisplay> pcs;
         private Dictionary<int, int> uniqBridge;
         private Dictionary<int, CharacterDisplay> npcs;
-        private List<PlayerModels.CombatDataModels.CombatNPCModel> combatNPCModels;
+        private List<PlayerModels.CombatDataModels.CombatCharacterModel> combatNPCModels;
         private PlayerModels.PlayerModel playerModel;
         private List<IEffect> currentEffects;
-        private List<PlayerModels.CombatDataModels.CombatPCModel> combatCharacterModels;
+        private List<PlayerModels.CombatDataModels.CombatCharacterModel> combatCharacterModels;
 
         public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator)
         {
@@ -34,7 +34,7 @@ namespace CombatDataClasses.LiveImplementation
                 characterUniqs.Add(pcm.characterUniq);
             }
             List<PlayerModels.Models.CharacterModel> characterModels = PlayerModels.PlayerDataManager.getCurrentParty(playerModel, characterUniqs);
-            combatCharacterModels = new List<PlayerModels.CombatDataModels.CombatPCModel>();
+            combatCharacterModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
 
             foreach (int characterUniq in characterUniqs)
             {
@@ -72,7 +72,7 @@ namespace CombatDataClasses.LiveImplementation
                 }
 
                 pcs.Add(characterUniq, new CharacterDisplay(name, hp, maxHP, mp, maxMP, new List<IStatusDisplay>(), currentUniq, turnOrder, classType, level));
-                combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatPCModel()
+                combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
                 {
                     characterUniq = characterUniq,
                     mods = new List<PlayerModels.CombatDataModels.CombatModificationsModel>(),
@@ -99,20 +99,21 @@ namespace CombatDataClasses.LiveImplementation
             //}
 
             Encounter encounter = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
-            combatNPCModels = new List<PlayerModels.CombatDataModels.CombatNPCModel>();
+            combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
             foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
             {
                 this.npcs.Add(currentUniq, new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq, enemy.type, enemy.level));
-                this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatNPCModel()
+                this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
                 {
-                    enemyName = enemy.name,
+                    name = enemy.name,
                     stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel()
                     {
                         hp = enemy.maxHP,
                         mp = enemy.maxMP
                     },
                     nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), enemy.agility),
-                    combatUniq = currentUniq
+                    combatUniq = currentUniq,
+                    characterUniq = 0
                 });
 
                 currentUniq++;
@@ -196,7 +197,7 @@ namespace CombatDataClasses.LiveImplementation
                 int currentFastestUniq = 1;
                 int fastestTime = int.MaxValue;
                 bool isPC = false;
-                foreach (PlayerModels.CombatDataModels.CombatNPCModel npc in combatNPCModels)
+                foreach (PlayerModels.CombatDataModels.CombatCharacterModel npc in combatNPCModels)
                 {
                     if (!usedUniqs.Contains(npc.combatUniq) && npc.nextAttackTime < fastestTime)
                     {
@@ -206,7 +207,7 @@ namespace CombatDataClasses.LiveImplementation
                     }
                 }
 
-                foreach (PlayerModels.CombatDataModels.CombatPCModel pc in combatCharacterModels)
+                foreach (PlayerModels.CombatDataModels.CombatCharacterModel pc in combatCharacterModels)
                 {
                     if (!usedUniqs.Contains(pc.combatUniq) && pc.nextAttackTime < fastestTime)
                     {

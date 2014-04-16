@@ -86,7 +86,7 @@ namespace CombatDataClasses.LiveImplementation
                     }
                 }
 
-                nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), agility);
+                nextAttackTime = GeneralProcessor.calculateNextAttackTime(0, initiativeCalculator(), agility);
 
                 pcs.Add(characterUniq, new FullCombatCharacter() {
                    name = name,
@@ -135,7 +135,7 @@ namespace CombatDataClasses.LiveImplementation
             combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
             foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
             {
-                int nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), enemy.agility);
+                int nextAttackTime = GeneralProcessor.calculateNextAttackTime(0, initiativeCalculator(), enemy.agility);
                 this.npcs.Add(currentUniq, new FullCombatCharacter(){
                     name = enemy.name,
                     hp = enemy.maxHP,
@@ -255,11 +255,6 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             return combatUniq;
-        }
-
-        private int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)
-        {
-            return startTime + ((int)(60 * ((Math.Log10(agi) / (abilityCoefficient * 2 * Math.Log10(10))))));
         }
 
         private void calculateTurnOrder()

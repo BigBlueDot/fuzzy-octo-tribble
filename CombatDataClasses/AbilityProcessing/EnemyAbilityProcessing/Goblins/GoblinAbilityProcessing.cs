@@ -1,4 +1,5 @@
-﻿using CombatDataClasses.Interfaces;
+﻿using CombatDataClasses.ClassProcessor;
+using CombatDataClasses.Interfaces;
 using CombatDataClasses.LiveImplementation;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing.Goblins
             effects.Add(new Effect(EffectTypes.DealDamage, target.combatUniq, string.Empty, dmg));
             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target.name + " for " + dmg.ToString() + " damage!", 0));
             target.hp -= dmg;
+            GeneralProcessor.calculateNextAttackTime(source, 1.0f);
 
             return effects;
         }

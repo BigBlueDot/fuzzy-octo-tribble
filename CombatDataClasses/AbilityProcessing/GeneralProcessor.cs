@@ -10,6 +10,16 @@ namespace CombatDataClasses.ClassProcessor
 {
     public class GeneralProcessor
     {
+        public static int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)
+        {
+            return startTime + ((int)(60 * ((Math.Log10(agi) / (abilityCoefficient * 2 * Math.Log10(10))))));
+        }
+
+        public static void calculateNextAttackTime(FullCombatCharacter character, float abilityCoefficient)
+        {
+            character.nextAttackTime = character.nextAttackTime + ((int)(60 * ((Math.Log10(character.agility) / (abilityCoefficient * 2 * Math.Log10(10))))));
+        }
+
         public static bool isProcessor(string name)
         {
             switch (name)
@@ -32,6 +42,7 @@ namespace CombatDataClasses.ClassProcessor
                         int dmg = (int)((source.strength * 5 / target[0].vitality));
                         effects.Add(new Effect(EffectTypes.DealDamage, target[0].combatUniq, string.Empty, dmg));
                         target[0].hp -= dmg;
+                        GeneralProcessor.calculateNextAttackTime(source, 1.0f);
                         return effects;
                     });
                 case "Flee":
@@ -53,6 +64,7 @@ namespace CombatDataClasses.ClassProcessor
                             {
                                 effects.Add(new Effect(EffectTypes.Message, 0, "You were unable to run away!  (Keepy trying, believe in yourself)", 0));
                             }
+                            GeneralProcessor.calculateNextAttackTime(source, .8f);
                             return effects;
                         });
                 default:

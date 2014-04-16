@@ -214,11 +214,11 @@
         }
 
         that.onCurrentControl = function () {
-            $initialScreen.find('.character-display-screen').css('cursor', 'pointer');
+            $initialScreen.find('.character-display-screen').addClass('character-display-screen-selectable');
         }
 
         that.clearCurrentControl = function () {
-            $initialScreen.find('.character-display-screen').css('cursor', 'initial');
+            $initialScreen.find('.character-display-screen').removeClass('character-display-screen-selectable');
         }
 
         that.pressLeft = function () {

@@ -176,6 +176,14 @@
         bottom:auto;
     }
 
+.character-display-screen-selectable {
+    cursor:pointer;
+}
+
+    .character-display-screen-selectable:hover {
+        background-color:#C0C0C0;
+    }
+
 @media (max-width: 850px) {
     .text-font {
         font-size: 20px;

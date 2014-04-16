@@ -133,8 +133,15 @@ namespace CombatDataClasses.LiveImplementation
         public ICombatStatus getStatus()
         {
             List<ICharacterDisplay> pcDisplays = new List<ICharacterDisplay>();
+            string fastestPCName = string.Empty;
+            int fastestPCTime = int.MaxValue;
             foreach(int key in pcs.Keys) {
                 pcDisplays.Add(pcs[key]);
+                if (pcs[key].turnOrder < fastestPCTime)
+                {
+                    fastestPCTime = pcs[key].turnOrder;
+                    fastestPCName = pcs[key].name;
+                }
             }
             List<ICharacterDisplay> npcDisplays = new List<ICharacterDisplay>();
             foreach (int key in npcs.Keys)
@@ -142,7 +149,7 @@ namespace CombatDataClasses.LiveImplementation
                 npcDisplays.Add(npcs[key]);
             }
 
-            return new CombatStatus("INCOMPLETE", currentEffects, pcDisplays, npcDisplays);
+            return new CombatStatus(fastestPCName, currentEffects, pcDisplays, npcDisplays);
         }
 
         public ICombatStatus executeCommand(SelectedCommand command)

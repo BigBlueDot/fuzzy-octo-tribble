@@ -25,6 +25,19 @@ namespace CombatDataClasses.LiveImplementation
         public int combatUniq { get; set; }
         public string className { get; set; }
         public int level { get; set; }
-        public int turnOrder { get; set; } 
+        public int turnOrder { get; set; }
+
+        public void inflictDamage(ref int damage)
+        {
+            foreach (CombatModificationsModel cmm in mods)
+            {
+                if (cmm.name == "Guard")
+                {
+                    damage = damage / 2;
+                }
+            }
+
+            hp -= damage;
+        }
     }
 }

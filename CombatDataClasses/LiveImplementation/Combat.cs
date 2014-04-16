@@ -1,4 +1,5 @@
 ﻿using CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing;
+using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
 using CombatDataClasses.ClassProcessor;
 using CombatDataClasses.Interfaces;
 using MapDataClasses.MapDataClasses;

@@ -44,6 +44,7 @@
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\BasicAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\Goblins\GoblinAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\GeneralProcessor.cs" />
+    <Compile Include="AbilityProcessing\ModificationsGeneration\BasicModificationsGeneration.cs" />
     <Compile Include="CombatDirector.cs" />
     <Compile Include="DummyImplementation\DummyCharacterDisplay.cs" />
     <Compile Include="DummyImplementation\DummyCombat.cs" />

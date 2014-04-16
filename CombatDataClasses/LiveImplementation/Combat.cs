@@ -129,9 +129,14 @@ namespace CombatDataClasses.LiveImplementation
         public List<ICommand> getCommands()
         {
             List<ICommand> returnValue = new List<ICommand>();
-            returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true));
-            returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false));
-            returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false));
+            int currentCharacter = getCurrentPC();
+            if (currentCharacter != 0)
+            {
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true));
+                returnValue.Add(new Command(true, ClassProcessor.ClassProcessor.getClassAbilities(pcs[uniqBridge[currentCharacter]].type, pcs[uniqBridge[currentCharacter]].level), false, 0, 0, "Abilities", false, 0, false));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false));
+            }
             return returnValue;
         }
 
@@ -160,6 +165,22 @@ namespace CombatDataClasses.LiveImplementation
         public ICombatStatus executeCommand(SelectedCommand command)
         {
             throw new NotImplementedException();
+        }
+
+        private int getCurrentPC()
+        {
+            int combatUniq = 0;
+            int fastestPCTime = int.MaxValue;
+            foreach (int key in pcs.Keys)
+            {
+                if (pcs[key].turnOrder < fastestPCTime)
+                {
+                    fastestPCTime = pcs[key].turnOrder;
+                    combatUniq = pcs[key].uniq;
+                }
+            }
+
+            return combatUniq;
         }
 
         private int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)

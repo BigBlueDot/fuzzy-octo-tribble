@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassProcessor\AdventurerProcessor.cs" />
+    <Compile Include="ClassProcessor\ClassProcessor.cs" />
     <Compile Include="CombatDirector.cs" />
     <Compile Include="DummyImplementation\DummyCharacterDisplay.cs" />
     <Compile Include="DummyImplementation\DummyCombat.cs" />

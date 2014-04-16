@@ -63,7 +63,9 @@
                     }
                 }
                 else if (currentCommand.hasChildCommands) {
-                    FuzzyOctoTribble.KeyControl.addController(createCommandSelectionScreen(currentCommand.childCommands, currentCharacter, sendingCommand.subCommand, onComplete));
+                    $currentCommandScreen = createCommandSelectionScreen(currentCommand.childCommands, currentCharacter, sendingCommand.subCommand, onComplete);
+                    $currentCommandScreen.show();
+                    FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
                 }
                 else {
                     onComplete();

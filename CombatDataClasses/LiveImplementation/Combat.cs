@@ -1,5 +1,7 @@
-﻿using CombatDataClasses.Interfaces;
+﻿using CombatDataClasses.ClassProcessor;
+using CombatDataClasses.Interfaces;
 using MapDataClasses.MapDataClasses;
+using PlayerModels.CombatDataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,14 @@ namespace CombatDataClasses.LiveImplementation
 {
     public class Combat : ICombat
     {
-        private int currentCharacterUniq;
+        private FullCombatCharacter currentCharacter;
         private Dictionary<int, int> uniqBridge;
         private PlayerModels.PlayerModel playerModel;
         private List<IEffect> currentEffects;
         private Dictionary<int, FullCombatCharacter> pcs;
         private Dictionary<int, FullCombatCharacter> npcs;
-        private List<PlayerModels.CombatDataModels.CombatCharacterModel> combatCharacterModels; //These are stored so they can be updated
-        private List<PlayerModels.CombatDataModels.CombatCharacterModel> combatNPCModels;
+        private List<CombatCharacterModel> combatCharacterModels; //These are stored so they can be updated
+        private List<CombatCharacterModel> combatNPCModels;
 
         public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator)
         {
@@ -26,6 +28,7 @@ namespace CombatDataClasses.LiveImplementation
             uniqBridge = new Dictionary<int, int>();
             pcs = new Dictionary<int, FullCombatCharacter>();
             npcs = new Dictionary<int, FullCombatCharacter>();
+            currentCharacter = new FullCombatCharacter();
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -51,6 +54,7 @@ namespace CombatDataClasses.LiveImplementation
                 int agility = 0;
                 int intellect = 0;
                 int wisdom = 0;
+                int nextAttackTime = 0;
                 uniqBridge.Add(currentUniq, characterUniq);
 
                 foreach (PlayerModels.Models.CharacterModel cm in characterModels)
@@ -79,6 +83,8 @@ namespace CombatDataClasses.LiveImplementation
                     }
                 }
 
+                nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), agility);
+
                 pcs.Add(characterUniq, new FullCombatCharacter() {
                    name = name,
                    maxHP = maxHP,
@@ -93,14 +99,15 @@ namespace CombatDataClasses.LiveImplementation
                    vitality = vitality,
                    intellect = intellect,
                    agility = agility,
-                   wisdom = wisdom
+                   wisdom = wisdom,
+                   nextAttackTime = nextAttackTime
                 });
                 combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
                 {
                     characterUniq = characterUniq,
                     mods = new List<PlayerModels.CombatDataModels.CombatModificationsModel>(),
                     stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel() { hp = hp, mp = mp },
-                    nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), agility),
+                    nextAttackTime = nextAttackTime,
                     combatUniq = currentUniq
                 });
                 currentUniq++;
@@ -125,6 +132,7 @@ namespace CombatDataClasses.LiveImplementation
             combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
             foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
             {
+                int nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), enemy.agility);
                 this.npcs.Add(currentUniq, new FullCombatCharacter(){
                     name = enemy.name,
                     hp = enemy.maxHP,
@@ -139,7 +147,8 @@ namespace CombatDataClasses.LiveImplementation
                     vitality = enemy.vitality,
                     agility = enemy.agility,
                     intellect = enemy.intellect,
-                    wisdom = enemy.wisdom
+                    wisdom = enemy.wisdom,
+                    nextAttackTime = nextAttackTime
                 });
                    
                 this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
@@ -150,7 +159,7 @@ namespace CombatDataClasses.LiveImplementation
                         hp = enemy.maxHP,
                         mp = enemy.maxMP
                     },
-                    nextAttackTime = calculateNextAttackTime(0, initiativeCalculator(), enemy.agility),
+                    nextAttackTime = nextAttackTime,
                     combatUniq = currentUniq,
                     characterUniq = 0
                 });
@@ -173,7 +182,7 @@ namespace CombatDataClasses.LiveImplementation
             if (currentCharacter != 0)
             {
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true));
-                returnValue.Add(new Command(true, ClassProcessor.ClassProcessor.getClassAbilities(pcs[uniqBridge[currentCharacter]].className, pcs[uniqBridge[currentCharacter]].level), false, 0, 0, "Abilities", false, 0, false));
+                returnValue.Add(new Command(true, ClassProcessor.AbilityDirector.getClassAbilities(pcs[uniqBridge[currentCharacter]].className, pcs[uniqBridge[currentCharacter]].level), false, 0, 0, "Abilities", false, 0, false));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false));
             }
@@ -206,7 +215,11 @@ namespace CombatDataClasses.LiveImplementation
 
         public ICombatStatus executeCommand(SelectedCommand command)
         {
-            throw new NotImplementedException();
+            FullCombatCharacter source = currentCharacter;
+            FullCombatCharacter target = getTarget(command.targets[0]);
+            Func<FullCombatCharacter, FullCombatCharacter, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
+            currentEffects = cmdExecute(source, target);
+            return getStatus();
         }
 
         private int getCurrentPC()
@@ -238,23 +251,33 @@ namespace CombatDataClasses.LiveImplementation
                 int currentFastestUniq = 1;
                 int fastestTime = int.MaxValue;
                 bool isPC = false;
-                foreach (PlayerModels.CombatDataModels.CombatCharacterModel npc in combatNPCModels)
+                foreach (int key in npcs.Keys)
                 {
+                    FullCombatCharacter npc = npcs[key];
                     if (!usedUniqs.Contains(npc.combatUniq) && npc.nextAttackTime < fastestTime)
                     {
                         currentFastestUniq = npc.combatUniq;
                         fastestTime = npc.nextAttackTime;
                         isPC = false;
+                        if (i == 0)
+                        {
+                            currentCharacter = npc;
+                        }
                     }
                 }
 
-                foreach (PlayerModels.CombatDataModels.CombatCharacterModel pc in combatCharacterModels)
+                foreach (int key in pcs.Keys)
                 {
+                    FullCombatCharacter pc = pcs[key];
                     if (!usedUniqs.Contains(pc.combatUniq) && pc.nextAttackTime < fastestTime)
                     {
                         currentFastestUniq = pc.combatUniq;
                         fastestTime = pc.nextAttackTime;
                         isPC = true;
+                        if (i == 0)
+                        {
+                            currentCharacter = pc;
+                        }
                     }
                 }
 
@@ -279,6 +302,27 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             currentEffects.Add(new Effect(EffectTypes.ShowCommand, 0, string.Empty, 0));
+        }
+
+        private FullCombatCharacter getTarget(int targetCombatUniq)
+        {
+            foreach (int key in pcs.Keys)
+            {
+                if (pcs[key].combatUniq == targetCombatUniq)
+                {
+                    return pcs[key];
+                }
+            }
+
+            foreach (int key in npcs.Keys)
+            {
+                if (npcs[key].combatUniq == targetCombatUniq)
+                {
+                    return npcs[key];
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -57,7 +57,6 @@ namespace GameDataClasses
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
             combatDirector = new CombatDataClasses.CombatDirector(this.player, currentMap.name, () => { return rng.getNumber(1, MapDataClasses.MapDataManager.getRandomEncounterCount(currentMap.name)); }, () => { return rng.calculateIntiative(); });
-            combat = combatDirector.getCombat(); //Combat will be generated when combat is entered, not here in final version
         }
 
         public bool isInDungeon()
@@ -220,6 +219,7 @@ namespace GameDataClasses
             player.rootY = newY;
             if (isCombat())
             {
+                combat = combatDirector.getCombat(); 
                 return MapEvent.CombatEntered;
             }
             return MapEvent.Nothing;

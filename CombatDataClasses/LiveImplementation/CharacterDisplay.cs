@@ -9,7 +9,7 @@ namespace CombatDataClasses.LiveImplementation
 {
     public class CharacterDisplay : ICharacterDisplay
     {
-        public CharacterDisplay(string name, int hp, int maxHP, int mp, int maxMP, List<IStatusDisplay> statuses, int uniq, int turnOrder)
+        public CharacterDisplay(string name, int hp, int maxHP, int mp, int maxMP, List<IStatusDisplay> statuses, int uniq, int turnOrder, string type, int level)
         {
             _name = name;
             _hp = hp;
@@ -19,6 +19,8 @@ namespace CombatDataClasses.LiveImplementation
             _statuses = statuses;
             _uniq = uniq;
             _turnOrder = turnOrder;
+            _type = type;
+            _level = level;
         }
 
         public void setTurnOrder(int turnOrder)
@@ -95,6 +97,18 @@ namespace CombatDataClasses.LiveImplementation
             {
                 return _turnOrder;
             }
+        }
+
+        private string _type;
+        public string type
+        {
+            get { return _type; }
+        }
+
+        private int _level;
+        public int level
+        {
+            get { return _level; }
         }
     }
 }

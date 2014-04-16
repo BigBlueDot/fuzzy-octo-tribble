@@ -45,6 +45,8 @@ namespace CombatDataClasses.LiveImplementation
                 int maxMP = 0;
                 int turnOrder = 0;
                 int agi = 0;
+                string classType = string.Empty;
+                int level = 0;
                 uniqBridge.Add(currentUniq, characterUniq);
 
                 foreach (PlayerModels.Models.CharacterModel cm in characterModels)
@@ -55,6 +57,8 @@ namespace CombatDataClasses.LiveImplementation
                         maxHP = cm.stats.maxHP;
                         maxMP = cm.stats.maxMP;
                         agi = cm.stats.agility;
+                        classType = cm.currentClass;
+                        level = cm.lvl;
                     }
                 }
 
@@ -67,7 +71,7 @@ namespace CombatDataClasses.LiveImplementation
                     }
                 }
 
-                pcs.Add(characterUniq, new CharacterDisplay(name, hp, maxHP, mp, maxMP, new List<IStatusDisplay>(), currentUniq, turnOrder));
+                pcs.Add(characterUniq, new CharacterDisplay(name, hp, maxHP, mp, maxMP, new List<IStatusDisplay>(), currentUniq, turnOrder, classType, level));
                 combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatPCModel()
                 {
                     characterUniq = characterUniq,
@@ -98,7 +102,7 @@ namespace CombatDataClasses.LiveImplementation
             combatNPCModels = new List<PlayerModels.CombatDataModels.CombatNPCModel>();
             foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
             {
-                this.npcs.Add(currentUniq, new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq));
+                this.npcs.Add(currentUniq, new CharacterDisplay(enemy.name, enemy.maxHP, enemy.maxHP, enemy.maxMP, enemy.maxMP, new List<IStatusDisplay>(), currentUniq, currentUniq, enemy.type, enemy.level));
                 this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatNPCModel()
                 {
                     enemyName = enemy.name,

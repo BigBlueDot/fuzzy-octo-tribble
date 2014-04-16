@@ -91,5 +91,15 @@ namespace CombatDataClasses.DummyImplementation
                 return _turnOrder;
             }
         }
+
+        public string type
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int level
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

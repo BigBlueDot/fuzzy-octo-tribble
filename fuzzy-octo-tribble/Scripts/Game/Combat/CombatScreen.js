@@ -94,10 +94,10 @@
         $detailScreen.addClass('popup-screen text-font character-detail-screen combat-screen');
 
         var $nameLvl = $(document.createElement('div'));
-        $nameLvl.text(character.name + " Level " + character.lvl);
+        $nameLvl.text(character.name + " Level " + character.level);
 
         var $class = $(document.createElement('div'));
-        $class.text("Character Type:  " + character.currentClass);
+        $class.text("Character Type:  " + character.type);
 
         var $HP = $(document.createElement('div'));
         $HP.text('HP: ' + character.hp + ' / ' + character.maxHP);

@@ -15,6 +15,8 @@ namespace CombatDataClasses.Interfaces
         int maxMP { get; }
         int uniq { get; }
         int turnOrder { get; }
+        string type { get; }
+        int level { get; }
         IEnumerable<IStatusDisplay> statuses { get; }
     }
 }

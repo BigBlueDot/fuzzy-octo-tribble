@@ -56,20 +56,27 @@ namespace GameDataClasses
             this.rng = new GameRNG();
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
-            combatDirector = new CombatDataClasses.CombatDirector(this.player, 
-                currentMap.name, 
-                () => { 
-                    return rng.getNumber(1, MapDataClasses.MapDataManager.getRandomEncounterCount(currentMap.name)); 
-                }, 
-                () => { 
-                    return rng.calculateIntiative(); 
+            combatDirector = new CombatDataClasses.CombatDirector(this.player,
+                currentMap.name,
+                () =>
+                {
+                    return rng.getNumber(1, MapDataClasses.MapDataManager.getRandomEncounterCount(currentMap.name));
                 },
-                () => {
-                    setMap(MapDataClasses.MapDataManager.getHubMap(player.rootMap), true); 
+                () =>
+                {
+                    return rng.calculateIntiative();
+                },
+                () =>
+                {
+                    setMap(MapDataClasses.MapDataManager.getHubMap(player.rootMap), true);
                     this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
                     currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
+                },
+                () =>
+                {
+                    db.SaveChanges();
                 }
                 );
         }

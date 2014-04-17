@@ -17,9 +17,9 @@ namespace CombatDataClasses
             factory = new DummyImplementation.DummyCombatFactory();
         }
 
-        public CombatDirector(PlayerModels.PlayerModel playerModel, string initialMap, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver)
+        public CombatDirector(PlayerModels.PlayerModel playerModel, string initialMap, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate)
         {
-            factory = new LiveImplementation.CombatFactory(playerModel, initialMap, randomNumberGenerator, initiativeCalculator, onGameOver);
+            factory = new LiveImplementation.CombatFactory(playerModel, initialMap, randomNumberGenerator, initiativeCalculator, onGameOver, onUpdate);
         }
 
         //TODO:  Add a constructor that takes in pointers to current party, loads enemies etc.

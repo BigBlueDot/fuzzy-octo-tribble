@@ -25,6 +25,7 @@ namespace CombatDataClasses.LiveImplementation
         private List<CombatCharacterModel> combatNPCModels;
         private CombatData combatData;
         private Action onGameOver;
+        private Action onUpdate;
         private int currentTime
         {
             get
@@ -37,7 +38,7 @@ namespace CombatDataClasses.LiveImplementation
             }
         }
 
-        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver)
+        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate)
         {
             int currentUniq = 1;
             this.playerModel = playerModel;
@@ -46,6 +47,7 @@ namespace CombatDataClasses.LiveImplementation
             npcs = new Dictionary<int, FullCombatCharacter>();
             currentCharacter = new FullCombatCharacter();
             this.onGameOver = onGameOver;
+            this.onUpdate = onUpdate;
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -357,6 +359,52 @@ namespace CombatDataClasses.LiveImplementation
                 }
                 currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
             }
+
+            //Update Combat Data Models
+            updateDataModels();
+        }
+
+        private void updateDataModels()
+        {
+            //Update the models list
+            foreach (CombatCharacterModel ccm in combatCharacterModels)
+            {
+                foreach (int key in pcs.Keys)
+                {
+                    FullCombatCharacter fcc = pcs[key];
+                    if (fcc.characterUniq == ccm.characterUniq)
+                    {
+                        ccm.nextAttackTime = fcc.nextAttackTime;
+                        ccm.stats.hp = fcc.hp;
+                        ccm.stats.mp = fcc.mp;
+                        ccm.mods.Clear();
+                        foreach (CombatModificationsModel cmm in fcc.mods)
+                        {
+                            ccm.mods.Add(cmm);
+                        }
+                    }
+                }
+            }
+
+            foreach (CombatCharacterModel ccm in combatNPCModels)
+            {
+                foreach (int key in npcs.Keys)
+                {
+                    FullCombatCharacter fcc = npcs[key];
+                    if (fcc.characterUniq == ccm.characterUniq)
+                    {
+                        ccm.nextAttackTime = fcc.nextAttackTime;
+                        ccm.stats.hp = fcc.hp;
+                        ccm.stats.mp = fcc.mp;
+                        ccm.mods = new List<CombatModificationsModel>();
+                        foreach (CombatModificationsModel cmm in fcc.mods)
+                        {
+                            ccm.mods.Add(cmm);
+                        }
+                    }
+                }
+            }
+            onUpdate();
         }
 
         private List<FullCombatCharacter> getAllPcsAsList()

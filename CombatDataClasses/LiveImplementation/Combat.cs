@@ -26,6 +26,7 @@ namespace CombatDataClasses.LiveImplementation
         private CombatData combatData;
         private Action onGameOver;
         private Action onUpdate;
+        private Action onCombatComplete;
         private int currentTime
         {
             get
@@ -38,7 +39,7 @@ namespace CombatDataClasses.LiveImplementation
             }
         }
 
-        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate)
+        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action onCombatComplete)
         {
             int currentUniq = 1;
             this.playerModel = playerModel;
@@ -48,6 +49,7 @@ namespace CombatDataClasses.LiveImplementation
             currentCharacter = new FullCombatCharacter();
             this.onGameOver = onGameOver;
             this.onUpdate = onUpdate;
+            this.onCombatComplete = onCombatComplete;
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -482,6 +484,7 @@ namespace CombatDataClasses.LiveImplementation
             {
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have emerged victorious!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                onCombatComplete();
             }
         }
 

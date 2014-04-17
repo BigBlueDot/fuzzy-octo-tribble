@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using CombatDataClasses.Interfaces;
+using PlayerModels.Models;
 
 namespace GameDataClasses
 {
@@ -76,6 +77,30 @@ namespace GameDataClasses
                 },
                 () =>
                 {
+                    db.SaveChanges();
+                },
+                () =>
+                {
+                    foreach (PartyModel pm in player.parties)
+                    {
+                        if (pm.uniq == player.activeParty)
+                        {
+                            foreach (PartyCharacterModel pcm in pm.characters)
+                            {
+                                foreach (PlayerModels.CombatDataModels.CombatCharacterModel ccm in player.currentCombat.pcs)
+                                {
+                                    if (pcm.characterUniq == ccm.characterUniq)
+                                    {
+                                        pcm.hp = ccm.stats.hp;
+                                        pcm.mp = ccm.stats.mp;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    player.currentCombat = null;
+
                     db.SaveChanges();
                 }
                 );

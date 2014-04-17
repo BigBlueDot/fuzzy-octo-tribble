@@ -1,4 +1,5 @@
-﻿using MapDataClasses.MapDataClasses;
+﻿using EnemyDataClasses.Goblins;
+using MapDataClasses.MapDataClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -162,7 +163,7 @@ namespace MapDataClasses.TutorialMapGenerators
 
         public Enemy getEnemy(string enemyType)
         {
-            return new MapDataClasses.Enemy() { name = "Hector", maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin", xp = 5, cp = 5 };
+            return new MapDataClasses.Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin", xp = 5, cp = 5 };
         }
     }
 }

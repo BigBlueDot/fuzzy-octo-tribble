@@ -62,6 +62,12 @@ namespace GameDataClasses
             this.userName = userName;
             this.db = db;
             this.rng = new GameRNG();
+
+            foreach (CharacterModel cm in this.player.characters)
+            {
+                PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
+            }
+
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
             combatDirector = new CombatDataClasses.CombatDirector(this.player,

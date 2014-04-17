@@ -570,6 +570,8 @@ namespace CombatDataClasses.LiveImplementation
                         if (cm.xp >= PlayerModels.PlayerDataManager.getXPForLevel(cm.lvl))
                         {
                             currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a level!", 0));
+                            cm.lvl++;
+                            PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
                         }
                         foreach (CharacterClassModel ccm in cm.characterClasses)
                         {
@@ -580,6 +582,7 @@ namespace CombatDataClasses.LiveImplementation
                                 {
                                     currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a class level!", 0));
                                     ccm.lvl++;
+                                    PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
                                 }
                             }
                         }

@@ -18,5 +18,7 @@ namespace MapDataClasses.MapDataClasses
         public int intellect { get; set; }
         public int wisdom { get; set; }
         public int agility { get; set; }
+        public int xp { get; set; }
+        public int cp { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using CombatDataClasses.ClassProcessor;
 using CombatDataClasses.Interfaces;
 using MapDataClasses.MapDataClasses;
 using PlayerModels.CombatDataModels;
+using PlayerModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace CombatDataClasses.LiveImplementation
         private Action onGameOver;
         private Action onUpdate;
         private Action onCombatComplete;
+        private string map;
         private int currentTime
         {
             get
@@ -51,6 +53,7 @@ namespace CombatDataClasses.LiveImplementation
             this.onGameOver = onGameOver;
             this.onUpdate = onUpdate;
             this.onCombatComplete = onCombatComplete;
+            this.map = map;
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -354,7 +357,7 @@ namespace CombatDataClasses.LiveImplementation
         private void calculateTurnOrder()
         {
             List<int> usedUniqs = new List<int>();
-            for (int i = 0; i < checkCharacterListDeath(npcs) + checkCharacterListDeath(pcs); i++)
+            for (int i = 0; i < checkCharacterListDeath(npcs, true) + checkCharacterListDeath(pcs); i++)
             {
                 int currentFastestUniq = 1;
                 int fastestTime = int.MaxValue;
@@ -513,16 +516,28 @@ namespace CombatDataClasses.LiveImplementation
             return null;
         }
 
-        private int checkCharacterListDeath(Dictionary<int, FullCombatCharacter> characters)
+        private int checkCharacterListDeath(Dictionary<int, FullCombatCharacter> characters, bool isNPC = false)
         {
             int livingCount = characters.Count;
             foreach (int key in characters.Keys)
             {
-                if (characters[key].hp <= 0)
+                if (!characters[key].defeated && characters[key].hp <= 0)
                 {
                     characters[key].hp = 0;
                     characters[key].turnOrder = 0;
                     characters[key].nextAttackTime = int.MaxValue;
+                    characters[key].defeated = true;
+                    currentEffects.Add(new Effect(EffectTypes.DestroyCharacter, characters[key].combatUniq, string.Empty, 0));
+                    if (isNPC)
+                    {
+                        //Calculate xp and cp
+                        MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, characters[key].className);
+                        getXPAndCP(enemy.xp, enemy.cp);
+                    }
+                    livingCount--;
+                }
+                else if (characters[key].defeated)
+                {
                     livingCount--;
                 }
             }
@@ -541,10 +556,42 @@ namespace CombatDataClasses.LiveImplementation
             }
         }
 
+        private void getXPAndCP(int xp, int cp)
+        {
+            currentEffects.Add(new Effect(EffectTypes.Message, 0, "You received " + xp.ToString() + " XP and " + cp.ToString() + " CP.", 0));
+            foreach (int key in pcs.Keys)
+            {
+                FullCombatCharacter fcc = pcs[key];
+                foreach (CharacterModel cm in playerModel.characters)
+                {
+                    if (cm.uniq == fcc.characterUniq)
+                    {
+                        cm.xp += xp;
+                        if (cm.xp >= PlayerModels.PlayerDataManager.getXPForLevel(cm.lvl))
+                        {
+                            currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a level!", 0));
+                        }
+                        foreach (CharacterClassModel ccm in cm.characterClasses)
+                        {
+                            if (ccm.className == cm.currentClass)
+                            {
+                                ccm.cp += cp;
+                                if (ccm.cp >= PlayerModels.PlayerDataManager.getCPForLevel(ccm.lvl))
+                                {
+                                    currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a class level!", 0));
+                                    ccm.lvl++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void checkDeath()
         {
             int livingPcs = checkCharacterListDeath(pcs);
-            int livingNpcs = checkCharacterListDeath(npcs);
+            int livingNpcs = checkCharacterListDeath(npcs, true);
 
             if (livingPcs == 0)
             {

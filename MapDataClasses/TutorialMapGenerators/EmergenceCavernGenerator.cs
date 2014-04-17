@@ -162,7 +162,7 @@ namespace MapDataClasses.TutorialMapGenerators
 
         public Enemy getEnemy(string enemyType)
         {
-            return new MapDataClasses.Enemy() { name = "Hector", maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin" };
+            return new MapDataClasses.Enemy() { name = "Hector", maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin", xp = 5, cp = 5 };
         }
     }
 }

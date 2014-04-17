@@ -26,6 +26,7 @@ namespace CombatDataClasses.LiveImplementation
         public string className { get; set; }
         public int level { get; set; }
         public int turnOrder { get; set; }
+        public bool defeated { get; set; }
 
         public void inflictDamage(ref int damage)
         {

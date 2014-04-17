@@ -7,6 +7,7 @@
         var $characterDisplay = $(document.createElement('div'));
         $characterDisplay.addClass('character-display-screen text-font');
         $characterDisplay.append($(document.createElement('div')).text(character.name));
+        $characterDisplay.append($(document.createElement('div')).text(character.type));
         $characterDisplay.append($(document.createElement('div')).text('Attack Order: ' + character.turnOrder));
         $characterDisplay.append($(document.createElement('div')).text("HP: " + character.hp + " / " + character.maxHP));
         $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + " / " + character.maxMP));

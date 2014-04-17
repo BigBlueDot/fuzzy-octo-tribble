@@ -10,6 +10,10 @@
         $characterDisplay.append($(document.createElement('div')).text('Attack Order: ' + character.turnOrder));
         $characterDisplay.append($(document.createElement('div')).text("HP: " + character.hp + " / " + character.maxHP));
         $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + " / " + character.maxMP));
+        for (var i = 0; i < character.statuses.length; i++) {
+            var currentStatus = character.statuses[i];
+            $characterDisplay.append($(document.createElement('div')).text(currentStatus.value));
+        }
         switch (character.turnOrder) {
             case 1:
                 $characterDisplay.css('border-color', '#ffd700');

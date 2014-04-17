@@ -25,6 +25,17 @@ namespace CombatDataClasses.LiveImplementation
         private List<CombatCharacterModel> combatNPCModels;
         private CombatData combatData;
         private Action onGameOver;
+        private int currentTime
+        {
+            get
+            {
+                return playerModel.currentCombat.currentTime;
+            }
+            set
+            {
+                playerModel.currentCombat.currentTime = value;
+            }
+        }
 
         public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver)
         {
@@ -106,7 +117,8 @@ namespace CombatDataClasses.LiveImplementation
                    intellect = intellect,
                    agility = agility,
                    wisdom = wisdom,
-                   nextAttackTime = nextAttackTime
+                   nextAttackTime = nextAttackTime,
+                   mods = new List<CombatModificationsModel>()
                 });
                 combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
                 {
@@ -154,7 +166,8 @@ namespace CombatDataClasses.LiveImplementation
                     agility = enemy.agility,
                     intellect = enemy.intellect,
                     wisdom = enemy.wisdom,
-                    nextAttackTime = nextAttackTime
+                    nextAttackTime = nextAttackTime,
+                    mods = new List<CombatModificationsModel>()
                 });
                    
                 this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
@@ -203,7 +216,12 @@ namespace CombatDataClasses.LiveImplementation
             int fastestPCTime = int.MaxValue;
             foreach(int key in pcs.Keys) {
                 FullCombatCharacter current = pcs[key];
-                pcDisplays.Add(new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, new List<IStatusDisplay>(), current.combatUniq, current.turnOrder,current.className, current.level));
+                List<IStatusDisplay> statuses = new List<IStatusDisplay>();
+                foreach (CombatModificationsModel cmm in current.mods)
+                {
+                    statuses.Add(new StatusDisplay(Interfaces.Type.Text, cmm.name));
+                }
+                pcDisplays.Add(new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder,current.className, current.level));
                 if (pcs[key].turnOrder < fastestPCTime)
                 {
                     fastestPCTime = pcs[key].turnOrder;
@@ -214,7 +232,12 @@ namespace CombatDataClasses.LiveImplementation
             foreach (int key in npcs.Keys)
             {
                 FullCombatCharacter current = npcs[key];
-                npcDisplays.Add(new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, new List<IStatusDisplay>(), current.combatUniq, current.turnOrder, current.className, current.level));
+                List<IStatusDisplay> statuses = new List<IStatusDisplay>();
+                foreach (CombatModificationsModel cmm in current.mods)
+                {
+                    statuses.Add(new StatusDisplay(Interfaces.Type.Text, cmm.name));
+                }
+                npcDisplays.Add(new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level));
             }
 
             return new CombatStatus(fastestPCName, currentEffects, pcDisplays, npcDisplays);
@@ -346,6 +369,16 @@ namespace CombatDataClasses.LiveImplementation
             return characters;
         }
 
+        private List<FullCombatCharacter> getAllNpcsAsList()
+        {
+            List<FullCombatCharacter> characters = new List<FullCombatCharacter>();
+            foreach (int key in npcs.Keys)
+            {
+                characters.Add(npcs[key]);
+            }
+            return characters;
+        }
+
         private FullCombatCharacter getTarget(int targetCombatUniq)
         {
             foreach (int key in pcs.Keys)
@@ -408,7 +441,9 @@ namespace CombatDataClasses.LiveImplementation
         public ICombatStatus nextTurn()
         {
             calculateTurnOrder();
-
+            currentTime = currentCharacter.nextAttackTime;
+            BasicModificationsGeneration.checkModifications(getAllPcsAsList(), currentTime);
+            BasicModificationsGeneration.checkModifications(getAllNpcsAsList(), currentTime);
             calculateTurn(true);
             checkDeath();
             return getStatus();

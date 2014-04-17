@@ -21,7 +21,7 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
                     {
                         if (ccm.name == "Time")
                         {
-                            if (Convert.ToInt32(ccm.state) >= time)
+                            if (Convert.ToInt32(ccm.state) <= time)
                             {
                                 toRemove.Add(cmm);
                             }

@@ -14,7 +14,7 @@
                 }
             }
 
-            characterItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility));
+            characterItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel));
         }
 
         currentPartyItems = [];
@@ -27,11 +27,11 @@
                 }
             }
 
-            currentPartyItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility));
+            currentPartyItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel));
         }
     }
 
-    var createCharacterItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI) {
+    var createCharacterItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel) {
         var character = {
             name: name,
             lvl: lvl,
@@ -43,7 +43,9 @@
             VIT: VIT,
             INT: INT,
             WIS: WIS,
-            AGI: AGI
+            AGI: AGI,
+            xp: xp,
+            xpToLevel: xpToLevel
         };
 
         var $characterItem = $(document.createElement('div'));
@@ -60,7 +62,7 @@
         return {
             content: $characterItem,
             select: function () {
-                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI), true, function () {
+                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI, character.xp, character.xpToLevel), true, function () {
                     FuzzyOctoTribble.KeyControl.menu();
                 }));
             },
@@ -68,12 +70,15 @@
         };
     }
 
-    var createCharacterDetailScreen = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI) {
+    var createCharacterDetailScreen = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel) {
         var $detailScreen = $(document.createElement('div'));
         $detailScreen.addClass('popup-screen text-font character-detail-screen');
 
         var $nameLvl = $(document.createElement('div'));
         $nameLvl.text(name + " Level " + lvl);
+
+        var $xp = $(document.createElement('div'));
+        $xp.text(xp + "/" + xpToLevel + " XP");
 
         var $class = $(document.createElement('div'));
         $class.text(currentClass + ' Level ' + classLvl);
@@ -91,6 +96,7 @@
         $AGI.text("AGI: " + AGI);
 
         $detailScreen.append($nameLvl);
+        $detailScreen.append($xp);
         $detailScreen.append($class);
         $detailScreen.append($HPMP);
         $detailScreen.append($STRVIT);

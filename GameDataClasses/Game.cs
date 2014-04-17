@@ -88,18 +88,21 @@ namespace GameDataClasses
                 },
                 () =>
                 {
-                    foreach (PartyModel pm in player.parties)
+                    if (player.currentCombat != null)
                     {
-                        if (pm.uniq == player.activeParty)
+                        foreach (PartyModel pm in player.parties)
                         {
-                            foreach (PartyCharacterModel pcm in pm.characters)
+                            if (pm.uniq == player.activeParty)
                             {
-                                foreach (PlayerModels.CombatDataModels.CombatCharacterModel ccm in player.currentCombat.pcs)
+                                foreach (PartyCharacterModel pcm in pm.characters)
                                 {
-                                    if (pcm.characterUniq == ccm.characterUniq)
+                                    foreach (PlayerModels.CombatDataModels.CombatCharacterModel ccm in player.currentCombat.pcs)
                                     {
-                                        pcm.hp = ccm.stats.hp;
-                                        pcm.mp = ccm.stats.mp;
+                                        if (pcm.characterUniq == ccm.characterUniq)
+                                        {
+                                            pcm.hp = ccm.stats.hp;
+                                            pcm.mp = ccm.stats.mp;
+                                        }
                                     }
                                 }
                             }

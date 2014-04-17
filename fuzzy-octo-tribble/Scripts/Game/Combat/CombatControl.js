@@ -116,18 +116,18 @@
             case 1: //Deal damage to target
                 var targetUniq = currentEffect.targetUniq;
                 var damage = currentEffect.value;
-                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('-' + damage, targetUniq, '#FF0000', 24);
+                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('-' + damage, targetUniq, '#FF0000', 32);
                 processEffects(effects);
                 break;
             case 2: //Heal the target
                 var targetUniq = currentEffect.targetUniq;
                 var heal = currentEffect.value;
-                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('+' + heal, targetUniq, '#00FF00', 24);
+                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('+' + heal, targetUniq, '#00FF00', 32);
                 processEffects(effects);
                 break;
             case 3: //Destroy the character
                 var targetUniq = currentEffect.targetUniq;
-                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('DEFEATED', targetUniq, '#FF0000', 30);
+                FuzzyOctoTribble.CombatScreenCreator.numberAnimation('DEFEATED', targetUniq, '#FF0000', 44);
                 processEffects(effects);
                 break;
             case 4: //Combat has ended

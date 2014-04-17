@@ -184,6 +184,10 @@
         background-color:#C0C0C0;
     }
 
+.damage-display {
+    z-index:3;
+}
+
 @media (max-width: 850px) {
     .text-font {
         font-size: 20px;

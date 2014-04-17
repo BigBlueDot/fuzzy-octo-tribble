@@ -609,6 +609,7 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Add(new Effect(EffectTypes.GameOver, 0, "", 0));
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have been defeated!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                removeEndOfTurnEffects();
                 checkCombatEnded();
                 onGameOver();
             }
@@ -616,8 +617,26 @@ namespace CombatDataClasses.LiveImplementation
             {
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have emerged victorious!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                removeEndOfTurnEffects();
                 checkCombatEnded();
                 onCombatComplete();
+            }
+        }
+
+        private void removeEndOfTurnEffects()
+        {
+            List<IEffect> toRemove = new List<IEffect>();
+            foreach (IEffect e in currentEffects)
+            {
+                if (e.type == EffectTypes.TurnEnded)
+                {
+                    toRemove.Add(e);
+                }
+            }
+
+            foreach (IEffect e in toRemove)
+            {
+                currentEffects.Remove(e);
             }
         }
 

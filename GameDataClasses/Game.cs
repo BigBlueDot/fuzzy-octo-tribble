@@ -172,7 +172,7 @@ namespace GameDataClasses
             if (combat || MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
             {
                 this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(dungeonName), MapDataClasses.MapDataManager.getMaxCombatCount(dungeonName));
-                if (isInDungeon())
+                if (MapDataClasses.MapDataManager.getHubMap(dungeonName) == dungeonName)
                 {
                     //Need to disband the party that is currently being used
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);

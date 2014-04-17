@@ -36,6 +36,19 @@
             }
         });
         characterWindows[character.uniq] = $characterDisplay;
+
+        character.onSelect = function () {
+            $characterDisplay.addClass('character-item-selected');
+        }
+
+        character.onDeselect = function () {
+            $characterDisplay.removeClass('character-item-selected');
+        }
+
+        character.click = function () {
+            $characterDisplay.click();
+        }
+
         return $characterDisplay;
     }
 

@@ -57,9 +57,12 @@
 
                 if (currentCommand.hasTarget) {
                     selectingTarget = true;
+                    $currentDefaultScreen.isCombat = true;
+                    FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
                     $currentDefaultScreen.onCurrentControl();
                     onTargetSelected = function (characterUniq) {
                         sendingCommand.targets.push(characterUniq);
+                        $currentDefaultScreen.onComplete();
                         $currentDefaultScreen.clearCurrentControl();
                         onComplete();
                     }
@@ -185,6 +188,9 @@
     that.createBaseScreen = function (allies, enemies, commands, currentCharacter) {
         var that = {};
 
+        var pcCurrentlySelected = false;
+        var currentSelection = 0;
+
         var onCharacterSelect = function (character) {
             if (selectingTarget) {
                 onTargetSelected(character.uniq);
@@ -223,10 +229,29 @@
 
         that.onCurrentControl = function () {
             $initialScreen.find('.character-display-screen').addClass('character-display-screen-selectable');
+            selectCurrent();
         }
 
         that.clearCurrentControl = function () {
             $initialScreen.find('.character-display-screen').removeClass('character-display-screen-selectable');
+        }
+
+        var deselectCurrent = function () {
+            if (pcCurrentlySelected) {
+                allies[currentSelection].onDeselect();
+            }
+            else {
+                enemies[currentSelection].onDeselect();
+            }
+        }
+
+        var selectCurrent = function () {
+            if (pcCurrentlySelected) {
+                allies[currentSelection].onSelect();
+            }
+            else {
+                enemies[currentSelection].onSelect();
+            }
         }
 
         that.pressLeft = function () {
@@ -246,23 +271,47 @@
         }
 
         that.releaseLeft = function () {
-
+            if (currentSelection != 0) {
+                deselectCurrent();
+                currentSelection--;
+                selectCurrent();
+            }
         }
 
         that.releaseUp = function () {
-
+            deselectCurrent();
+            pcCurrentlySelected = false;
+            if (currentSelection >= enemies.length) {
+                currentCharacter = enemies.length - 1;
+            }
+            selectCurrent();
         }
 
         that.releaseDown = function () {
-
+            deselectCurrent();
+            pcCurrentlySelected = true;
+            if (currentSelection >= allies.length) {
+                currentCharacter = allies.length - 1;
+            }
+            selectCurrent();
         }
 
         that.releaseRight = function () {
-
+            if ((pcCurrentlySelected && currentSelection < allies.length - 1) ||
+                (!pcCurrentlySelected && currentSelection < enemies.length - 1)) {
+                deselectCurrent();
+                currentSelection++;
+                selectCurrent();
+            }
         }
 
         that.confirm = function () {
-
+            if (pcCurrentlySelected) {
+                allies[currentSelection].click();
+            }
+            else {
+                enemies[currentSelection].click();
+            }
         }
 
         that.cancel = function () {

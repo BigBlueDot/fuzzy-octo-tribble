@@ -165,7 +165,7 @@ namespace GameDataClasses
             //Verify that the dungeon selection is legitimate
             if (combat || MapDataClasses.MapDataManager.validateDungeonSelection(currentMap.name, x, y, currentMap, dungeonName))
             {
-                this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
+                this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(dungeonName), MapDataClasses.MapDataManager.getMaxCombatCount(dungeonName));
                 if (isInDungeon())
                 {
                     //Need to disband the party that is currently being used

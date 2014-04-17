@@ -183,6 +183,14 @@
     .character-display-screen-selectable:hover {
         background-color:#C0C0C0;
     }
+.character-item-selected.character-display-screen-selectable {
+    background-color: #767676;
+}
+
+    .character-item-selected.character-display-screen-selectable:hover {
+        background-color: #575757;
+    }
+
 
 .damage-display {
     z-index:3;

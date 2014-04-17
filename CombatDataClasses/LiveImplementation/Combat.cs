@@ -331,6 +331,7 @@ namespace CombatDataClasses.LiveImplementation
             Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
             currentEffects = cmdExecute(source, targets, combatData);
             currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
+            checkCombatEnded();
             return getStatus();
         }
 
@@ -529,6 +530,17 @@ namespace CombatDataClasses.LiveImplementation
             return livingCount;
         }
 
+        private void checkCombatEnded()
+        {
+            foreach (Effect e in currentEffects)
+            {
+                if (e.type == EffectTypes.CombatEnded)
+                {
+                    onCombatComplete();
+                }
+            }
+        }
+
         private void checkDeath()
         {
             int livingPcs = checkCharacterListDeath(pcs);
@@ -540,13 +552,14 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Add(new Effect(EffectTypes.GameOver, 0, "", 0));
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have been defeated!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
-                onCombatComplete();
+                checkCombatEnded();
                 onGameOver();
             }
             else if (livingNpcs == 0)
             {
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have emerged victorious!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                checkCombatEnded();
                 onCombatComplete();
             }
         }

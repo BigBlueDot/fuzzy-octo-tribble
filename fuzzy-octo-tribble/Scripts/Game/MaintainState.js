@@ -23,6 +23,11 @@
                 FuzzyOctoTribble.MenuHandler.setPlayer(FuzzyOctoTribble.Player);
                 FuzzyOctoTribble.CharacterScreenCreator.setCharacters(FuzzyOctoTribble.Player.characters, currentParty);
                 FuzzyOctoTribble.Camera.draw();
+
+                if (data.isInCombat && !FuzzyOctoTribble.CombatControlCreator.inCombat()) {
+                    FuzzyOctoTribble.CombatAccess.startCombat();
+                }
+
                 playerTimer = setTimeout(calcPlayer, 5000);
             }
         });

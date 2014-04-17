@@ -196,6 +196,14 @@
     <Compile Include="Migrations\201404162212130_Initial.Designer.cs">
       <DependentUpon>201404162212130_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404171632052_Combat.cs" />
+    <Compile Include="Migrations\201404171632052_Combat.Designer.cs">
+      <DependentUpon>201404171632052_Combat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404171646288_EnemyTypeUpdate.cs" />
+    <Compile Include="Migrations\201404171646288_EnemyTypeUpdate.Designer.cs">
+      <DependentUpon>201404171646288_EnemyTypeUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -371,6 +379,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201404162212130_Initial.resx">
       <DependentUpon>201404162212130_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404171632052_Combat.resx">
+      <DependentUpon>201404171632052_Combat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404171646288_EnemyTypeUpdate.resx">
+      <DependentUpon>201404171646288_EnemyTypeUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -155,9 +155,14 @@ namespace MapDataClasses.TutorialMapGenerators
         {
             Encounter encounter = new Encounter();
             encounter.enemies = new List<MapDataClasses.Enemy>();
-            encounter.enemies.Add(new MapDataClasses.Enemy() { name = "Hector The Goblin", maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin" });
+            encounter.enemies.Add(getEnemy("Goblin"));
             encounter.message = "A horde of goblins has appeared!  Be on your guard!";
             return encounter;
+        }
+
+        public Enemy getEnemy(string enemyType)
+        {
+            return new MapDataClasses.Enemy() { name = "Hector The Goblin", maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin" };
         }
     }
 }

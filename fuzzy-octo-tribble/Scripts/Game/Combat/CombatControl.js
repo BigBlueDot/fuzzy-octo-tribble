@@ -5,6 +5,7 @@
     var onTargetSelected;
     var $currentDefaultScreen, $currentCommandScreen;
     var gameOver = false;
+    var inCombat = false;
 
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
@@ -134,11 +135,13 @@
                 if (gameOver) {
                     FuzzyOctoTribble.MaintainState.updateMap();
                 }
+                inCombat = false;
                 break;
             case 5: //Game over
                 FuzzyOctoTribble.CombatScreenCreator.gameOverAnimation();
                 gameOver = true;
                 processEffects(effects);
+                inCombat = false;
                 break;
             case 6: //Show Command Screen
                 $currentCommandScreen.show();
@@ -282,6 +285,11 @@
         if (spec.effects.length !== 0) {
             processEffects(spec.effects);
         }
+        inCombat = true;
+    }
+
+    that.inCombat = function () {
+        return inCombat;
     }
 
     return that;

@@ -238,6 +238,18 @@ namespace MapDataClasses
             }
         }
 
+
+        public static Enemy getEnemy(string mapName, string enemyType)
+        {
+            switch (mapName)
+            {
+                case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType);
+                default:
+                    return new Enemy();
+            }
+        }
+
         public static void interactWithMap(string name, int x, int y, MapModel mm, string selectedOption)
         {
             //switch (name)

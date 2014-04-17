@@ -46,6 +46,7 @@ namespace CombatDataClasses.LiveImplementation
             uniqBridge = new Dictionary<int, int>();
             pcs = new Dictionary<int, FullCombatCharacter>();
             npcs = new Dictionary<int, FullCombatCharacter>();
+            currentEffects = new List<IEffect>();
             currentCharacter = new FullCombatCharacter();
             this.onGameOver = onGameOver;
             this.onUpdate = onUpdate;
@@ -58,7 +59,22 @@ namespace CombatDataClasses.LiveImplementation
                 characterUniqs.Add(pcm.characterUniq);
             }
             List<PlayerModels.Models.CharacterModel> characterModels = PlayerModels.PlayerDataManager.getCurrentParty(playerModel, characterUniqs);
-            combatCharacterModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
+            bool hasPreviousCombatModels = false;
+            if (playerModel.currentCombat == null)
+            {
+                combatCharacterModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
+                combatNPCModels = new List<CombatCharacterModel>();
+                playerModel.currentCombat = new CombatModel();
+                playerModel.currentCombat.currentTime = 0;
+                playerModel.currentCombat.pcs = combatCharacterModels;
+                playerModel.currentCombat.npcs = combatNPCModels;
+            }
+            else
+            {
+                combatCharacterModels = playerModel.currentCombat.pcs;
+                combatNPCModels = playerModel.currentCombat.npcs;
+                hasPreviousCombatModels = true;
+            }
 
             foreach (int characterUniq in characterUniqs)
             {
@@ -76,6 +92,8 @@ namespace CombatDataClasses.LiveImplementation
                 int intellect = 0;
                 int wisdom = 0;
                 int nextAttackTime = 0;
+                int combatUniq = currentUniq;
+                List<CombatModificationsModel> mods = new List<CombatModificationsModel>();
                 uniqBridge.Add(currentUniq, characterUniq);
 
                 foreach (PlayerModels.Models.CharacterModel cm in characterModels)
@@ -105,6 +123,31 @@ namespace CombatDataClasses.LiveImplementation
                 }
 
                 nextAttackTime = GeneralProcessor.calculateNextAttackTime(0, initiativeCalculator(), agility);
+                
+                if (hasPreviousCombatModels)
+                {
+                    foreach (CombatCharacterModel ccm in combatCharacterModels)
+                    {
+                        if (ccm.characterUniq == characterUniq)
+                        {
+                            nextAttackTime = ccm.nextAttackTime;
+                            hp = ccm.stats.hp;
+                            mp = ccm.stats.mp;
+                            mods = ccm.mods;
+                            combatUniq = ccm.combatUniq;
+                        }
+                    }
+                }
+                else {
+                    combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
+                    {
+                        characterUniq = characterUniq,
+                        mods = new List<PlayerModels.CombatDataModels.CombatModificationsModel>(),
+                        stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel() { hp = hp, mp = mp },
+                        nextAttackTime = nextAttackTime,
+                        combatUniq = combatUniq
+                    });
+                }
 
                 pcs.Add(characterUniq, new FullCombatCharacter() {
                    name = name,
@@ -124,75 +167,94 @@ namespace CombatDataClasses.LiveImplementation
                    nextAttackTime = nextAttackTime,
                    mods = new List<CombatModificationsModel>()
                 });
-                combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
-                {
-                    characterUniq = characterUniq,
-                    mods = new List<PlayerModels.CombatDataModels.CombatModificationsModel>(),
-                    stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel() { hp = hp, mp = mp },
-                    nextAttackTime = nextAttackTime,
-                    combatUniq = currentUniq
-                });
                 currentUniq++;
             }
 
-            playerModel.currentCombat = new PlayerModels.CombatDataModels.CombatModel();
-            playerModel.currentCombat.pcs = combatCharacterModels;
-            playerModel.currentCombat.currentTime = 0;
-
-            //for(int i=0; i<pcs.Count; i++) {
-            //    PlayerModels.CombatDataModels.CombatPCModel currentCombatModel = cpcs[i];
-            //    PlayerModels.Models.CharacterModel currentModel = pcs[i];
-            //    CharacterDisplay cd = new CharacterDisplay(currentModel.name, currentCombatModel.stats.hp, 
-            //        currentModel.stats.maxHP, currentCombatModel.stats.mp, 
-            //        currentModel.stats.maxMP, new List<IStatusDisplay>(), 
-            //        currentUniq, 1);
-            //    this.pcs.Add(cd);
-            //    currentUniq++;
-            //}
-
-            Encounter encounter = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
-            combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
-            foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
+            if (hasPreviousCombatModels) //Combat was already initialized previously, just load the previous combatants
             {
-                int nextAttackTime = GeneralProcessor.calculateNextAttackTime(0, initiativeCalculator(), enemy.agility);
-                this.npcs.Add(currentUniq, new FullCombatCharacter(){
-                    name = enemy.name,
-                    hp = enemy.maxHP,
-                    maxHP = enemy.maxHP,
-                    mp = enemy.maxMP,
-                    maxMP = enemy.maxMP,
-                    characterUniq = 0,
-                    combatUniq = currentUniq,
-                    className = enemy.type,
-                    level = enemy.level,
-                    strength = enemy.strength,
-                    vitality = enemy.vitality,
-                    agility = enemy.agility,
-                    intellect = enemy.intellect,
-                    wisdom = enemy.wisdom,
-                    nextAttackTime = nextAttackTime,
-                    mods = new List<CombatModificationsModel>()
-                });
-                   
-                this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
+                foreach (CombatCharacterModel ccm in combatNPCModels)
                 {
-                    name = enemy.name,
-                    stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel()
+                    int hp = ccm.stats.hp;
+                    int mp = ccm.stats.mp;
+                    int nextAttackTime = ccm.nextAttackTime;
+                    List<CombatModificationsModel> mods = ccm.mods;
+
+                    MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, ccm.classType);
+
+                    this.npcs.Add(currentUniq, new FullCombatCharacter()
                     {
-                        hp = enemy.maxHP,
-                        mp = enemy.maxMP
-                    },
-                    nextAttackTime = nextAttackTime,
-                    combatUniq = currentUniq,
-                    characterUniq = 0
-                });
-
-                currentUniq++;
+                        name = enemy.name,
+                        hp = hp,
+                        maxHP = enemy.maxHP,
+                        mp = mp,
+                        maxMP = enemy.maxMP,
+                        characterUniq = 0,
+                        combatUniq = currentUniq,
+                        className = enemy.type,
+                        level = enemy.level,
+                        strength = enemy.strength,
+                        vitality = enemy.vitality,
+                        agility = enemy.agility,
+                        intellect = enemy.intellect,
+                        wisdom = enemy.wisdom,
+                        nextAttackTime = nextAttackTime,
+                        mods = mods
+                    });
+                }
             }
-            playerModel.currentCombat.npcs = combatNPCModels;
+            else //Generate a new encounter based on the map type
+            {
+                Encounter encounter = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
+                currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
+                combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
+                foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
+                {
+                    int nextAttackTime = GeneralProcessor.calculateNextAttackTime(0, initiativeCalculator(), enemy.agility);
+                    int hp = enemy.maxHP;
+                    int mp = enemy.maxMP;
+                    int combatUniq = currentUniq;
+                    List<CombatModificationsModel> mods = new List<CombatModificationsModel>();
 
-            currentEffects = new List<IEffect>();
-            currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
+                    this.npcs.Add(currentUniq, new FullCombatCharacter()
+                    {
+                        name = enemy.name,
+                        hp = hp,
+                        maxHP = enemy.maxHP,
+                        mp = mp,
+                        maxMP = enemy.maxMP,
+                        characterUniq = 0,
+                        combatUniq = currentUniq,
+                        className = enemy.type,
+                        level = enemy.level,
+                        strength = enemy.strength,
+                        vitality = enemy.vitality,
+                        agility = enemy.agility,
+                        intellect = enemy.intellect,
+                        wisdom = enemy.wisdom,
+                        nextAttackTime = nextAttackTime,
+                        mods = mods
+                    });
+
+
+                    this.combatNPCModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
+                    {
+                        name = enemy.name,
+                        stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel()
+                        {
+                            hp = enemy.maxHP,
+                            mp = enemy.maxMP
+                        },
+                        nextAttackTime = nextAttackTime,
+                        combatUniq = currentUniq,
+                        characterUniq = 0,
+                        classType = enemy.type
+                    });
+
+                    currentUniq++;
+                }
+            }
+
+            playerModel.currentCombat.npcs = combatNPCModels;
 
             calculateTurnOrder();
             calculateTurn(false);
@@ -478,6 +540,7 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Add(new Effect(EffectTypes.GameOver, 0, "", 0));
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have been defeated!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                onCombatComplete();
                 onGameOver();
             }
             else if (livingNpcs == 0)

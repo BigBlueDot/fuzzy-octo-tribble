@@ -13,6 +13,7 @@ namespace GameDataClasses.GamePlayerClasses
         public int y { get; set; }
         public int gp { get; set; }
         public List<CharacterModel> characters { get; set; }
-        public List<int> currentPartyCharacters { get; set; } 
+        public List<int> currentPartyCharacters { get; set; }
+        public bool isInCombat { get; set; }
     }
 }

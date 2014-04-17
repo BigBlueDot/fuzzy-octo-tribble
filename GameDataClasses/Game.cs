@@ -49,7 +49,14 @@ namespace GameDataClasses
                     .Include(up => up.player.characters.Select(c => c.stats))
                     .Include(up => up.player.parties)
                     .Include(up => up.player.parties.Select(c => c.characters))
-                .FirstOrDefault(u => u.UserName.ToLower() == userName);
+                    .Include(up => up.player.currentCombat)
+                    .Include(up => up.player.currentCombat.pcs)
+                    .Include(up => up.player.currentCombat.npcs)
+                    .Include(up => up.player.currentCombat.pcs.Select(c => c.stats))
+                    .Include(up => up.player.currentCombat.pcs.Select(c => c.mods))
+                    .Include(up => up.player.currentCombat.npcs.Select(c => c.stats))
+                    .Include(up => up.player.currentCombat.npcs.Select(c => c.mods))
+                    .FirstOrDefault(u => u.UserName.ToLower() == userName);
             this.player = user.player;
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
             this.userName = userName;
@@ -100,7 +107,6 @@ namespace GameDataClasses
                     }
 
                     player.currentCombat = null;
-
                     db.SaveChanges();
                 }
                 );
@@ -121,6 +127,7 @@ namespace GameDataClasses
         public ClientPlayer getClientPlayer()
         {
             List<int> currentPartyCharacters = new List<int>();
+            bool isInCombat = true;
             foreach (PlayerModels.Models.PartyModel pm in player.parties)
             {
                 if (pm.uniq == player.activeParty)
@@ -131,7 +138,11 @@ namespace GameDataClasses
                     }
                 }
             }
-            ClientPlayer cp = new ClientPlayer() { gp = player.gp, x = player.rootX, y = player.rootY, characters = player.characters, currentPartyCharacters = currentPartyCharacters };
+            if (player.currentCombat == null)
+            {
+                isInCombat = false;
+            }
+            ClientPlayer cp = new ClientPlayer() { gp = player.gp, x = player.rootX, y = player.rootY, characters = player.characters, currentPartyCharacters = currentPartyCharacters, isInCombat = isInCombat };
 
             return cp;
         }
@@ -279,6 +290,12 @@ namespace GameDataClasses
 
         public ICombatStatus getStatus()
         {
+            if (combat == null) //Game loaded without combat being loaded normally
+            {
+                combatCountdown = 0;
+                isCombat(); //This will cause it to init the combatCountdown properly
+                combat = combatDirector.getCombat(); 
+            }
             return combat.getStatus();
         }
 

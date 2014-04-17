@@ -79,6 +79,10 @@
         nextDialog();
     }
 
+    $dialogContainer.on('click', function () {
+        that.confirm();
+    });
+
     showDialog();
 
     return that;

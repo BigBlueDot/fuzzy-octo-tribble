@@ -33,11 +33,18 @@ namespace CombatDataClasses.LiveImplementation
         {
             get
             {
+                if (playerModel.currentCombat == null)
+                {
+                    return 0;
+                }
                 return playerModel.currentCombat.currentTime;
             }
             set
             {
-                playerModel.currentCombat.currentTime = value;
+                if (playerModel.currentCombat != null)
+                {
+                    playerModel.currentCombat.currentTime = value;
+                }
             }
         }
 

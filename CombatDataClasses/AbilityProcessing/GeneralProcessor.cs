@@ -14,12 +14,16 @@ namespace CombatDataClasses.ClassProcessor
     {
         public static int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)
         {
-            return startTime + ((int)(60 * ((Math.Log10(agi) / (abilityCoefficient * 2 * Math.Log10(10))))));
+            if (agi == 1)
+            {
+                return (int)(startTime + 250.0f * abilityCoefficient);
+            }
+            return startTime + ((int)(60 * (abilityCoefficient * Math.Log10(10) / (Math.Log10(agi)))));
         }
 
         public static void calculateNextAttackTime(FullCombatCharacter character, float abilityCoefficient)
         {
-            character.nextAttackTime = character.nextAttackTime + ((int)(60 * ((Math.Log10(character.agility) / (abilityCoefficient * 2 * Math.Log10(10))))));
+            character.nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient, character.agility);
         }
 
         public static bool isProcessor(string name)

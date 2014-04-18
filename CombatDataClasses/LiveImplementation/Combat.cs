@@ -201,25 +201,28 @@ namespace CombatDataClasses.LiveImplementation
 
                     MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, ccm.classType);
 
-                    this.npcs.Add(currentUniq, new FullCombatCharacter()
+                    if (!this.npcs.ContainsKey(currentUniq))
                     {
-                        name = enemy.name,
-                        hp = hp,
-                        maxHP = enemy.maxHP,
-                        mp = mp,
-                        maxMP = enemy.maxMP,
-                        characterUniq = 0,
-                        combatUniq = currentUniq,
-                        className = enemy.type,
-                        level = enemy.level,
-                        strength = enemy.strength,
-                        vitality = enemy.vitality,
-                        agility = enemy.agility,
-                        intellect = enemy.intellect,
-                        wisdom = enemy.wisdom,
-                        nextAttackTime = nextAttackTime,
-                        mods = mods
-                    });
+                        this.npcs.Add(currentUniq, new FullCombatCharacter()
+                        {
+                            name = enemy.name,
+                            hp = hp,
+                            maxHP = enemy.maxHP,
+                            mp = mp,
+                            maxMP = enemy.maxMP,
+                            characterUniq = 0,
+                            combatUniq = currentUniq,
+                            className = enemy.type,
+                            level = enemy.level,
+                            strength = enemy.strength,
+                            vitality = enemy.vitality,
+                            agility = enemy.agility,
+                            intellect = enemy.intellect,
+                            wisdom = enemy.wisdom,
+                            nextAttackTime = nextAttackTime,
+                            mods = mods
+                        });
+                    }
                 }
             }
             else //Generate a new encounter based on the map type
@@ -345,13 +348,18 @@ namespace CombatDataClasses.LiveImplementation
         {
             FullCombatCharacter source = currentCharacter;
             List<FullCombatCharacter> targets = new List<FullCombatCharacter>();
-            if (command.targets != null)
+            SelectedCommand testCommand = command;
+            while (testCommand != null)
             {
-                foreach (int uniq in command.targets)
+                if (testCommand.targets != null)
                 {
-                    FullCombatCharacter target = getTarget(command.targets[0]);
-                    targets.Add(target);
+                    foreach (int uniq in testCommand.targets)
+                    {
+                        FullCombatCharacter target = getTarget(uniq);
+                        targets.Add(target);
+                    }
                 }
+                testCommand = testCommand.subCommand;
             }
             if (targets.Count == 0) //Pass in all enemies if no single target was selected
             {

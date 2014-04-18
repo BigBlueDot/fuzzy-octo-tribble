@@ -9,6 +9,9 @@ namespace MapDataClasses.TutorialMapGenerators
 {
     public class EnsembleVillageGenerator : IVillageGenerator
     {
+        private Func<List<string>> getCharacters;
+        private Func<List<string>> getClasses;
+
         private static EnsembleVillageGenerator _implementation;
         public static EnsembleVillageGenerator Implementation
         {
@@ -21,6 +24,12 @@ namespace MapDataClasses.TutorialMapGenerators
 
                 return _implementation;
             }
+        }
+
+        public void setFunctions(Func<List<string>> getCharacters, Func<List<string>> getClasses)
+        {
+            this.getCharacters = getCharacters;
+            this.getClasses = getClasses;
         }
 
         public MapModel getMap()
@@ -50,6 +59,8 @@ namespace MapDataClasses.TutorialMapGenerators
             mm.map[2, 4] = "Quest";
             mm.map[4, 2] = "DungeonMaster";
 
+            mm.map[6, 6] = "ClassTrainer";
+
             return mm;
         }
 
@@ -76,6 +87,25 @@ namespace MapDataClasses.TutorialMapGenerators
                 mi.options.Add(new MapOption() { text = "Emergence Cavern", value = "Emergence Cavern" });
                 ((DungeonSelectInteraction)mi).maxPartySize = 2;
             }
+            else if (mm.map[x, y] == "ClassTrainer")
+            {
+                mi = new ClassTrainerInteraction();
+                mi.hasDialog = true;
+                mi.hasOptions = true;
+                mi.dialog = "Please select the characters you want to change classes for.";
+                mi.options = new List<MapOption>();
+                List<string> characters = getCharacters();
+                foreach (string c in characters)
+                {
+                    mi.options.Add(new MapOption() { text = c, value = c });
+                }
+                List<string> classes = getClasses();
+                foreach (string c in classes)
+                {
+                    ((ClassTrainerInteraction)mi).classes.Add(new MapOption() { text = c, value = c });
+                }
+            }
+
 
             return mi;
         }
@@ -88,6 +118,16 @@ namespace MapDataClasses.TutorialMapGenerators
                 {
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        public bool validateClassTrainer(MapModel mm, int x, int y)
+        {
+            if (mm.map[x, y] == "ClassTrainer")
+            {
+                return true;
             }
 
             return false;

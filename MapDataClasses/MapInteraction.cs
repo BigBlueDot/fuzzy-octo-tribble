@@ -26,4 +26,15 @@ namespace MapDataClasses
         public bool isExit { get; set; }
         public int maxPartySize { get; set; }
     }
+
+    public class ClassTrainerInteraction : MapInteraction
+    {
+        public bool isClassTrainer { get { return true; } }
+        public List<MapOption> classes { get; set; }
+
+        public ClassTrainerInteraction()
+        {
+            classes = new List<MapOption>();
+        }
+    }
 }

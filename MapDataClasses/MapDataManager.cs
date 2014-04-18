@@ -9,9 +9,19 @@ namespace MapDataClasses
 {
     public class MapDataManager
     {
+        private static Func<List<string>> getCharacterNames;
+        private static Func<List<string>> getClasses;
+
         static MapDataManager()
         {
 
+        }
+
+        public static void setPlayerInformation(Func<List<string>> getCharacterNames, Func<List<string>> getClasses)
+        {
+            MapDataManager.getCharacterNames = getCharacterNames;
+            MapDataManager.getClasses = getClasses;
+            TutorialMapGenerators.EnsembleVillageGenerator.Implementation.setFunctions(getCharacterNames, getClasses);
         }
 
         public static ClientMap getClientMap(MapModel mm)
@@ -56,6 +66,8 @@ namespace MapDataClasses
                     return "/images/game/cavewall.png";
                 case "DungeonMaster":
                     return "/images/game/dungeon.png";
+                case "ClassTrainer":
+                    return "/images/game/classtrainer.png";
                 case "Exit":
                     return "/images/game/dungeonexit.png";
                 default:
@@ -81,6 +93,8 @@ namespace MapDataClasses
                     return false;
                 case "DungeonMaster":
                     return true;
+                case "ClassTrainer":
+                    return true;
                 case "Exit":
                     return true;
                 default:
@@ -105,6 +119,8 @@ namespace MapDataClasses
                 case "CaveWall":
                     return false;
                 case "DungeonMaster":
+                    return false;
+                case "ClassTrainer":
                     return false;
                 case "Exit":
                     return false;
@@ -181,6 +197,19 @@ namespace MapDataClasses
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
+                default:
+                    return false;
+            }
+        }
+
+        public static bool validateClassChangeSelection(string name, int x, int y, MapModel mm)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.validateClassTrainer(mm, x, y);
+                case "Emergence Cavern":
+                    return false;
                 default:
                     return false;
             }

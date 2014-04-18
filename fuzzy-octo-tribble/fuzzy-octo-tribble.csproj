@@ -268,6 +268,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\Game\CaveEmpty.png" />
     <Content Include="Images\Game\CaveWall.png" />
+    <Content Include="Images\Game\ClassTrainer.png" />
     <Content Include="Images\Game\Dungeon.png" />
     <Content Include="Images\Game\DungeonExit.png" />
     <Content Include="Images\Game\Empty.png" />

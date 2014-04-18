@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CombatDataClasses.Interfaces;
 using PlayerModels.Models;
+using PlayerModels;
 
 namespace GameDataClasses
 {
@@ -56,6 +57,7 @@ namespace GameDataClasses
                     .Include(up => up.player.currentCombat.pcs.Select(c => c.mods))
                     .Include(up => up.player.currentCombat.npcs.Select(c => c.stats))
                     .Include(up => up.player.currentCombat.npcs.Select(c => c.mods))
+                    .Include(up => up.player.unlockedClasses)
                     .FirstOrDefault(u => u.UserName.ToLower() == userName);
             this.player = user.player;
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
@@ -67,6 +69,24 @@ namespace GameDataClasses
             {
                 PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
             }
+
+            MapDataClasses.MapDataManager.setPlayerInformation(() =>
+            {
+                List<string> characters = new List<string>();
+                foreach (CharacterModel cm in this.player.characters)
+                {
+                    characters.Add(cm.name);
+                }
+                return characters;
+            }, () =>
+            {
+                List<string> classes = new List<string>();
+                foreach (CharacterUnlockedClassModel cm in this.player.unlockedClasses)
+                {
+                    classes.Add(cm.name);
+                }
+                return classes;
+            });
 
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
@@ -164,6 +184,41 @@ namespace GameDataClasses
             }
 
             return MapDataClasses.MapDataManager.getMapInteraction(x, y, currentMap);
+        }
+
+        public void setClass(int x, int y, string characterName, string className)
+        {
+            if (MapDataClasses.MapDataManager.validateClassChangeSelection(currentMap.name, x, y, currentMap))
+            {
+                foreach (CharacterUnlockedClassModel cucm in player.unlockedClasses)
+                {
+                    if (cucm.name == className) //Validate that the user has the class
+                    {
+                        foreach (CharacterModel cm in player.characters)
+                        {
+                            if (cm.name == characterName)
+                            {
+                                cm.currentClass = className;
+                                bool foundClass = false;
+                                foreach (CharacterClassModel ccm in cm.characterClasses)
+                                {
+                                    if (ccm.className == className)
+                                    {
+                                        foundClass = true;
+                                    }
+                                }
+
+                                if (!foundClass)
+                                {
+                                    cm.characterClasses.Add(new CharacterClassModel() { className = className, cp = 0, lvl = 1 });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            db.SaveChanges();
         }
 
         public void loadDungeon(int x, int y, string dungeonName, string[] party, bool combat = false)

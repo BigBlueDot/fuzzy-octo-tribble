@@ -137,5 +137,12 @@ namespace fuzzy_octo_tribble.Controllers
             Game game = checkGame();
             return Json(game.executeCommand(command));
         }
+
+        [HttpGet]
+        public void setClass(int x, int y, string characterName, string className)
+        {
+            Game game = checkGame();
+            game.setClass(x, y, characterName, className);
+        }
     }
 }

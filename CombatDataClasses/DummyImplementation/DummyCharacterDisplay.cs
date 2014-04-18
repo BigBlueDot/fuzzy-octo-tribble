@@ -101,5 +101,36 @@ namespace CombatDataClasses.DummyImplementation
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public bool showSpecificStats
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int strength
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int vitality
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int intellect
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int wisdom
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int agility
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

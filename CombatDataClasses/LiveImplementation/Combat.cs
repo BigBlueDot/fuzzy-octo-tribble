@@ -297,7 +297,9 @@ namespace CombatDataClasses.LiveImplementation
                 {
                     statuses.Add(new StatusDisplay(Interfaces.Type.Text, cmm.name));
                 }
-                pcDisplays.Add(new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder,current.className, current.level));
+                CharacterDisplay cd = new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level);
+                cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility);
+                pcDisplays.Add(cd);
                 if (pcs[key].turnOrder < fastestPCTime)
                 {
                     fastestPCTime = pcs[key].turnOrder;
@@ -309,11 +311,21 @@ namespace CombatDataClasses.LiveImplementation
             {
                 FullCombatCharacter current = npcs[key];
                 List<IStatusDisplay> statuses = new List<IStatusDisplay>();
+                bool hasGlance = false;
                 foreach (CombatModificationsModel cmm in current.mods)
                 {
+                    if (cmm.name == "Glance")
+                    {
+                        hasGlance = true;
+                    }
                     statuses.Add(new StatusDisplay(Interfaces.Type.Text, cmm.name));
                 }
-                npcDisplays.Add(new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level));
+                CharacterDisplay cd = new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level);
+                if (hasGlance)
+                {
+                    cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility);
+                }
+                npcDisplays.Add(cd);
             }
 
             return new CombatStatus(fastestPCName, currentEffects, pcDisplays, npcDisplays);

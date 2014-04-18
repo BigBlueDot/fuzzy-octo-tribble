@@ -28,6 +28,16 @@ namespace CombatDataClasses.LiveImplementation
             _turnOrder = turnOrder;
         }
 
+        public void setGlanceStats(int strength, int vitality, int intellect, int wisdom, int agility)
+        {
+            _strength = strength;
+            _vitality = vitality;
+            _intellect = intellect;
+            _wisdom = wisdom;
+            _agility = agility;
+            _showSpecificStats = true;
+        }
+
         private string _name;
         public string name
         {
@@ -109,6 +119,42 @@ namespace CombatDataClasses.LiveImplementation
         public int level
         {
             get { return _level; }
+        }
+
+        private bool _showSpecificStats;
+        public bool showSpecificStats
+        {
+            get { return _showSpecificStats; }
+        }
+
+        private int _strength;
+        public int strength
+        {
+            get { return _strength; }
+        }
+
+        private int _vitality;
+        public int vitality
+        {
+            get { return _vitality; }
+        }
+
+        private int _intellect;
+        public int intellect
+        {
+            get { return _intellect; }
+        }
+
+        private int _wisdom;
+        public int wisdom
+        {
+            get { return _wisdom; }
+        }
+
+        private int _agility;
+        public int agility
+        {
+            get { return _agility; }
         }
     }
 }

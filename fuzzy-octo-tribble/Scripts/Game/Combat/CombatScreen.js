@@ -123,10 +123,27 @@
         var $MP = $(document.createElement('div'));
         $MP.text('MP: ' + character.mp + ' / ' + character.maxMP);
 
+        if (character.showSpecificStats) {
+            var $STRVIT = $(document.createElement('div'));
+            $STRVIT.text('STR: ' + character.strength + ' VIT: ' + character.vitality);
+
+            var $INTWIS = $(document.createElement('div'));
+            $INTWIS.text('INT: ' + character.intellect + ' WIS: ' + character.wisdom);
+
+            var $AGI = $(document.createElement('div'));
+            $AGI.text("AGI: " + character.agility);
+        }
+
         $detailScreen.append($nameLvl);
         $detailScreen.append($class);
         $detailScreen.append($HP);
         $detailScreen.append($MP);
+        
+        if (character.showSpecificStats) {
+            $detailScreen.append($STRVIT);
+            $detailScreen.append($INTWIS);
+            $detailScreen.append($AGI);
+        }
         return $detailScreen
     }
 

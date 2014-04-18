@@ -32,9 +32,9 @@ namespace CombatDataClasses.ClassProcessor
             }
         }
 
-        public static Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(string name)
+        public static Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)
         {
-            switch (name)
+            switch (command.commandName)
             {
                 case "Attack":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
@@ -80,6 +80,19 @@ namespace CombatDataClasses.ClassProcessor
                             GeneralProcessor.calculateNextAttackTime(source, .8f);
                             return effects;
                         });
+                case "Abilities":
+                    if (AdventurerProcessor.isAdventurerCommand(command.subCommand.commandName))
+                    {
+                        return AdventurerProcessor.executeCommand(command.subCommand);
+                    }
+                    else
+                    {
+                        return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                            {
+                                List<IEffect> effects = new List<IEffect>();
+                                return effects;
+                            });
+                    }
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

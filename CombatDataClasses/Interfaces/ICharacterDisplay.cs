@@ -17,6 +17,12 @@ namespace CombatDataClasses.Interfaces
         int turnOrder { get; }
         string type { get; }
         int level { get; }
+        bool showSpecificStats { get; }
+        int strength { get; }
+        int vitality { get; }
+        int intellect { get; }
+        int wisdom { get; }
+        int agility { get; }
         IEnumerable<IStatusDisplay> statuses { get; }
     }
 }

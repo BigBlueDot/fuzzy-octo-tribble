@@ -37,6 +37,10 @@ namespace CombatDataClasses.LiveImplementation
                 {
                     damage = damage / 2;
                 }
+                if (cmm.name == "Reckless")
+                {
+                    damage = (int)(damage * 1.5);
+                }
             }
 
             hp -= damage;

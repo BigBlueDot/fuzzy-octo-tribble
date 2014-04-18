@@ -27,14 +27,34 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing
         public static FullCombatCharacter identifyWeakestTarget(List<FullCombatCharacter> characters)
         {
             FullCombatCharacter currentCharacter = characters[0];
+            int currentWeakLevel = getWeakness(currentCharacter);
             foreach (FullCombatCharacter fcc in characters)
             {
-                if (fcc.hp < currentCharacter.hp)
+                int newWeakLevel = getWeakness(fcc);
+                if (newWeakLevel < currentWeakLevel)
                 {
                     currentCharacter = fcc;
+                    currentWeakLevel = newWeakLevel;
                 }
             }
             return currentCharacter;
+        }
+
+        private static int getWeakness(FullCombatCharacter fcc)
+        {
+            int weakness = fcc.hp;
+
+            if (ModificationsGeneration.BasicModificationsGeneration.hasMod(fcc, "Guard"))
+            {
+                weakness = weakness * 2;
+            }
+
+            if (ModificationsGeneration.BasicModificationsGeneration.hasMod(fcc, "Reckless"))
+            {
+                weakness = weakness / 4;
+            }
+
+            return weakness;
         }
     }
 }

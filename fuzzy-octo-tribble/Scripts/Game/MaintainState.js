@@ -7,7 +7,7 @@
         $.ajax("Game/GetPlayer", {
             success: function (data) {
                 var currentParty = [];
-                for (var i = 0; i < data.currentPartyCharacters; i++) {
+                for (var i = 0; i < data.currentPartyCharacters.length; i++) {
                     for (var j = 0; j < data.characters.length; j++) {
                         if (data.characters[j].uniq === data.currentPartyCharacters[i]) {
                             currentParty.push(data.characters[j]);

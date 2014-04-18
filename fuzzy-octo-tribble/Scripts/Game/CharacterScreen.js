@@ -9,8 +9,8 @@
             var character = characters[i];
             var currentCharacterClass;
             for (var j = 0; j < character.characterClasses.length; j++) {
-                if (character.characterClasses[i].className === character.currentClass) {
-                    currentCharacterClass = character.characterClasses[i];
+                if (character.characterClasses[j].className === character.currentClass) {
+                    currentCharacterClass = character.characterClasses[j];
                 }
             }
 
@@ -22,8 +22,8 @@
             var character = currentParty[i];
             var currentCharacterClass;
             for (var j = 0; j < character.characterClasses.length; j++) {
-                if (character.characterClasses[i].className === character.currentClass) {
-                    currentCharacterClass = character.characterClasses[i];
+                if (character.characterClasses[j].className === character.currentClass) {
+                    currentCharacterClass = character.characterClasses[j];
                 }
             }
 

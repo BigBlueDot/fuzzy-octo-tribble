@@ -74,7 +74,7 @@ namespace MapDataClasses.TutorialMapGenerators
                 mi.dialog = "What dungeon would you like to go to?";
                 mi.options = new List<MapOption>();
                 mi.options.Add(new MapOption() { text = "Emergence Cavern", value = "Emergence Cavern" });
-                ((DungeonSelectInteraction)mi).maxPartySize = 1;
+                ((DungeonSelectInteraction)mi).maxPartySize = 2;
             }
 
             return mi;

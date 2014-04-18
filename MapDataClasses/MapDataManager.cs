@@ -134,6 +134,7 @@ namespace MapDataClasses
             List<string> results = new List<string>();
             results.Add("Ensemble Village");
             results.Add("Emergence Cavern");
+            results.Add("Emergence Cavern F2");
             return results;
         }
 
@@ -144,6 +145,8 @@ namespace MapDataClasses
                 case "Ensemble Village":
                     return "Ensemble Village";
                 case "Emergence Cavern":
+                    return "Ensemble Village";
+                case "Emergence Cavern F2":
                     return "Ensemble Village";
                 default:
                     return "Ensemble Village";
@@ -158,6 +161,8 @@ namespace MapDataClasses
                     return false;
                 case "Emergence Cavern":
                     return true;
+                case "Emergence Cavern F2":
+                    return true;
                 default:
                     return false;
             }
@@ -171,6 +176,8 @@ namespace MapDataClasses
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMap();
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMap();
+                case "Emergence Cavern F2":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMapFloor2();
                 default:
                     return new MapModel();
             }
@@ -183,6 +190,8 @@ namespace MapDataClasses
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getInteraction(mm, x, y);
                 case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getInteraction(mm, x, y);
+                case "Emergence Cavern F2":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getInteraction(mm, x, y);
                 default:
                     return new MapInteraction();
@@ -197,6 +206,8 @@ namespace MapDataClasses
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
+                case "Emergence Cavern F2":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.validateDungeonSelection(mm, x, y, selectedDungeon);
                 default:
                     return false;
             }
@@ -209,6 +220,8 @@ namespace MapDataClasses
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.validateClassTrainer(mm, x, y);
                 case "Emergence Cavern":
+                    return false;
+                case "Emergence Cavern F2":
                     return false;
                 default:
                     return false;
@@ -223,6 +236,8 @@ namespace MapDataClasses
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMinCombatCount();
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCount();
+                case "Emergence Cavern F2":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCountF2();
                 default:
                     return 0;
             }
@@ -235,6 +250,8 @@ namespace MapDataClasses
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMaxCombatCount();
                 case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMaxCombatCount();
+                case "Emergence Cavern F2":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMaxCombatCount();
                 default:
                     return 0;
@@ -249,6 +266,8 @@ namespace MapDataClasses
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getRandomEncounterCount();
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCount();
+                case "Emergence Cavern F2":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCountF2();
                 default:
                     return 0;
             }
@@ -262,6 +281,8 @@ namespace MapDataClasses
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getRandomEncounter(selection);
                 case "Emergence Cavern":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounter(selection);
+                case "Emergence Cavern F2":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterF2(selection);
                 default:
                     return new Encounter();
             }
@@ -273,6 +294,8 @@ namespace MapDataClasses
             switch (mapName)
             {
                 case "Emergence Cavern":
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType);
+                case "Emergence Cavern F2":
                     return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType);
                 default:
                     return new Enemy();

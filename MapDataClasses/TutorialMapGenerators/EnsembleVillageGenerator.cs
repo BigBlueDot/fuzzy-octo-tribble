@@ -85,6 +85,7 @@ namespace MapDataClasses.TutorialMapGenerators
                 mi.dialog = "What dungeon would you like to go to?";
                 mi.options = new List<MapOption>();
                 mi.options.Add(new MapOption() { text = "Emergence Cavern", value = "Emergence Cavern" });
+                mi.options.Add(new MapOption() { text = "Emergence Cavern F2", value = "Emergence Cavern F2" });
                 ((DungeonSelectInteraction)mi).maxPartySize = 2;
             }
             else if (mm.map[x, y] == "ClassTrainer")
@@ -115,6 +116,10 @@ namespace MapDataClasses.TutorialMapGenerators
             if (mm.map[x, y] == "DungeonMaster")
             {
                 if (selectedDungeon == "Emergence Cavern")
+                {
+                    return true;
+                }
+                if (selectedDungeon == "Emergence Cavern F2")
                 {
                     return true;
                 }

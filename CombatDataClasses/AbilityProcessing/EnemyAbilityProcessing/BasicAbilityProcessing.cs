@@ -16,6 +16,10 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing
             {
                 return Goblins.GoblinAbilityProcessing.getCommand(source, targets, combatData);
             }
+            if (source.className == "Boss Goblin")
+            {
+                return Goblins.GoblinAbilityProcessing.getCommand(source, targets, combatData);
+            }
 
             return new List<IEffect>();
         }

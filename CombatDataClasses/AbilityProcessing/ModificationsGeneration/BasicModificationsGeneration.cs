@@ -75,6 +75,15 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
             return cmm;
         }
 
+        public static CombatModificationsModel getRecklessModification(string characterName)
+        {
+            CombatModificationsModel cmm = new CombatModificationsModel();
+            cmm.name = "Reckless";
+            cmm.conditions = new List<CombatConditionModel>();
+            cmm.conditions.Add(new CombatConditionModel() { name = "TurnEnding", state = characterName + "!" });
+            return cmm;
+        }
+
         public static bool hasMod(FullCombatCharacter fcc, string modName)
         {
             foreach (CombatModificationsModel cmm in fcc.mods)

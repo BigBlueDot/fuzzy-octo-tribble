@@ -14,7 +14,7 @@ namespace CombatDataClasses.ClassProcessor
     {
         public static bool isAdventurerCommand(string name)
         {
-            if (name == "Glance" || name == "Guarded Strike")
+            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit")
             {
                 return true;
             }
@@ -32,6 +32,10 @@ namespace CombatDataClasses.ClassProcessor
             if (level >= 2)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guarded Strike", false, 0, true));
+            }
+            if (level >= 3)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Reckless Hit", false, 0, true));
             }
 
             return commands;
@@ -82,7 +86,24 @@ namespace CombatDataClasses.ClassProcessor
                             GeneralProcessor.calculateNextAttackTime(source, coefficient);
                             return effects;
                         });
-
+                case "Reckless Hit":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 3)
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        foreach(FullCombatCharacter t in targets){
+                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 8 / t.vitality));
+                            t.inflictDamage(ref dmg);
+                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                            effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a reckless attack.", 0));
+                        }
+                        GeneralProcessor.calculateNextAttackTime(source, 1.2f);
+                        source.mods.Add(BasicModificationsGeneration.getRecklessModification(source.name));
+                        return effects;
+                    });
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

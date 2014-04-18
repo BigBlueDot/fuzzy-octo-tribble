@@ -14,7 +14,7 @@ namespace CombatDataClasses.ClassProcessor
     {
         public static bool isAdventurerCommand(string name)
         {
-            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit")
+            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit" || name == "Guided Strike")
             {
                 return true;
             }
@@ -36,6 +36,10 @@ namespace CombatDataClasses.ClassProcessor
             if (level >= 3)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Reckless Hit", false, 0, true));
+            }
+            if (level >= 4)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guided Strike", false, 0, true));
             }
 
             return commands;
@@ -104,6 +108,31 @@ namespace CombatDataClasses.ClassProcessor
                         source.mods.Add(BasicModificationsGeneration.getRecklessModification(source.name));
                         return effects;
                     });
+                case "Guided Strike":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                        {
+                            if (source.classLevel < 4)
+                            {
+                                return new List<IEffect>();
+                            }
+                            List<IEffect> effects = new List<IEffect>();
+                            foreach (FullCombatCharacter t in targets)
+                            {
+                                float dmgMod = .8f;
+                                string preMessage = string.Empty;
+                                if (BasicModificationsGeneration.hasMod(t, "Glance"))
+                                {
+                                    dmgMod = 1.2f;
+                                    preMessage = source.name + " is locked on!  ";
+                                }
+                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * dmgMod * 5 / t.vitality));
+                                t.inflictDamage(ref dmg);
+                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                                effects.Add(new Effect(EffectTypes.Message, 0,preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
+                            }
+                            GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                            return effects;
+                        });
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

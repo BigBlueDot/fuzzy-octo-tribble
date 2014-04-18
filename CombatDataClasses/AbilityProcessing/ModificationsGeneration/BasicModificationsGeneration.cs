@@ -17,13 +17,16 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
                 List<CombatModificationsModel> toRemove = new List<CombatModificationsModel>();
                 foreach (CombatModificationsModel cmm in fcc.mods)
                 {
-                    foreach (CombatConditionModel ccm in cmm.conditions)
+                    if (cmm.conditions != null)
                     {
-                        if (ccm.name == "Time")
+                        foreach (CombatConditionModel ccm in cmm.conditions)
                         {
-                            if (Convert.ToInt32(ccm.state) <= time)
+                            if (ccm.name == "Time")
                             {
-                                toRemove.Add(cmm);
+                                if (Convert.ToInt32(ccm.state) <= time)
+                                {
+                                    toRemove.Add(cmm);
+                                }
                             }
                         }
                     }
@@ -43,17 +46,20 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
                 List<CombatModificationsModel> toRemove = new List<CombatModificationsModel>();
                 foreach (CombatModificationsModel cmm in fcc.mods)
                 {
-                    foreach (CombatConditionModel ccm in cmm.conditions)
+                    if (cmm.conditions != null)
                     {
-                        if (ccm.name == "TurnEnding")
+                        foreach (CombatConditionModel ccm in cmm.conditions)
                         {
-                            if (ccm.state == characterEnding)
+                            if (ccm.name == "TurnEnding")
                             {
-                                toRemove.Add(cmm);
-                            }
-                            else if (ccm.state == characterEnding + "!") //This mod was just applied
-                            {
-                                ccm.state = characterEnding;
+                                if (ccm.state == characterEnding)
+                                {
+                                    toRemove.Add(cmm);
+                                }
+                                else if (ccm.state == characterEnding + "!") //This mod was just applied
+                                {
+                                    ccm.state = characterEnding;
+                                }
                             }
                         }
                     }

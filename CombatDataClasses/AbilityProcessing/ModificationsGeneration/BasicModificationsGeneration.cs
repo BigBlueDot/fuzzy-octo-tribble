@@ -51,6 +51,10 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
                             {
                                 toRemove.Add(cmm);
                             }
+                            else if (ccm.state == characterEnding + "!") //This mod was just applied
+                            {
+                                ccm.state = characterEnding;
+                            }
                         }
                     }
                 }
@@ -67,7 +71,7 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
             CombatModificationsModel cmm = new CombatModificationsModel();
             cmm.name = "Guard";
             cmm.conditions = new List<CombatConditionModel>();
-            cmm.conditions.Add(new CombatConditionModel() { name = "TurnEnding", state = characterName });
+            cmm.conditions.Add(new CombatConditionModel() { name = "TurnEnding", state = characterName + "!" });
             return cmm;
         }
 

@@ -361,9 +361,9 @@ namespace CombatDataClasses.LiveImplementation
                 }
             }
             Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
+            currentEffects = cmdExecute(source, targets, combatData);
             BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
             BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
-            currentEffects = cmdExecute(source, targets, combatData);
             currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
             checkCombatEnded();
             return getStatus();

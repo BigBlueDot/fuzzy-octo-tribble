@@ -60,6 +60,10 @@ namespace CombatDataClasses.ClassProcessor
                 case "Guarded Strike":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                         {
+                            if (source.classLevel < 2) //Verify that they have the level to use this skill
+                            {
+                                return new List<IEffect>();
+                            }
                             List<IEffect> effects = new List<IEffect>();
                             float coefficient = 1.0f;
                             string preMessage = string.Empty;
@@ -73,7 +77,7 @@ namespace CombatDataClasses.ClassProcessor
                                 int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / t.vitality));
                                 t.inflictDamage(ref dmg);
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                                effects.Add(new Effect(EffectTypes.Message, 0, preMessage + source.name + " has dealt " + dmg + " damage to " + t.name, 0));
+                                effects.Add(new Effect(EffectTypes.Message, 0, preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + ".", 0));
                             }
                             GeneralProcessor.calculateNextAttackTime(source, coefficient);
                             return effects;

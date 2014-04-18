@@ -361,6 +361,8 @@ namespace CombatDataClasses.LiveImplementation
                 }
             }
             Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
+            BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
+            BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
             currentEffects = cmdExecute(source, targets, combatData);
             currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
             checkCombatEnded();
@@ -450,6 +452,8 @@ namespace CombatDataClasses.LiveImplementation
             else
             {
                 List<IEffect> enemyEffects = BasicAbilityProcessing.getCommand(currentCharacter, getAllPcsAsList(), combatData);
+                BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
+                BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
                 foreach (IEffect e in enemyEffects)
                 {
                     currentEffects.Add(e);

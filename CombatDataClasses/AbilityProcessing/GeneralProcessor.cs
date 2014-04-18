@@ -60,7 +60,7 @@ namespace CombatDataClasses.ClassProcessor
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is guarding!", 0));
 
                         GeneralProcessor.calculateNextAttackTime(source, 1.0f);
-                        source.mods.Add(BasicModificationsGeneration.getGuardModification(source.nextAttackTime));
+                        source.mods.Add(BasicModificationsGeneration.getGuardModification(source.name));
                         return effects;
                     });
                 case "Flee":

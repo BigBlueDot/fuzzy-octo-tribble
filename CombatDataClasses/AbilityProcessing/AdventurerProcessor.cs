@@ -1,4 +1,6 @@
-﻿using CombatDataClasses.Interfaces;
+﻿using CombatDataClasses.AbilityProcessing;
+using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
+using CombatDataClasses.Interfaces;
 using CombatDataClasses.LiveImplementation;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace CombatDataClasses.ClassProcessor
     {
         public static bool isAdventurerCommand(string name)
         {
-            if (name == "Glance")
+            if (name == "Glance" || name == "Guarded Strike")
             {
                 return true;
             }
@@ -27,6 +29,10 @@ namespace CombatDataClasses.ClassProcessor
             List<ICommand> commands = new List<ICommand>();
 
             commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Glance", false, 0, true));
+            if (level >= 2)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guarded Strike", false, 0, true));
+            }
 
             return commands;
         }
@@ -51,6 +57,28 @@ namespace CombatDataClasses.ClassProcessor
                             GeneralProcessor.calculateNextAttackTime(source, .5f);
                             return effects;
                         });
+                case "Guarded Strike":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                        {
+                            List<IEffect> effects = new List<IEffect>();
+                            float coefficient = 1.0f;
+                            string preMessage = string.Empty;
+                            if (BasicModificationsGeneration.hasMod(source, "Guard"))
+                            {
+                                coefficient = .75f;
+                                preMessage = source.name + " attacks quicker due to guarding!  ";
+                            }
+                            foreach (FullCombatCharacter t in targets)
+                            {
+                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / t.vitality));
+                                t.inflictDamage(ref dmg);
+                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                                effects.Add(new Effect(EffectTypes.Message, 0, preMessage + source.name + " has dealt " + dmg + " damage to " + t.name, 0));
+                            }
+                            GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                            return effects;
+                        });
+
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

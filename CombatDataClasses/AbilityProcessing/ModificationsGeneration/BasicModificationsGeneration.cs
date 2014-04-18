@@ -36,13 +36,52 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
             }
         }
 
-        public static CombatModificationsModel getGuardModification(int nextAttack)
+        public static void endTurnForUser(List<FullCombatCharacter> characters, string characterEnding)
+        {
+            foreach (FullCombatCharacter fcc in characters)
+            {
+                List<CombatModificationsModel> toRemove = new List<CombatModificationsModel>();
+                foreach (CombatModificationsModel cmm in fcc.mods)
+                {
+                    foreach (CombatConditionModel ccm in cmm.conditions)
+                    {
+                        if (ccm.name == "TurnEnding")
+                        {
+                            if (ccm.state == characterEnding)
+                            {
+                                toRemove.Add(cmm);
+                            }
+                        }
+                    }
+                }
+
+                foreach (CombatModificationsModel cmm in toRemove)
+                {
+                    fcc.mods.Remove(cmm);
+                }
+            }
+        }
+
+        public static CombatModificationsModel getGuardModification(string characterName)
         {
             CombatModificationsModel cmm = new CombatModificationsModel();
             cmm.name = "Guard";
             cmm.conditions = new List<CombatConditionModel>();
-            cmm.conditions.Add(new CombatConditionModel() { name = "Time", state = nextAttack.ToString() });
+            cmm.conditions.Add(new CombatConditionModel() { name = "TurnEnding", state = characterName });
             return cmm;
+        }
+
+        public static bool hasMod(FullCombatCharacter fcc, string modName)
+        {
+            foreach (CombatModificationsModel cmm in fcc.mods)
+            {
+                if (cmm.name == modName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

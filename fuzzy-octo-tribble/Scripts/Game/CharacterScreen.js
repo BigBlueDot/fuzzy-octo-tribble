@@ -14,7 +14,7 @@
                 }
             }
 
-            characterItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel));
+            characterItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel, character.cp, character.cpToLevel));
         }
 
         currentPartyItems = [];
@@ -27,11 +27,11 @@
                 }
             }
 
-            currentPartyItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel));
+            currentPartyItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel, character.cp, character.cpToLevel));
         }
     }
 
-    var createCharacterItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel) {
+    var createCharacterItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel) {
         var character = {
             name: name,
             lvl: lvl,
@@ -45,7 +45,9 @@
             WIS: WIS,
             AGI: AGI,
             xp: xp,
-            xpToLevel: xpToLevel
+            xpToLevel: xpToLevel,
+            cp: cp,
+            cpToLevel: cpToLevel
         };
 
         var $characterItem = $(document.createElement('div'));
@@ -62,7 +64,7 @@
         return {
             content: $characterItem,
             select: function () {
-                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI, character.xp, character.xpToLevel), true, function () {
+                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI, character.xp, character.xpToLevel, character.cp, character.cpToLevel), true, function () {
                     FuzzyOctoTribble.KeyControl.menu();
                 }));
             },
@@ -70,7 +72,7 @@
         };
     }
 
-    var createCharacterDetailScreen = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel) {
+    var createCharacterDetailScreen = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel) {
         var $detailScreen = $(document.createElement('div'));
         $detailScreen.addClass('popup-screen text-font character-detail-screen');
 
@@ -79,6 +81,9 @@
 
         var $xp = $(document.createElement('div'));
         $xp.text(xp + "/" + xpToLevel + " XP");
+
+        var $cp = $(document.createElement('div'));
+        $cp.text(cp + "/" + cpToLevel + " CP");
 
         var $class = $(document.createElement('div'));
         $class.text(currentClass + ' Level ' + classLvl);
@@ -97,6 +102,7 @@
 
         $detailScreen.append($nameLvl);
         $detailScreen.append($xp);
+        $detailScreen.append($cp);
         $detailScreen.append($class);
         $detailScreen.append($HPMP);
         $detailScreen.append($STRVIT);

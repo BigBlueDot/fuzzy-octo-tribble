@@ -376,7 +376,7 @@ namespace CombatDataClasses.LiveImplementation
         private void calculateTurnOrder()
         {
             List<int> usedUniqs = new List<int>();
-            for (int i = 0; i < checkCharacterListDeath(npcs, true) + checkCharacterListDeath(pcs); i++)
+            for (int i = 0; i < checkCharacterListDeath(npcs, true, true) + checkCharacterListDeath(pcs, true); i++)
             {
                 int currentFastestUniq = 1;
                 int fastestTime = int.MaxValue;
@@ -535,7 +535,7 @@ namespace CombatDataClasses.LiveImplementation
             return null;
         }
 
-        private int checkCharacterListDeath(Dictionary<int, FullCombatCharacter> characters, bool isNPC = false)
+        private int checkCharacterListDeath(Dictionary<int, FullCombatCharacter> characters, bool justGetCount, bool isNPC = false)
         {
             int livingCount = characters.Count;
             foreach (int key in characters.Keys)
@@ -545,13 +545,16 @@ namespace CombatDataClasses.LiveImplementation
                     characters[key].hp = 0;
                     characters[key].turnOrder = 0;
                     characters[key].nextAttackTime = int.MaxValue;
-                    characters[key].defeated = true;
-                    currentEffects.Add(new Effect(EffectTypes.DestroyCharacter, characters[key].combatUniq, string.Empty, 0));
-                    if (isNPC)
+                    if (!justGetCount)
                     {
-                        //Calculate xp and cp
-                        MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, characters[key].className);
-                        getXPAndCP(enemy.xp, enemy.cp);
+                        characters[key].defeated = true;
+                        currentEffects.Add(new Effect(EffectTypes.DestroyCharacter, characters[key].combatUniq, string.Empty, 0));
+                        if (isNPC)
+                        {
+                            //Calculate xp and cp
+                            MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, characters[key].className);
+                            getXPAndCP(enemy.xp, enemy.cp);
+                        }
                     }
                     livingCount--;
                 }
@@ -612,8 +615,8 @@ namespace CombatDataClasses.LiveImplementation
 
         private void checkDeath()
         {
-            int livingPcs = checkCharacterListDeath(pcs);
-            int livingNpcs = checkCharacterListDeath(npcs, true);
+            int livingPcs = checkCharacterListDeath(pcs, false);
+            int livingNpcs = checkCharacterListDeath(npcs, false, true);
 
             if (livingPcs == 0)
             {

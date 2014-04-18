@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="AbilityProcessing\AdventurerProcessor.cs" />
     <Compile Include="AbilityProcessing\AbilityDirector.cs" />
+    <Compile Include="AbilityProcessing\CombatCalculator.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\BasicAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\Goblins\GoblinAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\GeneralProcessor.cs" />

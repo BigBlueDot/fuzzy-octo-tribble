@@ -1,4 +1,5 @@
-﻿using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
+﻿using CombatDataClasses.AbilityProcessing;
+using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
 using CombatDataClasses.Interfaces;
 using CombatDataClasses.LiveImplementation;
 using System;
@@ -40,7 +41,7 @@ namespace CombatDataClasses.ClassProcessor
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {
                         List<IEffect> effects = new List<IEffect>();
-                        int dmg = (int)((source.strength * 5 / target[0].vitality));
+                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / target[0].vitality));
                         target[0].inflictDamage(ref dmg);
                         effects.Add(new Effect(EffectTypes.DealDamage, target[0].combatUniq, string.Empty, dmg));
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target[0].name + " for " + dmg.ToString() + " damage!", 0));

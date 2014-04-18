@@ -25,6 +25,7 @@ namespace CombatDataClasses.LiveImplementation
         public int combatUniq { get; set; }
         public string className { get; set; }
         public int level { get; set; }
+        public int classLevel { get; set; }
         public int turnOrder { get; set; }
         public bool defeated { get; set; }
 

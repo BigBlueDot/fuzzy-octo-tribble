@@ -102,6 +102,7 @@ namespace CombatDataClasses.LiveImplementation
                 int intellect = 0;
                 int wisdom = 0;
                 int nextAttackTime = 0;
+                int classLevel = 0;
                 int combatUniq = currentUniq;
                 List<CombatModificationsModel> mods = new List<CombatModificationsModel>();
                 uniqBridge.Add(currentUniq, characterUniq);
@@ -120,6 +121,14 @@ namespace CombatDataClasses.LiveImplementation
                         agility = cm.stats.agility;
                         intellect = cm.stats.intellect;
                         wisdom = cm.stats.wisdom;
+
+                        foreach (PlayerModels.Models.CharacterClassModel ccm in cm.characterClasses)
+                        {
+                            if (ccm.className == classType)
+                            {
+                                classLevel = ccm.lvl;
+                            }
+                        }
                     }
                 }
 
@@ -168,6 +177,7 @@ namespace CombatDataClasses.LiveImplementation
                    characterUniq = characterUniq,
                    combatUniq = currentUniq,
                    className = classType,
+                   classLevel = classLevel,
                    level = level,
                    strength = strength,
                    vitality = vitality,

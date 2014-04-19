@@ -51,21 +51,42 @@
 
     var that = FuzzyOctoTribble.ScreenSelectControl(spec, subMy);
 
+    var localUp = that.releaseUp;
+    var localDown = that.releaseDown;
     var storeConfirm = that.confirm;
     var storeSelected;
+    var isRight = false;
     that.releaseRight = function () {
-        storeSelected = $('.popup-screen-item-selected');
-        storeSelected.removeClass('popup-screen-item-selected');
-        $done.addClass('popup-screen-item-selected');
-        that.confirm = function () {
-            $done.click();
+        if (!isRight) {
+            isRight = true;
+            storeSelected = $('.popup-screen-item-selected');
+            storeSelected.removeClass('popup-screen-item-selected');
+            $done.addClass('popup-screen-item-selected');
+            that.confirm = function () {
+                $done.click();
+            }
         }
     }
 
     that.releaseLeft = function () {
         that.confirm = storeConfirm;
-        storeSelected.addClass('popup-screen-item-selected');
+        isRight = false;
+        if (storeSelected) {
+            storeSelected.addClass('popup-screen-item-selected');
+        }
         $done.removeClass('popup-screen-item-selected');
+    }
+    
+    that.releaseDown = function () {
+        if (!isRight) {
+            localDown();
+        }
+    }
+
+    that.releaseUp = function () {
+        if (!isRight) {
+            localUp();
+        }
     }
 
     return that;

@@ -282,7 +282,7 @@
             deselectCurrent();
             pcCurrentlySelected = false;
             if (currentSelection >= enemies.length) {
-                currentCharacter = enemies.length - 1;
+                currentSelection = enemies.length - 1;
             }
             selectCurrent();
         }
@@ -291,7 +291,7 @@
             deselectCurrent();
             pcCurrentlySelected = true;
             if (currentSelection >= allies.length) {
-                currentCharacter = allies.length - 1;
+                currentSelection = allies.length - 1;
             }
             selectCurrent();
         }

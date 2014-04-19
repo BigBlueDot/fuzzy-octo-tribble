@@ -152,7 +152,6 @@ namespace CombatDataClasses.LiveImplementation
                             nextAttackTime = ccm.nextAttackTime;
                             hp = ccm.stats.hp;
                             mp = ccm.stats.mp;
-                            mods = ccm.mods;
                             combatUniq = ccm.combatUniq;
                         }
                     }
@@ -161,7 +160,6 @@ namespace CombatDataClasses.LiveImplementation
                     combatCharacterModels.Add(new PlayerModels.CombatDataModels.CombatCharacterModel()
                     {
                         characterUniq = characterUniq,
-                        mods = new List<PlayerModels.CombatDataModels.CombatModificationsModel>(),
                         stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel() { hp = hp, mp = mp },
                         nextAttackTime = nextAttackTime,
                         combatUniq = combatUniq
@@ -187,6 +185,9 @@ namespace CombatDataClasses.LiveImplementation
                    nextAttackTime = nextAttackTime,
                    mods = new List<CombatModificationsModel>()
                 });
+
+                combatCharacterModels[combatCharacterModels.Count - 1].mods = pcs[characterUniq].mods;
+
                 currentUniq++;
             }
 
@@ -270,7 +271,8 @@ namespace CombatDataClasses.LiveImplementation
                         nextAttackTime = nextAttackTime,
                         combatUniq = currentUniq,
                         characterUniq = 0,
-                        classType = enemy.type
+                        classType = enemy.type,
+                        mods = this.npcs[currentUniq].mods
                     });
 
                     currentUniq++;
@@ -278,9 +280,12 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             playerModel.currentCombat.npcs = combatNPCModels;
+            if (combatNPCModels.Count == 0)
+            {
+                throw new Exception("No NPCs were loaded :(");
+            }
 
             calculateTurnOrder();
-            calculateTurn(false);
             combatData = new CombatData();
 
             if (!combatData.combatInitalized)
@@ -294,6 +299,7 @@ namespace CombatDataClasses.LiveImplementation
 
                 combatData.combatInitalized = true;
             }
+            calculateTurn(false);
         }
         
         public List<ICommand> getCommands()
@@ -303,7 +309,7 @@ namespace CombatDataClasses.LiveImplementation
             if (currentCharacter != 0)
             {
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true));
-                returnValue.Add(new Command(true, ClassProcessor.AbilityDirector.getClassAbilities(pcs[uniqBridge[currentCharacter]].className, pcs[uniqBridge[currentCharacter]].level), false, 0, 0, "Abilities", false, 0, false));
+                returnValue.Add(new Command(true, ClassProcessor.AbilityDirector.getClassAbilities(pcs[uniqBridge[currentCharacter]].className, pcs[uniqBridge[currentCharacter]].classLevel), false, 0, 0, "Abilities", false, 0, false));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false));
             }
@@ -382,6 +388,7 @@ namespace CombatDataClasses.LiveImplementation
             }
             Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> cmdExecute = AbilityDirector.executeCommand(command);
             currentEffects = cmdExecute(source, targets, combatData);
+            combatData.setFirstTurnOver(source.name);
             BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
             BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
             currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
@@ -472,6 +479,7 @@ namespace CombatDataClasses.LiveImplementation
             else
             {
                 List<IEffect> enemyEffects = BasicAbilityProcessing.getCommand(currentCharacter, getAllPcsAsList(), combatData);
+                combatData.setFirstTurnOver(currentCharacter.name);
                 BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
                 BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
                 foreach (IEffect e in enemyEffects)
@@ -498,11 +506,16 @@ namespace CombatDataClasses.LiveImplementation
                         ccm.nextAttackTime = fcc.nextAttackTime;
                         ccm.stats.hp = fcc.hp;
                         ccm.stats.mp = fcc.mp;
-                        ccm.mods.Clear();
-                        foreach (CombatModificationsModel cmm in fcc.mods)
-                        {
-                            ccm.mods.Add(cmm);
-                        }
+                        //ccm.mods.Clear();
+                        //foreach (CombatModificationsModel cmm in fcc.mods)
+                        //{
+                        //    ccm.mods.Add(new CombatModificationsModel()
+                        //    {
+                        //        name = cmm.name,
+                        //        uniq = cmm.uniq,
+                        //        conditions = cmm.conditions
+                        //    });
+                        //}
                     }
                 }
             }
@@ -517,11 +530,17 @@ namespace CombatDataClasses.LiveImplementation
                         ccm.nextAttackTime = fcc.nextAttackTime;
                         ccm.stats.hp = fcc.hp;
                         ccm.stats.mp = fcc.mp;
-                        ccm.mods = new List<CombatModificationsModel>();
-                        foreach (CombatModificationsModel cmm in fcc.mods)
-                        {
-                            ccm.mods.Add(cmm);
-                        }
+                        //ccm.mods.Clear();
+                        //foreach (CombatModificationsModel cmm in fcc.mods)
+                        //{
+                        //    //Initializing a new CombatModificationsModel fixes an EF bug in the easiest way possible.  THis is probably not the best way to do it.
+                        //    ccm.mods.Add(new CombatModificationsModel()
+                        //        {
+                        //            name = cmm.name,
+                        //            uniq = cmm.uniq,
+                        //            conditions = cmm.conditions
+                        //        });
+                        //}
                     }
                 }
             }

@@ -224,6 +224,8 @@ namespace CombatDataClasses.LiveImplementation
                             mods = mods
                         });
                     }
+
+                    currentUniq++;
                 }
             }
             else //Generate a new encounter based on the map type

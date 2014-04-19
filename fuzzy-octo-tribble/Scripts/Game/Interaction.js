@@ -110,6 +110,7 @@ FuzzyOctoTribble.InteractionHandler = (function () {
                                         success: function () {
                                             FuzzyOctoTribble.KeyControl.cancel(); //Close out the dungeon selector
                                             FuzzyOctoTribble.KeyControl.cancel(); //Close out the dungeon selector
+                                            FuzzyOctoTribble.MaintainState.updateMap() //Get latest version of player
                                         }
                                     });
                             }

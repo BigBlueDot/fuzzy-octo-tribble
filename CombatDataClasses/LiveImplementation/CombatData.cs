@@ -30,7 +30,7 @@ namespace CombatDataClasses.LiveImplementation
 
         public bool isFirstTurn(string name)
         {
-            return firstTurnOver.Contains(name);
+            return !firstTurnOver.Contains(name);
         }
 
         public int currentFleeCount { get; set; }

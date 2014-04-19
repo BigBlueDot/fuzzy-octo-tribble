@@ -15,7 +15,7 @@ namespace CombatDataClasses.ClassProcessor
     {
         public static bool isAdventurerCommand(string name)
         {
-            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit" || name == "Guided Strike")
+            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit" || name == "Guided Strike" || name == "First Strike")
             {
                 return true;
             }
@@ -66,6 +66,11 @@ namespace CombatDataClasses.ClassProcessor
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guided Strike", false, 0, true));
             }
+            if (level >= 8)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "First Strike", false, 0, true));
+            }
+
 
             return commands;
         }
@@ -161,6 +166,27 @@ namespace CombatDataClasses.ClassProcessor
                             GeneralProcessor.calculateNextAttackTime(source, 1.0f);
                             return effects;
                         });
+                case "First Strike":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 8)
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        if (combatData.isFirstTurn(source.name))
+                        {
+                            foreach (FullCombatCharacter t in targets)
+                            {
+                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 1.5 * 5 / t.vitality));
+                                t.inflictDamage(ref dmg);
+                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is well rested.  " + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
+                            }
+                        }
+                        GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                        return effects;
+                    });
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

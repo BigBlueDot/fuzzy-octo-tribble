@@ -510,16 +510,6 @@ namespace CombatDataClasses.LiveImplementation
                         ccm.stats.mp = fcc.mp;
                         ccm.name = fcc.name;
                         ccm.classType = fcc.className;
-                        //ccm.mods.Clear();
-                        //foreach (CombatModificationsModel cmm in fcc.mods)
-                        //{
-                        //    ccm.mods.Add(new CombatModificationsModel()
-                        //    {
-                        //        name = cmm.name,
-                        //        uniq = cmm.uniq,
-                        //        conditions = cmm.conditions
-                        //    });
-                        //}
                     }
                 }
             }
@@ -534,17 +524,6 @@ namespace CombatDataClasses.LiveImplementation
                         ccm.nextAttackTime = fcc.nextAttackTime;
                         ccm.stats.hp = fcc.hp;
                         ccm.stats.mp = fcc.mp;
-                        //ccm.mods.Clear();
-                        //foreach (CombatModificationsModel cmm in fcc.mods)
-                        //{
-                        //    //Initializing a new CombatModificationsModel fixes an EF bug in the easiest way possible.  THis is probably not the best way to do it.
-                        //    ccm.mods.Add(new CombatModificationsModel()
-                        //        {
-                        //            name = cmm.name,
-                        //            uniq = cmm.uniq,
-                        //            conditions = cmm.conditions
-                        //        });
-                        //}
                     }
                 }
             }

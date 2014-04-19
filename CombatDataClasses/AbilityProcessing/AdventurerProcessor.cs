@@ -34,10 +34,14 @@ namespace CombatDataClasses.ClassProcessor
                 {
                     foreach (FullCombatCharacter fcc in enemies)
                     {
-                        CombatModificationsModel cmm = new CombatModificationsModel();
-                        cmm.name = "Glance";
-                        cmm.conditions = new List<CombatConditionModel>();
-                        fcc.mods.Add(cmm);
+                        if (!BasicModificationsGeneration.hasMod(fcc, "Glance"))
+                        {
+                            CombatModificationsModel cmm = new CombatModificationsModel();
+                            cmm.name = "Glance";
+                            cmm.conditions = new List<CombatConditionModel>();
+                            fcc.mods.Add(cmm);
+                            cmm = null;
+                        }
                     }
                     effects.Add(new Effect(EffectTypes.Message, 0, "All enemies have been glanced by " + source.name + "'s Insight ability!", 0));
                 }
@@ -76,12 +80,15 @@ namespace CombatDataClasses.ClassProcessor
                             List<IEffect> effects = new List<IEffect>();
                             foreach (FullCombatCharacter t in target)
                             {
-                                t.mods.Add(new PlayerModels.CombatDataModels.CombatModificationsModel()
+                                if (!BasicModificationsGeneration.hasMod(t, "Glance"))
                                 {
-                                    name="Glance",
-                                    conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>()
-                                });
-                                effects.Add(new Effect(EffectTypes.Message, 0, t.name + " has been glanced!", 0));
+                                    t.mods.Add(new PlayerModels.CombatDataModels.CombatModificationsModel()
+                                    {
+                                        name = "Glance",
+                                        conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>()
+                                    });
+                                    effects.Add(new Effect(EffectTypes.Message, 0, t.name + " has been glanced!", 0));
+                                }
                             }
                             GeneralProcessor.calculateNextAttackTime(source, .5f);
                             return effects;

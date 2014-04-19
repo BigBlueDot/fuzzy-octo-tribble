@@ -192,6 +192,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404192223128_RemoveFailedFix.cs" />
+    <Compile Include="Migrations\201404192223128_RemoveFailedFix.Designer.cs">
+      <DependentUpon>201404192223128_RemoveFailedFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -364,6 +368,11 @@
       <Project>{7e5c6982-c5b2-48ed-a9f2-422cdc70ed04}</Project>
       <Name>MapDataClasses</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201404192223128_RemoveFailedFix.resx">
+      <DependentUpon>201404192223128_RemoveFailedFix.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

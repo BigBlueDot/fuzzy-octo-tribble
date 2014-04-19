@@ -34,7 +34,7 @@ namespace GameDataClasses
         /// <returns></returns>
         public int getNumber(int min, int max)
         {
-            return random.Next(min - 1, max + 1);
+            return random.Next(min, max + 1);
         }
 
         public float calculateIntiative()

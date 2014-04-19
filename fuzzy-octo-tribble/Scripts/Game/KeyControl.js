@@ -102,6 +102,16 @@
         }
     }
 
+    that.previousIsCombat = function () {
+        if (controllers.length >= 3) {
+            if (controllers[controllers.length - 2] && controllers[controllers.length - 2].isCombat) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     that.pressLeft = function () {
         if (currentController().pressLeft) {
             currentController().pressLeft();

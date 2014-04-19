@@ -315,7 +315,14 @@
         }
 
         that.cancel = function () {
-
+            if (FuzzyOctoTribble.KeyControl.previousIsCombat()) {
+                if (this.onComplete) {
+                    this.onComplete();
+                }
+            }
+            else {
+                that.menu();
+            }
         }
 
         that.menu = function () {

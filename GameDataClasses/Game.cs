@@ -212,6 +212,9 @@ namespace GameDataClasses
                                 {
                                     cm.characterClasses.Add(new CharacterClassModel() { className = className, cp = 0, lvl = 1 });
                                 }
+
+                                //Update stats for new class
+                                PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
                             }
                         }
                     }

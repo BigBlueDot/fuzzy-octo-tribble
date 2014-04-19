@@ -36,6 +36,19 @@ namespace CombatDataClasses.ClassProcessor
                     return false;
             }
         }
+        
+        public static Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
+        {
+            if (source.className == "Adventurer")
+            {
+                return AdventurerProcessor.initialExecute(source);
+            }
+
+            return ((List<FullCombatCharacter> allies, List<FullCombatCharacter> enemies, CombatData combatData) =>
+            {
+                return new List<IEffect>();
+            });
+        }
 
         public static Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)
         {

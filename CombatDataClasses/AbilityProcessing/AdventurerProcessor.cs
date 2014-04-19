@@ -2,6 +2,7 @@
 using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
 using CombatDataClasses.Interfaces;
 using CombatDataClasses.LiveImplementation;
+using PlayerModels.CombatDataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,26 @@ namespace CombatDataClasses.ClassProcessor
             {
                 return false;
             }
+        }
+
+        public static Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
+        {
+            return ((List<FullCombatCharacter> allies, List<FullCombatCharacter> enemies, CombatData combatData) =>
+            {
+                List<IEffect> effects = new List<IEffect>();
+                if (source.className == "Adventurer" && source.classLevel >= 7)
+                {
+                    foreach (FullCombatCharacter fcc in enemies)
+                    {
+                        CombatModificationsModel cmm = new CombatModificationsModel();
+                        cmm.name = "Glance";
+                        cmm.conditions = new List<CombatConditionModel>();
+                        fcc.mods.Add(cmm);
+                    }
+                    effects.Add(new Effect(EffectTypes.Message, 0, "All enemies have been glanced by " + source.name + "'s Insight ability!", 0));
+                }
+                return effects;
+            });
         }
 
         public static List<ICommand> getClassCommands(int level)

@@ -282,6 +282,18 @@ namespace CombatDataClasses.LiveImplementation
             calculateTurnOrder();
             calculateTurn(false);
             combatData = new CombatData();
+
+            if (!combatData.combatInitalized)
+            {
+                foreach (int key in pcs.Keys) //Check for initial code
+                {
+                    FullCombatCharacter fcc = pcs[key];
+                    List<IEffect> newEffects = GeneralProcessor.initialExecute(fcc)(getAllPcsAsList(), getAllNpcsAsList(), combatData);
+                    currentEffects.AddRange(newEffects);
+                }
+
+                combatData.combatInitalized = true;
+            }
         }
         
         public List<ICommand> getCommands()

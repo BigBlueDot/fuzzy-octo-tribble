@@ -63,6 +63,7 @@ namespace GameDataClasses
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
             this.userName = userName;
             this.db = db;
+            
             this.rng = new GameRNG();
 
             foreach (CharacterModel cm in this.player.characters)

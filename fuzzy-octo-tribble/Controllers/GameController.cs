@@ -11,6 +11,7 @@ using CombatDataClasses.Interfaces;
 
 namespace fuzzy_octo_tribble.Controllers
 {
+    [Authorize]
     public class GameController : Controller
     {
         //

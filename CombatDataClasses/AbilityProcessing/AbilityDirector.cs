@@ -10,12 +10,12 @@ namespace CombatDataClasses.ClassProcessor
 {
     public class AbilityDirector
     {
-        public static List<ICommand> getClassAbilities(string className, int level)
+        public static List<ICommand> getClassAbilities(FullCombatCharacter source, CombatData combatData)
         {
-            switch (className)
+            switch (source.className)
             {
                 case "Adventurer":
-                    return AdventurerProcessor.getClassCommands(level);
+                    return AdventurerProcessor.getClassCommands(source, combatData);
                 default:
                     return new List<ICommand>();
             }

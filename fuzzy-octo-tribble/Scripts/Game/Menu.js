@@ -34,11 +34,16 @@
         $menuItem.addClass('menu-item text-font');
         $menuItem.text(items[i].text);
         $menuItem.data('index', i);
-        $menuItem.on('click', function () {
-            if (that.hasCurrentControl) {
-                items[$(this).data('index')].selected();
-            }
-        });
+        if (items[i].isDisabled) {
+            $menuItem.addClass('menu-item-disabled');
+        }
+        else {
+            $menuItem.on('click', function () {
+                if (that.hasCurrentControl) {
+                    items[$(this).data('index')].selected();
+                }
+            });
+        }
         $menu.append($menuItem);
         menuItems.push($menuItem);
     }
@@ -65,16 +70,26 @@
     }
 
     that.releaseUp = function () {
-        if (selectedMenuItem != 0) {
-            selectedMenuItem--;
-            applySelect();
+        var index = selectedMenuItem;
+        while (index != 0) {
+            index--;
+            if (!menuItems[index].hasClass('menu-item-disabled')) {
+                selectedMenuItem = index;
+                applySelect();
+                return;
+            }
         }
     }
 
     that.releaseDown = function () {
-        if (selectedMenuItem != menuItems.length - 1) {
-            selectedMenuItem++;
-            applySelect();
+        var index = selectedMenuItem;
+        while (index != menuItems.length - 1) {
+            index++;
+            if (!menuItems[index].hasClass('menu-item-disabled')) {
+                selectedMenuItem = index;
+                applySelect();
+                return;
+            }
         }
     }
 

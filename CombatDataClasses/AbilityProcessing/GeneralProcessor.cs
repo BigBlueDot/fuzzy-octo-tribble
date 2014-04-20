@@ -36,6 +36,16 @@ namespace CombatDataClasses.ClassProcessor
                     return false;
             }
         }
+
+        public static bool isDisabled(string abilityName, FullCombatCharacter source, CombatData combatData)
+        {
+            if (source.className == "Adventurer")
+            {
+                return AdventurerProcessor.isDisabled(abilityName, source, combatData);
+            }
+
+            return false;
+        }
         
         public static Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
         {

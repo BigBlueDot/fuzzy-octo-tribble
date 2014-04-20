@@ -64,6 +64,13 @@
         background-color:#C0C0C0;
     }
 
+.menu-item.menu-item-disabled {
+    color: #C0C0C0;
+}
+    .menu-item.menu-item-disabled:hover {
+        background-color:#FFFFFF;
+    }
+
 .gold-display {
     bottom: 10px;
     left: 10px;
@@ -78,9 +85,16 @@
 .menu-item-selected.menu-item {
     background-color: #767676;
 }
+    .menu-item-selected.menu-item.menu-item-disabled {
+        background-color:#FFFFFF;
+    }
 
     .menu-item-selected.menu-item:hover {
         background-color: #575757;
+    }
+
+    .menu-item-selected.menu-item.menu-item-disabled:hover {
+        background-color:#FFFFFF;
     }
 
 .menu-title {

@@ -102,5 +102,11 @@ namespace CombatDataClasses.DummyImplementation
                 return _hasTarget;
             }
         }
+
+
+        public bool isDisabled
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

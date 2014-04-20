@@ -9,7 +9,7 @@ namespace CombatDataClasses.LiveImplementation
 {
     public class Command : ICommand
     {
-        public Command(bool hasChildCommands, List<ICommand> childCommands, bool limitedUsage, int uses, int totalUses, string name, bool mpNeeded, int mpCost, bool hasTarget)
+        public Command(bool hasChildCommands, List<ICommand> childCommands, bool limitedUsage, int uses, int totalUses, string name, bool mpNeeded, int mpCost, bool hasTarget, bool isDisabled)
         {
             _hasChildCommands = hasChildCommands;
             _childCommands = childCommands;
@@ -20,6 +20,7 @@ namespace CombatDataClasses.LiveImplementation
             _mpNeeded = mpNeeded;
             _mpCost = mpCost;
             _hasTarget = hasTarget;
+            _isDisabled = isDisabled;
         }
 
         private bool _hasChildCommands;
@@ -101,6 +102,12 @@ namespace CombatDataClasses.LiveImplementation
             {
                 return _hasTarget;
             }
+        }
+
+        private bool _isDisabled;
+        public bool isDisabled
+        {
+            get { return _isDisabled; }
         }
     }
 }

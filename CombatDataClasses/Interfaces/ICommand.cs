@@ -17,5 +17,6 @@ namespace CombatDataClasses.Interfaces
         bool mpNeeded { get;  }
         int mpCost { get;  }
         bool hasTarget { get; }
+        bool isDisabled { get; }
     }
 }

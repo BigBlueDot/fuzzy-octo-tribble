@@ -75,7 +75,8 @@
                 else {
                     onComplete();
                 }
-            }
+            },
+            isDisabled: currentCommand.isDisabled
         }
         return item;
     }

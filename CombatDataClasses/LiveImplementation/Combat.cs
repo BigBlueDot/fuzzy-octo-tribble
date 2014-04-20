@@ -310,10 +310,11 @@ namespace CombatDataClasses.LiveImplementation
             int currentCharacter = getCurrentPC();
             if (currentCharacter != 0)
             {
-                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true));
-                returnValue.Add(new Command(true, ClassProcessor.AbilityDirector.getClassAbilities(pcs[uniqBridge[currentCharacter]].className, pcs[uniqBridge[currentCharacter]].classLevel), false, 0, 0, "Abilities", false, 0, false));
-                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false));
-                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true, false));
+                List<ICommand> abilityCommands = ClassProcessor.AbilityDirector.getClassAbilities(pcs[uniqBridge[currentCharacter]], combatData);
+                returnValue.Add(new Command(true, abilityCommands, false, 0, 0, "Abilities", false, 0, false, (abilityCommands.Count == 0)));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false, false));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false, false));
             }
             return returnValue;
         }

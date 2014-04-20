@@ -25,6 +25,19 @@ namespace CombatDataClasses.ClassProcessor
             }
         }
 
+        public static bool isDisabled(string abilityName, FullCombatCharacter source, CombatData combatData)
+        {
+            if (abilityName == "First Strike")
+            {
+                if (!combatData.isFirstTurn(source.name))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
         {
             return ((List<FullCombatCharacter> allies, List<FullCombatCharacter> enemies, CombatData combatData) =>
@@ -49,26 +62,27 @@ namespace CombatDataClasses.ClassProcessor
             });
         }
 
-        public static List<ICommand> getClassCommands(int level)
+        public static List<ICommand> getClassCommands(FullCombatCharacter source, CombatData combatData)
         {
             List<ICommand> commands = new List<ICommand>();
 
-            commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Glance", false, 0, true));
+            int level = source.classLevel;
+            commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Glance", false, 0, true, isDisabled("Glance", source, combatData)));
             if (level >= 2)
             {
-                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guarded Strike", false, 0, true));
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guarded Strike", false, 0, true, isDisabled("Guarded Strike", source, combatData)));
             }
             if (level >= 3)
             {
-                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Reckless Hit", false, 0, true));
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Reckless Hit", false, 0, true, isDisabled("Reckless Hit", source, combatData)));
             }
             if (level >= 4)
             {
-                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guided Strike", false, 0, true));
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guided Strike", false, 0, true, isDisabled("Guided Strike", source, combatData)));
             }
             if (level >= 8)
             {
-                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "First Strike", false, 0, true));
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "First Strike", false, 0, true, isDisabled("First Strike", source, combatData)));
             }
 
 

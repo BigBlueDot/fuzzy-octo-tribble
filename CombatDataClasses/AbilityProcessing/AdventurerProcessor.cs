@@ -43,7 +43,7 @@ namespace CombatDataClasses.ClassProcessor
             return ((List<FullCombatCharacter> allies, List<FullCombatCharacter> enemies, CombatData combatData) =>
             {
                 List<IEffect> effects = new List<IEffect>();
-                if (source.className == "Adventurer" && source.classLevel >= 7)
+                if (source.className == "Adventurer" && source.classLevel >= 13)
                 {
                     foreach (FullCombatCharacter fcc in enemies)
                     {
@@ -68,19 +68,19 @@ namespace CombatDataClasses.ClassProcessor
 
             int level = source.classLevel;
             commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Glance", false, 0, true, isDisabled("Glance", source, combatData)));
-            if (level >= 2)
+            if (level >= 3)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guarded Strike", false, 0, true, isDisabled("Guarded Strike", source, combatData)));
             }
-            if (level >= 3)
+            if (level >= 5)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Reckless Hit", false, 0, true, isDisabled("Reckless Hit", source, combatData)));
             }
-            if (level >= 4)
+            if (level >= 7)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guided Strike", false, 0, true, isDisabled("Guided Strike", source, combatData)));
             }
-            if (level >= 8)
+            if (level >= 15)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "First Strike", false, 0, true, isDisabled("First Strike", source, combatData)));
             }
@@ -115,7 +115,7 @@ namespace CombatDataClasses.ClassProcessor
                 case "Guarded Strike":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                         {
-                            if (source.classLevel < 2) //Verify that they have the level to use this skill
+                            if (source.classLevel < 3) //Verify that they have the level to use this skill
                             {
                                 return new List<IEffect>();
                             }
@@ -140,7 +140,7 @@ namespace CombatDataClasses.ClassProcessor
                 case "Reckless Hit":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                     {
-                        if (source.classLevel < 3)
+                        if (source.classLevel < 5)
                         {
                             return new List<IEffect>();
                         }
@@ -158,7 +158,7 @@ namespace CombatDataClasses.ClassProcessor
                 case "Guided Strike":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                         {
-                            if (source.classLevel < 4)
+                            if (source.classLevel < 7)
                             {
                                 return new List<IEffect>();
                             }
@@ -183,7 +183,7 @@ namespace CombatDataClasses.ClassProcessor
                 case "First Strike":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                     {
-                        if (source.classLevel < 8)
+                        if (source.classLevel < 15)
                         {
                             return new List<IEffect>();
                         }

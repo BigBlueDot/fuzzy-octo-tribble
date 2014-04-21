@@ -30,6 +30,13 @@ namespace CombatDataClasses.AbilityProcessing
                     return true;
                 }
             }
+            else if (abilityName == "One-Two Punch")
+            {
+                if (combatData.hasCooldown(source.name, "One-Two Punch"))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -51,6 +58,10 @@ namespace CombatDataClasses.AbilityProcessing
             if (level >= 3)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Disarming Blow", false, 0, true, isDisabled("Disarming Blow", source, combatData)));
+            }
+            if (level >= 7)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "One-Two Punch", false, 0, true, isDisabled("One-Two Punch", source, combatData)));
             }
 
             return commands;
@@ -101,6 +112,40 @@ namespace CombatDataClasses.AbilityProcessing
                             GeneralProcessor.calculateNextAttackTime(source, coefficient);
                             return effects;
                         });
+                case "One-Two Punch":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 7 || combatData.hasCooldown(source.name, "One-Two Punch"))
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        float coefficient = 1.0f;
+                        foreach (FullCombatCharacter t in target)
+                        {
+                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * .75f / t.vitality));
+                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                            {
+                                coefficient = coefficient * 2;
+                            }
+                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                            {
+                                coefficient = coefficient * 2;
+                            }
+                            combatData.cooldowns.Add(new CombatData.Cooldown()
+                            {
+                                character = source.name,
+                                name = "One-Two Punch",
+                                time = (source.nextAttackTime + 120)
+                            });
+
+                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                            effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt 2x" + dmg + " damage to " + t.name + " with a One-Two Punch.", 0));
+
+                        }
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        return effects;
+                    });
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

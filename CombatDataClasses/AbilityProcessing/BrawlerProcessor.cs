@@ -51,6 +51,13 @@ namespace CombatDataClasses.AbilityProcessing
                     return true;
                 }
             }
+            else if (abilityName == "Vicious Blow")
+            {
+                if (combatData.hasCooldown(source.name, "Vicious Blow"))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -81,9 +88,13 @@ namespace CombatDataClasses.AbilityProcessing
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Sweep", false, 0, false, isDisabled("Sweep", source, combatData)));
             }
-            if (level >= 11)
+            if (level >= 13)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Preemptive Strike", false, 0, false, isDisabled("Preemptive Strike", source, combatData)));
+            }
+            if (level >= 15)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Vicious Blow", false, 0, true, isDisabled("Vicious Blow", source, combatData)));
             }
 
             return commands;
@@ -229,6 +240,43 @@ namespace CombatDataClasses.AbilityProcessing
                             time = (source.nextAttackTime + 120)
                         });
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt " + dmg + " damage to " + currentTarget.name + " with a preemptive strike!", 0));
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        return effects;
+                    });
+                case "Vicious Blow":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 15)
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        float coefficient = 1.0f;
+                        foreach (FullCombatCharacter t in targets)
+                        {
+                            if (t.hp < t.maxHP / 2)
+                            {
+                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f / t.vitality));
+                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                {
+                                    coefficient = coefficient * 2;
+                                }
+                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt " + dmg + " damage to " + t.name + " with a vicious blow!", 0));
+                            }
+                            else
+                            {
+                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + "'s Vicious Blow Missed!", 0));
+                            }
+                        }
+
+                        combatData.cooldowns.Add(new CombatData.Cooldown()
+                        {
+                            character = source.name,
+                            name = "Vicious Blow",
+                            time = (source.nextAttackTime + 180)
+                        });
+                        
                         GeneralProcessor.calculateNextAttackTime(source, coefficient);
                         return effects;
                     });

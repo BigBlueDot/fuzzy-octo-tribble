@@ -17,6 +17,12 @@ namespace CombatDataClasses.AbilityProcessing
                 //Add bonus points for fist speciality
                 attackValue += ((int)(fcc.classLevel / 5) + 1);
             }
+
+            if (ModificationsGeneration.BasicModificationsGeneration.hasMod(fcc, "Disarmed"))
+            {
+                attackValue = (int)(attackValue * .75);
+            }
+
             return attackValue;
         }
     }

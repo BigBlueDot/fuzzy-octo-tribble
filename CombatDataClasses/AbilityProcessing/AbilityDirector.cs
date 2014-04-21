@@ -12,13 +12,7 @@ namespace CombatDataClasses.ClassProcessor
     {
         public static List<ICommand> getClassAbilities(FullCombatCharacter source, CombatData combatData)
         {
-            switch (source.className)
-            {
-                case "Adventurer":
-                    return AdventurerProcessor.getClassCommands(source, combatData);
-                default:
-                    return new List<ICommand>();
-            }
+            return GeneralProcessor.getClassCommands(source, combatData);
         }
 
         public static Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)

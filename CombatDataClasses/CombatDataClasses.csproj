@@ -41,10 +41,12 @@
   <ItemGroup>
     <Compile Include="AbilityProcessing\AdventurerProcessor.cs" />
     <Compile Include="AbilityProcessing\AbilityDirector.cs" />
+    <Compile Include="AbilityProcessing\BrawlerProcessor.cs" />
     <Compile Include="AbilityProcessing\CombatCalculator.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\BasicAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\Goblins\GoblinAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\GeneralProcessor.cs" />
+    <Compile Include="AbilityProcessing\IProcessor.cs" />
     <Compile Include="AbilityProcessing\ModificationsGeneration\BasicModificationsGeneration.cs" />
     <Compile Include="CombatDirector.cs" />
     <Compile Include="DummyImplementation\DummyCharacterDisplay.cs" />

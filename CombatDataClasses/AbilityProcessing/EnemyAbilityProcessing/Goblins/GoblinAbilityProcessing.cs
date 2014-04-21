@@ -17,7 +17,7 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing.Goblins
         {
             List<IEffect> effects = new List<IEffect>();
             FullCombatCharacter target = BasicAbilityProcessing.identifyWeakestTarget(targets);
-            int dmg = (int)((source.strength * 5 / target.vitality));
+            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / target.vitality));
             target.inflictDamage(ref dmg);
             effects.Add(new Effect(EffectTypes.DealDamage, target.combatUniq, string.Empty, dmg));
             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target.name + " for " + dmg.ToString() + " damage!", 0));

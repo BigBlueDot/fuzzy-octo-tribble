@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace CombatDataClasses.ClassProcessor
 {
-    public class AdventurerProcessor
+    public class AdventurerProcessor : IProcessor
     {
-        public static bool isAdventurerCommand(string name)
+        public bool isType(string name)
         {
             if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit" || name == "Guided Strike" || name == "First Strike")
             {
@@ -25,7 +25,7 @@ namespace CombatDataClasses.ClassProcessor
             }
         }
 
-        public static bool isDisabled(string abilityName, FullCombatCharacter source, CombatData combatData)
+        public bool isDisabled(string abilityName, FullCombatCharacter source, CombatData combatData)
         {
             if (abilityName == "First Strike")
             {
@@ -38,7 +38,7 @@ namespace CombatDataClasses.ClassProcessor
             return false;
         }
 
-        public static Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
+        public Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
         {
             return ((List<FullCombatCharacter> allies, List<FullCombatCharacter> enemies, CombatData combatData) =>
             {
@@ -62,7 +62,7 @@ namespace CombatDataClasses.ClassProcessor
             });
         }
 
-        public static List<ICommand> getClassCommands(FullCombatCharacter source, CombatData combatData)
+        public List<ICommand> getClassCommands(FullCombatCharacter source, CombatData combatData)
         {
             List<ICommand> commands = new List<ICommand>();
 
@@ -89,7 +89,7 @@ namespace CombatDataClasses.ClassProcessor
             return commands;
         }
 
-        public static Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)
+        public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)
         {
             switch (command.commandName)
             {

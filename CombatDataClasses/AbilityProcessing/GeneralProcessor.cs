@@ -12,6 +12,15 @@ namespace CombatDataClasses.ClassProcessor
 {
     public class GeneralProcessor
     {
+        private static Dictionary<string, IProcessor> processors;
+
+        static GeneralProcessor()
+        {
+            processors = new Dictionary<string, IProcessor>();
+            processors.Add("Adventurer", new AdventurerProcessor());
+            processors.Add("Brawler", new BrawlerProcessor());
+        }
+
         public static int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)
         {
             if (agi == 1)
@@ -37,11 +46,21 @@ namespace CombatDataClasses.ClassProcessor
             }
         }
 
+        public static List<ICommand> getClassCommands(FullCombatCharacter source, CombatData combatData)
+        {
+            if (processors.ContainsKey(source.className))
+            {
+                return processors[source.className].getClassCommands(source, combatData);
+            }
+
+            return new List<ICommand>();
+        }
+
         public static bool isDisabled(string abilityName, FullCombatCharacter source, CombatData combatData)
         {
-            if (source.className == "Adventurer")
+            if(processors.ContainsKey(source.className))
             {
-                return AdventurerProcessor.isDisabled(abilityName, source, combatData);
+                return processors[source.className].isDisabled(abilityName, source, combatData);
             }
 
             return false;
@@ -49,9 +68,9 @@ namespace CombatDataClasses.ClassProcessor
         
         public static Func<List<FullCombatCharacter>, List<FullCombatCharacter>, CombatData, List<IEffect>> initialExecute(FullCombatCharacter source)
         {
-            if (source.className == "Adventurer")
+            if (processors.ContainsKey(source.className))
             {
-                return AdventurerProcessor.initialExecute(source);
+                return processors[source.className].initialExecute(source);
             }
 
             return ((List<FullCombatCharacter> allies, List<FullCombatCharacter> enemies, CombatData combatData) =>
@@ -109,18 +128,19 @@ namespace CombatDataClasses.ClassProcessor
                             return effects;
                         });
                 case "Abilities":
-                    if (AdventurerProcessor.isAdventurerCommand(command.subCommand.commandName))
+                    foreach (string key in processors.Keys)
                     {
-                        return AdventurerProcessor.executeCommand(command.subCommand);
+                        if (processors[key].isType(command.subCommand.commandName))
+                        {
+                            return processors[key].executeCommand(command.subCommand);
+                        }
                     }
-                    else
-                    {
-                        return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
-                            {
-                                List<IEffect> effects = new List<IEffect>();
-                                return effects;
-                            });
-                    }
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                        {
+                            List<IEffect> effects = new List<IEffect>();
+                            return effects;
+                        });
+
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

@@ -18,6 +18,7 @@ namespace CombatDataClasses.LiveImplementation
             currentFleeCount = 0;
             firstTurnOver = new List<string>();
             combatInitalized = false;
+            cooldowns = new List<Cooldown>();
         }
 
         public void setFirstTurnOver(string name)
@@ -33,8 +34,46 @@ namespace CombatDataClasses.LiveImplementation
             return !firstTurnOver.Contains(name);
         }
 
+        public void removeCooldowns(int time)
+        {
+            List<Cooldown> toRemove = new List<Cooldown>();
+            foreach (Cooldown cd in cooldowns)
+            {
+                if (cd.time <= time)
+                {
+                    toRemove.Add(cd);
+                }
+            }
+
+            foreach (Cooldown cd in toRemove)
+            {
+                cooldowns.Remove(cd);
+            }
+        }
+
+        public bool hasCooldown(string characterName, string attack)
+        {
+            foreach (Cooldown cd in cooldowns)
+            {
+                if (cd.character == characterName && cd.name == attack)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public int currentFleeCount { get; set; }
         public List<string> firstTurnOver { get; set; }
         public bool combatInitalized { get; set; }
+        public List<Cooldown> cooldowns { get; set; }
+
+        public class Cooldown
+        {
+            public string character { get; set; }
+            public string name { get; set; }
+            public int time { get; set; }
+        }
     }
 }

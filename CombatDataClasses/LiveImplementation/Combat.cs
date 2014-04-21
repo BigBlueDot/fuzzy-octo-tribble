@@ -705,6 +705,7 @@ namespace CombatDataClasses.LiveImplementation
             currentTime = currentCharacter.nextAttackTime;
             BasicModificationsGeneration.checkModifications(getAllPcsAsList(), currentTime);
             BasicModificationsGeneration.checkModifications(getAllNpcsAsList(), currentTime);
+            combatData.removeCooldowns(currentTime);
             calculateTurn(true);
             checkDeath();
             return getStatus();

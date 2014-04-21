@@ -90,6 +90,15 @@ namespace CombatDataClasses.AbilityProcessing.ModificationsGeneration
             return cmm;
         }
 
+        public static CombatModificationsModel getAdrenalineModification(string time)
+        {
+            CombatModificationsModel cmm = new CombatModificationsModel();
+            cmm.name = "Adrenaline";
+            cmm.conditions = new List<CombatConditionModel>();
+            cmm.conditions.Add(new CombatConditionModel() { name = "Time", state = time });
+            return cmm;
+        }
+
         public static bool hasMod(FullCombatCharacter fcc, string modName)
         {
             foreach (CombatModificationsModel cmm in fcc.mods)

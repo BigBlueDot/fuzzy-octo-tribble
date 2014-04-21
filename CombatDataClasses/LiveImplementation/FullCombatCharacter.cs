@@ -28,6 +28,7 @@ namespace CombatDataClasses.LiveImplementation
         public int classLevel { get; set; }
         public int turnOrder { get; set; }
         public bool defeated { get; set; }
+        public List<string> usedAbilities { get; set; }
 
         public HitEffect inflictDamage(ref int damage)
         {

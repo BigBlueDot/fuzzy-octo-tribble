@@ -277,7 +277,7 @@ namespace GameDataClasses
                         {
                             if (cm.name == s)
                             {
-                                pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq, hp = cm.stats.maxHP, mp = cm.stats.maxMP });
+                                pm.characters.Add(new PlayerModels.Models.PartyCharacterModel() { characterUniq = cm.uniq, hp = cm.stats.maxHP, mp = cm.stats.maxMP, usedAbilities = new List<string>() });
                             }
                         }
                     }

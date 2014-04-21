@@ -32,7 +32,14 @@ namespace CombatDataClasses.ClassProcessor
 
         public static void calculateNextAttackTime(FullCombatCharacter character, float abilityCoefficient)
         {
-            character.nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient, character.agility);
+            if (BasicModificationsGeneration.hasMod(character, "Adrenaline"))
+            {
+                character.nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient / 3, character.agility);
+            }
+            else
+            {
+                character.nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient, character.agility);
+            }
         }
 
         public static bool isProcessor(string name)

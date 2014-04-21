@@ -105,6 +105,7 @@ namespace CombatDataClasses.LiveImplementation
                 int classLevel = 0;
                 int combatUniq = currentUniq;
                 List<CombatModificationsModel> mods = new List<CombatModificationsModel>();
+                List<string> usedAbilities = new List<string>();
                 uniqBridge.Add(currentUniq, characterUniq);
 
                 foreach (PlayerModels.Models.CharacterModel cm in characterModels)
@@ -138,6 +139,7 @@ namespace CombatDataClasses.LiveImplementation
                     {
                         hp = pcm.hp;
                         mp = pcm.mp;
+                        usedAbilities = pcm.usedAbilities;
                     }
                 }
 
@@ -183,7 +185,8 @@ namespace CombatDataClasses.LiveImplementation
                    agility = agility,
                    wisdom = wisdom,
                    nextAttackTime = nextAttackTime,
-                   mods = new List<CombatModificationsModel>()
+                   mods = new List<CombatModificationsModel>(),
+                   usedAbilities = usedAbilities
                 });
 
                 combatCharacterModels[combatCharacterModels.Count - 1].mods = pcs[characterUniq].mods;
@@ -199,6 +202,7 @@ namespace CombatDataClasses.LiveImplementation
                     int mp = ccm.stats.mp;
                     int nextAttackTime = ccm.nextAttackTime;
                     List<CombatModificationsModel> mods = ccm.mods;
+                    List<string> usedAbilities = new List<string>();
 
                     MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, ccm.classType);
 
@@ -221,7 +225,8 @@ namespace CombatDataClasses.LiveImplementation
                             intellect = enemy.intellect,
                             wisdom = enemy.wisdom,
                             nextAttackTime = nextAttackTime,
-                            mods = mods
+                            mods = mods,
+                            usedAbilities = usedAbilities
                         });
                     }
 
@@ -240,6 +245,7 @@ namespace CombatDataClasses.LiveImplementation
                     int mp = enemy.maxMP;
                     int combatUniq = currentUniq;
                     List<CombatModificationsModel> mods = new List<CombatModificationsModel>();
+                    List<string> usedAbilities = new List<string>();
 
                     this.npcs.Add(currentUniq, new FullCombatCharacter()
                     {
@@ -258,7 +264,8 @@ namespace CombatDataClasses.LiveImplementation
                         intellect = enemy.intellect,
                         wisdom = enemy.wisdom,
                         nextAttackTime = nextAttackTime,
-                        mods = mods
+                        mods = mods,
+                        usedAbilities = usedAbilities
                     });
 
 

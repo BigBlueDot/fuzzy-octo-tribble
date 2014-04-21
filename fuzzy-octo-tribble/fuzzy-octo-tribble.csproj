@@ -196,6 +196,10 @@
     <Compile Include="Migrations\201404192223128_RemoveFailedFix.Designer.cs">
       <DependentUpon>201404192223128_RemoveFailedFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404212233156_AdrenalineUpdate.cs" />
+    <Compile Include="Migrations\201404212233156_AdrenalineUpdate.Designer.cs">
+      <DependentUpon>201404212233156_AdrenalineUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -372,6 +376,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201404192223128_RemoveFailedFix.resx">
       <DependentUpon>201404192223128_RemoveFailedFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404212233156_AdrenalineUpdate.resx">
+      <DependentUpon>201404212233156_AdrenalineUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

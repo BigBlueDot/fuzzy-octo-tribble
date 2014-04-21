@@ -58,6 +58,13 @@ namespace CombatDataClasses.AbilityProcessing
                     return true;
                 }
             }
+            else if (abilityName == "Adrenaline")
+            {
+                if (source.usedAbilities.Contains("Adrenaline"))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -95,6 +102,10 @@ namespace CombatDataClasses.AbilityProcessing
             if (level >= 15)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Vicious Blow", false, 0, true, isDisabled("Vicious Blow", source, combatData)));
+            }
+            if (level >= 17)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Adrenaline", false, 0, true, isDisabled("Adrenaline", source, combatData)));
             }
 
             return commands;
@@ -212,7 +223,7 @@ namespace CombatDataClasses.AbilityProcessing
                 case "Preemptive Strike":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                     {
-                        if (source.classLevel < 13)
+                        if (source.classLevel < 13 || isDisabled("Preemptive Strike", source, combatData))
                         {
                             return new List<IEffect>();
                         }
@@ -246,7 +257,7 @@ namespace CombatDataClasses.AbilityProcessing
                 case "Vicious Blow":
                     return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
                     {
-                        if (source.classLevel < 15)
+                        if (source.classLevel < 15 || isDisabled("Vicious Blow", source, combatData))
                         {
                             return new List<IEffect>();
                         }
@@ -277,6 +288,22 @@ namespace CombatDataClasses.AbilityProcessing
                             time = (source.nextAttackTime + 180)
                         });
                         
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        return effects;
+                    });
+                case "Adrenaline":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 17 || isDisabled("Adrenaline", source, combatData))
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        float coefficient = 1.0f;
+                        source.usedAbilities.Add("Adrenaline");
+
+                        source.mods.Add(BasicModificationsGeneration.getAdrenalineModification((source.nextAttackTime + 60).ToString()));
+
                         GeneralProcessor.calculateNextAttackTime(source, coefficient);
                         return effects;
                     });

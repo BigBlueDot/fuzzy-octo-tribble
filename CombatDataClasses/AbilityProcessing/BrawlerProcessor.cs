@@ -37,6 +37,13 @@ namespace CombatDataClasses.AbilityProcessing
                     return true;
                 }
             }
+            else if (abilityName == "Sweep")
+            {
+                if (combatData.hasCooldown(source.name, "Sweep"))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -62,6 +69,10 @@ namespace CombatDataClasses.AbilityProcessing
             if (level >= 7)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "One-Two Punch", false, 0, true, isDisabled("One-Two Punch", source, combatData)));
+            }
+            if (level >= 9)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Sweep", false, 0, false, isDisabled("Sweep", source, combatData)));
             }
 
             return commands;
@@ -140,9 +151,39 @@ namespace CombatDataClasses.AbilityProcessing
                             });
 
                             effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt 2x" + dmg + " damage to " + t.name + " with a One-Two Punch.", 0));
 
                         }
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        return effects;
+                    });
+                case "Sweep":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 9 || combatData.hasCooldown(source.name, "Sweep"))
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        float coefficient = 1.5f;
+                        foreach (FullCombatCharacter t in targets)
+                        {
+                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * .5f / t.vitality));
+                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                            {
+                                coefficient = coefficient * 2;
+                            }
+
+                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
+                        }
+                        combatData.cooldowns.Add(new CombatData.Cooldown()
+                        {
+                            character = source.name,
+                            name = "Sweep",
+                            time = (source.nextAttackTime + 180)
+                        });
+                        effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt damage to all enemies with a sweeping blow!", 0));
                         GeneralProcessor.calculateNextAttackTime(source, coefficient);
                         return effects;
                     });

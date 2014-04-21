@@ -39,7 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DescriptionDirector.cs" />
+    <Compile Include="Goblins\Descriptions.cs" />
     <Compile Include="Goblins\NameGenerator.cs" />
+    <Compile Include="IDescriptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

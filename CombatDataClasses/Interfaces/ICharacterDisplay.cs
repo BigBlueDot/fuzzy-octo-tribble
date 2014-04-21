@@ -24,5 +24,6 @@ namespace CombatDataClasses.Interfaces
         int wisdom { get; }
         int agility { get; }
         IEnumerable<IStatusDisplay> statuses { get; }
+        string description { get; }
     }
 }

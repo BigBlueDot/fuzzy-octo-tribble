@@ -332,7 +332,7 @@ namespace CombatDataClasses.LiveImplementation
                     statuses.Add(new StatusDisplay(Interfaces.Type.Text, cmm.name));
                 }
                 CharacterDisplay cd = new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level);
-                cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility);
+                cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility, string.Empty);
                 pcDisplays.Add(cd);
                 if (pcs[key].turnOrder < fastestPCTime)
                 {
@@ -357,7 +357,7 @@ namespace CombatDataClasses.LiveImplementation
                 CharacterDisplay cd = new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level);
                 if (hasGlance)
                 {
-                    cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility);
+                    cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility, EnemyDataClasses.DescriptionDirector.getDescription(current.className));
                 }
                 npcDisplays.Add(cd);
             }

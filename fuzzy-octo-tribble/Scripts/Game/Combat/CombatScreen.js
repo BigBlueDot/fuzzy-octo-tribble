@@ -132,6 +132,9 @@
 
             var $AGI = $(document.createElement('div'));
             $AGI.text("AGI: " + character.agility);
+
+            var $description = $(document.createElement('div'));
+            $description.text(character.description);
         }
 
         $detailScreen.append($nameLvl);
@@ -143,6 +146,7 @@
             $detailScreen.append($STRVIT);
             $detailScreen.append($INTWIS);
             $detailScreen.append($AGI);
+            $detailScreen.append($description);
         }
         return $detailScreen
     }

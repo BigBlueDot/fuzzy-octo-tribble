@@ -132,5 +132,11 @@ namespace CombatDataClasses.DummyImplementation
         {
             get { throw new NotImplementedException(); }
         }
+
+
+        public string description
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

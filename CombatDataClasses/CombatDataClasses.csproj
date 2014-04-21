@@ -79,10 +79,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PlayerModels\PlayerDataClasses.csproj">
-      <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
-      <Name>PlayerDataClasses</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EnemyDataClasses\EnemyDataClasses.csproj">
       <Project>{83f08687-6e45-4e49-9f6a-471e331b5444}</Project>
       <Name>EnemyDataClasses</Name>
@@ -90,6 +86,10 @@
     <ProjectReference Include="..\MapDataClasses\MapDataClasses.csproj">
       <Project>{7e5c6982-c5b2-48ed-a9f2-422cdc70ed04}</Project>
       <Name>MapDataClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlayerModels\PlayerDataClasses.csproj">
+      <Project>{55723eb1-5bd0-4cca-9a7e-f3279c06c3f4}</Project>
+      <Name>PlayerDataClasses</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

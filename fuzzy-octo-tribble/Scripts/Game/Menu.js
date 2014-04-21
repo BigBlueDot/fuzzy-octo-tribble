@@ -137,8 +137,14 @@ FuzzyOctoTribble.MenuHandler = (function () {
                         selected: function () {
                             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartyCharacters())
                         }
+                    },
+                    {
+                        text: "Abilities",
+                        selected: function () {
+                            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartyAbilityScreen())
                     }
-                ]
+                }
+            ]
         });
     }
 
@@ -149,6 +155,12 @@ FuzzyOctoTribble.MenuHandler = (function () {
                 text: "Characters",
                 selected: function () {
                     FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getScreen())
+                }
+            },
+            {
+                text: "Abilities",
+                selected: function () {
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getAbilityScreen())
                 }
             },
             {

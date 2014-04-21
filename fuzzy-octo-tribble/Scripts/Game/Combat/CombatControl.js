@@ -76,7 +76,7 @@
                     onComplete();
                 }
             },
-            isabled: currentCommand.isDisabled
+            isDisabled: currentCommand.isDisabled
         }
         return item;
     }

@@ -2,9 +2,12 @@
     var that = {};
     var characterItems = [];
     var currentPartyItems = [];
+    var characterAbilityItems = [];
+    var currentPartyAbilityItems = [];
 
     that.setCharacters = function (characters, currentParty) {
         characterItems = [];
+        characterAbilityItems = [];
         for (var i = 0; i < characters.length; i++) {
             var character = characters[i];
             var currentCharacterClass;
@@ -15,9 +18,11 @@
             }
 
             characterItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel, character.cp, character.cpToLevel));
+            characterAbilityItems.push(createCharacterAbilityItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel, character.cp, character.cpToLevel, character.abilities));
         }
 
         currentPartyItems = [];
+        currentPartyAbilityItems = [];
         for (var i = 0; i < currentParty.length; i++) {
             var character = currentParty[i];
             var currentCharacterClass;
@@ -28,10 +33,11 @@
             }
 
             currentPartyItems.push(createCharacterItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel, character.cp, character.cpToLevel));
+            currentPartyAbilityItems.push(createCharacterAbilityItem(character.name, character.lvl, currentCharacterClass.className, currentCharacterClass.lvl, character.stats.maxHP, character.stats.maxMP, character.stats.strength, character.stats.vitality, character.stats.intellect, character.stats.wisdom, character.stats.agility, character.xp, character.xpToLevel, character.cp, character.cpToLevel, character.abilities));
         }
     }
 
-    var createCharacterItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel) {
+    var createCharacterItemControl = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel) {
         var character = {
             name: name,
             lvl: lvl,
@@ -61,12 +67,91 @@
         $characterItem.append($characterLeft);
         $characterItem.append($characterRight);
 
+        return $characterItem;
+    }
+
+    var createCharacterItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel) {
+        var character = {
+            name: name,
+            lvl: lvl,
+            currentClass: currentClass,
+            classLvl: classLvl,
+            HP: HP,
+            MP: MP,
+            STR: STR,
+            VIT: VIT,
+            INT: INT,
+            WIS: WIS,
+            AGI: AGI,
+            xp: xp,
+            xpToLevel: xpToLevel,
+            cp: cp,
+            cpToLevel: cpToLevel
+        };
+
+        var $characterItem = createCharacterItemControl(name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel);
+
         return {
             content: $characterItem,
             select: function () {
                 FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.ScreenControl(createCharacterDetailScreen(character.name, character.lvl, character.currentClass, character.classLvl, character.HP, character.MP, character.STR, character.VIT, character.INT, character.WIS, character.AGI, character.xp, character.xpToLevel, character.cp, character.cpToLevel), true, function () {
                     FuzzyOctoTribble.KeyControl.menu();
                 }));
+            },
+            value: name
+        };
+    }
+
+    var createCharacterAbilityItem = function (name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel, abilities) {
+        var character = {
+            name: name,
+            lvl: lvl,
+            currentClass: currentClass,
+            classLvl: classLvl,
+            HP: HP,
+            MP: MP,
+            STR: STR,
+            VIT: VIT,
+            INT: INT,
+            WIS: WIS,
+            AGI: AGI,
+            xp: xp,
+            xpToLevel: xpToLevel,
+            cp: cp,
+            cpToLevel: cpToLevel,
+            abilities: abilities
+        };
+
+        var addItem = function (currentAbility) {
+            return {
+                text: currentAbility.name,
+                selected: function () {
+                    var dialogSpec = {
+                        dialogContent: currentAbility.description
+                    };
+                    FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox(dialogSpec, my));
+                }
+            }
+        }
+
+        var items = [];
+        for (var i = 0; i < abilities.length; i++) {
+            var currentAbility = abilities[i];
+            items.push(addItem(currentAbility));
+        }
+        var spec = {
+            items: items,
+            closeOnMenu: true,
+            header: character.name + ":"
+        }
+        var my = {};
+
+        var $characterItem = createCharacterItemControl(name, lvl, currentClass, classLvl, HP, MP, STR, VIT, INT, WIS, AGI, xp, xpToLevel, cp, cpToLevel);
+
+        return {
+            content: $characterItem,
+            select: function () {
+                FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.Menu(spec, my));
             },
             value: name
         };
@@ -122,6 +207,16 @@
         });
     }
 
+    that.getAbilityScreen = function () {
+        return FuzzyOctoTribble.ScreenSelectControl({
+            items: characterAbilityItems,
+            closeOnMenu: true,
+            onCloseMenu: function () {
+                FuzzyOctoTribble.KeyControl.menu();
+            }
+        });
+    }
+
     that.getPartySelectScreen = function (maxSelectCount, onSelectComplete) {
         return FuzzyOctoTribble.ScreenMultiSelectControl({
             items: characterItems,
@@ -133,6 +228,16 @@
     that.getPartyCharacters = function () {
         return FuzzyOctoTribble.ScreenSelectControl({
             items: currentPartyItems,
+            closeOnMenu: true,
+            onCloseMenu: function () {
+                FuzzyOctoTribble.KeyControl.menu();
+            }
+        });
+    }
+
+    that.getPartyAbilityScreen = function () {
+        return FuzzyOctoTribble.ScreenSelectControl({
+            items: currentPartyAbilityItems,
             closeOnMenu: true,
             onCloseMenu: function () {
                 FuzzyOctoTribble.KeyControl.menu();

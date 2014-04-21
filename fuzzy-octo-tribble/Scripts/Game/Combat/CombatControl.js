@@ -76,7 +76,7 @@
                     onComplete();
                 }
             },
-            isDisabled: currentCommand.isDisabled
+            isabled: currentCommand.isDisabled
         }
         return item;
     }
@@ -316,10 +316,11 @@
         }
 
         that.cancel = function () {
-            if (FuzzyOctoTribble.KeyControl.previousIsCombat()) {
+            if (selectingTarget) {
                 if (this.onComplete) {
                     this.onComplete();
                 }
+                selectingTarget = false;
             }
             else {
                 that.menu();

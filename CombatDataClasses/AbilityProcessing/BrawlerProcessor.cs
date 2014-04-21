@@ -44,6 +44,13 @@ namespace CombatDataClasses.AbilityProcessing
                     return true;
                 }
             }
+            else if (abilityName == "Preemptive Strike")
+            {
+                if (combatData.hasCooldown(source.name, "Preemptive Strike"))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -73,6 +80,10 @@ namespace CombatDataClasses.AbilityProcessing
             if (level >= 9)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Sweep", false, 0, false, isDisabled("Sweep", source, combatData)));
+            }
+            if (level >= 11)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Preemptive Strike", false, 0, false, isDisabled("Preemptive Strike", source, combatData)));
             }
 
             return commands;
@@ -184,6 +195,40 @@ namespace CombatDataClasses.AbilityProcessing
                             time = (source.nextAttackTime + 180)
                         });
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt damage to all enemies with a sweeping blow!", 0));
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        return effects;
+                    });
+                case "Preemptive Strike":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    {
+                        if (source.classLevel < 13)
+                        {
+                            return new List<IEffect>();
+                        }
+                        List<IEffect> effects = new List<IEffect>();
+                        float coefficient = 1.0f;
+                        FullCombatCharacter currentTarget = targets[0];
+                        foreach (FullCombatCharacter t in targets)
+                        {
+                            if (currentTarget.nextAttackTime > t.nextAttackTime)
+                            {
+                                currentTarget = t;
+                            }
+                        }
+                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f / currentTarget.vitality));
+                        if (currentTarget.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                        {
+                            coefficient = coefficient * 2;
+                        }
+
+                        effects.Add(new Effect(EffectTypes.DealDamage, currentTarget.combatUniq, string.Empty, dmg));
+                        combatData.cooldowns.Add(new CombatData.Cooldown()
+                        {
+                            character = source.name,
+                            name = "Preemptive Strike",
+                            time = (source.nextAttackTime + 120)
+                        });
+                        effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt " + dmg + " damage to " + currentTarget.name + " with a preemptive strike!", 0));
                         GeneralProcessor.calculateNextAttackTime(source, coefficient);
                         return effects;
                     });

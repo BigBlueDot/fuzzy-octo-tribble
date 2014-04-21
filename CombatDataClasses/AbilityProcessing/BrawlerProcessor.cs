@@ -68,10 +68,14 @@ namespace CombatDataClasses.AbilityProcessing
                                 return new List<IEffect>();
                             }
                             List<IEffect> effects = new List<IEffect>();
+                            float coefficient = 1.0f;
                             foreach (FullCombatCharacter t in target)
                             {
                                 int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / t.vitality));
-                                t.inflictDamage(ref dmg);
+                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                {
+                                    coefficient = coefficient * 2;
+                                }
                                 List<PlayerModels.CombatDataModels.CombatConditionModel> conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>();
                                 conditions.Add(new PlayerModels.CombatDataModels.CombatConditionModel()
                                 {
@@ -94,7 +98,7 @@ namespace CombatDataClasses.AbilityProcessing
                                 effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a disarming blow.", 0));
 
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                            GeneralProcessor.calculateNextAttackTime(source, coefficient);
                             return effects;
                         });
                 default:

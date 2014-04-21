@@ -130,7 +130,10 @@ namespace CombatDataClasses.ClassProcessor
                             foreach (FullCombatCharacter t in targets)
                             {
                                 int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / t.vitality));
-                                t.inflictDamage(ref dmg);
+                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                {
+                                    coefficient = coefficient * 2;
+                                }
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                                 effects.Add(new Effect(EffectTypes.Message, 0, preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + ".", 0));
                             }
@@ -144,14 +147,18 @@ namespace CombatDataClasses.ClassProcessor
                         {
                             return new List<IEffect>();
                         }
+                        float coefficient = 1.2f;
                         List<IEffect> effects = new List<IEffect>();
                         foreach(FullCombatCharacter t in targets){
                             int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 8 / t.vitality));
-                            t.inflictDamage(ref dmg);
+                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                            {
+                                coefficient = coefficient * 2;
+                            }
                             effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a reckless attack.", 0));
                         }
-                        GeneralProcessor.calculateNextAttackTime(source, 1.2f);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
                         source.mods.Add(BasicModificationsGeneration.getRecklessModification(source.name));
                         return effects;
                     });
@@ -163,6 +170,7 @@ namespace CombatDataClasses.ClassProcessor
                                 return new List<IEffect>();
                             }
                             List<IEffect> effects = new List<IEffect>();
+                            float coefficient = 1.0f;
                             foreach (FullCombatCharacter t in targets)
                             {
                                 float dmgMod = .8f;
@@ -173,11 +181,14 @@ namespace CombatDataClasses.ClassProcessor
                                     preMessage = source.name + " is locked on!  ";
                                 }
                                 int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * dmgMod * 5 / t.vitality));
-                                t.inflictDamage(ref dmg);
+                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                {
+                                    coefficient = coefficient * 2;
+                                }
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                                 effects.Add(new Effect(EffectTypes.Message, 0,preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                            GeneralProcessor.calculateNextAttackTime(source, coefficient);
                             return effects;
                         });
                 case "First Strike":
@@ -188,17 +199,21 @@ namespace CombatDataClasses.ClassProcessor
                             return new List<IEffect>();
                         }
                         List<IEffect> effects = new List<IEffect>();
+                        float coefficient = 1.0f;
                         if (combatData.isFirstTurn(source.name))
                         {
                             foreach (FullCombatCharacter t in targets)
                             {
                                 int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 1.5 * 5 / t.vitality));
-                                t.inflictDamage(ref dmg);
+                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                {
+                                    coefficient = coefficient * 2;
+                                }
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                                 effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is well rested.  " + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
                             }
                         }
-                        GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
                         return effects;
                     });
                 default:

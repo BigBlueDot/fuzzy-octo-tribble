@@ -16,12 +16,16 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing.Goblins
         public static List<IEffect> getCommand(FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData)
         {
             List<IEffect> effects = new List<IEffect>();
+            float coefficient = 1.0f;
             FullCombatCharacter target = BasicAbilityProcessing.identifyWeakestTarget(targets);
             int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / target.vitality));
-            target.inflictDamage(ref dmg);
+            if (target.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+            {
+                coefficient = coefficient * 2;
+            }
             effects.Add(new Effect(EffectTypes.DealDamage, target.combatUniq, string.Empty, dmg));
             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target.name + " for " + dmg.ToString() + " damage!", 0));
-            GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+            GeneralProcessor.calculateNextAttackTime(source, coefficient);
 
             return effects;
         }

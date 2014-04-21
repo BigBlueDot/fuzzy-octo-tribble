@@ -29,7 +29,7 @@ namespace CombatDataClasses.LiveImplementation
         public int turnOrder { get; set; }
         public bool defeated { get; set; }
 
-        public void inflictDamage(ref int damage)
+        public HitEffect inflictDamage(ref int damage)
         {
             foreach (CombatModificationsModel cmm in mods)
             {
@@ -44,6 +44,19 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             hp -= damage;
+
+            if (this.className == "Brawler" && this.classLevel >= 5)
+            {
+                return HitEffect.Unbalance;
+            }
+
+            return HitEffect.None;
+        }
+
+        public enum HitEffect
+        {
+            None,
+            Unbalance
         }
     }
 }

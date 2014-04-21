@@ -642,6 +642,12 @@ namespace CombatDataClasses.LiveImplementation
                                     currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a class level!", 0));
                                     ccm.lvl++;
                                     PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
+
+                                    string newAbilityMessage = PlayerModels.StatCalculations.StatCalculator.getNewAbilityText(cm);
+                                    if (newAbilityMessage != string.Empty)
+                                    {
+                                        currentEffects.Add(new Effect(EffectTypes.Message, 0, newAbilityMessage, 0));
+                                    }
                                 }
                             }
                         }

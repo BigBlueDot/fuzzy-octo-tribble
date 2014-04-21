@@ -15,7 +15,7 @@ namespace CombatDataClasses.AbilityProcessing
             if (fcc.className == "Brawler")
             {
                 //Add bonus points for fist speciality
-                attackValue += (int)(fcc.classLevel / 2);
+                attackValue += ((int)(fcc.classLevel / 5) + 1);
             }
             return attackValue;
         }

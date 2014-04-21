@@ -312,7 +312,15 @@ namespace CombatDataClasses.LiveImplementation
             {
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Attack", false, 0, true, false));
                 List<ICommand> abilityCommands = ClassProcessor.AbilityDirector.getClassAbilities(pcs[uniqBridge[currentCharacter]], combatData);
-                returnValue.Add(new Command(true, abilityCommands, false, 0, 0, "Abilities", false, 0, false, (abilityCommands.Count == 0)));
+                bool abilityDisabled = true;
+                foreach (ICommand command in abilityCommands)
+                {
+                    if (!command.isDisabled)
+                    {
+                        abilityDisabled = false;
+                    }
+                }
+                returnValue.Add(new Command(true, abilityCommands, false, 0, 0, "Abilities", false, 0, false, abilityDisabled));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false, false));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false, false));
             }

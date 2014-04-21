@@ -25,7 +25,7 @@ namespace CombatDataClasses.AbilityProcessing
         {
             if (abilityName == "Disarming Blow")
             {
-                if(combatData.hasCooldown(source.name, "DisarmingBlow"))
+                if(combatData.hasCooldown(source.name, "Disarming Blow"))
                 {
                     return true;
                 }
@@ -87,7 +87,7 @@ namespace CombatDataClasses.AbilityProcessing
                                 {
                                     character = source.name,
                                     name = "Disarming Blow",
-                                    time = (source.nextAttackTime + 60)
+                                    time = (source.nextAttackTime + 120)
                                 });
                                 
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));

@@ -210,6 +210,13 @@
     height: 40px !important;
 }
 
+.Boss.Goblin {
+    background-image: url('/Images/Game/Combat/BossGoblin.png');
+    background-size: 40px, 50px;
+    width: 40px !important;
+    height: 50px !important;
+}
+
 .character-display-screen-background {
     background-color: #FFFFFF;
     top:0;

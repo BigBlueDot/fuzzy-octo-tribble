@@ -175,20 +175,48 @@
     }
 
 .character-display-screen {
-    height:240px;
-    width:200px;
-    position:absolute;
-    bottom:20px;
-    background-color:#FFFFFF;
+    height: 240px;
+    width: 200px;
+    position: absolute;
+    bottom: 20px;
     border: solid 6px black;
     padding: 5px;
-    overflow:hidden;
+    overflow: hidden;
+    background-color: #FFFFFF;
 }
 
     .character-display-screen.enemy {
         top:20px;
         bottom:auto;
     }
+
+    .character-display-screen.image {
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-position-y: center;
+        background-color:#FFFFFF;
+        right: 5px;
+        bottom: 5px;
+        position: absolute;
+        border: 0px;
+        width:0px;
+        height:0px;
+    }
+
+.Goblin {
+    background-image: url('/Images/Game/Combat/Goblin.png');
+    background-size: 40px, 45px;
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.character-display-screen-background {
+    background-color: #FFFFFF;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
 
 .character-display-screen-selectable {
     cursor:pointer;
@@ -204,7 +232,6 @@
     .character-item-selected.character-display-screen-selectable:hover {
         background-color: #575757;
     }
-
 
 .damage-display {
     z-index:3;

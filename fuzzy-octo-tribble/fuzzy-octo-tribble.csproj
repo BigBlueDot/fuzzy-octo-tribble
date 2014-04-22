@@ -265,6 +265,8 @@
     <Content Include="Images\Game\CaveEmpty.png" />
     <Content Include="Images\Game\CaveWall.png" />
     <Content Include="Images\Game\ClassTrainer.png" />
+    <Content Include="Images\Game\Combat\BossGoblin.png" />
+    <Content Include="Images\Game\Combat\Goblin.png" />
     <Content Include="Images\Game\Dungeon.png" />
     <Content Include="Images\Game\DungeonExit.png" />
     <Content Include="Images\Game\Empty.png" />

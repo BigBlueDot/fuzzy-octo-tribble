@@ -55,7 +55,7 @@
                             }
                         }
                         else {
-                            drawSquare(map.mapSquares[x][y].imageUrl, drawX, drawY);
+                            drawSquare(map.mapUrl[map.mapSquares[x][y].imageUrl], drawX, drawY);
                         }
                     }
                     drawY += 40;

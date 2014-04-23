@@ -11,6 +11,7 @@ namespace MapDataClasses
     public class ClientMap
     {
         public string name { get; set; }
+        public string[] mapUrl { get; set; }
         public ClientMapSquare[][] mapSquares { get; set; }
         public bool isDungeon { get; set; }
     }

@@ -28,6 +28,7 @@ namespace MapDataClasses
         {
             ClientMap cm = new ClientMap();
             cm.mapSquares = new ClientMapSquare[mm.map.GetLength(0)][];
+            List<string> urls = new List<string>();
             for (var i = 0; i < cm.mapSquares.Length; i++)
             {
                 cm.mapSquares[i] = new ClientMapSquare[mm.map.GetLength(1)];
@@ -37,13 +38,26 @@ namespace MapDataClasses
             {
                 for (var y = 0; y < mm.map.GetLength(1); y++)
                 {
+                    int imageUrlId;
+                    string imageUrl = getImageURL(mm.map[x, y]);
+                    if (urls.Contains(imageUrl))
+                    {
+                        imageUrlId = urls.IndexOf(imageUrl);
+                    }
+                    else
+                    {
+                        imageUrlId = urls.Count;
+                        urls.Add(imageUrl);
+                    }
                     cm.mapSquares[x][y] = new ClientMapSquare() { 
-                        imageUrl = getImageURL(mm.map[x, y]), 
+                        imageUrl = imageUrlId,
                         isInteractable = getInteractable(mm.map[x, y]), 
                         isTraversable = getTraversable(mm.map[x, y]) 
                     };
                 }
             }
+
+            cm.mapUrl = urls.ToArray();
 
             return cm;
         }

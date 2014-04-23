@@ -10,6 +10,6 @@ namespace MapDataClasses
     {
         public bool isTraversable { get; set; }
         public bool isInteractable { get; set; }
-        public string imageUrl { get; set; }
+        public int imageUrl { get; set; }
     }
 }

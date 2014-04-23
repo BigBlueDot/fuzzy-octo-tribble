@@ -23,8 +23,8 @@
 }
 
 .text-font {
-    font-size: 26px;
-    font-family: 'Chau Philomene One', sans-serif;
+    font-size: 18px;
+    font-family: 'Press Start 2P', sans-serif;
 }
 
 .dialog-container {
@@ -184,6 +184,9 @@
     overflow: hidden;
     background-color: #FFFFFF;
 }
+    .character-display-screen.text-font {
+        font-size:16px;
+    }
 
     .character-display-screen.enemy {
         top:20px;
@@ -204,10 +207,31 @@
     }
 
 .Goblin {
-    background-image: url('/Images/Game/Combat/Goblin.png');
-    background-size: 40px, 45px;
-    width: 40px !important;
-    height: 40px !important;
+    background-image: url('/Images/Game/Combat/GoblinNew.png');
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
+}
+
+.Goblin.WalkOne {
+    background-image: url('/Images/Game/Combat/GoblinWalkOne.png');
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
+}
+
+.Goblin.PreAttack {
+    background-image: url('/Images/Game/Combat/GoblinNewPreAttack.png') !important;
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
+}
+
+.Goblin.Attack {
+    background-image: url('/Images/Game/Combat/GoblinNewAttack.png') !important;
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
 }
 
 .Boss.Goblin {

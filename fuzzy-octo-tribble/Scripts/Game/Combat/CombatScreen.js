@@ -8,10 +8,25 @@
         $characterDisplay.addClass('character-display-screen text-font');
         $characterDisplay.append($(document.createElement('div')).text(character.name));
         $characterDisplay.append($(document.createElement('div')).text(character.type));
-        $characterDisplay.append($(document.createElement('div')).text('Attack Order: ' + character.turnOrder));
-        $characterDisplay.append($(document.createElement('div')).text("HP: " + character.hp + " / " + character.maxHP));
-        $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + " / " + character.maxMP));
-        $characterDisplay.append($(document.createElement('div')).addClass(character.type + ' character-display-screen image'));
+        $characterDisplay.append($(document.createElement('div')).text('Turn Order:' + character.turnOrder));
+        $characterDisplay.append($(document.createElement('div')).text("HP: " + character.hp + "/" + character.maxHP));
+        $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + "/" + character.maxMP));$(document.createElement('div')).addClass(character.type + ' character-display-screen image')
+        var $imageDisplay = $(document.createElement('div')).addClass(character.type + ' character-display-screen image')
+        $characterDisplay.append($imageDisplay);
+
+        var animateCharacter = function () {
+            if ($imageDisplay.hasClass('WalkOne')) {
+                $imageDisplay.removeClass('WalkOne');
+            }
+            else {
+                $imageDisplay.addClass('WalkOne');
+            }
+        }
+
+        var timer = setInterval(function () {
+            animateCharacter();
+        }, 300);
+
         for (var i = 0; i < character.statuses.length; i++) {
             var currentStatus = character.statuses[i];
             $characterDisplay.append($(document.createElement('div')).text(currentStatus.value));

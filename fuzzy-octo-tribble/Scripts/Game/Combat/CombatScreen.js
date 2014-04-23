@@ -14,19 +14,6 @@
         var $imageDisplay = $(document.createElement('div')).addClass(character.type + ' character-display-screen image')
         $characterDisplay.append($imageDisplay);
 
-        var animateCharacter = function () {
-            if ($imageDisplay.hasClass('WalkOne')) {
-                $imageDisplay.removeClass('WalkOne');
-            }
-            else {
-                $imageDisplay.addClass('WalkOne');
-            }
-        }
-
-        var timer = setInterval(function () {
-            animateCharacter();
-        }, 300);
-
         for (var i = 0; i < character.statuses.length; i++) {
             var currentStatus = character.statuses[i];
             $characterDisplay.append($(document.createElement('div')).text(currentStatus.value));

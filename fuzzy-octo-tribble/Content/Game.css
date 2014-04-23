@@ -198,8 +198,8 @@
         background-position-x: center;
         background-position-y: center;
         background-color:#FFFFFF;
-        right: 5px;
-        bottom: 5px;
+        left:0px;
+        bottom:0px;
         position: absolute;
         border: 0px;
         width:0px;

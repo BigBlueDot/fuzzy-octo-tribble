@@ -132,6 +132,7 @@
             case 3: //Destroy the character
                 var targetUniq = currentEffect.targetUniq;
                 FuzzyOctoTribble.CombatScreenCreator.numberAnimation('DEFEATED', targetUniq, '#FF0000', 44);
+                FuzzyOctoTribble.CombatScreenCreator.defeat(targetUniq);
                 processEffects(effects);
                 break;
             case 4: //Combat has ended

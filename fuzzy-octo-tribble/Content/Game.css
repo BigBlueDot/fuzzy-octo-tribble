@@ -255,6 +255,10 @@
     height: 152px !important;
 }
 
+.Defeated > .image {
+    display:none;
+}
+
 .Boss.Goblin {
     background-image: url('/Images/Game/Combat/BossGoblin.png');
     background-size: 40px, 50px;

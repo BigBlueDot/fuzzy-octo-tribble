@@ -34,6 +34,7 @@
             $characterDisplay.css('border-color', '#ff0000');
             $characterDisplay.css('background-color', '#000000');
             $characterDisplay.css('color', '#ffffff');
+            $characterDisplay.addClass('Defeated');
         }
         $characterDisplay.on('click', function () {
             if (character.selected) {
@@ -86,6 +87,10 @@
         }
 
         setAnimationTimer();
+    }
+
+    that.defeat = function (uniq) {
+        characterWindows[uniq].addClass('Defeated');
     }
 
     that.numberAnimation = function (value, uniq, color, size) {

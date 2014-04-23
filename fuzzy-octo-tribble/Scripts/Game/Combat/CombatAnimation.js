@@ -8,11 +8,34 @@
         var delayTime = Math.floor(Math.random() * 10) + 5;
         var timerTime = Math.floor(Math.random() * 200) + 50;
         var startPauseCheck = 3;
+        var idleTime = 0;
 
         var processAnimation = function () {
             if (delayTime != 0) {
                 delayTime--;
                 return;
+            }
+            else {
+                if (Math.floor(Math.random() * 12) == 0) {
+                    idleTime = 6;
+                    isRight = true;
+                    $image.removeClass('Left');
+                }
+            }
+            
+            if (idleTime !== 0) {
+                if ($image.hasClass('Idle')) {
+                    $image.removeClass('Idle');
+                }
+                else {
+                    $image.addClass('Idle');
+                }
+
+                idleTime--;
+                return;
+            }
+            else {
+                $image.removeClass('Idle');
             }
 
             if (startPauseCheck == 0) {

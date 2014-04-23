@@ -212,6 +212,14 @@
     width: 104px !important;
     height: 152px !important;
 }
+
+.Goblin.Idle {
+    background-image: url('/Images/Game/Combat/GoblinNewIdle.png');
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
+}
+
 .Goblin.Left {
     background-image: url('/Images/Game/Combat/GoblinLeft.png');
     background-size: 104px, 152px;

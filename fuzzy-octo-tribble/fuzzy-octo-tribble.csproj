@@ -267,6 +267,12 @@
     <Content Include="Images\Game\ClassTrainer.png" />
     <Content Include="Images\Game\Combat\BossGoblin.png" />
     <Content Include="Images\Game\Combat\Goblin.png" />
+    <Content Include="Images\Game\Combat\GoblinLeft.png" />
+    <Content Include="Images\Game\Combat\GoblinLeftWalkOne.png" />
+    <Content Include="Images\Game\Combat\GoblinNew.png" />
+    <Content Include="Images\Game\Combat\GoblinNewAttack.png" />
+    <Content Include="Images\Game\Combat\GoblinNewIdle.png" />
+    <Content Include="Images\Game\Combat\GoblinNewPreAttack.png" />
     <Content Include="Images\Game\Dungeon.png" />
     <Content Include="Images\Game\DungeonExit.png" />
     <Content Include="Images\Game\Empty.png" />
@@ -281,6 +287,7 @@
     <Content Include="Scripts\Game\Camera.js" />
     <Content Include="Scripts\Game\CharacterScreen.js" />
     <Content Include="Scripts\Game\Combat\CombatAccess.js" />
+    <Content Include="Scripts\Game\Combat\CombatAnimation.js" />
     <Content Include="Scripts\Game\Combat\CombatControl.js" />
     <Content Include="Scripts\Game\Combat\CombatScreen.js" />
     <Content Include="Scripts\Game\DialogBox.js" />

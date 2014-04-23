@@ -57,6 +57,37 @@
         return $characterDisplay;
     }
 
+    that.attackAnimation = function (uniq, success) {
+        $characterDisplay = characterWindows[uniq];
+        var count = 4;
+
+        var processAnimation = function () {
+            count--;
+            if ($characterDisplay.hasClass('Attack')) {
+                $characterDisplay.removeClass('Attack');
+                $characterDisplay.addClass('PreAttack');
+            }
+            else {
+                $characterDisplay.addClass('Attack');
+                $characterDisplay.removeClass('PreAttack');
+            }
+        }
+
+        var setAnimationTimer = function() {
+            processAnimation();
+            if (count == 0) {
+                $characterDisplay.removeClass('Attack');
+                $characterDisplay.removeClass('PreAttack');
+                success();
+            }
+            else {
+                setTimeout(setAnimationTimer, 200);
+            }
+        }
+
+        setAnimationTimer();
+    }
+
     that.numberAnimation = function (value, uniq, color, size) {
         var $damageWindow = $(document.createElement('div'));
         $damageWindow.addClass('text-font damage-display');

@@ -155,6 +155,11 @@
             case 7: //End turn
                 FuzzyOctoTribble.CombatAccess.continueCombat();
                 break;
+            case 8: //Enemy attack animation
+                FuzzyOctoTribble.CombatScreenCreator.attackAnimation(currentEffect.targetUniq, function () {
+                    processEffects(effects);
+                });
+                break;
 
         }
     }

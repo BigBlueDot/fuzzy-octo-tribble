@@ -241,14 +241,14 @@
     height: 152px !important;
 }
 
-.Goblin.PreAttack {
+.PreAttack > .Goblin {
     background-image: url('/Images/Game/Combat/GoblinNewPreAttack.png') !important;
     background-size: 104px, 152px;
     width: 104px !important;
     height: 152px !important;
 }
 
-.Goblin.Attack {
+.Attack > .Goblin {
     background-image: url('/Images/Game/Combat/GoblinNewAttack.png') !important;
     background-size: 104px, 152px;
     width: 104px !important;

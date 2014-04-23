@@ -25,6 +25,7 @@ namespace CombatDataClasses.Interfaces
         CombatEnded,
         GameOver,
         ShowCommand,
-        TurnEnded
+        TurnEnded,
+        Attack
     }
 }

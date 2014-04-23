@@ -212,9 +212,22 @@
     width: 104px !important;
     height: 152px !important;
 }
+.Goblin.Left {
+    background-image: url('/Images/Game/Combat/GoblinLeft.png');
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
+}
 
 .Goblin.WalkOne {
     background-image: url('/Images/Game/Combat/GoblinWalkOne.png');
+    background-size: 104px, 152px;
+    width: 104px !important;
+    height: 152px !important;
+}
+
+.Goblin.WalkOne.Left {
+    background-image: url('/Images/Game/Combat/GoblinLeftWalkOne.png');
     background-size: 104px, 152px;
     width: 104px !important;
     height: 152px !important;

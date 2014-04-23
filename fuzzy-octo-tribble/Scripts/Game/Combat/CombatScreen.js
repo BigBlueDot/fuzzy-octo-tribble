@@ -11,7 +11,8 @@
         $characterDisplay.append($(document.createElement('div')).text('Turn Order:' + character.turnOrder));
         $characterDisplay.append($(document.createElement('div')).text("HP: " + character.hp + "/" + character.maxHP));
         $characterDisplay.append($(document.createElement('div')).text("MP: " + character.mp + "/" + character.maxMP));$(document.createElement('div')).addClass(character.type + ' character-display-screen image')
-        var $imageDisplay = $(document.createElement('div')).addClass(character.type + ' character-display-screen image')
+        var $imageDisplay = $(document.createElement('div')).addClass(character.type + ' character-display-screen image');
+        FuzzyOctoTribble.CombatAnimation.addAnimation($imageDisplay);
         $characterDisplay.append($imageDisplay);
 
         for (var i = 0; i < character.statuses.length; i++) {

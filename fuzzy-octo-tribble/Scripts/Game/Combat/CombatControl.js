@@ -197,6 +197,8 @@
 
         var pcCurrentlySelected = false;
         var currentSelection = 0;
+        var commands = commands;
+        var currentCharacter = currentCharacter;
 
         var onCharacterSelect = function (character) {
             if (selectingTarget) {
@@ -339,11 +341,22 @@
             FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
         }
 
+        that.updateInformation = function (allies, enemies, commands, currentCharacter) {
+            commands = commands;
+            currentCharacter = currentCharacter;
+            $initialScreen.update(allies, enemies);
+        }
+
         return that;
     }
 
     that.create = function (spec, my) {
-        $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
+        if ($currentDefaultScreen) {
+            $currentDefaultScreen.updateInformation(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
+        }
+        else {
+            $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
+        }
         FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
         $currentCommandScreen = that.createCommandSelectionScreen(spec.commands, spec.currentCharacter);
         if (spec.effects.length !== 0) {

@@ -288,7 +288,16 @@
 
 @media (max-width: 850px) {
     .text-font {
-        font-size: 20px;
+        font-size: 12px;
+        line-height:16px;
+    }
+
+    .character-display-screen.text-font {
+        font-size: 10px;
+    }
+
+    .character-display-screen.enemy {
+        line-height:10px;
     }
 
     .menu-container {
@@ -325,7 +334,16 @@
 }
 @media (max-width: 400px) {
     .text-font {
-        font-size: 16px;
+        font-size: 10px;
+        line-height:12px;
+    }
+
+    .character-display-screen.text-font {
+        font-size: 8px;
+    }
+
+    .character-display-screen.enemy {
+        line-height:10px;
     }
     
     .menu-container {

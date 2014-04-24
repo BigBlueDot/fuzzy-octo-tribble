@@ -184,6 +184,15 @@
     overflow: hidden;
     background-color: #FFFFFF;
 }
+
+    .character-display-screen.PreAttack.enemy {
+        top:50px;
+    }
+
+    .character-display-screen.Attack.enemy {
+        top:50px;
+    }
+
     .character-display-screen.text-font {
         font-size:16px;
     }

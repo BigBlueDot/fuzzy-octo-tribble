@@ -10,45 +10,51 @@
         var $turnOrder = $(document.createElement('div')).text('Turn Order:' + character.turnOrder);
         var $HP = $(document.createElement('div')).text("HP: " + character.hp + "/" + character.maxHP);
         var $MP = $(document.createElement('div')).text("MP: " + character.mp + "/" + character.maxMP);
+        var $statuses = $(document.createElement('div'));
         $characterDisplay.addClass('character-display-screen text-font');
         $characterDisplay.append($name);
         $characterDisplay.append($type);
         $characterDisplay.append($turnOrder);
         $characterDisplay.append($HP);
         $characterDisplay.append($MP);
+        $characterDisplay.append($statuses);
         var $imageDisplay = $(document.createElement('div')).addClass(character.type + ' character-display-screen image');
         FuzzyOctoTribble.CombatAnimation.addAnimation($imageDisplay);
         $characterDisplay.append($imageDisplay);
 
         $characterDisplay.update = function (character) {
+            $statuses.empty();
             $name.text(character.name);
             $type.text(character.type);
             $turnOrder.text('Turn Order:' + character.turnOrder);
             $HP.text("HP: " + character.hp + "/" + character.maxHP);
             $MP.text("MP: " + character.mp + "/" + character.maxMP);
+
+            for (var i = 0; i < character.statuses.length; i++) {
+                var currentStatus = character.statuses[i];
+                $statuses.append($(document.createElement('div')).text(currentStatus.value));
+            }
+            switch (character.turnOrder) {
+                case 1:
+                    $characterDisplay.css('border-color', '#ffd700');
+                    break;
+                case 2:
+                    $characterDisplay.css('border-color', '#C4AEAD ');
+                    break;
+                case 3:
+                    $characterDisplay.css('border-color', '#cd7f32');
+                    break;
+                default:
+                    $characterDisplay.css('border-color', '#000000');
+            }
+            if (character.hp <= 0) {
+                $characterDisplay.css('border-color', '#ff0000');
+                $characterDisplay.css('background-color', '#000000');
+                $characterDisplay.css('color', '#ffffff');
+                $characterDisplay.addClass('Defeated');
+            }
         }
 
-        for (var i = 0; i < character.statuses.length; i++) {
-            var currentStatus = character.statuses[i];
-            $characterDisplay.append($(document.createElement('div')).text(currentStatus.value));
-        }
-        switch (character.turnOrder) {
-            case 1:
-                $characterDisplay.css('border-color', '#ffd700');
-                break;
-            case 2:
-                $characterDisplay.css('border-color', '#C4AEAD ');
-                break;
-            case 3:
-                $characterDisplay.css('border-color', '#cd7f32');
-                break;
-        }
-        if (character.hp <= 0) {
-            $characterDisplay.css('border-color', '#ff0000');
-            $characterDisplay.css('background-color', '#000000');
-            $characterDisplay.css('color', '#ffffff');
-            $characterDisplay.addClass('Defeated');
-        }
         $characterDisplay.on('click', function () {
             if (character.selected) {
                 character.selected(character);
@@ -67,6 +73,8 @@
         character.click = function () {
             $characterDisplay.click();
         }
+
+        $characterDisplay.update(character);
 
         return $characterDisplay;
     }

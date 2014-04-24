@@ -6,6 +6,7 @@
     var $currentDefaultScreen, $currentCommandScreen;
     var gameOver = false;
     var inCombat = false;
+    var commandScreens = [];
 
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
@@ -22,6 +23,10 @@
                     $.ajax("Game/getCommands", {
                         success: function (commandData) {
                             $currentCommandScreen.close();
+                            for (var i = 0; i < commandScreens.length; i++) {
+                                commandScreens[i].close();
+                            }
+                            commandScreens = [];
                             fullData.commands = commandData;
                             that.create(fullData);
                         }
@@ -69,7 +74,7 @@
                     }
                 }
                 else if (currentCommand.hasChildCommands) {
-                    $currentCommandScreen.close();
+                    commandScreens.push($currentCommandScreen);
                     $currentCommandScreen = createCommandSelectionScreen(currentCommand.childCommands, currentCharacter, sendingCommand.subCommand, onComplete);
                     $currentCommandScreen.show();
                     FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);

@@ -21,6 +21,7 @@
                     fullData = data;
                     $.ajax("Game/getCommands", {
                         success: function (commandData) {
+                            $currentCommandScreen.close();
                             fullData.commands = commandData;
                             that.create(fullData);
                         }
@@ -68,6 +69,7 @@
                     }
                 }
                 else if (currentCommand.hasChildCommands) {
+                    $currentCommandScreen.close();
                     $currentCommandScreen = createCommandSelectionScreen(currentCommand.childCommands, currentCharacter, sendingCommand.subCommand, onComplete);
                     $currentCommandScreen.show();
                     FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
@@ -356,8 +358,9 @@
         }
         else {
             $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
+            FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
         }
-        FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
+
         $currentCommandScreen = that.createCommandSelectionScreen(spec.commands, spec.currentCharacter);
         if (spec.effects.length !== 0) {
             processEffects(spec.effects);

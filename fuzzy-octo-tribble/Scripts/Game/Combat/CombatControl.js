@@ -139,6 +139,8 @@
                 break;
             case 4: //Combat has ended
                 FuzzyOctoTribble.KeyControl.removeCombat();
+                $currentDefaultScreen = false;
+                $currentCommandScreen = false;
                 if (gameOver) {
                     FuzzyOctoTribble.MaintainState.updateMap();
                 }

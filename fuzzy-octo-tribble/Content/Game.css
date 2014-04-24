@@ -215,44 +215,26 @@
 
 .Goblin.Idle {
     background-image: url('/Images/Game/Combat/GoblinNewIdle.png');
-    background-size: 104px, 152px;
-    width: 104px !important;
-    height: 152px !important;
 }
 
 .Goblin.Left {
     background-image: url('/Images/Game/Combat/GoblinLeft.png');
-    background-size: 104px, 152px;
-    width: 104px !important;
-    height: 152px !important;
 }
 
 .Goblin.WalkOne {
     background-image: url('/Images/Game/Combat/GoblinWalkOne.png');
-    background-size: 104px, 152px;
-    width: 104px !important;
-    height: 152px !important;
 }
 
 .Goblin.WalkOne.Left {
     background-image: url('/Images/Game/Combat/GoblinLeftWalkOne.png');
-    background-size: 104px, 152px;
-    width: 104px !important;
-    height: 152px !important;
 }
 
 .PreAttack > .Goblin {
     background-image: url('/Images/Game/Combat/GoblinNewPreAttack.png') !important;
-    background-size: 104px, 152px;
-    width: 104px !important;
-    height: 152px !important;
 }
 
 .Attack > .Goblin {
     background-image: url('/Images/Game/Combat/GoblinNewAttack.png') !important;
-    background-size: 104px, 152px;
-    width: 104px !important;
-    height: 152px !important;
 }
 
 .Defeated > .image {

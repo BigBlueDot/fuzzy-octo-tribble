@@ -25,6 +25,7 @@
 .text-font {
     font-size: 18px;
     font-family: 'Press Start 2P', sans-serif;
+    line-height: 30px;
 }
 
 .dialog-container {
@@ -54,9 +55,8 @@
 .menu-item {
     width:100%;
     text-overflow:ellipsis;
-    padding-top:15px;
     padding-left:5px;
-    height:45px;
+    height:60px;
     cursor: pointer;
 }
 
@@ -194,12 +194,13 @@
     }
 
     .character-display-screen.text-font {
-        font-size:16px;
+        font-size: 14px;
     }
 
     .character-display-screen.enemy {
         top:20px;
         bottom:auto;
+        line-height:14px;
     }
 
     .character-display-screen.image {

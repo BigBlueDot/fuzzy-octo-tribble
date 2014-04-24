@@ -59,7 +59,7 @@
         var $characterItem = $(document.createElement('div'));
         $characterItem.addClass('popup-screen-item text-font');
         var $characterLeft = $(document.createElement('span'));
-        $characterLeft.text('Level ' + lvl + ' ' + currentClass + " Class Level: " + classLvl + " HP: " + HP + " MP: " + MP);
+        $characterLeft.text('Level ' + lvl + ' ' + currentClass + " Level " + classLvl);
         var $characterRight = $(document.createElement('span'));
         $characterRight.text(name);
         $characterRight.css('float', 'right');

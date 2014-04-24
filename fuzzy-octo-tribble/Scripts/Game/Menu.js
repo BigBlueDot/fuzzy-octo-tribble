@@ -32,7 +32,8 @@
     for (var i = 0; i < items.length; i++) {
         var $menuItem = $(document.createElement('div'));
         $menuItem.addClass('menu-item text-font');
-        $menuItem.text(items[i].text);
+        var $innerText = $(document.createElement('span')).text(items[i].text).addClass('menu-item-inner-text');
+        $menuItem.append($innerText);
         $menuItem.data('index', i);
         if (items[i].isDisabled) {
             $menuItem.addClass('menu-item-disabled');

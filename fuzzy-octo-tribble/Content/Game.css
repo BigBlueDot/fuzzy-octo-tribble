@@ -207,7 +207,7 @@
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: center;
-        background-color:#FFFFFF;
+        background-color: transparent;
         left:0px;
         bottom:0px;
         position: absolute;
@@ -215,6 +215,10 @@
         width:0px;
         height:0px;
         padding:0px;
+    }
+
+    .character-display-screen.image:hover {
+        background-color: transparent;
     }
 
 .Goblin {

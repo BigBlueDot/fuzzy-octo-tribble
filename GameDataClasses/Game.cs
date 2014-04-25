@@ -379,7 +379,7 @@ namespace GameDataClasses
 
         private bool isCombat()
         {
-            if (MapDataClasses.MapDataManager.isCombatMap(player.rootMap))
+            if (MapDataClasses.MapDataManager.isCombatMap(player.rootMap) && player.currentCombat == null)
             {
                 combatCountdown--;
                 if (combatCountdown <= 0)

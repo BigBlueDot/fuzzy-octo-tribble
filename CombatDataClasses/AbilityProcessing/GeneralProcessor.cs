@@ -129,7 +129,7 @@ namespace CombatDataClasses.ClassProcessor
                             }
                             else
                             {
-                                effects.Add(new Effect(EffectTypes.Message, 0, "You were unable to run away!  (Keepy trying, believe in yourself)", 0));
+                                effects.Add(new Effect(EffectTypes.Message, 0, "You were unable to run away!  (Keep trying, believe in yourself)", 0));
                             }
                             GeneralProcessor.calculateNextAttackTime(source, .8f);
                             return effects;

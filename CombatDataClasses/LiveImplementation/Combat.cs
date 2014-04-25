@@ -139,7 +139,7 @@ namespace CombatDataClasses.LiveImplementation
                     {
                         hp = pcm.hp;
                         mp = pcm.mp;
-                        usedAbilities = pcm.usedAbilities;
+                        usedAbilities = (pcm.usedAbilities == null ? new List<string>() : pcm.usedAbilities);
                     }
                 }
 

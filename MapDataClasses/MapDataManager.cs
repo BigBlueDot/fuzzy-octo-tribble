@@ -59,6 +59,19 @@ namespace MapDataClasses
 
             cm.mapUrl = urls.ToArray();
 
+            cm.events = new List<ClientEvent>();
+            if (mm.events != null)
+            {
+                foreach (MapEvent me in mm.events)
+                {
+                    ClientEvent ce = new ClientEvent();
+                    ce.x = me.x;
+                    ce.y = me.y;
+                    ce.rewardType = me.rewardType;
+                    cm.events.Add(ce);
+                }
+            }
+
             return cm;
         }
 

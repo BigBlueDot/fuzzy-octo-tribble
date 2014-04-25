@@ -17,5 +17,6 @@ namespace MapDataClasses
         public string[,] map { get; set; }
         public int startX { get; set; }
         public int startY { get; set; }
+        public List<MapEvent> events { get; set; }
     }
 }

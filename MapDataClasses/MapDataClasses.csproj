@@ -40,12 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventClasses\ClientEvent.cs" />
     <Compile Include="ClientMap.cs" />
     <Compile Include="ClientMapSquare.cs" />
+    <Compile Include="EventClasses\IEventData.cs" />
     <Compile Include="MapDataClasses\Encounter.cs" />
     <Compile Include="MapDataClasses\Enemy.cs" />
     <Compile Include="MapDataClasses\MapSelectedEventArgs.cs" />
     <Compile Include="MapDataManager.cs" />
+    <Compile Include="EventClasses\MapEvent.cs" />
     <Compile Include="MapInteraction.cs" />
     <Compile Include="MapModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

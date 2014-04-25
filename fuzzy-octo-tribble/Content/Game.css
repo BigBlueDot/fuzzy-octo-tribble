@@ -228,24 +228,48 @@
     height: 152px !important;
 }
 
+.Wounded > .Goblin {
+    background-image: url('/Images/Game/Combat/GoblinInjured.png');
+}
+
 .Goblin.Idle {
     background-image: url('/Images/Game/Combat/GoblinNewIdle.png');
+}
+
+.Wounded > .Goblin.Idle {
+    background-image: url('/Images/Game/Combat/GoblinNewIdleInjured.png');
 }
 
 .Goblin.Left {
     background-image: url('/Images/Game/Combat/GoblinLeft.png');
 }
 
+.Wounded > .Goblin.Left {
+    background-image: url('/Images/Game/Combat/GoblinLeftInjured.png');
+}
+
 .Goblin.WalkOne {
     background-image: url('/Images/Game/Combat/GoblinWalkOne.png');
+}
+
+.Wounded > .Goblin.WalkOne {
+    background-image: url('/Images/Game/Combat/GoblinWalkOneInjured.png');
 }
 
 .Goblin.WalkOne.Left {
     background-image: url('/Images/Game/Combat/GoblinLeftWalkOne.png');
 }
 
+.Wounded > .Goblin.WalkOne.Left {
+    background-image: url('/Images/Game/Combat/GoblinLeftWalkOneInjured.png');
+}
+
 .PreAttack > .Goblin {
     background-image: url('/Images/Game/Combat/GoblinNewPreAttack.png') !important;
+}
+
+.PreAttack.Wounded > .Goblin {
+    background-image: url('/Images/Game/Combat/GoblinNewPreAttackInjured.png') !important;
 }
 
 .Attack > .Goblin {

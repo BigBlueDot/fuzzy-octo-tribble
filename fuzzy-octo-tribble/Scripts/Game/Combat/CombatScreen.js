@@ -29,6 +29,11 @@
             $turnOrder.text('Turn Order:' + character.turnOrder);
             $HP.text("HP: " + character.hp + "/" + character.maxHP);
             $MP.text("MP: " + character.mp + "/" + character.maxMP);
+            if (character.hp < character.maxHP / 2) {
+                $characterDisplay.addClass('Wounded');
+            } else {
+                $characterDisplay.removeClass('Wounded');
+            }
 
             for (var i = 0; i < character.statuses.length; i++) {
                 var currentStatus = character.statuses[i];

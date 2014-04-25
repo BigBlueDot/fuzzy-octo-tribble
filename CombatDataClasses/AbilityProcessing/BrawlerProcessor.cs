@@ -2,6 +2,7 @@
 using CombatDataClasses.ClassProcessor;
 using CombatDataClasses.Interfaces;
 using CombatDataClasses.LiveImplementation;
+using PlayerModels.CombatDataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,7 +143,7 @@ namespace CombatDataClasses.AbilityProcessing
                                     name = "Disarmed",
                                     conditions = conditions
                                 });
-                                combatData.cooldowns.Add(new CombatData.Cooldown()
+                                combatData.cooldowns.Add(new CooldownModel
                                 {
                                     character = source.name,
                                     name = "Disarming Blow",
@@ -176,7 +177,7 @@ namespace CombatDataClasses.AbilityProcessing
                             {
                                 coefficient = coefficient * 2;
                             }
-                            combatData.cooldowns.Add(new CombatData.Cooldown()
+                            combatData.cooldowns.Add(new CooldownModel()
                             {
                                 character = source.name,
                                 name = "One-Two Punch",
@@ -210,7 +211,7 @@ namespace CombatDataClasses.AbilityProcessing
 
                             effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                         }
-                        combatData.cooldowns.Add(new CombatData.Cooldown()
+                        combatData.cooldowns.Add(new CooldownModel()
                         {
                             character = source.name,
                             name = "Sweep",
@@ -244,7 +245,7 @@ namespace CombatDataClasses.AbilityProcessing
                         }
 
                         effects.Add(new Effect(EffectTypes.DealDamage, currentTarget.combatUniq, string.Empty, dmg));
-                        combatData.cooldowns.Add(new CombatData.Cooldown()
+                        combatData.cooldowns.Add(new CooldownModel()
                         {
                             character = source.name,
                             name = "Preemptive Strike",
@@ -281,7 +282,7 @@ namespace CombatDataClasses.AbilityProcessing
                             }
                         }
 
-                        combatData.cooldowns.Add(new CombatData.Cooldown()
+                        combatData.cooldowns.Add(new CooldownModel()
                         {
                             character = source.name,
                             name = "Vicious Blow",

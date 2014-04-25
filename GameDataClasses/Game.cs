@@ -58,6 +58,8 @@ namespace GameDataClasses
                     .Include(up => up.player.currentCombat.npcs.Select(c => c.stats))
                     .Include(up => up.player.currentCombat.npcs.Select(c => c.mods))
                     .Include(up => up.player.unlockedClasses)
+                    .Include(up => up.player.currentCombat.combatData)
+                    .Include(up => up.player.currentCombat.combatData.cooldowns)
                     .FirstOrDefault(u => u.UserName.ToLower() == userName);
             this.player = user.player;
             currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);

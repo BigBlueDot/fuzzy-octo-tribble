@@ -200,6 +200,14 @@
     <Compile Include="Migrations\201404212233156_AdrenalineUpdate.Designer.cs">
       <DependentUpon>201404212233156_AdrenalineUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404250254557_CombatDataStore.cs" />
+    <Compile Include="Migrations\201404250254557_CombatDataStore.Designer.cs">
+      <DependentUpon>201404250254557_CombatDataStore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404250319143_FirstTurnOverFix.cs" />
+    <Compile Include="Migrations\201404250319143_FirstTurnOverFix.Designer.cs">
+      <DependentUpon>201404250319143_FirstTurnOverFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -401,6 +409,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404212233156_AdrenalineUpdate.resx">
       <DependentUpon>201404212233156_AdrenalineUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404250254557_CombatDataStore.resx">
+      <DependentUpon>201404250254557_CombatDataStore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404250319143_FirstTurnOverFix.resx">
+      <DependentUpon>201404250319143_FirstTurnOverFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -41,9 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CombatDataModels\CombatConditionModel.cs" />
+    <Compile Include="CombatDataModels\CombatDataModel.cs" />
     <Compile Include="CombatDataModels\CombatModel.cs" />
     <Compile Include="CombatDataModels\CombatModificationsModel.cs" />
     <Compile Include="CombatDataModels\CombatCharacterModel.cs" />
+    <Compile Include="CombatDataModels\CooldownModel.cs" />
     <Compile Include="CombatDataModels\TemporaryCombatStatsModel.cs" />
     <Compile Include="Models\AbilityDescription.cs" />
     <Compile Include="Models\CharacterClassModel.cs" />

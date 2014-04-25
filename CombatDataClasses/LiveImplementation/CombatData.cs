@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayerModels.CombatDataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,36 +9,95 @@ namespace CombatDataClasses.LiveImplementation
 {
     public class CombatData
     {
-        public CombatData()
+        private CombatDataModel combatData { get; set; }
+        public bool combatInitalized
         {
-            Init();
+            get
+            {
+                return combatData.combatInitalized;
+            }
+            set
+            {
+                combatData.combatInitalized = value;
+            }
+        }
+        public int currentFleeCount
+        {
+            get
+            {
+                return combatData.currentFleeCount;
+            }
+            set
+            {
+                combatData.currentFleeCount = value;
+            }
+        }
+
+        public List<string> firstTurnOver
+        {
+            get
+            {
+                List<string> returnValues = new List<string>();
+                foreach (CombatDataModel.TurnOverModel tom in combatData.firstTurnOver)
+                {
+                    returnValues.Add(tom.name);
+                }
+                return returnValues;
+            }
+        }
+        public List<CooldownModel> cooldowns
+        {
+            get
+            {
+                return combatData.cooldowns;
+            }
+            set
+            {
+                combatData.cooldowns = value;
+            }
+        }
+
+        public CombatData(CombatModel combat)
+        {
+            if (combat.combatData == null)
+            {
+                combat.combatData = this.combatData = new CombatDataModel();
+                Init();
+            }
+            
+            this.combatData = combat.combatData;
+
+            if (this.combatData.firstTurnOver == null)
+            {
+                this.combatData.firstTurnOver = new List<CombatDataModel.TurnOverModel>();
+            }
         }
 
         private void Init()
         {
-            currentFleeCount = 0;
-            firstTurnOver = new List<string>();
-            combatInitalized = false;
-            cooldowns = new List<Cooldown>();
+            this.combatData.currentFleeCount = 0;
+            this.combatData.firstTurnOver = new List<CombatDataModel.TurnOverModel>();
+            this.combatData.combatInitalized = false;
+            this.combatData.cooldowns = new List<CooldownModel>();
         }
 
         public void setFirstTurnOver(string name)
         {
-            if (!firstTurnOver.Contains(name))
+            if (!this.firstTurnOver.Contains(name))
             {
-                firstTurnOver.Add(name);
+                combatData.firstTurnOver.Add(new CombatDataModel.TurnOverModel() { name = name });
             }
         }
 
         public bool isFirstTurn(string name)
         {
-            return !firstTurnOver.Contains(name);
+            return !this.firstTurnOver.Contains(name);
         }
 
         public void removeCooldowns(int time)
         {
-            List<Cooldown> toRemove = new List<Cooldown>();
-            foreach (Cooldown cd in cooldowns)
+            List<CooldownModel> toRemove = new List<CooldownModel>();
+            foreach (CooldownModel cd in combatData.cooldowns)
             {
                 if (cd.time <= time)
                 {
@@ -45,15 +105,15 @@ namespace CombatDataClasses.LiveImplementation
                 }
             }
 
-            foreach (Cooldown cd in toRemove)
+            foreach (CooldownModel cd in toRemove)
             {
-                cooldowns.Remove(cd);
+                combatData.cooldowns.Remove(cd);
             }
         }
 
         public bool hasCooldown(string characterName, string attack)
         {
-            foreach (Cooldown cd in cooldowns)
+            foreach (CooldownModel cd in combatData.cooldowns)
             {
                 if (cd.character == characterName && cd.name == attack)
                 {
@@ -62,18 +122,6 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             return false;
-        }
-
-        public int currentFleeCount { get; set; }
-        public List<string> firstTurnOver { get; set; }
-        public bool combatInitalized { get; set; }
-        public List<Cooldown> cooldowns { get; set; }
-
-        public class Cooldown
-        {
-            public string character { get; set; }
-            public string name { get; set; }
-            public int time { get; set; }
         }
     }
 }

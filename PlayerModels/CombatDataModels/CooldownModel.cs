@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace PlayerModels.CombatDataModels
 {
-    public class CombatModel
+    public class CooldownModel
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int uniq { get; set; }
-        public List<CombatCharacterModel> pcs { get; set; }
-        public List<CombatCharacterModel> npcs { get; set; }
-        public int currentTime { get; set; }
-        public CombatDataModel combatData { get; set; }
+        public string character { get; set; }
+        public string name { get; set; }
+        public int time { get; set; }
     }
 }

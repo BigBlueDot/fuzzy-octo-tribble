@@ -91,6 +91,14 @@ namespace MapDataClasses.TutorialMapGenerators
 
             mm.map[26, 38] = "Exit";
 
+            mm.events = new List<MapEvent>();
+            mm.events.Add(new MapEvent()
+            {
+                x = 26,
+                y = 23,
+                rewardType = ClientEvent.RewardType.Objective
+            });
+
             return mm;
         }
 

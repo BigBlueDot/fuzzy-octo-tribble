@@ -8,10 +8,10 @@ namespace MapDataClasses.EventClasses
 {
     public interface IEventData
     {
-        bool hasMessage { get; set; }
-        string message { get; set; }
-        int eventId { get; set; }
-        EventDataType type { get; set; } 
+        bool hasMessage { get;  }
+        string message { get;  }
+        int eventId { get;  }
+        EventDataType type { get;  } 
     }
     public enum EventDataType
     {

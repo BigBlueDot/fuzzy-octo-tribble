@@ -1,4 +1,5 @@
 ﻿using EnemyDataClasses.Goblins;
+using MapDataClasses.EventClasses;
 using MapDataClasses.MapDataClasses;
 using System;
 using System.Collections.Generic;
@@ -91,8 +92,9 @@ namespace MapDataClasses.TutorialMapGenerators
 
             mm.map[26, 38] = "Exit";
 
-            mm.events = new List<MapEvent>();
-            mm.events.Add(new MapEvent()
+            mm.eventCollection = new MapEventCollection();
+            IEventData eventData = EventHolder.getMapEvent(1);
+            mm.eventCollection.addEvent(new MapEvent()
             {
                 x = 26,
                 y = 23,

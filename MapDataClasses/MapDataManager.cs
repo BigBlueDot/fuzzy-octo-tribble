@@ -49,10 +49,11 @@ namespace MapDataClasses
                         imageUrlId = urls.Count;
                         urls.Add(imageUrl);
                     }
-                    cm.mapSquares[x][y] = new ClientMapSquare() { 
+                    cm.mapSquares[x][y] = new ClientMapSquare()
+                    {
                         imageUrl = imageUrlId,
-                        isInteractable = getInteractable(mm.map[x, y]), 
-                        isTraversable = getTraversable(mm.map[x, y]) 
+                        isInteractable = getInteractable(mm.map[x, y]),
+                        isTraversable = getTraversable(mm.map[x, y])
                     };
                 }
             }
@@ -60,16 +61,13 @@ namespace MapDataClasses
             cm.mapUrl = urls.ToArray();
 
             cm.events = new List<ClientEvent>();
-            if (mm.events != null)
+            foreach (MapEvent me in mm.eventCollection.getAll())
             {
-                foreach (MapEvent me in mm.events)
-                {
-                    ClientEvent ce = new ClientEvent();
-                    ce.x = me.x;
-                    ce.y = me.y;
-                    ce.rewardType = me.rewardType;
-                    cm.events.Add(ce);
-                }
+                ClientEvent ce = new ClientEvent();
+                ce.x = me.x;
+                ce.y = me.y;
+                ce.rewardType = me.rewardType;
+                cm.events.Add(ce);
             }
 
             return cm;

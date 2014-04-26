@@ -1,6 +1,8 @@
 ﻿using MapDataClasses.MapDataClasses;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,10 @@ namespace MapDataClasses.EventClasses
         {
 
         }
+
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int uniq { get; set; }
 
         private bool _hasMessage;
         public bool hasMessage
@@ -87,5 +93,9 @@ namespace MapDataClasses.EventClasses
         {
             get { return _type; }
         }
+
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int uniq { get; set; }
     }
 }

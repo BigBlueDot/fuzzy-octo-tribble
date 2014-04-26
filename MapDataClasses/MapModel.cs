@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapDataClasses.EventClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,6 @@ namespace MapDataClasses
         public string[,] map { get; set; }
         public int startX { get; set; }
         public int startY { get; set; }
-        public List<MapEvent> events { get; set; }
+        public MapEventCollection eventCollection { get; set; }
     }
 }

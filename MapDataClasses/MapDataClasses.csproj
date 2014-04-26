@@ -46,6 +46,7 @@
     <Compile Include="EventClasses\EventData.cs" />
     <Compile Include="EventClasses\EventHolder.cs" />
     <Compile Include="EventClasses\IEventData.cs" />
+    <Compile Include="EventClasses\MapEventCollection.cs" />
     <Compile Include="MapDataClasses\Encounter.cs" />
     <Compile Include="MapDataClasses\Enemy.cs" />
     <Compile Include="MapDataClasses\MapSelectedEventArgs.cs" />

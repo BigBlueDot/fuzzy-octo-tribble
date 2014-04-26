@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201404250319143_FirstTurnOverFix.Designer.cs">
       <DependentUpon>201404250319143_FirstTurnOverFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404261701477_QuestsFirstBuild.cs" />
+    <Compile Include="Migrations\201404261701477_QuestsFirstBuild.Designer.cs">
+      <DependentUpon>201404261701477_QuestsFirstBuild.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -415,6 +419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404250319143_FirstTurnOverFix.resx">
       <DependentUpon>201404250319143_FirstTurnOverFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404261701477_QuestsFirstBuild.resx">
+      <DependentUpon>201404261701477_QuestsFirstBuild.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

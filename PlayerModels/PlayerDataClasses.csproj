@@ -64,6 +64,7 @@
     <Compile Include="StatCalculations\BrawlerStatCalculator.cs" />
     <Compile Include="StatCalculations\GeneralStatCalculator.cs" />
     <Compile Include="StatCalculations\IStatCalculator.cs" />
+    <Compile Include="StatCalculations\MageStatCalculator.cs" />
     <Compile Include="StatCalculations\StatCalculator.cs" />
   </ItemGroup>
   <ItemGroup>

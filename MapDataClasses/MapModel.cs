@@ -18,6 +18,6 @@ namespace MapDataClasses
         public string[,] map { get; set; }
         public int startX { get; set; }
         public int startY { get; set; }
-        public MapEventCollection eventCollection { get; set; }
+        public MapEventCollectionModel eventCollection { get; set; }
     }
 }

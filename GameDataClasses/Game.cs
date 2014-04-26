@@ -24,8 +24,6 @@ namespace GameDataClasses
         private ICombat combat;
         private int combatCountdown;
         private GameRNG rng;
-        private int combatMinNumber = 7; //This will probably be calculated by the map later
-        private int combatMaxNumber = 15;
 
         private int x
         {
@@ -50,6 +48,8 @@ namespace GameDataClasses
                     .Include(up => up.player.characters.Select(c => c.stats))
                     .Include(up => up.player.parties)
                     .Include(up => up.player.parties.Select(c => c.characters))
+                    .Include(up => up.player.parties.Select(c => c.location))
+                    .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection))
                     .Include(up => up.player.currentCombat)
                     .Include(up => up.player.currentCombat.pcs)
                     .Include(up => up.player.currentCombat.npcs)
@@ -343,8 +343,23 @@ namespace GameDataClasses
             {
                 return MapEvent.Nothing;
             }
+
             player.rootX = newX;
             player.rootY = newY;
+
+            if(MapDataClasses.MapDataManager.isEvent(currentMap, newX, newY))
+            {
+                MapDataClasses.MapEventModel mapEvent = MapDataClasses.MapDataManager.getEvent(currentMap, newX, newY);
+
+                switch (mapEvent.eventData.type)
+                {
+                    case MapDataClasses.EventClasses.EventDataType.Combat:
+                        combat = combatDirector.getCombat();
+                        return MapEvent.CombatEntered;
+                    default:
+                        return MapEvent.Nothing;
+                }
+            }
             if (isCombat())
             {
                 combat = combatDirector.getCombat(); 

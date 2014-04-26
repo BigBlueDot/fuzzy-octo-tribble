@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201404261701477_QuestsFirstBuild.Designer.cs">
       <DependentUpon>201404261701477_QuestsFirstBuild.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404262000075_QuestsUpdateTwo.cs" />
+    <Compile Include="Migrations\201404262000075_QuestsUpdateTwo.Designer.cs">
+      <DependentUpon>201404262000075_QuestsUpdateTwo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -422,6 +426,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404261701477_QuestsFirstBuild.resx">
       <DependentUpon>201404261701477_QuestsFirstBuild.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404262000075_QuestsUpdateTwo.resx">
+      <DependentUpon>201404262000075_QuestsUpdateTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -235,7 +235,7 @@ namespace CombatDataClasses.LiveImplementation
             }
             else //Generate a new encounter based on the map type
             {
-                Encounter encounter = MapDataClasses.MapDataManager.getRandomEncounter(map, encounterSelection);
+                Encounter encounter = MapDataClasses.MapDataManager.getEncounter(this.playerModel.getActiveParty().location, playerModel.rootX, playerModel.rootY, encounterSelection);
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
                 combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
                 foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)

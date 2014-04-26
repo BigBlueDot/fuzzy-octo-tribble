@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MapDataClasses.EventClasses
 {
-    public class EventData : IEventData
+    public class EventDataModel : IEventData
     {
-        public EventData(bool hasMessage, string message, int eventId, EventDataType eventDataType)
+        public EventDataModel(bool hasMessage, string message, int eventId, EventDataType eventDataType)
         {
 
         }
@@ -57,9 +57,9 @@ namespace MapDataClasses.EventClasses
         }
     }
 
-    public class CombatEventData : IEventData
+    public class CombatEventDataModel : IEventData
     {
-        public CombatEventData(Encounter encounter)
+        public CombatEventDataModel(Encounter encounter)
         {
             _encounter = encounter;
         }

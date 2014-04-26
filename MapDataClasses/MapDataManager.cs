@@ -1,4 +1,5 @@
-﻿using MapDataClasses.MapDataClasses;
+﻿using MapDataClasses.EventClasses;
+using MapDataClasses.MapDataClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace MapDataClasses
             cm.mapUrl = urls.ToArray();
 
             cm.events = new List<ClientEvent>();
-            foreach (MapEvent me in mm.eventCollection.getAll())
+            foreach (MapEventModel me in mm.eventCollection.getAll())
             {
                 ClientEvent ce = new ClientEvent();
                 ce.x = me.x;
@@ -313,6 +314,25 @@ namespace MapDataClasses
             }
         }
 
+        public static Encounter getEncounter(MapModel mm, int x, int y, int selection)
+        {
+            if(isEvent(mm, x, y))
+            {
+                MapEventModel me = getEvent(mm, x, y);
+                if (me.eventData.type == EventClasses.EventDataType.Combat)
+                {
+                    return ((CombatEventDataModel)me.eventData).encounter;
+                }
+                else
+                {
+                    return getRandomEncounter(mm.name, selection);
+                }
+            }
+            else{
+                return getRandomEncounter(mm.name, selection);
+            }
+        }
+
 
         public static Enemy getEnemy(string mapName, string enemyType)
         {
@@ -325,6 +345,33 @@ namespace MapDataClasses
                 default:
                     return new Enemy();
             }
+        }
+
+        public static bool isEvent(MapModel mm, int x, int y)
+        {
+            foreach (MapEventModel me in mm.eventCollection.getAll())
+            {
+                if (me.x == x && me.y == y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static MapEventModel getEvent(MapModel mm, int x, int y)
+        {
+
+            foreach (MapEventModel me in mm.eventCollection.getAll())
+            {
+                if (me.x == x && me.y == y)
+                {
+                    return me;
+                }
+            }
+
+            return new MapEventModel();
         }
 
         public static void interactWithMap(string name, int x, int y, MapModel mm, string selectedOption)

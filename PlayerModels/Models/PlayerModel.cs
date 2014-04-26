@@ -47,6 +47,22 @@ namespace PlayerModels
             pm.configuration = configuration;
             pm.commands = commands;
         }
+
+        public PartyModel getActiveParty()
+        {
+            if (activeParty != 0)
+            {
+                foreach (PartyModel pm in parties)
+                {
+                    if (pm.uniq == activeParty)
+                    {
+                        return pm;
+                    }
+                }
+            }
+
+            return new PartyModel();
+        }
     }
 
     public class CharacterUnlockedClassModel

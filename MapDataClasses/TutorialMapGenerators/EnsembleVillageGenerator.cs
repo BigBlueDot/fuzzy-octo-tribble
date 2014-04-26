@@ -61,6 +61,8 @@ namespace MapDataClasses.TutorialMapGenerators
 
             mm.map[6, 6] = "ClassTrainer";
 
+            mm.eventCollection = new EventClasses.MapEventCollectionModel();
+
             return mm;
         }
 

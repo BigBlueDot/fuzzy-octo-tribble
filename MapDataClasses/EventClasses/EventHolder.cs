@@ -15,7 +15,7 @@ namespace MapDataClasses.EventClasses
         {
             List<Enemy> enemies = new List<Enemy>();
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            events.Add(1, new CombatEventData(new Encounter()
+            events.Add(1, new CombatEventDataModel(new Encounter()
             {
                 enemies = enemies,
                 message = "A single goblin blocks your path!"
@@ -28,7 +28,7 @@ namespace MapDataClasses.EventClasses
             {
                 return events[uniq];
             }
-            return new EventData(false, string.Empty, 0, EventDataType.Combat);
+            return new EventDataModel(false, string.Empty, 0, EventDataType.Combat);
         }
     }
 }

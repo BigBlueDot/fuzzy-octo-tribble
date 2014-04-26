@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace MapDataClasses.EventClasses
 {
-    public class MapEventCollection
+    public class MapEventCollectionModel
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int uniq { get; set; }
-        private List<MapEvent> events { get; set; }
+        private List<MapEventModel> events { get; set; }
 
-        public MapEventCollection()
+        public MapEventCollectionModel()
         {
-            events = new List<MapEvent>();
+            events = new List<MapEventModel>();
         }
 
-        public void addEvent(MapEvent e)
+        public void addEvent(MapEventModel e)
         {
             e.eventId = events.Count;
             events.Add(e);
         }
 
-        public MapEvent getEvent(int uniq)
+        public MapEventModel getEvent(int uniq)
         {
             if (events.Count > uniq)
             {
@@ -38,7 +38,7 @@ namespace MapDataClasses.EventClasses
             }
         }
 
-        public List<MapEvent> getAll()
+        public List<MapEventModel> getAll()
         {
             return events;
         }

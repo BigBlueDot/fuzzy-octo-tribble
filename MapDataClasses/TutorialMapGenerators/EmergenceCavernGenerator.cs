@@ -92,13 +92,14 @@ namespace MapDataClasses.TutorialMapGenerators
 
             mm.map[26, 38] = "Exit";
 
-            mm.eventCollection = new MapEventCollection();
+            mm.eventCollection = new MapEventCollectionModel();
             IEventData eventData = EventHolder.getMapEvent(1);
-            mm.eventCollection.addEvent(new MapEvent()
+            mm.eventCollection.addEvent(new MapEventModel()
             {
                 x = 26,
                 y = 27,
-                rewardType = ClientEvent.RewardType.Objective
+                rewardType = ClientEvent.RewardType.Objective,
+                eventData = eventData
             });
 
             return mm;

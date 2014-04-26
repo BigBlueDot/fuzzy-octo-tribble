@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MapDataClasses
 {
-    public class MapEvent
+    public class MapEventModel
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]

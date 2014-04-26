@@ -97,7 +97,7 @@ namespace MapDataClasses.TutorialMapGenerators
             mm.eventCollection.addEvent(new MapEvent()
             {
                 x = 26,
-                y = 23,
+                y = 27,
                 rewardType = ClientEvent.RewardType.Objective
             });
 

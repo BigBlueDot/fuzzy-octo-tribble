@@ -14,6 +14,12 @@
         $('.game-map').append($square);
     }
 
+    var drawEvent = function (x, y, rewardType) {
+        if (rewardType == 0) {
+            drawSquare('/Images/Game/Map/Objective.png', x, y);
+        }
+    }
+
     that.setMap = function (newMap) {
         map = newMap;
     }
@@ -56,6 +62,12 @@
                         }
                         else {
                             drawSquare(map.mapUrl[map.mapSquares[x][y].imageUrl], drawX, drawY);
+                        }
+
+                        for (var i = 0; i < map.events.length; i++) {
+                            if (map.events[i].x == x && map.events[i].y == y) {
+                                drawEvent(drawX, drawY, map.events[i].rewardType);
+                            }
                         }
                     }
                     drawY += 40;

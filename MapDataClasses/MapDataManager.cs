@@ -18,11 +18,12 @@ namespace MapDataClasses
 
         }
 
-        public static void setPlayerInformation(Func<List<string>> getCharacterNames, Func<List<string>> getClasses)
+        public static void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom)
         {
             MapDataManager.getCharacterNames = getCharacterNames;
             MapDataManager.getClasses = getClasses;
-            TutorialMapGenerators.EnsembleVillageGenerator.Implementation.setFunctions(getCharacterNames, getClasses);
+            TutorialMapGenerators.EnsembleVillageGenerator.Implementation.setFunctions(getCharacterNames, getClasses, getRandom);
+            TutorialMapGenerators.EmergenceCavernGenerator.Implementation.setFunctions(getCharacterNames, getClasses, getRandom);
         }
 
         public static void setupMapModel(MapModel mm)

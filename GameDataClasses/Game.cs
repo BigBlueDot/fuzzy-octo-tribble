@@ -84,7 +84,7 @@ namespace GameDataClasses
                 PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
             }
 
-            MapDataClasses.MapDataManager.setPlayerInformation(() =>
+            MapDataClasses.MapDataManager.setFunctions(() =>
             {
                 List<string> characters = new List<string>();
                 foreach (CharacterModel cm in this.player.characters)
@@ -100,7 +100,11 @@ namespace GameDataClasses
                     classes.Add(cm.name);
                 }
                 return classes;
-            });
+            }, (int start, int end) =>
+                {
+                    return this.rng.getNumber(start, end);
+                }
+            );
 
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 

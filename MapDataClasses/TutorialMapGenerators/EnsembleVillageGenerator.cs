@@ -26,7 +26,7 @@ namespace MapDataClasses.TutorialMapGenerators
             }
         }
 
-        public void setFunctions(Func<List<string>> getCharacters, Func<List<string>> getClasses)
+        public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom)
         {
             this.getCharacters = getCharacters;
             this.getClasses = getClasses;

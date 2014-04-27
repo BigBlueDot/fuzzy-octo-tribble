@@ -24,6 +24,12 @@ namespace MapDataClasses.TutorialMapGenerators
                 return _implementation;
             }
         }
+        private Func<int, int, int> generateRandom;
+
+        public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom)
+        {
+            generateRandom = getRandom;
+        }
 
         public MapModel getMap()
         {
@@ -93,49 +99,7 @@ namespace MapDataClasses.TutorialMapGenerators
             mm.map[26, 38] = "Exit";
 
             mm.eventCollection = new MapEventCollectionModel();
-            EventDataModel eventData = EventHolder.getMapEvent(1);
-            mm.eventCollection.addEvent(new MapEventModel()
-            {
-                x = 26,
-                y = 27,
-                rewardType = ClientEvent.RewardType.Objective,
-                eventData = eventData,
-                rewardValue = 0
-            });
-
-            List<Enemy> enemies = new List<Enemy>();
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            eventData = new CombatEventDataModel(new Encounter()
-            {
-                enemies = enemies,
-                message = "Two goblins appear!"
-            });
-            mm.eventCollection.addEvent(new MapEventModel()
-            {
-                x = 20,
-                y = 35,
-                rewardType = ClientEvent.RewardType.XP,
-                eventData = eventData,
-                rewardValue = 5
-            });
-
-            enemies = new List<Enemy>();
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            eventData = new CombatEventDataModel(new Encounter()
-            {
-                enemies = enemies,
-                message = "Two goblins appear!"
-            });
-            mm.eventCollection.addEvent(new MapEventModel()
-            {
-                x = 20,
-                y = 36,
-                rewardType = ClientEvent.RewardType.CP,
-                eventData = eventData,
-                rewardValue = 5
-            });
+            setupEvents(mm);
 
             return mm;
         }
@@ -321,6 +285,93 @@ namespace MapDataClasses.TutorialMapGenerators
                 default:
                     return getEnemy("Goblin");
             }
+        }
+
+        private void setupEvents(MapModel mm)
+        {
+            //Add objectives
+            EventDataModel eventData = EventHolder.getMapEvent(1);
+            mm.eventCollection.addEvent(new MapEventModel()
+            {
+                x = 26,
+                y = 27,
+                rewardType = ClientEvent.RewardType.Objective,
+                eventData = eventData,
+                rewardValue = 0
+            });
+
+            //Add an "event wall" on the left and two on the right
+            for (int y = 38; y >= 35; y--)
+            {
+                mm.eventCollection.addEvent(getRandomEvent(16, y));
+            }
+            for (int x = 43; x <= 46; x++)
+            {
+                mm.eventCollection.addEvent(getRandomEvent(x, 31));
+            }
+            for (int x = 43; x <= 46; x++)
+            {
+                mm.eventCollection.addEvent(getRandomEvent(x, 24));
+            }
+        }
+
+        private MapEventModel getRandomEvent(int x, int y)
+        {
+            var rewardType = getRewardType();
+            MapEventModel mem = new MapEventModel()
+            {
+                eventData = getRandomEventData(),
+                rewardType = rewardType,
+                rewardValue = getRewardValue(rewardType),
+                x = x,
+                y = y
+            };
+
+            return mem;
+        }
+
+        private int getRewardValue(ClientEvent.RewardType rewardType)
+        {
+            return 5;
+        }
+
+        private ClientEvent.RewardType getRewardType()
+        {
+            int random = generateRandom(0, 3);
+            switch (random)
+            {
+                case 0:
+                    return ClientEvent.RewardType.CP;
+                case 1:
+                    return ClientEvent.RewardType.Gold;
+                case 2:
+                    return ClientEvent.RewardType.Item;
+                case 3:
+                    return ClientEvent.RewardType.XP;
+            }
+
+            return ClientEvent.RewardType.XP;
+        }
+
+        private EventDataModel getRandomEventData()
+        {
+            Encounter encounter = getEventEncounter();
+            EventDataModel edm = new CombatEventDataModel(encounter);
+            return edm;
+        }
+
+        private Encounter getEventEncounter()
+        {
+            List<Enemy> enemies = new List<Enemy>();
+            enemies.Add(getEnemy("Goblin"));
+            enemies.Add(getEnemy("Goblin"));
+            Encounter encounter = new Encounter()
+            {
+                enemies = enemies,
+                message = "A duo of goblins has appeared!"
+            };
+
+            return encounter;
         }
     }
 }

@@ -52,6 +52,9 @@ namespace GameDataClasses
                     .Include(up => up.player.parties.Select(c => c.location))
                     .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection))
                     .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection).Select(e => e.events))
+                    .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection).Select(e => e.events.Select(k => k.eventData)))
+                    .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection).Select(e => e.events.Select(k => k.eventData.encounter)))
+                    .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection).Select(e => e.events.Select(k => k.eventData.encounter.enemies)))
                     .Include(up => up.player.currentCombat)
                     .Include(up => up.player.currentCombat.pcs)
                     .Include(up => up.player.currentCombat.npcs)
@@ -64,25 +67,11 @@ namespace GameDataClasses
                     .Include(up => up.player.currentCombat.combatData.cooldowns)
                     .FirstOrDefault(u => u.UserName.ToLower() == userName);
             this.player = user.player;
-            currentMap = player.getActiveParty().location;
-            if (currentMap == null)
-            {
-                currentMap = MapDataClasses.MapDataManager.createMap(this.player.rootMap);
-            }
-            else
-            {
-                MapDataClasses.MapDataManager.setupMapModel(currentMap);
-            }
             this.userName = userName;
             this.db = db;
             this.messageQueue = new List<ClientMessage>();
-            
-            this.rng = new GameRNG();
 
-            foreach (CharacterModel cm in this.player.characters)
-            {
-                PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
-            }
+            this.rng = new GameRNG();
 
             MapDataClasses.MapDataManager.setFunctions(() =>
             {
@@ -101,10 +90,25 @@ namespace GameDataClasses
                 }
                 return classes;
             }, (int start, int end) =>
-                {
-                    return this.rng.getNumber(start, end);
-                }
+            {
+                return this.rng.getNumber(start, end);
+            }
             );
+
+            currentMap = player.getActiveParty().location;
+            if (currentMap == null)
+            {
+                currentMap = MapDataClasses.MapDataManager.createMap(this.player.rootMap);
+            }
+            else
+            {
+                MapDataClasses.MapDataManager.setupMapModel(currentMap);
+            }
+
+            foreach (CharacterModel cm in this.player.characters)
+            {
+                PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
+            }
 
             this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
 
@@ -186,6 +190,18 @@ namespace GameDataClasses
                                             type = ClientMessage.ClientMessageType.RefreshMap
                                         });
                                         PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
+                                        break;
+                                    case MapDataClasses.ClientEvent.RewardType.Gold:
+                                        messageQueue.Add(new ClientMessage()
+                                        {
+                                            message = "You have found " + currentEvent.rewardValue.ToString() + " GP!",
+                                            type = ClientMessage.ClientMessageType.Message
+                                        });
+                                        messageQueue.Add(new ClientMessage()
+                                        {
+                                            type = ClientMessage.ClientMessageType.RefreshMap
+                                        });
+                                        PlayerDataManager.givePartyGP(player, currentEvent.rewardValue);
                                         break;
                                 }
                             }

@@ -219,5 +219,10 @@ namespace PlayerModels
                 }
             }
         }
+
+        public static void givePartyGP(PlayerModel pm, int gp)
+        {
+            pm.gp += gp;
+        }
     }
 }

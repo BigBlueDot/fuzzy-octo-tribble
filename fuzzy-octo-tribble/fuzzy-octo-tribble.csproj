@@ -228,6 +228,14 @@
     <Compile Include="Migrations\201404271851349_MapEventsAdditionalUpdate.Designer.cs">
       <DependentUpon>201404271851349_MapEventsAdditionalUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404272050350_EventDataModelFix.cs" />
+    <Compile Include="Migrations\201404272050350_EventDataModelFix.Designer.cs">
+      <DependentUpon>201404272050350_EventDataModelFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404272129562_CombatDataEventModelFix.cs" />
+    <Compile Include="Migrations\201404272129562_CombatDataEventModelFix.Designer.cs">
+      <DependentUpon>201404272129562_CombatDataEventModelFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -318,6 +326,7 @@
     <Content Include="Images\Game\DungeonExit.png" />
     <Content Include="Images\Game\Empty.png" />
     <Content Include="Images\Game\Map\CpEvent.png" />
+    <Content Include="Images\Game\Map\GpEvent.png" />
     <Content Include="Images\Game\Map\Objective.png" />
     <Content Include="Images\Game\Map\ObjectiveComplete.png" />
     <Content Include="Images\Game\Map\XpEvent.png" />
@@ -454,6 +463,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404271851349_MapEventsAdditionalUpdate.resx">
       <DependentUpon>201404271851349_MapEventsAdditionalUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404272050350_EventDataModelFix.resx">
+      <DependentUpon>201404272050350_EventDataModelFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404272129562_CombatDataEventModelFix.resx">
+      <DependentUpon>201404272129562_CombatDataEventModelFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

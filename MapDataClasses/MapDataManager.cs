@@ -329,7 +329,7 @@ namespace MapDataClasses
                 MapEventModel me = getEvent(mm, x, y);
                 if (me.eventData.type == EventClasses.EventDataType.Combat)
                 {
-                    return ((CombatEventDataModel)me.eventData).encounter;
+                    return me.eventData.encounter;
                 }
                 else
                 {

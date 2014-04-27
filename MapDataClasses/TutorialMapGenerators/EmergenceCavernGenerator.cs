@@ -356,7 +356,7 @@ namespace MapDataClasses.TutorialMapGenerators
         private EventDataModel getRandomEventData()
         {
             Encounter encounter = getEventEncounter();
-            EventDataModel edm = new CombatEventDataModel(encounter);
+            EventDataModel edm = EventDataModel.getCombatEvent(encounter);
             return edm;
         }
 

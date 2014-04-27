@@ -9,7 +9,12 @@ using System.Threading.Tasks;
 
 namespace MapDataClasses.EventClasses
 {
-    public class EventDataModel : IEventData
+    public enum EventDataType
+    {
+        Combat
+    }
+
+    public class EventDataModel 
     {
         public EventDataModel()
         {
@@ -25,94 +30,52 @@ namespace MapDataClasses.EventClasses
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int uniq { get; set; }
 
-        private bool _hasMessage;
         public bool hasMessage
         {
-            get
-            {
-                return _hasMessage;
-            }
+            get;
+            set;
         }
 
-        private string _message;
         public string message
         {
-            get
-            {
-                return message;
-            }
+            get;
+            set;
         }
 
-        private int _eventId;
         public int eventId
         {
-            get
-            {
-                return _eventId;
-            }
+            get;
+            set;
         }
 
-        private EventDataType _type;
         public EventDataType type
         {
-            get
-            {
-                return _type;
-            }
+            get;
+            set;
         }
 
-
-        public IEventData nextEvent
+        public EventDataModel nextEvent
         {
-            get { return null; }
-        }
-    }
-
-    public class CombatEventDataModel : EventDataModel
-    {
-        public CombatEventDataModel(Encounter encounter)
-        {
-            _encounter = encounter;
+            get;
+            set;
         }
 
-        private Encounter _encounter;
         public Encounter encounter
         {
-            get
-            {
-                return _encounter;
-            }
-        }
-        public bool hasMessage
-        {
-            get { return false; }
+            get;
+            set;
         }
 
-        public string message
+        public static EventDataModel getCombatEvent(Encounter encounter)
         {
-            get { return string.Empty; }
-        }
+            EventDataModel edm = new EventDataModel();
+            edm.encounter = encounter;
+            edm.hasMessage = false;
+            edm.message = string.Empty;
+            edm.type = EventDataType.Combat;
+            edm.nextEvent = null;
 
-        private int _eventId;
-        public int eventId
-        {
-            get { return _eventId; }
-        }
-
-        private EventDataType _type;
-        public EventDataType type
-        {
-            get { return _type; }
-        }
-
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int uniq { get; set; }
-
-
-        public IEventData nextEvent
-        {
-            get { return null; }
+            return edm;
         }
     }
 }

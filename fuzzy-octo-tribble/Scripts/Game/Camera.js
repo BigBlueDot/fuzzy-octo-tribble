@@ -18,6 +18,9 @@
         if (rewardType == 0) {
             drawSquare('/Images/Game/Map/Objective.png', x, y);
         }
+        else if (rewardType == 2) {
+            drawSquare('/Images/Game/Map/GpEvent.png', x, y);
+        }
         else if (rewardType == 3) {
             drawSquare('/Images/Game/Map/XpEvent.png', x, y);
         }

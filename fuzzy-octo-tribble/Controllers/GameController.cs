@@ -145,5 +145,12 @@ namespace fuzzy_octo_tribble.Controllers
             Game game = checkGame();
             game.setClass(x, y, characterName, className);
         }
+
+        [HttpGet]
+        public JsonResult getMessages()
+        {
+            Game game = checkGame();
+            return Json(game.getMessages(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

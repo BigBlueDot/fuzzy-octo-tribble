@@ -18,6 +18,7 @@ namespace MapDataClasses
         public int y { get; set; }
         public int eventId { get; set; }
         public ClientEvent.RewardType rewardType { get; set; }
-        public IEventData eventData { get; set; }
+        public EventDataModel eventData { get; set; }
+        public int rewardValue { get; set; }
     }
 }

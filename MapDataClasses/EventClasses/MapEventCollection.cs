@@ -13,7 +13,7 @@ namespace MapDataClasses.EventClasses
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int uniq { get; set; }
-        private List<MapEventModel> events { get; set; }
+        public List<MapEventModel> events { get; set; }
 
         public MapEventCollectionModel()
         {
@@ -41,6 +41,23 @@ namespace MapDataClasses.EventClasses
         public List<MapEventModel> getAll()
         {
             return events;
+        }
+
+        public void removeEvent(MapEventModel e)
+        {
+            MapEventModel toRemove = null;
+            foreach (MapEventModel mem in events)
+            {
+                if (mem.uniq == e.uniq)
+                {
+                    toRemove = mem;
+                }
+            }
+
+            if (toRemove != null)
+            {
+                events.Remove(toRemove);
+            }
         }
     }
 }

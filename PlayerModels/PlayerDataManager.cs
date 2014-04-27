@@ -177,5 +177,47 @@ namespace PlayerModels
                 return (currentLevel + 4) * currentLevel * ((currentLevel / 5) + 1);
             }
         }
+
+        public static void givePartyXP(PlayerModel pm, int xp)
+        {
+            List<int> partyUniqs = new List<int>();
+            PartyModel currentParty = pm.getActiveParty();
+            foreach (PartyCharacterModel pcm in currentParty.characters)
+            {
+                partyUniqs.Add(pcm.characterUniq);
+            }
+
+            foreach (int uniq in partyUniqs)
+            {
+                foreach (CharacterModel cm in pm.characters)
+                {
+                    if(cm.uniq == uniq)
+                    {
+                        cm.xp += xp;
+                    }
+                }
+            }
+        }
+
+        public static void givePartyCP(PlayerModel pm, int cp)
+        {
+            List<int> partyUniqs = new List<int>();
+            PartyModel currentParty = pm.getActiveParty();
+            foreach (PartyCharacterModel pcm in currentParty.characters)
+            {
+                partyUniqs.Add(pcm.characterUniq);
+            }
+
+            foreach (int uniq in partyUniqs)
+            {
+                foreach (CharacterModel cm in pm.characters)
+                {
+                    if (cm.uniq == uniq)
+                    {
+                        cm.addCp(cp);
+                    }
+                }
+            }
+        }
     }
 }

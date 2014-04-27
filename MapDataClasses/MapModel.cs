@@ -19,5 +19,6 @@ namespace MapDataClasses
         public int startX { get; set; }
         public int startY { get; set; }
         public MapEventCollectionModel eventCollection { get; set; }
+        public MapEventModel activeEvent { get; set; }
     }
 }

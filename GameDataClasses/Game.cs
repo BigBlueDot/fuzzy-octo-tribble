@@ -24,6 +24,7 @@ namespace GameDataClasses
         private ICombat combat;
         private int combatCountdown;
         private GameRNG rng;
+        private List<ClientMessage> messageQueue;
 
         private int x
         {
@@ -50,6 +51,7 @@ namespace GameDataClasses
                     .Include(up => up.player.parties.Select(c => c.characters))
                     .Include(up => up.player.parties.Select(c => c.location))
                     .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection))
+                    .Include(up => up.player.parties.Select(c => c.location).Select(t => t.eventCollection).Select(e => e.events))
                     .Include(up => up.player.currentCombat)
                     .Include(up => up.player.currentCombat.pcs)
                     .Include(up => up.player.currentCombat.npcs)
@@ -62,9 +64,18 @@ namespace GameDataClasses
                     .Include(up => up.player.currentCombat.combatData.cooldowns)
                     .FirstOrDefault(u => u.UserName.ToLower() == userName);
             this.player = user.player;
-            currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
+            currentMap = player.getActiveParty().location;
+            if (currentMap == null)
+            {
+                currentMap = MapDataClasses.MapDataManager.createMap(this.player.rootMap);
+            }
+            else
+            {
+                MapDataClasses.MapDataManager.setupMapModel(currentMap);
+            }
             this.userName = userName;
             this.db = db;
+            this.messageQueue = new List<ClientMessage>();
             
             this.rng = new GameRNG();
 
@@ -139,6 +150,47 @@ namespace GameDataClasses
                     }
 
                     player.currentCombat = null;
+
+                    if (player.getActiveParty() != null)
+                    {
+                        MapDataClasses.MapEventModel currentEvent = player.getActiveParty().location.activeEvent;
+                        if (currentEvent != null && currentEvent.eventData.type == MapDataClasses.EventClasses.EventDataType.Combat)
+                        {
+                            if (currentEvent.eventData.nextEvent == null)
+                            {
+                                switch (currentEvent.rewardType)
+                                {
+                                    case MapDataClasses.ClientEvent.RewardType.Objective:
+                                        break;
+                                    case MapDataClasses.ClientEvent.RewardType.XP:
+                                        messageQueue.Add(new ClientMessage() {
+                                            message = "All characters have gained " + currentEvent.rewardValue.ToString() + " XP!",
+                                            type = ClientMessage.ClientMessageType.Message
+                                        });
+                                        messageQueue.Add(new ClientMessage() {
+                                            type = ClientMessage.ClientMessageType.RefreshMap
+                                        });
+                                        PlayerDataManager.givePartyXP(player, currentEvent.rewardValue);
+                                        break;
+                                    case MapDataClasses.ClientEvent.RewardType.CP:
+                                        messageQueue.Add(new ClientMessage()
+                                        {
+                                            message = "All characters have gained " + currentEvent.rewardValue.ToString() + " CP!",
+                                            type = ClientMessage.ClientMessageType.Message
+                                        });
+                                        messageQueue.Add(new ClientMessage() {
+                                            type = ClientMessage.ClientMessageType.RefreshMap
+                                        });
+                                        PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
+                                        break;
+                                }
+                            }
+
+                            player.getActiveParty().location.eventCollection.removeEvent(currentEvent);
+                            player.getActiveParty().location.activeEvent = null;
+                        }
+                    }
+
                     db.SaveChanges();
                 }
                 );
@@ -354,13 +406,14 @@ namespace GameDataClasses
                 switch (mapEvent.eventData.type)
                 {
                     case MapDataClasses.EventClasses.EventDataType.Combat:
+                        player.getActiveParty().location.activeEvent = mapEvent;
                         combat = combatDirector.getCombat();
                         return MapEvent.CombatEntered;
                     default:
                         return MapEvent.Nothing;
                 }
             }
-            if (isCombat())
+            else if (isCombat())
             {
                 combat = combatDirector.getCombat(); 
                 return MapEvent.CombatEntered;
@@ -392,6 +445,13 @@ namespace GameDataClasses
         public ICombatStatus nextTurn()
         {
             return combat.nextTurn();
+        }
+
+        public List<ClientMessage> getMessages()
+        {
+            List<ClientMessage> messages = this.messageQueue;
+            this.messageQueue = new List<ClientMessage>();
+            return messages;
         }
 
         private bool isCombat()

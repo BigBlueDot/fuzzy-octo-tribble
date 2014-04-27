@@ -216,6 +216,18 @@
     <Compile Include="Migrations\201404262000075_QuestsUpdateTwo.Designer.cs">
       <DependentUpon>201404262000075_QuestsUpdateTwo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404270118594_XPCPEventUpdate.cs" />
+    <Compile Include="Migrations\201404270118594_XPCPEventUpdate.Designer.cs">
+      <DependentUpon>201404270118594_XPCPEventUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404270549528_EventCollectionFix.cs" />
+    <Compile Include="Migrations\201404270549528_EventCollectionFix.Designer.cs">
+      <DependentUpon>201404270549528_EventCollectionFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404271851349_MapEventsAdditionalUpdate.cs" />
+    <Compile Include="Migrations\201404271851349_MapEventsAdditionalUpdate.Designer.cs">
+      <DependentUpon>201404271851349_MapEventsAdditionalUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -305,6 +317,10 @@
     <Content Include="Images\Game\Dungeon.png" />
     <Content Include="Images\Game\DungeonExit.png" />
     <Content Include="Images\Game\Empty.png" />
+    <Content Include="Images\Game\Map\CpEvent.png" />
+    <Content Include="Images\Game\Map\Objective.png" />
+    <Content Include="Images\Game\Map\ObjectiveComplete.png" />
+    <Content Include="Images\Game\Map\XpEvent.png" />
     <Content Include="Images\Game\Player.png" />
     <Content Include="Images\Game\PlayerDown.png" />
     <Content Include="Images\Game\PlayerLeft.png" />
@@ -429,6 +445,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404262000075_QuestsUpdateTwo.resx">
       <DependentUpon>201404262000075_QuestsUpdateTwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404270118594_XPCPEventUpdate.resx">
+      <DependentUpon>201404270118594_XPCPEventUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404270549528_EventCollectionFix.resx">
+      <DependentUpon>201404270549528_EventCollectionFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404271851349_MapEventsAdditionalUpdate.resx">
+      <DependentUpon>201404271851349_MapEventsAdditionalUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

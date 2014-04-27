@@ -16,7 +16,8 @@ namespace MapDataClasses.EventClasses
         bool hasMessage { get;  }
         string message { get;  }
         int eventId { get;  }
-        EventDataType type { get;  } 
+        EventDataType type { get;  }
+        IEventData nextEvent { get; }
     }
     public enum EventDataType
     {

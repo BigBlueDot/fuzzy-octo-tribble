@@ -93,13 +93,48 @@ namespace MapDataClasses.TutorialMapGenerators
             mm.map[26, 38] = "Exit";
 
             mm.eventCollection = new MapEventCollectionModel();
-            IEventData eventData = EventHolder.getMapEvent(1);
+            EventDataModel eventData = EventHolder.getMapEvent(1);
             mm.eventCollection.addEvent(new MapEventModel()
             {
                 x = 26,
                 y = 27,
                 rewardType = ClientEvent.RewardType.Objective,
-                eventData = eventData
+                eventData = eventData,
+                rewardValue = 0
+            });
+
+            List<Enemy> enemies = new List<Enemy>();
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            eventData = new CombatEventDataModel(new Encounter()
+            {
+                enemies = enemies,
+                message = "Two goblins appear!"
+            });
+            mm.eventCollection.addEvent(new MapEventModel()
+            {
+                x = 20,
+                y = 35,
+                rewardType = ClientEvent.RewardType.XP,
+                eventData = eventData,
+                rewardValue = 5
+            });
+
+            enemies = new List<Enemy>();
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            eventData = new CombatEventDataModel(new Encounter()
+            {
+                enemies = enemies,
+                message = "Two goblins appear!"
+            });
+            mm.eventCollection.addEvent(new MapEventModel()
+            {
+                x = 20,
+                y = 36,
+                rewardType = ClientEvent.RewardType.CP,
+                eventData = eventData,
+                rewardValue = 5
             });
 
             return mm;

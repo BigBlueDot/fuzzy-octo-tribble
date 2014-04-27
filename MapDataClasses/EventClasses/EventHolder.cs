@@ -9,7 +9,7 @@ namespace MapDataClasses.EventClasses
 {
     public class EventHolder
     {
-        public static Dictionary<int, IEventData> events = new Dictionary<int, IEventData>();
+        public static Dictionary<int, EventDataModel> events = new Dictionary<int, EventDataModel>();
 
         static EventHolder()
         {
@@ -22,7 +22,7 @@ namespace MapDataClasses.EventClasses
             }));
         }
 
-        public static IEventData getMapEvent(int uniq)
+        public static EventDataModel getMapEvent(int uniq)
         {
             if(events.ContainsKey(uniq))
             {

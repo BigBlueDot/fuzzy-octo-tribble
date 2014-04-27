@@ -11,6 +11,11 @@ namespace MapDataClasses.EventClasses
 {
     public class EventDataModel : IEventData
     {
+        public EventDataModel()
+        {
+
+        }
+
         public EventDataModel(bool hasMessage, string message, int eventId, EventDataType eventDataType)
         {
 
@@ -55,9 +60,15 @@ namespace MapDataClasses.EventClasses
                 return _type;
             }
         }
+
+
+        public IEventData nextEvent
+        {
+            get { return null; }
+        }
     }
 
-    public class CombatEventDataModel : IEventData
+    public class CombatEventDataModel : EventDataModel
     {
         public CombatEventDataModel(Encounter encounter)
         {
@@ -97,5 +108,11 @@ namespace MapDataClasses.EventClasses
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int uniq { get; set; }
+
+
+        public IEventData nextEvent
+        {
+            get { return null; }
+        }
     }
 }

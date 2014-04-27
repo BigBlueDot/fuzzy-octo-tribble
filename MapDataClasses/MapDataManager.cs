@@ -25,6 +25,13 @@ namespace MapDataClasses
             TutorialMapGenerators.EnsembleVillageGenerator.Implementation.setFunctions(getCharacterNames, getClasses);
         }
 
+        public static void setupMapModel(MapModel mm)
+        {
+            //Load the map since it's not stored in the database.
+            MapModel temp = createMap(mm.name);
+            mm.map = temp.map;
+        }
+
         public static ClientMap getClientMap(MapModel mm)
         {
             ClientMap cm = new ClientMap();

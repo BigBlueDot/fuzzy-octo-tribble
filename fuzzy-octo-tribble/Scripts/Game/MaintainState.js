@@ -3,7 +3,35 @@
 
     var playerTimer;
 
-    var calcPlayer = function () {
+    var periodicCheck = function () {
+        calcPlayer(function () {
+            calcMessage(function () {
+                FuzzyOctoTribble.Camera.draw();
+                maintainTimer = setTimeout(periodicCheck, 5000);
+            });
+        });
+    }
+
+    var calcMessage = function (success) {
+        $.ajax("Game/getMessages", {
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    switch (data[i].type) {
+                        case 0:
+                            FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({ dialogContent: data[i].message }));
+                            break;
+                        case 1:
+                            calcMap();
+                            break;
+                    }
+                }
+
+                success();
+            }
+        });
+    }
+
+    var calcPlayer = function (success) {
         $.ajax("Game/GetPlayer", {
             success: function (data) {
                 var currentParty = [];
@@ -22,13 +50,14 @@
                 FuzzyOctoTribble.Camera.setPlayer(FuzzyOctoTribble.Player);
                 FuzzyOctoTribble.MenuHandler.setPlayer(FuzzyOctoTribble.Player);
                 FuzzyOctoTribble.CharacterScreenCreator.setCharacters(FuzzyOctoTribble.Player.characters, currentParty);
-                FuzzyOctoTribble.Camera.draw();
 
                 if (data.isInCombat && !FuzzyOctoTribble.CombatControlCreator.inCombat()) {
                     FuzzyOctoTribble.CombatAccess.startCombat();
                 }
 
-                playerTimer = setTimeout(calcPlayer, 5000);
+                if (success) {
+                    success();
+                }
             }
         });
     }
@@ -45,7 +74,7 @@
     }
 
     that.start = function () {
-        calcPlayer();
+        periodicCheck();
         calcMap();
     }
 

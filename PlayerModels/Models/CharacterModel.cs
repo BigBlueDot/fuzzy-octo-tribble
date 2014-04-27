@@ -64,6 +64,17 @@ namespace PlayerModels.Models
         public CharacterQuestModel currentQuest { get; set; }
         public List<CharacterClassModel> characterClasses { get; set; }
         public List<CharacterAbilityModel> activeAbilities { get; set; }
+
+        public void addCp(int cp)
+        {
+            foreach (CharacterClassModel ccm in characterClasses)
+            {
+                if (ccm.className == currentClass)
+                {
+                    ccm.cp += cp;
+                }
+            }
+        }
     }
 
     public class CharacterAbilityModel

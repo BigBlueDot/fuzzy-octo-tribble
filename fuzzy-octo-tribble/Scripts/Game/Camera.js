@@ -18,6 +18,12 @@
         if (rewardType == 0) {
             drawSquare('/Images/Game/Map/Objective.png', x, y);
         }
+        else if (rewardType == 3) {
+            drawSquare('/Images/Game/Map/XpEvent.png', x, y);
+        }
+        else if (rewardType == 4) {
+            drawSquare('/Images/Game/Map/CpEvent.png', x, y);
+        }
     }
 
     that.setMap = function (newMap) {

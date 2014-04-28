@@ -110,11 +110,14 @@ namespace GameDataClasses
             if (currentMap == null)
             {
                 currentMap = MapDataClasses.MapDataManager.createMap(this.player.rootMap);
+                this.player.getActiveParty().location = currentMap;
                 ObjectiveDirector.markCompletedObjectives(this.player);
             }
             else
             {
                 MapDataClasses.MapDataManager.setupMapModel(currentMap);
+                this.player.getActiveParty().location = currentMap;
+                ObjectiveDirector.markCompletedObjectives(this.player);
             }
 
             foreach (CharacterModel cm in this.player.characters)
@@ -137,6 +140,7 @@ namespace GameDataClasses
                 () =>
                 {
                     setMap(MapDataClasses.MapDataManager.getHubMap(player.rootMap), true);
+                    this.player.getActiveParty().location = currentMap;
                     this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
                     currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
                     ObjectiveDirector.markCompletedObjectives(this.player);
@@ -335,6 +339,7 @@ namespace GameDataClasses
                 {
                     //Need to disband the party that is currently being used
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                    this.player.getActiveParty().location = currentMap;
                     ObjectiveDirector.markCompletedObjectives(this.player);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
@@ -361,10 +366,6 @@ namespace GameDataClasses
                 else
                 {
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
-                    ObjectiveDirector.markCompletedObjectives(this.player);
-                    player.rootX = currentMap.startX;
-                    player.rootY = currentMap.startY;
-                    setMap(dungeonName);
 
                     //Create party and set to default
                     PlayerModels.Models.PartyModel pm = new PlayerModels.Models.PartyModel();
@@ -390,6 +391,11 @@ namespace GameDataClasses
                     db.SaveChanges();
                     player.activeParty = pm.uniq;
                     player.copyTo(user.player);
+                    this.player.getActiveParty().location = currentMap;
+                    ObjectiveDirector.markCompletedObjectives(this.player);
+                    player.rootX = currentMap.startX;
+                    player.rootY = currentMap.startY;
+                    setMap(dungeonName);
                     db.SaveChanges();
                 }
 

@@ -29,7 +29,7 @@ namespace MapDataClasses.TutorialMapGenerators
 
         public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom, Func<string, bool> isDungeonUnlocked)
         {
-            this.getCharacters = getCharacters;
+            this.getCharacters = getCharacterNames;
             this.getClasses = getClasses;
             this.isDungeonUnlocked = isDungeonUnlocked;
         }

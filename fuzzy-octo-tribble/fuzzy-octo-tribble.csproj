@@ -240,6 +240,10 @@
     <Compile Include="Migrations\201404280025274_PlayerObjectiveUpdate.Designer.cs">
       <DependentUpon>201404280025274_PlayerObjectiveUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404280306590_PlayerObjectiveUpdate1.cs" />
+    <Compile Include="Migrations\201404280306590_PlayerObjectiveUpdate1.Designer.cs">
+      <DependentUpon>201404280306590_PlayerObjectiveUpdate1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -476,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404280025274_PlayerObjectiveUpdate.resx">
       <DependentUpon>201404280025274_PlayerObjectiveUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404280306590_PlayerObjectiveUpdate1.resx">
+      <DependentUpon>201404280306590_PlayerObjectiveUpdate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

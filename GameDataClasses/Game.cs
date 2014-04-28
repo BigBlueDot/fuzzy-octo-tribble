@@ -74,6 +74,12 @@ namespace GameDataClasses
 
             this.rng = new GameRNG();
 
+            //Initialize player stuff if they have no value
+            if (player.objectives == null)
+            {
+                player.objectives = new List<MapDataClasses.EventClasses.ObjectiveType>();
+            }
+
             MapDataClasses.MapDataManager.setFunctions(() =>
             {
                 List<string> characters = new List<string>();

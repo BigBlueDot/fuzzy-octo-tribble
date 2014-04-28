@@ -14,7 +14,8 @@ namespace GameDataClasses
         public enum ClientMessageType
         {
             Message,
-            RefreshMap
+            RefreshMap,
+            ExecuteEvent
         }
     }
 }

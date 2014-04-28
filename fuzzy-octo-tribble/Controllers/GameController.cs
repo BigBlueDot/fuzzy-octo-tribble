@@ -93,6 +93,13 @@ namespace fuzzy_octo_tribble.Controllers
         }
 
         [HttpGet]
+        public JsonResult StandStill()
+        {
+            Game game = checkGame();
+            return Json(game.standStill(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public JsonResult isInDungeon()
         {
             Game game = checkGame();

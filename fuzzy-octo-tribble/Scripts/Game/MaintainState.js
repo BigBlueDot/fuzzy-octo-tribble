@@ -17,11 +17,14 @@
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
                     switch (data[i].type) {
-                        case 0:
+                        case 0: //Display message
                             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({ dialogContent: data[i].message }));
                             break;
-                        case 1:
+                        case 1: //Redraw map
                             calcMap();
+                            break;
+                        case 2: //Run the current event
+                            FuzzyOctoTribble.Movement.feignMove();
                             break;
                     }
                 }

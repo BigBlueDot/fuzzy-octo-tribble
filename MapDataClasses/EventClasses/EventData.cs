@@ -84,5 +84,34 @@ namespace MapDataClasses.EventClasses
 
             return edm;
         }
+
+        public static EventDataModel getMultiCombatEvent(List<Encounter> encounters, ObjectiveType objective = ObjectiveType.None)
+        {
+            EventDataModel edm = new EventDataModel();
+            edm.hasMessage = false;
+            edm.message = string.Empty;
+            edm.type = EventDataType.Combat;
+            edm.objective = objective;
+
+            EventDataModel currentEvent = edm;
+
+            foreach (Encounter encounter in encounters)
+            {
+                currentEvent.encounter = encounter;
+
+                EventDataModel edm2 = new EventDataModel();
+                edm2.encounter = encounter;
+                edm2.hasMessage = false;
+                edm2.message = string.Empty;
+                edm2.type = EventDataType.Combat;
+                edm2.nextEvent = null;
+                edm2.objective = objective;
+
+                currentEvent.nextEvent = edm2;
+                currentEvent = edm2;
+            }
+
+            return edm;
+        }
     }
 }

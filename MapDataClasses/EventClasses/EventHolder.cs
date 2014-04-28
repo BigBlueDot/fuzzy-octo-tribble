@@ -30,6 +30,23 @@ namespace MapDataClasses.EventClasses
                 enemies = enemies,
                 message = "A horde of angry Goblins attacks!"
             }, ObjectiveType.EmergenceCavernB2));
+
+            enemies = new List<Enemy>();
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            List<Encounter> encounters = new List<Encounter>();
+            encounters.Add(new Encounter()
+            {
+                enemies = enemies,
+                message = "A single goblin blocks your path!",
+            });
+            enemies = new List<Enemy>();
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            encounters.Add(new Encounter()
+            {
+                enemies = enemies,
+                message = "Another goblin has appeared!",
+            });
+            events.Add(3, EventDataModel.getMultiCombatEvent(encounters, ObjectiveType.None));
         }
 
         public static EventDataModel getMapEvent(int uniq)

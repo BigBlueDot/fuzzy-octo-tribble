@@ -149,5 +149,11 @@
         clearTimers();
     }
 
+    that.feignMove = function () {
+        $.ajax("Game/StandStill", {
+            success: checkSuccess
+        });
+    }
+
     return that;
 }

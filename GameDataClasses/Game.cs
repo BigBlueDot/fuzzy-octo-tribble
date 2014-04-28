@@ -201,11 +201,13 @@ namespace GameDataClasses
                                         }
                                         break;
                                     case MapDataClasses.ClientEvent.RewardType.XP:
-                                        messageQueue.Add(new ClientMessage() {
+                                        messageQueue.Add(new ClientMessage()
+                                        {
                                             message = "All characters have gained " + currentEvent.rewardValue.ToString() + " XP!",
                                             type = ClientMessage.ClientMessageType.Message
                                         });
-                                        messageQueue.Add(new ClientMessage() {
+                                        messageQueue.Add(new ClientMessage()
+                                        {
                                             type = ClientMessage.ClientMessageType.RefreshMap
                                         });
                                         PlayerDataManager.givePartyXP(player, currentEvent.rewardValue);
@@ -216,7 +218,8 @@ namespace GameDataClasses
                                             message = "All characters have gained " + currentEvent.rewardValue.ToString() + " CP!",
                                             type = ClientMessage.ClientMessageType.Message
                                         });
-                                        messageQueue.Add(new ClientMessage() {
+                                        messageQueue.Add(new ClientMessage()
+                                        {
                                             type = ClientMessage.ClientMessageType.RefreshMap
                                         });
                                         PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
@@ -234,10 +237,16 @@ namespace GameDataClasses
                                         PlayerDataManager.givePartyGP(player, currentEvent.rewardValue);
                                         break;
                                 }
+                                player.getActiveParty().location.eventCollection.removeEvent(currentEvent);
+                                player.getActiveParty().location.activeEvent = null;
+                            }
+                            else
+                            {
+                                messageQueue.Add(new ClientMessage() { type = ClientMessage.ClientMessageType.ExecuteEvent });
+                                currentEvent.eventData = currentEvent.eventData.nextEvent;
+                                player.getActiveParty().location.activeEvent = currentEvent;
                             }
 
-                            player.getActiveParty().location.eventCollection.removeEvent(currentEvent);
-                            player.getActiveParty().location.activeEvent = null;
                         }
                     }
 
@@ -441,6 +450,11 @@ namespace GameDataClasses
                 return MapEvent.Nothing;
             }
             return move(player.rootX, player.rootY + 1);
+        }
+
+        public MapEvent standStill()
+        {
+            return move(player.rootX, player.rootY);
         }
 
         private MapEvent move(int newX, int newY)

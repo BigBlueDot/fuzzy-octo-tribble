@@ -66,7 +66,13 @@ namespace MapDataClasses.EventClasses
             set;
         }
 
-        public static EventDataModel getCombatEvent(Encounter encounter)
+        public ObjectiveType objective
+        {
+            get;
+            set;
+        }
+
+        public static EventDataModel getCombatEvent(Encounter encounter, ObjectiveType objective = ObjectiveType.None)
         {
             EventDataModel edm = new EventDataModel();
             edm.encounter = encounter;
@@ -74,6 +80,7 @@ namespace MapDataClasses.EventClasses
             edm.message = string.Empty;
             edm.type = EventDataType.Combat;
             edm.nextEvent = null;
+            edm.objective = objective;
 
             return edm;
         }

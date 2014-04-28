@@ -58,6 +58,8 @@
     <Compile Include="Models\PlayerItemModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\StatsModel.cs" />
+    <Compile Include="Objective\DungeonUnlockedDirector.cs" />
+    <Compile Include="Objective\ObjectiveDirector.cs" />
     <Compile Include="PlayerDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatCalculations\AdventurerStatCalculator.cs" />

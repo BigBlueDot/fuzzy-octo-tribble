@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CombatDataClasses.Interfaces;
 using PlayerModels.Models;
 using PlayerModels;
+using PlayerModels.Objective;
 
 namespace GameDataClasses
 {
@@ -92,13 +93,17 @@ namespace GameDataClasses
             }, (int start, int end) =>
             {
                 return this.rng.getNumber(start, end);
-            }
+            }, (string name) =>
+                {
+                    return DungeonUnlockedDirector.isDungeonUnlocked(name, player.objectives);
+                }
             );
 
             currentMap = player.getActiveParty().location;
             if (currentMap == null)
             {
                 currentMap = MapDataClasses.MapDataManager.createMap(this.player.rootMap);
+                ObjectiveDirector.markCompletedObjectives(this.player);
             }
             else
             {
@@ -127,6 +132,7 @@ namespace GameDataClasses
                     setMap(MapDataClasses.MapDataManager.getHubMap(player.rootMap), true);
                     this.combatCountdown = rng.getNumber(MapDataClasses.MapDataManager.getMinCombatCount(player.rootMap), MapDataClasses.MapDataManager.getMaxCombatCount(player.rootMap));
                     currentMap = MapDataClasses.MapDataManager.createMap(player.rootMap);
+                    ObjectiveDirector.markCompletedObjectives(this.player);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
                 },
@@ -169,6 +175,19 @@ namespace GameDataClasses
                                 switch (currentEvent.rewardType)
                                 {
                                     case MapDataClasses.ClientEvent.RewardType.Objective:
+                                        string returnValue = ObjectiveDirector.completeObjective(this.player, currentEvent.eventData.objective);
+                                        if (returnValue != string.Empty)
+                                        {
+                                            messageQueue.Add(new ClientMessage()
+                                            {
+                                                message = returnValue,
+                                                type = ClientMessage.ClientMessageType.Message
+                                            });
+                                            messageQueue.Add(new ClientMessage()
+                                            {
+                                                type = ClientMessage.ClientMessageType.RefreshMap
+                                            });
+                                        }
                                         break;
                                     case MapDataClasses.ClientEvent.RewardType.XP:
                                         messageQueue.Add(new ClientMessage() {
@@ -309,6 +328,7 @@ namespace GameDataClasses
                 {
                     //Need to disband the party that is currently being used
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                    ObjectiveDirector.markCompletedObjectives(this.player);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
                     setMap(dungeonName);
@@ -334,6 +354,7 @@ namespace GameDataClasses
                 else
                 {
                     currentMap = MapDataClasses.MapDataManager.createMap(dungeonName);
+                    ObjectiveDirector.markCompletedObjectives(this.player);
                     player.rootX = currentMap.startX;
                     player.rootY = currentMap.startY;
                     setMap(dungeonName);

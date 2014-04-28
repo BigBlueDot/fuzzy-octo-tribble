@@ -1,4 +1,5 @@
-﻿using PlayerModels.Models;
+﻿using MapDataClasses.EventClasses;
+using PlayerModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -176,6 +177,21 @@ namespace PlayerModels
             {
                 return (currentLevel + 4) * currentLevel * ((currentLevel / 5) + 1);
             }
+        }
+
+        public static void addCharacter(PlayerModel pm)
+        {
+            Models.CharacterModel cm = new Models.CharacterModel();
+            cm.name = "Alexander";
+            cm.currentClass = "Adventurer";
+            cm.lvl = 1;
+            cm.activeAbilities = new List<Models.CharacterAbilityModel>();
+            cm.characterClasses = new List<Models.CharacterClassModel>();
+            cm.characterClasses.Add(new Models.CharacterClassModel() { className = "Adventurer", cp = 0, lvl = 1 });
+            cm.currentQuest = new Models.CharacterQuestModel();
+            cm.equipment = new Models.EquipmentModel() { accessory = "", armor = "", weapon = "" };
+            cm.stats = new Models.StatsModel() { maxHP = 25, maxMP = 1, strength = 5, vitality = 5, intellect = 5, wisdom = 5, agility = 5 };
+            pm.characters.Add(cm);
         }
 
         public static void givePartyXP(PlayerModel pm, int xp)

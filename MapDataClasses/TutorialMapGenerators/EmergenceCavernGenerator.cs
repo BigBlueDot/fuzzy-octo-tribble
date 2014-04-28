@@ -26,7 +26,7 @@ namespace MapDataClasses.TutorialMapGenerators
         }
         private Func<int, int, int> generateRandom;
 
-        public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom)
+        public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom, Func<string, bool> isDungeonUnlocked)
         {
             generateRandom = getRandom;
         }
@@ -290,13 +290,20 @@ namespace MapDataClasses.TutorialMapGenerators
         private void setupEvents(MapModel mm)
         {
             //Add objectives
-            EventDataModel eventData = EventHolder.getMapEvent(1);
             mm.eventCollection.addEvent(new MapEventModel()
             {
                 x = 26,
                 y = 27,
                 rewardType = ClientEvent.RewardType.Objective,
-                eventData = eventData,
+                eventData = EventHolder.getMapEvent(1),
+                rewardValue = 0
+            });
+            mm.eventCollection.addEvent(new MapEventModel()
+            {
+                x = 12,
+                y = 37,
+                rewardType = ClientEvent.RewardType.Objective,
+                eventData = EventHolder.getMapEvent(2),
                 rewardValue = 0
             });
 

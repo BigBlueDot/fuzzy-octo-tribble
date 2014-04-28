@@ -11,6 +11,7 @@ namespace MapDataClasses.TutorialMapGenerators
     {
         private Func<List<string>> getCharacters;
         private Func<List<string>> getClasses;
+        private Func<string, bool> isDungeonUnlocked;
 
         private static EnsembleVillageGenerator _implementation;
         public static EnsembleVillageGenerator Implementation
@@ -26,10 +27,11 @@ namespace MapDataClasses.TutorialMapGenerators
             }
         }
 
-        public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom)
+        public void setFunctions(Func<List<string>> getCharacterNames, Func<List<string>> getClasses, Func<int, int, int> getRandom, Func<string, bool> isDungeonUnlocked)
         {
             this.getCharacters = getCharacters;
             this.getClasses = getClasses;
+            this.isDungeonUnlocked = isDungeonUnlocked;
         }
 
         public MapModel getMap()
@@ -86,8 +88,14 @@ namespace MapDataClasses.TutorialMapGenerators
                 mi.hasOptions = true;
                 mi.dialog = "What dungeon would you like to go to?";
                 mi.options = new List<MapOption>();
-                mi.options.Add(new MapOption() { text = "Emergence Cavern", value = "Emergence Cavern" });
-                mi.options.Add(new MapOption() { text = "Emergence Cavern F2", value = "Emergence Cavern F2" });
+                if (isDungeonUnlocked("Emergence Cavern"))
+                {
+                    mi.options.Add(new MapOption() { text = "Emergence Cavern", value = "Emergence Cavern" });
+                }
+                if (isDungeonUnlocked("Emergence Cavern B2"))
+                {
+                    mi.options.Add(new MapOption() { text = "Emergence Cavern F2", value = "Emergence Cavern F2" });
+                }
                 ((DungeonSelectInteraction)mi).maxPartySize = 2;
             }
             else if (mm.map[x, y] == "ClassTrainer")

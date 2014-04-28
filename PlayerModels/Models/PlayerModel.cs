@@ -1,4 +1,5 @@
-﻿using PlayerModels.Models;
+﻿using MapDataClasses.EventClasses;
+using PlayerModels.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,7 @@ namespace PlayerModels
         public List<CharacterModel> characters { get; set; }
         public List<PartyModel> parties { get; set; }
         public int activeParty { get; set; }
+        public List<ObjectiveType> objectives { get; set; }
         public List<CharacterUnlockedClassModel> unlockedClasses { get; set; }
         public List<CharacterCompletedQuestModel> completedQuests { get; set; }
         public List<CharacterBattleCommandModel> battleCommands { get; set; }
@@ -46,6 +48,7 @@ namespace PlayerModels
             pm.purchaseables = purchaseables;
             pm.configuration = configuration;
             pm.commands = commands;
+            pm.objectives = objectives;
         }
 
         public PartyModel getActiveParty()

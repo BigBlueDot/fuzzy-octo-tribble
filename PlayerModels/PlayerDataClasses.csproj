@@ -54,6 +54,7 @@
     <Compile Include="Models\CharacterQuestProgressModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
+    <Compile Include="Models\PlayerObjectiveModel.cs" />
     <Compile Include="Models\PartyModel.cs" />
     <Compile Include="Models\PlayerItemModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />

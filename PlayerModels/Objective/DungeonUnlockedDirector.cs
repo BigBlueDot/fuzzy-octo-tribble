@@ -9,12 +9,12 @@ namespace PlayerModels.Objective
 {
     public class DungeonUnlockedDirector
     {
-        public static bool isDungeonUnlocked(string name, List<ObjectiveType> objectives)
+        public static bool isDungeonUnlocked(string name, PlayerModel pm)
         {
             switch (name)
             {
                 case "Emergence Cavern B2":
-                    return objectives.Contains(ObjectiveType.EmergenceCavernB2);
+                    return pm.isObjectiveCompleted(ObjectiveType.EmergenceCavernB2);
             }
 
             return true;

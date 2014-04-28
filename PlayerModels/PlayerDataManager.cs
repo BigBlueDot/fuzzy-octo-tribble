@@ -191,6 +191,7 @@ namespace PlayerModels
             cm.currentQuest = new Models.CharacterQuestModel();
             cm.equipment = new Models.EquipmentModel() { accessory = "", armor = "", weapon = "" };
             cm.stats = new Models.StatsModel() { maxHP = 25, maxMP = 1, strength = 5, vitality = 5, intellect = 5, wisdom = 5, agility = 5 };
+            StatCalculations.StatCalculator.updateCharacterStats(cm);
             pm.characters.Add(cm);
         }
 

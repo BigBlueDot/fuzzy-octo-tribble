@@ -244,6 +244,10 @@
     <Compile Include="Migrations\201404280306590_PlayerObjectiveUpdate1.Designer.cs">
       <DependentUpon>201404280306590_PlayerObjectiveUpdate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404280331404_PlayerObjectiveFix.cs" />
+    <Compile Include="Migrations\201404280331404_PlayerObjectiveFix.Designer.cs">
+      <DependentUpon>201404280331404_PlayerObjectiveFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -483,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404280306590_PlayerObjectiveUpdate1.resx">
       <DependentUpon>201404280306590_PlayerObjectiveUpdate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404280331404_PlayerObjectiveFix.resx">
+      <DependentUpon>201404280331404_PlayerObjectiveFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

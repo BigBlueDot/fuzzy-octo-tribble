@@ -23,7 +23,7 @@ namespace PlayerModels
         public List<CharacterModel> characters { get; set; }
         public List<PartyModel> parties { get; set; }
         public int activeParty { get; set; }
-        public List<ObjectiveType> objectives { get; set; }
+        public List<PlayerObjectiveModel> objectives { get; set; }
         public List<CharacterUnlockedClassModel> unlockedClasses { get; set; }
         public List<CharacterCompletedQuestModel> completedQuests { get; set; }
         public List<CharacterBattleCommandModel> battleCommands { get; set; }
@@ -66,7 +66,21 @@ namespace PlayerModels
 
             return new PartyModel();
         }
+
+        public bool isObjectiveCompleted(ObjectiveType type)
+        {
+            foreach (PlayerObjectiveModel pom in objectives)
+            {
+                if (pom.type == type)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
+
 
     public class CharacterUnlockedClassModel
     {

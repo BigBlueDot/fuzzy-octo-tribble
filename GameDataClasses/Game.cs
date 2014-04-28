@@ -48,6 +48,7 @@ namespace GameDataClasses
                     .Include(up => up.player.characters)
                     .Include(up => up.player.characters.Select(c => c.characterClasses))
                     .Include(up => up.player.characters.Select(c => c.stats))
+                    .Include(up => up.player.objectives)
                     .Include(up => up.player.parties)
                     .Include(up => up.player.parties.Select(c => c.characters))
                     .Include(up => up.player.parties.Select(c => c.location))
@@ -77,7 +78,7 @@ namespace GameDataClasses
             //Initialize player stuff if they have no value
             if (player.objectives == null)
             {
-                player.objectives = new List<MapDataClasses.EventClasses.ObjectiveType>();
+                player.objectives = new List<PlayerObjectiveModel>();
             }
 
             MapDataClasses.MapDataManager.setFunctions(() =>
@@ -101,7 +102,7 @@ namespace GameDataClasses
                 return this.rng.getNumber(start, end);
             }, (string name) =>
                 {
-                    return DungeonUnlockedDirector.isDungeonUnlocked(name, player.objectives);
+                    return DungeonUnlockedDirector.isDungeonUnlocked(name, player);
                 }
             );
 

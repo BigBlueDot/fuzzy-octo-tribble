@@ -1,4 +1,5 @@
 ﻿using MapDataClasses.EventClasses;
+using PlayerModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +27,16 @@ namespace PlayerModels.Objective
 
         public static string completeObjective(PlayerModel pm, ObjectiveType objective)
         {
-            if (!pm.objectives.Contains(objective))
+            if (!pm.isObjectiveCompleted(objective))
             {
                 if (objective == ObjectiveType.EmergenceCavernAdditionalAdventurer)
                 {
                     PlayerDataManager.addCharacter(pm);
                 }
-                pm.objectives.Add(objective);
+                pm.objectives.Add(new PlayerObjectiveModel()
+                {
+                    type = objective
+                });
                 return getCompletedText(objective);
             }
 
@@ -48,7 +52,7 @@ namespace PlayerModels.Objective
                 {
                     if (mem.rewardType == MapDataClasses.ClientEvent.RewardType.Objective)
                     {
-                        if (pm.objectives.Contains(mem.eventData.objective))
+                        if (pm.isObjectiveCompleted(mem.eventData.objective))
                         {
                             mem.rewardType = MapDataClasses.ClientEvent.RewardType.CompletedObjective;
                         }

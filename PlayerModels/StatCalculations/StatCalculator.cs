@@ -14,8 +14,9 @@ namespace PlayerModels.StatCalculations
         static StatCalculator()
         {
             classCalculators = new Dictionary<string, IStatCalculator>();
-            classCalculators.Add("Adventurer", new AdventurerStatCalculator());
-            classCalculators.Add("Brawler", new BrawlerStatCalculator());
+            classCalculators.Add("Adventurer", AdventurerStatCalculator.getClassCalculator());
+            classCalculators.Add("Brawler", BrawlerStatCalculator.getClassCalculator());
+            classCalculators.Add("Mage", MageStatCalculator.getClassCalculator());
         }
 
         public static void updateCharacterStats(CharacterModel cm)

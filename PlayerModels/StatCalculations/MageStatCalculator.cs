@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace PlayerModels.StatCalculations
 {
-    public class MageStatCalculator : IStatCalculator
+    public class MageStatCalculator
     {
-        private static List<Action<CharacterModel>> levelIncreases;
-        private static List<AbilityDescription> abilities;
-        private static List<string> statIncreases;
-        private static string className;
-
-        static MageStatCalculator()
+        public static ClassStatCalculator getClassCalculator()
         {
+            List<Action<CharacterModel>> levelIncreases;
+            List<AbilityDescription> abilities = new List<AbilityDescription>();
+            List<string> statIncreases = new List<string>();
+            string className;
             className = "Mage";
             levelIncreases = new List<Action<CharacterModel>>();
 
@@ -122,58 +121,8 @@ namespace PlayerModels.StatCalculations
                 name = "Arcane Nova",
                 description = "Deal 200% magic damage to all enemies.  Costs 2 MP to use."
             });
-        }
 
-        public void getStats(Models.CharacterModel cm)
-        {
-            foreach (CharacterClassModel ccm in cm.characterClasses)
-            {
-                if (ccm.className == className)
-                {
-                    for (int i = 0; i < ccm.lvl && i < levelIncreases.Count; i++)
-                    {
-                        levelIncreases[i](cm);
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<Models.AbilityDescription> getAbilities(Models.CharacterModel cm)
-        {
-            List<AbilityDescription> abilities = new List<AbilityDescription>();
-
-            foreach (CharacterClassModel ccm in cm.characterClasses)
-            {
-                if (ccm.className == className)
-                {
-                    for (int i = 0; i < ccm.lvl; i += 2)
-                    {
-                        abilities.Add(MageStatCalculator.abilities[i / 2]);
-                    }
-                }
-            }
-
-            return abilities;
-        }
-
-        public string getNewAbilityMessage(Models.CharacterModel cm)
-        {
-            foreach (CharacterClassModel ccm in cm.characterClasses)
-            {
-                if (ccm.className == className)
-                {
-                    if (ccm.lvl % 2 == 1)
-                    {
-                        return cm.name + " has learned " + abilities[(ccm.lvl - 1) / 2].name + ".  " + abilities[(ccm.lvl - 1) / 2].description;
-                    }
-                    else
-                    {
-                        return statIncreases[(ccm.lvl / 2) - 1]; //Return new message for stat increases
-                    }
-                }
-            }
-
-            return string.Empty;
+            return new ClassStatCalculator(levelIncreases, abilities, statIncreases, className);
         }
     }
 }

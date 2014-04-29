@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace PlayerModels.StatCalculations
 {
-    public class AdventurerStatCalculator : IStatCalculator
+    public class AdventurerStatCalculator
     {
-        private static List<Action<CharacterModel>> levelIncreases;
-        private static List<AbilityDescription> abilities;
-        private static List<string> statIncreases;
-        private static string className;
-
-        static AdventurerStatCalculator()
+        public static ClassStatCalculator getClassCalculator()
         {
+            List<Action<CharacterModel>> levelIncreases;
+            List<AbilityDescription> abilities = new List<AbilityDescription>();
+            List<string> statIncreases = new List<string>();
+            string className;
             className = "Adventurer";
             levelIncreases = new List<Action<CharacterModel>>();
             for (int i = 1; i <= 19; i++)
@@ -122,58 +121,8 @@ namespace PlayerModels.StatCalculations
                 name = "Use Leather Armor",
                 description = "Allows the adventurer to equip Leather Armor."
             });
-        }
 
-        public void getStats(CharacterModel cm)
-        {
-            foreach (CharacterClassModel ccm in cm.characterClasses)
-            {
-                if (ccm.className == className)
-                {
-                    for (int i = 0; i < ccm.lvl && i < levelIncreases.Count; i++)
-                    {
-                        levelIncreases[i](cm);
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<AbilityDescription> getAbilities(CharacterModel cm)
-        {
-            List<AbilityDescription> abilities = new List<AbilityDescription>();
-
-            foreach (CharacterClassModel ccm in cm.characterClasses)
-            {
-                if (ccm.className == className)
-                {
-                    for (int i = 0; i < ccm.lvl; i+=2)
-                    {
-                        abilities.Add(AdventurerStatCalculator.abilities[i / 2]);
-                    }
-                }
-            }
-
-            return abilities;
-        }
-
-        public string getNewAbilityMessage(CharacterModel cm)
-        {
-            foreach (CharacterClassModel ccm in cm.characterClasses)
-            {
-                if (ccm.className == className)
-                {
-                    if (ccm.lvl % 2 == 1)
-                    {
-                        return cm.name + " has learned " + abilities[(ccm.lvl - 1) / 2].name + ".  " + abilities[(ccm.lvl - 1) / 2].description;
-                    }
-                    else
-                    {
-                        return statIncreases[(ccm.lvl / 2) - 1]; //Return new message for stat increases
-                    }
-                }
-            }
-
-            return string.Empty;
+            return new ClassStatCalculator(levelIncreases, abilities, statIncreases, className);
         }
     }
 }

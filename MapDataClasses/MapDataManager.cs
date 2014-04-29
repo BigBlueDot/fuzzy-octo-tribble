@@ -60,9 +60,9 @@ namespace MapDataClasses
                     }
                     cm.mapSquares[x][y] = new ClientMapSquare()
                     {
-                        imageUrl = imageUrlId,
-                        isInteractable = getInteractable(mm.map[x, y]),
-                        isTraversable = getTraversable(mm.map[x, y])
+                        i = imageUrlId,
+                        isI = getInteractable(mm.map[x, y]),
+                        isT = getTraversable(mm.map[x, y])
                     };
                 }
             }

@@ -23,7 +23,7 @@
 
     var moveLeft = function () {
         FuzzyOctoTribble.PlayerDirection = 1;
-        if (FuzzyOctoTribble.Player.x == 0 || !map.mapSquares[FuzzyOctoTribble.Player.x - 1][FuzzyOctoTribble.Player.y].isTraversable) {
+        if (FuzzyOctoTribble.Player.x == 0 || !map.mapSquares[FuzzyOctoTribble.Player.x - 1][FuzzyOctoTribble.Player.y].isT) {
             FuzzyOctoTribble.Camera.draw();
             return;
         }
@@ -37,7 +37,7 @@
 
     var moveUp = function () {
         FuzzyOctoTribble.PlayerDirection = 2;
-        if (FuzzyOctoTribble.Player.y == 0 || !map.mapSquares[FuzzyOctoTribble.Player.x][FuzzyOctoTribble.Player.y - 1].isTraversable) {
+        if (FuzzyOctoTribble.Player.y == 0 || !map.mapSquares[FuzzyOctoTribble.Player.x][FuzzyOctoTribble.Player.y - 1].isT) {
             FuzzyOctoTribble.Camera.draw();
             return;
         }
@@ -51,7 +51,7 @@
 
     var moveRight = function () {
         FuzzyOctoTribble.PlayerDirection = 3;
-        if (FuzzyOctoTribble.Player.x == map.mapSquares.length - 1 || !map.mapSquares[FuzzyOctoTribble.Player.x + 1][FuzzyOctoTribble.Player.y].isTraversable) {
+        if (FuzzyOctoTribble.Player.x == map.mapSquares.length - 1 || !map.mapSquares[FuzzyOctoTribble.Player.x + 1][FuzzyOctoTribble.Player.y].isT) {
             FuzzyOctoTribble.Camera.draw();
             return;
         }
@@ -65,7 +65,7 @@
 
     var moveDown = function () {
         FuzzyOctoTribble.PlayerDirection = 4;
-        if (FuzzyOctoTribble.Player.y == map.mapSquares[0].length - 1 || !map.mapSquares[FuzzyOctoTribble.Player.x][FuzzyOctoTribble.Player.y + 1].isTraversable) {
+        if (FuzzyOctoTribble.Player.y == map.mapSquares[0].length - 1 || !map.mapSquares[FuzzyOctoTribble.Player.x][FuzzyOctoTribble.Player.y + 1].isT) {
             FuzzyOctoTribble.Camera.draw();
             return;
         }

@@ -8,8 +8,8 @@ namespace MapDataClasses
 {
     public class ClientMapSquare
     {
-        public bool isTraversable { get; set; }
-        public bool isInteractable { get; set; }
-        public int imageUrl { get; set; }
+        public bool isT { get; set; }
+        public bool isI { get; set; }
+        public int i { get; set; }
     }
 }

@@ -31,7 +31,7 @@ FuzzyOctoTribble.InteractionHandler = (function () {
             if (x === 0 || y === 0 || x === map.mapSquares.length || y === map.mapSquares[0].length) {
                 return;
             }
-            else if (!map.mapSquares[x][y].isInteractable) {
+            else if (!map.mapSquares[x][y].isI) {
                 return;
             }
         }

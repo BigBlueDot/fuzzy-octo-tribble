@@ -73,7 +73,7 @@
                             }
                         }
                         else {
-                            drawSquare(map.mapUrl[map.mapSquares[x][y].imageUrl], drawX, drawY);
+                            drawSquare(map.mapUrl[map.mapSquares[x][y].i], drawX, drawY);
                         }
 
                         for (var i = 0; i < map.events.length; i++) {

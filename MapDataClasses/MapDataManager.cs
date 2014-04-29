@@ -269,9 +269,9 @@ namespace MapDataClasses
                 case "Ensemble Village":
                     return TutorialMapGenerators.EnsembleVillageGenerator.Implementation.getMinCombatCount();
                 case "Emergence Cavern":
-                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCount();
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMinCombatCount();
                 case "Emergence Cavern F2":
-                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getRandomEncounterCountF2();
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getMinCombatCount();
                 default:
                     return 0;
             }

@@ -7,6 +7,12 @@
     var gameOver = false;
     var inCombat = false;
     var commandScreens = [];
+    var placeholderKeyControl = {
+        isCombat: true, close: function () {
+            if (this.onComplete) {
+                this.onComplete();
+            }
+        }};
 
     var createCommand = function (currentCommand, currentCharacter, sendingCommand, onComplete) {
         var executeFinalCommand = function (cmd) {
@@ -111,6 +117,7 @@
         if (effects.length === 0) {
             return;
         }
+        FuzzyOctoTribble.KeyControl.addController(placeholderKeyControl);
         var currentEffect = effects.shift();
         switch (currentEffect.type) {
             case 0: //Simple Message effects
@@ -143,6 +150,7 @@
                 processEffects(effects);
                 break;
             case 4: //Combat has ended
+                placeholderKeyControl.onComplete();
                 FuzzyOctoTribble.KeyControl.removeCombat();
                 $currentDefaultScreen = false;
                 $currentCommandScreen = false;
@@ -159,6 +167,7 @@
                 break;
             case 6: //Show Command Screen
                 $currentCommandScreen.show();
+                placeholderKeyControl.onComplete();
                 FuzzyOctoTribble.KeyControl.addController($currentCommandScreen);
                 processEffects(effects);
                 break;

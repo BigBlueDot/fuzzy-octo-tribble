@@ -56,6 +56,11 @@ namespace CombatDataClasses.LiveImplementation
                 combatData.cooldowns = value;
             }
         }
+        public CombatEndType combatEndType
+        {
+            get;
+            set;
+        }
 
         public CombatData(CombatModel combat)
         {

@@ -124,6 +124,7 @@ namespace CombatDataClasses.ClassProcessor
                             }
                             if (combatData.currentFleeCount >= totalAgi)
                             {
+                                combatData.combatEndType = CombatEndType.Flee;
                                 effects.Add(new Effect(EffectTypes.Message, 0, "You were able to run away!", 0));
                                 effects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
                             }

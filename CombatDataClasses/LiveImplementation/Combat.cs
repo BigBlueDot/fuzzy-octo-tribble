@@ -27,7 +27,7 @@ namespace CombatDataClasses.LiveImplementation
         private CombatData combatData;
         private Action onGameOver;
         private Action onUpdate;
-        private Action onCombatComplete;
+        private Action<CombatEndType> onCombatComplete;
         private string map;
         private int currentTime
         {
@@ -48,7 +48,7 @@ namespace CombatDataClasses.LiveImplementation
             }
         }
 
-        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action onCombatComplete)
+        public Combat(PlayerModels.PlayerModel playerModel, string map, int encounterSelection, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action<CombatEndType> onCombatComplete)
         {
             int currentUniq = 1;
             this.playerModel = playerModel;
@@ -625,7 +625,7 @@ namespace CombatDataClasses.LiveImplementation
             {
                 if (e.type == EffectTypes.CombatEnded)
                 {
-                    onCombatComplete();
+                    onCombatComplete(combatData.combatEndType);
                 }
             }
         }
@@ -682,6 +682,7 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Add(new Effect(EffectTypes.GameOver, 0, "", 0));
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have been defeated!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                combatData.combatEndType = CombatEndType.Defeat;
                 removeEndOfTurnEffects();
                 checkCombatEnded();
                 onGameOver();
@@ -690,9 +691,10 @@ namespace CombatDataClasses.LiveImplementation
             {
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, "You have emerged victorious!", 0));
                 currentEffects.Add(new Effect(EffectTypes.CombatEnded, 0, string.Empty, 0));
+                combatData.combatEndType = CombatEndType.Victory;
                 removeEndOfTurnEffects();
                 checkCombatEnded();
-                onCombatComplete();
+                onCombatComplete(combatData.combatEndType);
             }
         }
 

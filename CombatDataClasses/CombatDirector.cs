@@ -17,7 +17,7 @@ namespace CombatDataClasses
             factory = new DummyImplementation.DummyCombatFactory();
         }
 
-        public CombatDirector(PlayerModels.PlayerModel playerModel, string initialMap, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action onCombatComplete)
+        public CombatDirector(PlayerModels.PlayerModel playerModel, string initialMap, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action<CombatEndType> onCombatComplete)
         {
             factory = new LiveImplementation.CombatFactory(playerModel, initialMap, randomNumberGenerator, initiativeCalculator, onGameOver, onUpdate, onCombatComplete);
         }

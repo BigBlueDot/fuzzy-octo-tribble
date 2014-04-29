@@ -10,6 +10,7 @@ using CombatDataClasses.Interfaces;
 using PlayerModels.Models;
 using PlayerModels;
 using PlayerModels.Objective;
+using CombatDataClasses;
 
 namespace GameDataClasses
 {
@@ -151,7 +152,7 @@ namespace GameDataClasses
                 {
                     db.SaveChanges();
                 },
-                () =>
+                (CombatEndType combatEndType) =>
                 {
                     if (player.currentCombat != null)
                     {
@@ -179,7 +180,7 @@ namespace GameDataClasses
                     if (player.getActiveParty() != null)
                     {
                         MapDataClasses.MapEventModel currentEvent = player.getActiveParty().location.activeEvent;
-                        if (currentEvent != null && currentEvent.eventData.type == MapDataClasses.EventClasses.EventDataType.Combat)
+                        if (currentEvent != null && currentEvent.eventData.type == MapDataClasses.EventClasses.EventDataType.Combat && combatEndType == CombatEndType.Victory)
                         {
                             if (currentEvent.eventData.nextEvent == null)
                             {

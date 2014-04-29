@@ -15,8 +15,8 @@ namespace CombatDataClasses.LiveImplementation
         private Func<float> initiativeCalculator;
         private Action onGameOver;
         private Action onUpdate;
-        private Action onCombatComplete;
-        public CombatFactory(PlayerModels.PlayerModel playerModel, string map, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action onCombatComplete)
+        private Action<CombatEndType> onCombatComplete;
+        public CombatFactory(PlayerModels.PlayerModel playerModel, string map, Func<int> randomNumberGenerator, Func<float> initiativeCalculator, Action onGameOver, Action onUpdate, Action<CombatEndType> onCombatComplete)
         {
             this.playerModel = playerModel;
             this.map = map;

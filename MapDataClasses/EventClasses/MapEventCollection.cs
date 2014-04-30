@@ -45,19 +45,48 @@ namespace MapDataClasses.EventClasses
 
         public void removeEvent(MapEventModel e)
         {
-            MapEventModel toRemove = null;
+            List<MapEventModel> toRemove = new List<MapEventModel>();
+            List<Coordinate> toCheck = new List<Coordinate>();
             foreach (MapEventModel mem in events)
             {
                 if (mem.uniq == e.uniq)
                 {
-                    toRemove = mem;
+                    toRemove.Add(mem);
+                    toCheck.Add(new Coordinate() { x = mem.x, y = mem.y });
                 }
             }
 
-            if (toRemove != null)
+            while (toCheck.Count != 0)
             {
-                events.Remove(toRemove);
+                Coordinate current = toCheck[0];
+                toCheck.RemoveAt(0);
+
+                foreach (MapEventModel mem in events)
+                {
+                    if (toRemove.Contains(mem))
+                    {
+                        continue;
+                    }
+                    var xDiff = Math.Abs(mem.x - current.x);
+                    var yDiff = Math.Abs(mem.y - current.y);
+                    if (xDiff + yDiff == 1) //If it is exactly one space away
+                    {
+                        toRemove.Add(mem);
+                        toCheck.Add(new Coordinate() { x = mem.x, y = mem.y });
+                    }
+                }
             }
+
+            foreach(MapEventModel mem in toRemove)
+            {
+                events.Remove(mem);
+            }
+        }
+
+        public class Coordinate
+        {
+            public int x { get; set; }
+            public int y { get; set; }
         }
     }
 }

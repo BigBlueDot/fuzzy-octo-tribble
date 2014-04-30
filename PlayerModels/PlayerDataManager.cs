@@ -1,5 +1,8 @@
-﻿using MapDataClasses.EventClasses;
+﻿using GameDataClasses;
+using MapDataClasses;
+using MapDataClasses.EventClasses;
 using PlayerModels.Models;
+using PlayerModels.Objective;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +49,66 @@ namespace PlayerModels
             returnValue.rootX = 5;
             returnValue.rootY = 5;
             return returnValue;
+        }
+
+        public static void processEvent(MapEventModel currentEvent, PlayerModel player, ref List<ClientMessage> messageQueue)
+        {
+            switch (currentEvent.rewardType)
+            {
+                case MapDataClasses.ClientEvent.RewardType.Objective:
+                    string returnValue = ObjectiveDirector.completeObjective(player, currentEvent.eventData.objective);
+                    if (returnValue != string.Empty)
+                    {
+                        messageQueue.Add(new ClientMessage()
+                        {
+                            message = returnValue,
+                            type = ClientMessage.ClientMessageType.Message
+                        });
+                        messageQueue.Add(new ClientMessage()
+                        {
+                            type = ClientMessage.ClientMessageType.RefreshMap
+                        });
+                    }
+                    break;
+                case MapDataClasses.ClientEvent.RewardType.XP:
+                    messageQueue.Add(new ClientMessage()
+                    {
+                        message = "All characters have gained " + currentEvent.rewardValue.ToString() + " XP!",
+                        type = ClientMessage.ClientMessageType.Message
+                    });
+                    messageQueue.Add(new ClientMessage()
+                    {
+                        type = ClientMessage.ClientMessageType.RefreshMap
+                    });
+                    PlayerDataManager.givePartyXP(player, currentEvent.rewardValue);
+                    break;
+                case MapDataClasses.ClientEvent.RewardType.CP:
+                    messageQueue.Add(new ClientMessage()
+                    {
+                        message = "All characters have gained " + currentEvent.rewardValue.ToString() + " CP!",
+                        type = ClientMessage.ClientMessageType.Message
+                    });
+                    messageQueue.Add(new ClientMessage()
+                    {
+                        type = ClientMessage.ClientMessageType.RefreshMap
+                    });
+                    PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
+                    break;
+                case MapDataClasses.ClientEvent.RewardType.Gold:
+                    messageQueue.Add(new ClientMessage()
+                    {
+                        message = "You have found " + currentEvent.rewardValue.ToString() + " GP!",
+                        type = ClientMessage.ClientMessageType.Message
+                    });
+                    messageQueue.Add(new ClientMessage()
+                    {
+                        type = ClientMessage.ClientMessageType.RefreshMap
+                    });
+                    PlayerDataManager.givePartyGP(player, currentEvent.rewardValue);
+                    break;
+            }
+            player.getActiveParty().location.eventCollection.removeEvent(currentEvent);
+            player.getActiveParty().location.activeEvent = null;
         }
 
         public static List<Models.CharacterModel> getInactiveCharacters(PlayerModel pm)

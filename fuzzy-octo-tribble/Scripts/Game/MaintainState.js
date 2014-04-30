@@ -2,6 +2,7 @@
     var that = {};
 
     var playerTimer;
+    var maintainTimer;
 
     var periodicCheck = function () {
         calcPlayer(function () {
@@ -15,7 +16,7 @@
     var calcMessage = function (success) {
         $.ajax("Game/getMessages", {
             success: function (data) {
-                for (var i = 0; i < data.length; i++) {
+                for (var i = data.length - 1; i >= 0; i--) {
                     switch (data[i].type) {
                         case 0: //Display message
                             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({ dialogContent: data[i].message }));
@@ -85,6 +86,11 @@
         clearTimeout(playerTimer);
         calcMap();
         calcPlayer();
+    }
+
+    that.checkNow = function () {
+        clearTimeout(maintainTimer);
+        periodicCheck();
     }
 
     return that;

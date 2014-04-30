@@ -11,7 +11,8 @@ namespace MapDataClasses.EventClasses
 {
     public enum EventDataType
     {
-        Combat
+        Combat,
+        EmergenceCavernCeilingCollapse
     }
 
     public class EventDataModel 
@@ -70,6 +71,18 @@ namespace MapDataClasses.EventClasses
         {
             get;
             set;
+        }
+
+        public static EventDataModel getTrapEvent(EventDataType eventDataType, string message, ObjectiveType objective = ObjectiveType.None)
+        {
+            EventDataModel edm = new EventDataModel();
+            edm.hasMessage = true;
+            edm.message = message;
+            edm.type = eventDataType;
+            edm.nextEvent = null;
+            edm.objective = objective;
+
+            return edm;
         }
 
         public static EventDataModel getCombatEvent(Encounter encounter, ObjectiveType objective = ObjectiveType.None)

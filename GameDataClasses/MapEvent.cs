@@ -9,6 +9,7 @@ namespace GameDataClasses
     public enum MapEvent
     {
         Nothing,
-        CombatEntered
+        CombatEntered,
+        UpdateMessageQueue
     }
 }

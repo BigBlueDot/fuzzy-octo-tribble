@@ -19,6 +19,9 @@
         if (data === 1) { //Combat
             FuzzyOctoTribble.CombatAccess.startCombat();
         }
+        else if (data === 2) { //Update message queue
+            FuzzyOctoTribble.MaintainState.checkNow();
+        }
     }
 
     var moveLeft = function () {

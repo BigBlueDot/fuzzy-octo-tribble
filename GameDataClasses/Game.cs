@@ -179,62 +179,7 @@ namespace GameDataClasses
                         {
                             if (currentEvent.eventData.nextEvent == null)
                             {
-                                switch (currentEvent.rewardType)
-                                {
-                                    case MapDataClasses.ClientEvent.RewardType.Objective:
-                                        string returnValue = ObjectiveDirector.completeObjective(this.player, currentEvent.eventData.objective);
-                                        if (returnValue != string.Empty)
-                                        {
-                                            messageQueue.Add(new ClientMessage()
-                                            {
-                                                message = returnValue,
-                                                type = ClientMessage.ClientMessageType.Message
-                                            });
-                                            messageQueue.Add(new ClientMessage()
-                                            {
-                                                type = ClientMessage.ClientMessageType.RefreshMap
-                                            });
-                                        }
-                                        break;
-                                    case MapDataClasses.ClientEvent.RewardType.XP:
-                                        messageQueue.Add(new ClientMessage()
-                                        {
-                                            message = "All characters have gained " + currentEvent.rewardValue.ToString() + " XP!",
-                                            type = ClientMessage.ClientMessageType.Message
-                                        });
-                                        messageQueue.Add(new ClientMessage()
-                                        {
-                                            type = ClientMessage.ClientMessageType.RefreshMap
-                                        });
-                                        PlayerDataManager.givePartyXP(player, currentEvent.rewardValue);
-                                        break;
-                                    case MapDataClasses.ClientEvent.RewardType.CP:
-                                        messageQueue.Add(new ClientMessage()
-                                        {
-                                            message = "All characters have gained " + currentEvent.rewardValue.ToString() + " CP!",
-                                            type = ClientMessage.ClientMessageType.Message
-                                        });
-                                        messageQueue.Add(new ClientMessage()
-                                        {
-                                            type = ClientMessage.ClientMessageType.RefreshMap
-                                        });
-                                        PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
-                                        break;
-                                    case MapDataClasses.ClientEvent.RewardType.Gold:
-                                        messageQueue.Add(new ClientMessage()
-                                        {
-                                            message = "You have found " + currentEvent.rewardValue.ToString() + " GP!",
-                                            type = ClientMessage.ClientMessageType.Message
-                                        });
-                                        messageQueue.Add(new ClientMessage()
-                                        {
-                                            type = ClientMessage.ClientMessageType.RefreshMap
-                                        });
-                                        PlayerDataManager.givePartyGP(player, currentEvent.rewardValue);
-                                        break;
-                                }
-                                player.getActiveParty().location.eventCollection.removeEvent(currentEvent);
-                                player.getActiveParty().location.activeEvent = null;
+                                PlayerDataManager.processEvent(currentEvent, this.player, ref messageQueue);
                             }
                             else
                             {
@@ -473,6 +418,28 @@ namespace GameDataClasses
                         player.getActiveParty().location.activeEvent = mapEvent;
                         combat = combatDirector.getCombat();
                         return MapEvent.CombatEntered;
+                    case MapDataClasses.EventClasses.EventDataType.EmergenceCavernCeilingCollapse:
+                        //Deal damage to each character
+                        foreach (PartyCharacterModel pcm in player.getActiveParty().characters)
+                        {
+                            foreach (CharacterModel cm in player.characters)
+                            {
+                                if (cm.uniq == pcm.characterUniq)
+                                {
+                                    pcm.hp = pcm.hp - 10;
+                                    if(pcm.hp <= 0)
+                                    {
+                                        pcm.hp = 0;
+                                    }
+                                }
+                            }
+                        }
+                        messageQueue.Add(new ClientMessage(){
+                            type = ClientMessage.ClientMessageType.Message,
+                            message = "The roof collapsed above you!  All characters take 10 damage."
+                        });
+                        PlayerDataManager.processEvent(mapEvent, this.player, ref messageQueue);
+                        return MapEvent.UpdateMessageQueue;
                     default:
                         return MapEvent.Nothing;
                 }

@@ -47,6 +47,7 @@ namespace MapDataClasses.EventClasses
                 message = "Another goblin has appeared!",
             });
             events.Add(3, EventDataModel.getMultiCombatEvent(encounters, ObjectiveType.Brawler));
+            events.Add(4, EventDataModel.getTrapEvent(EventDataType.EmergenceCavernCeilingCollapse, string.Empty));
         }
 
         public static EventDataModel getMapEvent(int uniq)

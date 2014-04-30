@@ -59,6 +59,7 @@
     <Compile Include="Models\PlayerItemModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\StatsModel.cs" />
+    <Compile Include="Objective\ClientMessage.cs" />
     <Compile Include="Objective\DungeonUnlockedDirector.cs" />
     <Compile Include="Objective\ObjectiveDirector.cs" />
     <Compile Include="PlayerDataManager.cs" />

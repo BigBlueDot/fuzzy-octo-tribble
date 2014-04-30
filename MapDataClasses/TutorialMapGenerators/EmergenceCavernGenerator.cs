@@ -314,6 +314,14 @@ namespace MapDataClasses.TutorialMapGenerators
                 eventData = EventHolder.getMapEvent(3),
                 rewardValue = 0
             });
+            mm.eventCollection.addEvent(new MapEventModel()
+            {
+                x = 28,
+                y = 38,
+                rewardType = ClientEvent.RewardType.Gold,
+                eventData = EventHolder.getMapEvent(4),
+                rewardValue = 5
+            });
 
             //Add an "event wall" on the left and two on the right
             for (int y = 38; y >= 35; y--)

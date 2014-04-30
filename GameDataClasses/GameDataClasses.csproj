@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientMessage.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GamePlayerClasses\ClientPlayer.cs" />
     <Compile Include="GameRNG.cs" />

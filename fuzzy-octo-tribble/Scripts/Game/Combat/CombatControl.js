@@ -117,7 +117,6 @@
         if (effects.length === 0) {
             return;
         }
-        FuzzyOctoTribble.KeyControl.addController(placeholderKeyControl);
         var currentEffect = effects.shift();
         switch (currentEffect.type) {
             case 0: //Simple Message effects
@@ -154,6 +153,7 @@
                 FuzzyOctoTribble.KeyControl.removeCombat();
                 $currentDefaultScreen = false;
                 $currentCommandScreen = false;
+                FuzzyOctoTribble.MaintainState.checkNow();
                 if (gameOver) {
                     FuzzyOctoTribble.MaintainState.updateMap();
                 }
@@ -379,6 +379,7 @@
 
         $currentCommandScreen = that.createCommandSelectionScreen(spec.commands, spec.currentCharacter);
         if (spec.effects.length !== 0) {
+            FuzzyOctoTribble.KeyControl.addController(placeholderKeyControl);
             processEffects(spec.effects);
         }
         inCombat = true;

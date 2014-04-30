@@ -80,7 +80,14 @@ namespace PlayerModels
                     {
                         type = ClientMessage.ClientMessageType.RefreshMap
                     });
-                    PlayerDataManager.givePartyXP(player, currentEvent.rewardValue);
+                    List<string> results = PlayerDataManager.givePartyXP(player, currentEvent.rewardValue);
+                    foreach (string s in results)
+                    {
+                        messageQueue.Add(new ClientMessage()
+                        {
+                            message = s
+                        });
+                    }
                     break;
                 case MapDataClasses.ClientEvent.RewardType.CP:
                     messageQueue.Add(new ClientMessage()
@@ -92,7 +99,14 @@ namespace PlayerModels
                     {
                         type = ClientMessage.ClientMessageType.RefreshMap
                     });
-                    PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
+                    List<string> cpResults = PlayerDataManager.givePartyCP(player, currentEvent.rewardValue);
+                    foreach (string s in cpResults)
+                    {
+                        messageQueue.Add(new ClientMessage()
+                        {
+                            message = s
+                        });
+                    }
                     break;
                 case MapDataClasses.ClientEvent.RewardType.Gold:
                     messageQueue.Add(new ClientMessage()
@@ -255,51 +269,75 @@ namespace PlayerModels
             return classes;
         }
 
-        public static void givePartyXP(PlayerModel pm, int xp)
+        public static List<string> givePartyXP(PlayerModel pm, int xp)
         {
             List<int> partyUniqs = new List<int>();
             PartyModel currentParty = pm.getActiveParty();
+            List<string> results = new List<string>();
             foreach (PartyCharacterModel pcm in currentParty.characters)
             {
-                partyUniqs.Add(pcm.characterUniq);
+                results.AddRange(giveXPCP(pm, pcm.characterUniq, xp, 0));
             }
 
-            foreach (int uniq in partyUniqs)
-            {
-                foreach (CharacterModel cm in pm.characters)
-                {
-                    if(cm.uniq == uniq)
-                    {
-                        cm.xp += xp;
-                    }
-                }
-            }
+            return results;
         }
 
-        public static void givePartyCP(PlayerModel pm, int cp)
+        public static List<string> givePartyCP(PlayerModel pm, int cp)
         {
             List<int> partyUniqs = new List<int>();
             PartyModel currentParty = pm.getActiveParty();
+            List<string> results = new List<string>();
             foreach (PartyCharacterModel pcm in currentParty.characters)
             {
-                partyUniqs.Add(pcm.characterUniq);
+                results.AddRange(giveXPCP(pm, pcm.characterUniq, 0, cp));
             }
 
-            foreach (int uniq in partyUniqs)
-            {
-                foreach (CharacterModel cm in pm.characters)
-                {
-                    if (cm.uniq == uniq)
-                    {
-                        cm.addCp(cp);
-                    }
-                }
-            }
+            return results;
         }
 
         public static void givePartyGP(PlayerModel pm, int gp)
         {
             pm.gp += gp;
+        }
+
+        public static List<string> giveXPCP(PlayerModel playerModel, int characterUniq, int xp, int cp)
+        {
+            List<string> results = new List<string>();
+
+            foreach (CharacterModel cm in playerModel.characters)
+            {
+                if (cm.uniq == characterUniq)
+                {
+                    cm.xp += xp;
+                    if (cm.xp >= PlayerModels.PlayerDataManager.getXPForLevel(cm.lvl))
+                    {
+                        results.Add(cm.name + " has gained a level!");
+                        cm.lvl++;
+                        PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
+                    }
+                    foreach (CharacterClassModel ccm in cm.characterClasses)
+                    {
+                        if (ccm.className == cm.currentClass)
+                        {
+                            ccm.cp += cp;
+                            if (ccm.cp >= PlayerModels.PlayerDataManager.getCPForLevel(ccm.lvl))
+                            {
+                                results.Add(cm.name + " has gained a class level!");
+                                ccm.lvl++;
+                                PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
+
+                                string newAbilityMessage = PlayerModels.StatCalculations.StatCalculator.getNewAbilityText(cm);
+                                if (newAbilityMessage != string.Empty)
+                                {
+                                    results.Add(newAbilityMessage);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return results;
         }
     }
 }

@@ -318,9 +318,9 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 x = 28,
                 y = 38,
-                rewardType = ClientEvent.RewardType.Gold,
+                rewardType = ClientEvent.RewardType.XP,
                 eventData = EventHolder.getMapEvent(4),
-                rewardValue = 5
+                rewardValue = 500
             });
 
             //Add an "event wall" on the left and two on the right

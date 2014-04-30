@@ -3,6 +3,7 @@ using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
 using CombatDataClasses.ClassProcessor;
 using CombatDataClasses.Interfaces;
 using MapDataClasses.MapDataClasses;
+using PlayerModels;
 using PlayerModels.CombatDataModels;
 using PlayerModels.Models;
 using System;
@@ -633,40 +634,14 @@ namespace CombatDataClasses.LiveImplementation
         private void getXPAndCP(int xp, int cp)
         {
             currentEffects.Add(new Effect(EffectTypes.Message, 0, "You received " + xp.ToString() + " XP and " + cp.ToString() + " CP.", 0));
+            List<string> results = new List<string>();
             foreach (int key in pcs.Keys)
             {
                 FullCombatCharacter fcc = pcs[key];
-                foreach (CharacterModel cm in playerModel.characters)
+                results = PlayerDataManager.giveXPCP(playerModel, fcc.characterUniq, xp, cp);
+                foreach (string s in results)
                 {
-                    if (cm.uniq == fcc.characterUniq)
-                    {
-                        cm.xp += xp;
-                        if (cm.xp >= PlayerModels.PlayerDataManager.getXPForLevel(cm.lvl))
-                        {
-                            currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a level!", 0));
-                            cm.lvl++;
-                            PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
-                        }
-                        foreach (CharacterClassModel ccm in cm.characterClasses)
-                        {
-                            if (ccm.className == cm.currentClass)
-                            {
-                                ccm.cp += cp;
-                                if (ccm.cp >= PlayerModels.PlayerDataManager.getCPForLevel(ccm.lvl))
-                                {
-                                    currentEffects.Add(new Effect(EffectTypes.Message, 0, fcc.name + " has gained a class level!", 0));
-                                    ccm.lvl++;
-                                    PlayerModels.StatCalculations.StatCalculator.updateCharacterStats(cm);
-
-                                    string newAbilityMessage = PlayerModels.StatCalculations.StatCalculator.getNewAbilityText(cm);
-                                    if (newAbilityMessage != string.Empty)
-                                    {
-                                        currentEffects.Add(new Effect(EffectTypes.Message, 0, newAbilityMessage, 0));
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    currentEffects.Add(new Effect(EffectTypes.Message, 0, s, 0));
                 }
             }
         }

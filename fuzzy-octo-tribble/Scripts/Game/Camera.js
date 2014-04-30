@@ -30,6 +30,9 @@
         else if (rewardType == 4) {
             drawSquare('/Images/Game/Map/CpEvent.png', x, y);
         }
+        else if (rewardType == 5) {
+            drawSquare('/Images/Game/Map/GpEvent.png', x, y);
+        }
     }
 
     that.setMap = function (newMap) {

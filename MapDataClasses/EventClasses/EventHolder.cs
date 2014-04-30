@@ -46,7 +46,7 @@ namespace MapDataClasses.EventClasses
                 enemies = enemies,
                 message = "Another goblin has appeared!",
             });
-            events.Add(3, EventDataModel.getMultiCombatEvent(encounters, ObjectiveType.None));
+            events.Add(3, EventDataModel.getMultiCombatEvent(encounters, ObjectiveType.Brawler));
         }
 
         public static EventDataModel getMapEvent(int uniq)

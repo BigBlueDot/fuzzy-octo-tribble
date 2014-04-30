@@ -13,12 +13,6 @@ namespace PlayerModels
         public static PlayerModel initPlayerModel()
         {
             PlayerModel returnValue = new PlayerModel();
-            returnValue.battleCommands = new List<PlayerModels.CharacterBattleCommandModel>();
-            returnValue.battleCommands.Add(new PlayerModels.CharacterBattleCommandModel() { name = "Attack" });
-            returnValue.battleCommands.Add(new PlayerModels.CharacterBattleCommandModel() { name = "Ability" });
-            returnValue.battleCommands.Add(new PlayerModels.CharacterBattleCommandModel() { name = "Guard" });
-            returnValue.battleCommands.Add(new PlayerModels.CharacterBattleCommandModel() { name = "Use Item" });
-            returnValue.battleCommands.Add(new PlayerModels.CharacterBattleCommandModel() { name = "Flee" });
             returnValue.characters = new List<Models.CharacterModel>();
             Models.CharacterModel cm = new Models.CharacterModel();
             cm.name = "Lance Renfro";
@@ -44,18 +38,10 @@ namespace PlayerModels
             cm.equipment = new Models.EquipmentModel() { accessory = "", armor = "", weapon = "" };
             cm.stats = new Models.StatsModel() { maxHP = 25, maxMP = 1, strength = 5, vitality = 5, intellect = 5, wisdom = 5, agility = 5 };
             returnValue.characters.Add(cm);
-            returnValue.commands = new List<CharacterCommandModel>();
-            returnValue.completedQuests = new List<CharacterCompletedQuestModel>();
             returnValue.configuration = new List<Models.ConfigurationModel>();
             returnValue.gp = 0;
             returnValue.items = new List<Models.PlayerItemModel>();
             returnValue.parties = new List<Models.PartyModel>();
-            returnValue.purchaseables = new List<CharacterPurchaseableModel>();
-            returnValue.purchaseables.Add(new CharacterPurchaseableModel() { name = "Tutorial Quest Shop" });
-            returnValue.purchaseables.Add(new CharacterPurchaseableModel() { name = "Tutorial Rest" });
-            returnValue.unlockedClasses = new List<CharacterUnlockedClassModel>();
-            returnValue.unlockedClasses.Add(new CharacterUnlockedClassModel() { name = "Adventurer" });
-            returnValue.unlockedClasses.Add(new CharacterUnlockedClassModel() { name = "Brawler" });
             returnValue.rootMap = "Ensemble Village";
             returnValue.rootX = 5;
             returnValue.rootY = 5;
@@ -193,6 +179,17 @@ namespace PlayerModels
             cm.stats = new Models.StatsModel() { maxHP = 25, maxMP = 1, strength = 5, vitality = 5, intellect = 5, wisdom = 5, agility = 5 };
             StatCalculations.StatCalculator.updateCharacterStats(cm);
             pm.characters.Add(cm);
+        }
+
+        public static List<string> getClasses(PlayerModel pm)
+        {
+            List<string> classes = new List<string>();
+            classes.Add("Adventurer");
+            if(pm.isObjectiveCompleted(ObjectiveType.Brawler))
+            {
+                classes.Add("Brawler");
+            }
+            return classes;
         }
 
         public static void givePartyXP(PlayerModel pm, int xp)

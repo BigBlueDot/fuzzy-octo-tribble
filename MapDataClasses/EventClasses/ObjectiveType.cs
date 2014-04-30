@@ -11,6 +11,7 @@ namespace MapDataClasses.EventClasses
         None,
         EmergenceCavernAdditionalAdventurer,
         EmergenceCavernB2,
-        Potion
+        Potion,
+        Brawler
     }
 }

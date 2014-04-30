@@ -248,6 +248,10 @@
     <Compile Include="Migrations\201404280331404_PlayerObjectiveFix.Designer.cs">
       <DependentUpon>201404280331404_PlayerObjectiveFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404300047470_RemoveUnnecessaryModels.cs" />
+    <Compile Include="Migrations\201404300047470_RemoveUnnecessaryModels.Designer.cs">
+      <DependentUpon>201404300047470_RemoveUnnecessaryModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -490,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404280331404_PlayerObjectiveFix.resx">
       <DependentUpon>201404280331404_PlayerObjectiveFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404300047470_RemoveUnnecessaryModels.resx">
+      <DependentUpon>201404300047470_RemoveUnnecessaryModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

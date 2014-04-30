@@ -65,7 +65,6 @@ namespace GameDataClasses
                     .Include(up => up.player.currentCombat.pcs.Select(c => c.mods))
                     .Include(up => up.player.currentCombat.npcs.Select(c => c.stats))
                     .Include(up => up.player.currentCombat.npcs.Select(c => c.mods))
-                    .Include(up => up.player.unlockedClasses)
                     .Include(up => up.player.currentCombat.combatData)
                     .Include(up => up.player.currentCombat.combatData.cooldowns)
                     .FirstOrDefault(u => u.UserName.ToLower() == userName);
@@ -92,11 +91,7 @@ namespace GameDataClasses
                 return characters;
             }, () =>
             {
-                List<string> classes = new List<string>();
-                foreach (CharacterUnlockedClassModel cm in this.player.unlockedClasses)
-                {
-                    classes.Add(cm.name);
-                }
+                List<string> classes = PlayerDataManager.getClasses(player);
                 return classes;
             }, (int start, int end) =>
             {
@@ -305,9 +300,9 @@ namespace GameDataClasses
         {
             if (MapDataClasses.MapDataManager.validateClassChangeSelection(currentMap.name, x, y, currentMap))
             {
-                foreach (CharacterUnlockedClassModel cucm in player.unlockedClasses)
+                foreach (string cucm in PlayerDataManager.getClasses(player))
                 {
-                    if (cucm.name == className) //Validate that the user has the class
+                    if (cucm == className) //Validate that the user has the class
                     {
                         foreach (CharacterModel cm in player.characters)
                         {

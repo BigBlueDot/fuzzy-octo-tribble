@@ -1,10 +1,13 @@
 ﻿FuzzyOctoTribble.MaintainState = (function () {
     var that = {};
 
-    var playerTimer;
     var maintainTimer;
+    var paused = false;
 
     var periodicCheck = function () {
+        if (paused) {
+            return;
+        }
         calcPlayer(function () {
             calcMessage(function () {
                 FuzzyOctoTribble.Camera.draw();
@@ -22,7 +25,7 @@
                             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.DialogBox({ dialogContent: data[i].message }));
                             break;
                         case 1: //Redraw map
-                            calcMap();
+                            calcMap(true);
                             break;
                         case 2: //Run the current event
                             FuzzyOctoTribble.Movement.feignMove();
@@ -66,10 +69,10 @@
         });
     }
 
-    var calcMap = function () {
+    var calcMap = function (doDraw) {
         $.ajax("Game/GetMap", {
             success: function (data) {
-                FuzzyOctoTribble.Camera.setMap(data);
+                FuzzyOctoTribble.Camera.setMap(data, doDraw);
                 FuzzyOctoTribble.Movement.setMap(data);
                 FuzzyOctoTribble.InteractionHandler.setMap(data);
                 FuzzyOctoTribble.MenuHandler.setIsDungeon(data.isDungeon);
@@ -83,13 +86,22 @@
     }
 
     that.updateMap = function () {
-        clearTimeout(playerTimer);
         calcMap();
         calcPlayer();
     }
 
     that.checkNow = function () {
-        clearTimeout(maintainTimer);
+        window.clearTimeout(maintainTimer);
+        periodicCheck();
+    }
+
+    that.pause = function () {
+        paused = true;
+        window.clearTimeout(maintainTimer);
+    }
+
+    that.restart = function () {
+        paused = false;
         periodicCheck();
     }
 

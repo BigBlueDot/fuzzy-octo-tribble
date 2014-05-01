@@ -35,11 +35,15 @@
         }
     }
 
-    that.setMap = function (newMap) {
+    that.setMap = function (newMap, doDraw) {
         map = newMap;
+        if (doDraw) {
+            that.draw();
+        }
     }
     that.setPlayer = function (newPlayerCoordinates) {
         playerCoordinates = newPlayerCoordinates;
+        that.draw();
     }
 
     that.draw = function () {

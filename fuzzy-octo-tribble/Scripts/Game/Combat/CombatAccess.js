@@ -29,6 +29,7 @@
     }
 
     that.startCombat = function () {
+        FuzzyOctoTribble.MaintainState.pause();
         that.getState(function (data) {
             FuzzyOctoTribble.CombatControlCreator.create(data);
         });
@@ -42,6 +43,7 @@
 
     that.endCombat = function () {
         combatStartedRecently = false;
+        FuzzyOctoTribble.MaintainState.restart();
     }
 
 

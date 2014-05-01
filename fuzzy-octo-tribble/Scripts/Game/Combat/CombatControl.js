@@ -158,6 +158,7 @@
                     FuzzyOctoTribble.MaintainState.updateMap();
                 }
                 inCombat = false;
+                FuzzyOctoTribble.CombatAccess.endCombat();
                 break;
             case 5: //Game over
                 FuzzyOctoTribble.CombatScreenCreator.gameOverAnimation();

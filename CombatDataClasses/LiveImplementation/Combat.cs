@@ -62,6 +62,7 @@ namespace CombatDataClasses.LiveImplementation
             this.onUpdate = onUpdate;
             this.onCombatComplete = onCombatComplete;
             this.map = map;
+            bool canFlee = true;
 
             List<PlayerModels.Models.PartyCharacterModel> partyCharacterModels = PlayerModels.PlayerDataManager.getCurrentPartyPartyStats(playerModel);
             List<int> characterUniqs = new List<int>();
@@ -239,6 +240,7 @@ namespace CombatDataClasses.LiveImplementation
                 Encounter encounter = MapDataClasses.MapDataManager.getEncounter(this.playerModel.getActiveParty().location, playerModel.rootX, playerModel.rootY, encounterSelection);
                 currentEffects.Add(new Effect(EffectTypes.Message, 0, encounter.message, 0));
                 combatNPCModels = new List<PlayerModels.CombatDataModels.CombatCharacterModel>();
+                canFlee = encounter.canFlee;
                 foreach (MapDataClasses.MapDataClasses.Enemy enemy in encounter.enemies)
                 {
                     int nextAttackTime = GeneralProcessor.calculateNextAttackTime(0, initiativeCalculator(), enemy.agility);
@@ -296,7 +298,7 @@ namespace CombatDataClasses.LiveImplementation
             }
 
             calculateTurnOrder();
-            this.combatData = new CombatData(playerModel.currentCombat);
+            this.combatData = new CombatData(playerModel.currentCombat, canFlee);
 
             if (!this.combatData.combatInitalized)
             {
@@ -330,7 +332,7 @@ namespace CombatDataClasses.LiveImplementation
                 }
                 returnValue.Add(new Command(true, abilityCommands, false, 0, 0, "Abilities", false, 0, false, abilityDisabled));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false, false));
-                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false, false));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false, !combatData.canFlee));
             }
             return returnValue;
         }

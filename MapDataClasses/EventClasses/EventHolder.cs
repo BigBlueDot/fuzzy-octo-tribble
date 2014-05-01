@@ -15,7 +15,7 @@ namespace MapDataClasses.EventClasses
         {
             List<Enemy> enemies = new List<Enemy>();
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            events.Add(1, EventDataModel.getCombatEvent(new Encounter()
+            events.Add(1, EventDataModel.getCombatEvent(new Encounter(isEvent:true)
             {
                 enemies = enemies,
                 message = "A single goblin blocks your path!",
@@ -25,7 +25,7 @@ namespace MapDataClasses.EventClasses
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            events.Add(2, EventDataModel.getCombatEvent(new Encounter()
+            events.Add(2, EventDataModel.getCombatEvent(new Encounter(isEvent:true)
             {
                 enemies = enemies,
                 message = "A horde of angry Goblins attacks!"
@@ -34,14 +34,14 @@ namespace MapDataClasses.EventClasses
             enemies = new List<Enemy>();
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
             List<Encounter> encounters = new List<Encounter>();
-            encounters.Add(new Encounter()
+            encounters.Add(new Encounter(isEvent:true)
             {
                 enemies = enemies,
                 message = "A single goblin blocks your path!",
             });
             enemies = new List<Enemy>();
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            encounters.Add(new Encounter()
+            encounters.Add(new Encounter(isEvent:true)
             {
                 enemies = enemies,
                 message = "Another goblin has appeared!",

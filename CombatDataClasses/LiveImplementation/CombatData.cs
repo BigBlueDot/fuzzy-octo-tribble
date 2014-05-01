@@ -61,12 +61,25 @@ namespace CombatDataClasses.LiveImplementation
             get;
             set;
         }
+        public bool canFlee
+        {
+            get
+            {
+                return combatData.canFlee;
+            }
+            set
+            {
+                combatData.canFlee = value;
+            }
+        }
 
-        public CombatData(CombatModel combat)
+        public CombatData(CombatModel combat, bool canFlee)
         {
             if (combat.combatData == null)
             {
                 combat.combatData = this.combatData = new CombatDataModel();
+                combat.combatData.canFlee = canFlee;
+
                 Init();
             }
             

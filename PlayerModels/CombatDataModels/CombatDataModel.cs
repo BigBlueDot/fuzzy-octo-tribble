@@ -17,6 +17,7 @@ namespace PlayerModels.CombatDataModels
         public List<TurnOverModel> firstTurnOver { get; set; }
         public bool combatInitalized { get; set; }
         public List<CooldownModel> cooldowns { get; set; }
+        public bool canFlee { get; set; }
 
         public class TurnOverModel
         {

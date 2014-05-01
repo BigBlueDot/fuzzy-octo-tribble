@@ -252,6 +252,14 @@
     <Compile Include="Migrations\201404300047470_RemoveUnnecessaryModels.Designer.cs">
       <DependentUpon>201404300047470_RemoveUnnecessaryModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405010155165_EventFleeDisableUpdate.cs" />
+    <Compile Include="Migrations\201405010155165_EventFleeDisableUpdate.Designer.cs">
+      <DependentUpon>201405010155165_EventFleeDisableUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405010201222_AdditionalCanFleeUpdate.cs" />
+    <Compile Include="Migrations\201405010201222_AdditionalCanFleeUpdate.Designer.cs">
+      <DependentUpon>201405010201222_AdditionalCanFleeUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -497,6 +505,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404300047470_RemoveUnnecessaryModels.resx">
       <DependentUpon>201404300047470_RemoveUnnecessaryModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405010155165_EventFleeDisableUpdate.resx">
+      <DependentUpon>201405010155165_EventFleeDisableUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405010201222_AdditionalCanFleeUpdate.resx">
+      <DependentUpon>201405010201222_AdditionalCanFleeUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

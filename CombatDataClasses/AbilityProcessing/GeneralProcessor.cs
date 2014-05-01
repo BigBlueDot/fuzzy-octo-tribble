@@ -116,6 +116,10 @@ namespace CombatDataClasses.ClassProcessor
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                         {
                             List<IEffect> effects = new List<IEffect>();
+                            if (!combatData.canFlee)
+                            {
+                                return effects;
+                            }
                             combatData.currentFleeCount += source.agility;
                             int totalAgi = 0;
                             foreach (FullCombatCharacter fcc in target)

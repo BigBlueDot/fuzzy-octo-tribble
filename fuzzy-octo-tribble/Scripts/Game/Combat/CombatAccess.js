@@ -40,5 +40,10 @@
         }, true);
     }
 
+    that.endCombat = function () {
+        combatStartedRecently = false;
+    }
+
+
     return that;
 })();

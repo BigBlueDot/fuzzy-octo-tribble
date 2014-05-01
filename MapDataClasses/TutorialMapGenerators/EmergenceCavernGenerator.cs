@@ -388,7 +388,7 @@ namespace MapDataClasses.TutorialMapGenerators
             List<Enemy> enemies = new List<Enemy>();
             enemies.Add(getEnemy("Goblin"));
             enemies.Add(getEnemy("Goblin"));
-            Encounter encounter = new Encounter()
+            Encounter encounter = new Encounter(isEvent:true)
             {
                 enemies = enemies,
                 message = "A duo of goblins has appeared!"

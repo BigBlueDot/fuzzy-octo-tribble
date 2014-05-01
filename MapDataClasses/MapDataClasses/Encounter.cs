@@ -15,5 +15,25 @@ namespace MapDataClasses.MapDataClasses
         public int uniq { get; set; }
         public string message { get; set; }
         public List<Enemy> enemies { get; set; }
+        public bool canFlee { get; set; }
+
+        public Encounter()
+        {
+            canFlee = true;
+            enemies = new List<Enemy>();
+        }
+
+        public Encounter(bool isEvent)
+        {
+            if (isEvent)
+            {
+                canFlee = false;
+            }
+            else
+            {
+                canFlee = true;
+            }
+            enemies = new List<Enemy>();
+        }
     }
 }

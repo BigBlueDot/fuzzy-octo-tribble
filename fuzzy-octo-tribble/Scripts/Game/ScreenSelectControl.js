@@ -18,6 +18,9 @@
 
     for (var i = 0; i < items.length; i++) {
         items[i].content.addClass('text-font popup-screen-item');
+        if (items[i].content.hasClass('popup-screen-item-selected')) {
+            currentSelection = i;
+        }
         $screenSelect.append(items[i].content);
         items[i].content.click(items[i].select);
         screenItems.push(items[i].content);

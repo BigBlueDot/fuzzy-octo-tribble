@@ -171,6 +171,8 @@ namespace MapDataClasses.TutorialMapGenerators
 
             mm.map[26, 38] = "Exit";
 
+            mm.eventCollection = new MapEventCollectionModel();
+
             return mm;
         }
 

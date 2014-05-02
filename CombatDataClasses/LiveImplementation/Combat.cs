@@ -202,6 +202,7 @@ namespace CombatDataClasses.LiveImplementation
                 {
                     int hp = ccm.stats.hp;
                     int mp = ccm.stats.mp;
+                    string name = ccm.name;
                     int nextAttackTime = ccm.nextAttackTime;
                     List<CombatModificationsModel> mods = ccm.mods;
                     List<string> usedAbilities = new List<string>();
@@ -212,7 +213,7 @@ namespace CombatDataClasses.LiveImplementation
                     {
                         this.npcs.Add(currentUniq, new FullCombatCharacter()
                         {
-                            name = enemy.name,
+                            name = name,
                             hp = hp,
                             maxHP = enemy.maxHP,
                             mp = mp,
@@ -277,8 +278,8 @@ namespace CombatDataClasses.LiveImplementation
                         name = enemy.name,
                         stats = new PlayerModels.CombatDataModels.TemporaryCombatStatsModel()
                         {
-                            hp = enemy.maxHP,
-                            mp = enemy.maxMP
+                            hp = hp,
+                            mp = mp
                         },
                         nextAttackTime = nextAttackTime,
                         combatUniq = currentUniq,
@@ -538,7 +539,7 @@ namespace CombatDataClasses.LiveImplementation
                 foreach (int key in npcs.Keys)
                 {
                     FullCombatCharacter fcc = npcs[key];
-                    if (fcc.characterUniq == ccm.characterUniq)
+                    if (fcc.combatUniq == ccm.combatUniq)
                     {
                         ccm.nextAttackTime = fcc.nextAttackTime;
                         ccm.stats.hp = fcc.hp;
@@ -546,6 +547,7 @@ namespace CombatDataClasses.LiveImplementation
                     }
                 }
             }
+
             onUpdate();
         }
 

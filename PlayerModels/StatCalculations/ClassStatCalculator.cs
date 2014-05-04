@@ -44,7 +44,7 @@ namespace PlayerModels.StatCalculations
             {
                 if (ccm.className == className)
                 {
-                    for (int i = 0; i < ccm.lvl && i * 2 < abilities.Count; i += 2)
+                    for (int i = 0; i < ccm.lvl && i / 2 < abilities.Count; i += 2)
                     {
                         returnValue.Add(this.abilities[i / 2]);
                     }

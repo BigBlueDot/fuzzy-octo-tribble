@@ -309,7 +309,7 @@ namespace PlayerModels
                 if (cm.uniq == characterUniq)
                 {
                     cm.xp += xp;
-                    if (cm.xp >= PlayerModels.PlayerDataManager.getXPForLevel(cm.lvl))
+                    while (cm.xp >= PlayerModels.PlayerDataManager.getXPForLevel(cm.lvl))
                     {
                         results.Add(cm.name + " has gained a level!");
                         cm.lvl++;
@@ -320,7 +320,7 @@ namespace PlayerModels
                         if (ccm.className == cm.currentClass)
                         {
                             ccm.cp += cp;
-                            if (ccm.cp >= PlayerModels.PlayerDataManager.getCPForLevel(ccm.lvl))
+                            while (ccm.cp >= PlayerModels.PlayerDataManager.getCPForLevel(ccm.lvl))
                             {
                                 results.Add(cm.name + " has gained a class level!");
                                 ccm.lvl++;

@@ -320,7 +320,7 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 x = 28,
                 y = 38,
-                rewardType = ClientEvent.RewardType.XP,
+                rewardType = ClientEvent.RewardType.CP,
                 eventData = EventHolder.getMapEvent(4),
                 rewardValue = 500
             });

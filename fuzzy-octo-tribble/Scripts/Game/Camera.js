@@ -2,6 +2,7 @@
     var that = {};
     var map;
     var playerCoordinates;
+    var squareSize = 64;
 
     var drawSquare = function (url, x, y) {
         $square = $(document.createElement('div'));
@@ -51,12 +52,12 @@
             $('.game-map').empty();
             var height = $('.game-map').height();
             var width = $('.game-map').width();
-            var centerX = (width / 2) - 20;
-            var centerY = (height / 2) - 20;
-            var offsetHeight = centerY % 40;
-            var offsetWidth = centerX % 40;
-            var drawCountHeight = Math.ceil(centerY / 40);
-            var drawCountWidth = Math.ceil(centerX / 40);
+            var centerX = (width / 2) - (squareSize / 2);
+            var centerY = (height / 2) - (squareSize / 2);
+            var offsetHeight = centerY % squareSize;
+            var offsetWidth = centerX % squareSize;
+            var drawCountHeight = Math.ceil(centerY / squareSize);
+            var drawCountWidth = Math.ceil(centerX / squareSize);
             var topIndex = playerCoordinates.y - drawCountHeight;
             var leftIndex = playerCoordinates.x - drawCountWidth;
             var drawX = -offsetWidth;
@@ -89,10 +90,10 @@
                             }
                         }
                     }
-                    drawY += 40;
+                    drawY += squareSize;
                 }
                 drawY = -offsetHeight;
-                drawX += 40;
+                drawX += squareSize;
             }
         }
     }

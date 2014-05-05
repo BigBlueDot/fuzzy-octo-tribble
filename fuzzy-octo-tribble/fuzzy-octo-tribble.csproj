@@ -351,6 +351,9 @@
     <Content Include="Images\Game\Empty.png" />
     <Content Include="Images\Game\Map\CpEvent.png" />
     <Content Include="Images\Game\Map\GpEvent.png" />
+    <Content Include="Images\Game\Map\GrassOne.png" />
+    <Content Include="Images\Game\Map\GrassThree.png" />
+    <Content Include="Images\Game\Map\GrassTwo.png" />
     <Content Include="Images\Game\Map\Objective.png" />
     <Content Include="Images\Game\Map\ObjectiveComplete.png" />
     <Content Include="Images\Game\Map\XpEvent.png" />

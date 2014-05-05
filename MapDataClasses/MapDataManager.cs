@@ -86,8 +86,12 @@ namespace MapDataClasses
         {
             switch (mapSquare)
             {
-                case "Empty":
-                    return "/images/game/empty.png";
+                case "GrassOne":
+                    return "/images/game/map/GrassOne.png";
+                case "GrassTwo":
+                    return "/images/game/map/GrassTwo.png";
+                case "GrassThree":
+                    return "/images/game/map/GrassThree.png";
                 case "CaveEmpty":
                     return "/images/game/CaveEmpty.png";
                 case "Rest":
@@ -113,7 +117,11 @@ namespace MapDataClasses
         {
             switch (mapSquare)
             {
-                case "Empty":
+                case "GrassOne":
+                    return false;
+                case "GrassTwo":
+                    return false;
+                case "GrassThree":
                     return false;
                 case "CaveEmpty":
                     return false;
@@ -140,7 +148,11 @@ namespace MapDataClasses
         {
             switch (mapSquare)
             {
-                case "Empty":
+                case "GrassOne":
+                    return true;
+                case "GrassTwo":
+                    return true;
+                case "GrassThree":
                     return true;
                 case "CaveEmpty":
                     return true;

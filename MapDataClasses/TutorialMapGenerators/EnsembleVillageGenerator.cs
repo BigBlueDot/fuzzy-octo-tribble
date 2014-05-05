@@ -45,14 +45,24 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 for (var y = 0; y < 10; y++)
                 {
-                    mm.map[x, y] = "Empty";
+                    mm.map[x, y] = "GrassOne";
                 }
                 mm.map[x, 0] = "Wall";
                 mm.map[x, 9] = "Wall";
+                if(x != 0 && x != 9)
+                {
+                    mm.map[x, 1] = "GrassTwo";
+                    mm.map[x, 8] = "GrassThree";
+                }
             }
 
             for (var y = 0; y < 10; y++)
             {
+                if (y != 0 && y != 9)
+                {
+                    mm.map[1, y] = "GrassTwo";
+                    mm.map[8, y] = "GrassThree";
+                }
                 mm.map[0, y] = "Wall";
                 mm.map[9, y] = "Wall";
             }

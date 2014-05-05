@@ -99,7 +99,7 @@ namespace MapDataClasses
                 case "Quest":
                     return "/images/game/quest.png";
                 case "Wall":
-                    return "/images/game/wall.png";
+                    return "/images/game/Map/Wall.png";
                 case "CaveWall":
                     return "/images/game/cavewall.png";
                 case "DungeonMaster":

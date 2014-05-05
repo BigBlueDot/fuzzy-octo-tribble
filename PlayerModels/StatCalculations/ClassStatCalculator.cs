@@ -60,7 +60,7 @@ namespace PlayerModels.StatCalculations
             {
                 if (ccm.className == className)
                 {
-                    if (ccm.lvl % 2 == 1)
+                    if (ccm.lvl % 2 == 1 && abilities.Count < ((ccm.lvl - 1) / 2))
                     {
                         return cm.name + " has learned " + abilities[(ccm.lvl - 1) / 2].name + ".  " + abilities[(ccm.lvl - 1) / 2].description;
                     }

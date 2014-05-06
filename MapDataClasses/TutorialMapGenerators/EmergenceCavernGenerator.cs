@@ -43,6 +43,14 @@ namespace MapDataClasses.TutorialMapGenerators
                 for (var y = 0; y < 40; y++)
                 {
                     mm.map[x, y] = "CaveEmpty";
+                    if (x == 26)
+                    {
+                        mm.map[x, y] = "CaveEmptyThree";
+                    }
+                    if (y == 38)
+                    {
+                        mm.map[x, y] = "CaveEmptyTwo";
+                    }
                 }
                 mm.map[x, 0] = "CaveWall";
                 mm.map[x, 39] = "CaveWall";

@@ -93,7 +93,11 @@ namespace MapDataClasses
                 case "GrassThree":
                     return "/images/game/map/GrassThree.png";
                 case "CaveEmpty":
-                    return "/images/game/CaveEmpty.png";
+                    return "/images/game/Map/CaveEmpty.png";
+                case "CaveEmptyTwo":
+                    return "/images/game/Map/CaveEmptyTwo.png";
+                case "CaveEmptyThree":
+                    return "/images/game/Map/CaveEmptyThree.png";
                 case "Rest":
                     return "/images/game/rest.png";
                 case "Quest":
@@ -125,6 +129,10 @@ namespace MapDataClasses
                     return false;
                 case "CaveEmpty":
                     return false;
+                case "CaveEmptyTwo":
+                    return false;
+                case "CaveEmptyThree":
+                    return false;
                 case "Rest":
                     return true;
                 case "Quest":
@@ -155,6 +163,10 @@ namespace MapDataClasses
                 case "GrassThree":
                     return true;
                 case "CaveEmpty":
+                    return true;
+                case "CaveEmptyTwo":
+                    return true;
+                case "CaveEmptyThree":
                     return true;
                 case "Rest":
                     return false;

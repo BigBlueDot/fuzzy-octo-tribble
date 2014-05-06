@@ -349,6 +349,9 @@
     <Content Include="Images\Game\Dungeon.png" />
     <Content Include="Images\Game\DungeonExit.png" />
     <Content Include="Images\Game\Empty.png" />
+    <Content Include="Images\Game\Map\CaveEmpty.png" />
+    <Content Include="Images\Game\Map\CaveEmptyThree.png" />
+    <Content Include="Images\Game\Map\CaveEmptyTwo.png" />
     <Content Include="Images\Game\Map\CpEvent.png" />
     <Content Include="Images\Game\Map\GpEvent.png" />
     <Content Include="Images\Game\Map\GrassOne.png" />

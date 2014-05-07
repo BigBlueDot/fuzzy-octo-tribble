@@ -116,7 +116,7 @@ namespace MapDataClasses
                     return "/images/game/empty.png";
             }
         }
-
+        
         public static bool getInteractable(string mapSquare)
         {
             switch (mapSquare)
@@ -346,6 +346,21 @@ namespace MapDataClasses
             }
         }
 
+
+        public static string getLocation(string name)
+        {
+            switch (name)
+            {
+                case "Ensemble Village":
+                    return string.Empty;
+                case "Emergence Cavern":
+                    return "Cave";
+                case "Emergence Cavern F2":
+                    return "Cave";
+                default:
+                    return string.Empty;
+            }
+        }
         public static Encounter getEncounter(MapModel mm, int x, int y, int selection)
         {
             if(isEvent(mm, x, y))

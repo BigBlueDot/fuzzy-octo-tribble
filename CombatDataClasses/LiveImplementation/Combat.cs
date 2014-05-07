@@ -381,7 +381,7 @@ namespace CombatDataClasses.LiveImplementation
                 npcDisplays.Add(cd);
             }
 
-            return new CombatStatus(fastestPCName, currentEffects, pcDisplays, npcDisplays);
+            return new CombatStatus(fastestPCName, currentEffects, pcDisplays, npcDisplays, MapDataClasses.MapDataManager.getLocation(map));
         }
 
         public ICombatStatus executeCommand(SelectedCommand command)

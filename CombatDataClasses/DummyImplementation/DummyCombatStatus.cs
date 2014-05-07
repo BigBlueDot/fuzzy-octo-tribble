@@ -52,5 +52,11 @@ namespace CombatDataClasses.DummyImplementation
                 return _npcDisplays;
             }
         }
+
+
+        public string location
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

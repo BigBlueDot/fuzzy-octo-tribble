@@ -9,12 +9,13 @@ namespace CombatDataClasses.LiveImplementation
 {
     public class CombatStatus : ICombatStatus
     {
-        public CombatStatus(string currentCharacter, IEnumerable<IEffect> effects, IEnumerable<ICharacterDisplay> characterDisplays, IEnumerable<ICharacterDisplay> npcDisplays)
+        public CombatStatus(string currentCharacter, IEnumerable<IEffect> effects, IEnumerable<ICharacterDisplay> characterDisplays, IEnumerable<ICharacterDisplay> npcDisplays, string location)
         {
             _currentCharacter = currentCharacter;
             _effects = effects;
             _characterDisplays = characterDisplays;
             _npcDisplays = npcDisplays;
+            _location = location;
         }
 
         private string _currentCharacter;
@@ -50,6 +51,15 @@ namespace CombatDataClasses.LiveImplementation
             get
             {
                 return _npcDisplays;
+            }
+        }
+
+        private string _location;
+        public string location
+        {
+            get
+            {
+                return _location;
             }
         }
     }

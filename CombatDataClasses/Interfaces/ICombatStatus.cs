@@ -12,5 +12,6 @@ namespace CombatDataClasses.Interfaces
         IEnumerable<IEffect> effects { get; }
         IEnumerable<ICharacterDisplay> characterDisplays { get; }
         IEnumerable<ICharacterDisplay> npcDisplays { get; }
+        string location { get; }
     }
 }

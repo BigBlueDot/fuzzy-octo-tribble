@@ -183,7 +183,12 @@
     padding: 5px;
     overflow: hidden;
     background-color: #FFFFFF;
+    background-repeat: repeat-x;
 }
+
+    .character-display-screen.Cave {
+    background-image:  url("/Images/Game/Combat/Backgrounds/CaveBackground.png") ;
+    }
 
     .character-display-screen.PreAttack.enemy {
         top:50px;

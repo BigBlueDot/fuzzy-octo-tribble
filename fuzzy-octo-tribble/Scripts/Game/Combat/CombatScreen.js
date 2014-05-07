@@ -3,7 +3,7 @@
     var allies, enemies;
     var characterWindows = {};
 
-    var getCharacterWindow = function (character) {
+    var getCharacterWindow = function (character, location) {
         var $characterDisplay = $(document.createElement('div'));
         var $name = $(document.createElement('div')).text(character.name);
         var $type = $(document.createElement('div')).text(character.type);
@@ -11,7 +11,7 @@
         var $HP = $(document.createElement('div')).text("HP: " + character.hp + "/" + character.maxHP);
         var $MP = $(document.createElement('div')).text("MP: " + character.mp + "/" + character.maxMP);
         var $statuses = $(document.createElement('div'));
-        $characterDisplay.addClass('character-display-screen text-font');
+        $characterDisplay.addClass('character-display-screen text-font ' + location);
         $characterDisplay.append($name);
         $characterDisplay.append($type);
         $characterDisplay.append($turnOrder);
@@ -154,17 +154,18 @@
     that.loadInitialScreen = function (spec, my) {
         allies = spec.allies;
         enemies = spec.enemies;
+        var location = spec.location;
         var $content = $(document.createElement('div'));
         $content.addClass('combat-initial-screen combat-screen');
 
         for (var i = 0; i < allies.length; i++) {
-            var $characterDisplay = getCharacterWindow(allies[i]);
+            var $characterDisplay = getCharacterWindow(allies[i], location);
             $characterDisplay.css('left', (20 + (230 * i)).toString() + "px");
             $content.append($characterDisplay);
         }
 
         for (var i = 0; i < enemies.length; i++) {
-            var $characterDisplay = getCharacterWindow(enemies[i]);
+            var $characterDisplay = getCharacterWindow(enemies[i], location);
             $characterDisplay.addClass('enemy');
             $characterDisplay.css('left', (20 + (230 * i)).toString() + "px");
             $content.append($characterDisplay);

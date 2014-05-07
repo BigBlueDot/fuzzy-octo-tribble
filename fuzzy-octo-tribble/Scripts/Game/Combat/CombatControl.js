@@ -211,7 +211,7 @@
         return that;
     }
 
-    that.createBaseScreen = function (allies, enemies, commands, currentCharacter) {
+    that.createBaseScreen = function (allies, enemies, commands, currentCharacter, location) {
         var that = {};
 
         var pcCurrentlySelected = false;
@@ -241,7 +241,8 @@
         $('.combat-screen').remove();
         var $initialScreen = FuzzyOctoTribble.CombatScreenCreator.loadInitialScreen({
             allies: allies,
-            enemies: enemies
+            enemies: enemies,
+            location: location
         });
 
         $('.game-window').append($initialScreen);
@@ -374,7 +375,7 @@
             $currentDefaultScreen.updateInformation(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
         }
         else {
-            $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter);
+            $currentDefaultScreen = that.createBaseScreen(spec.characterDisplays, spec.npcDisplays, spec.commands, spec.currentCharacter, spec.location);
             FuzzyOctoTribble.KeyControl.addController($currentDefaultScreen);
         }
 

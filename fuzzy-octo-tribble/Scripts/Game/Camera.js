@@ -66,22 +66,20 @@
             for (var x = leftIndex; x < (leftIndex) + (drawCountWidth * 2) + 2; x++) {
                 for (var y = topIndex; y < (topIndex) + (drawCountHeight * 2) + 2; y++) {
                     if (x >= 0 && y >= 0 && x < map.mapSquares.length && y < map.mapSquares[0].length) {
+                        drawSquare(map.mapUrl[map.mapSquares[x][y].i], drawX, drawY);
                         if (x == playerCoordinates.x && y == playerCoordinates.y) {
                             if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
-                                drawSquare("/Images/Game/PlayerDown.png", drawX, drawY);
+                                drawSquare("/Images/Game/Map/PlayerDown.png", drawX, drawY);
                             }
                             else if (FuzzyOctoTribble.PlayerDirection === 1) {
-                                drawSquare("/Images/Game/PlayerLeft.png", drawX, drawY);
+                                drawSquare("/Images/Game/Map/PlayerLeft.png", drawX, drawY);
                             }
                             else if (FuzzyOctoTribble.PlayerDirection === 2) {
-                                drawSquare("/Images/Game/PlayerUp.png", drawX, drawY);
+                                drawSquare("/Images/Game/Map/PlayerUp.png", drawX, drawY);
                             }
                             else if (FuzzyOctoTribble.PlayerDirection === 3) {
-                                drawSquare("/Images/Game/PlayerRight.png", drawX, drawY);
+                                drawSquare("/Images/Game/Map/PlayerRight.png", drawX, drawY);
                             }
-                        }
-                        else {
-                            drawSquare(map.mapUrl[map.mapSquares[x][y].i], drawX, drawY);
                         }
 
                         for (var i = 0; i < map.events.length; i++) {

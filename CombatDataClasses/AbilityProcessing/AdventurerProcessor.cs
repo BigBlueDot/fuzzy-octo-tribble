@@ -109,7 +109,7 @@ namespace CombatDataClasses.ClassProcessor
                                     effects.Add(new Effect(EffectTypes.Message, 0, t.name + " has been glanced!", 0));
                                 }
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, .5f);
+                            GeneralProcessor.calculateNextAttackTime(source, .5f, combatData);
                             return effects;
                         });
                 case "Guarded Strike":
@@ -137,7 +137,7 @@ namespace CombatDataClasses.ClassProcessor
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                                 effects.Add(new Effect(EffectTypes.Message, 0, preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + ".", 0));
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                            GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                             return effects;
                         });
                 case "Reckless Hit":
@@ -158,7 +158,7 @@ namespace CombatDataClasses.ClassProcessor
                             effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a reckless attack.", 0));
                         }
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         source.mods.Add(BasicModificationsGeneration.getRecklessModification(source.name));
                         return effects;
                     });
@@ -188,7 +188,7 @@ namespace CombatDataClasses.ClassProcessor
                                 effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
                                 effects.Add(new Effect(EffectTypes.Message, 0,preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                            GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                             return effects;
                         });
                 case "First Strike":
@@ -213,7 +213,7 @@ namespace CombatDataClasses.ClassProcessor
                                 effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is well rested.  " + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
                             }
                         }
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         return effects;
                     });
                 default:

@@ -332,7 +332,8 @@ namespace CombatDataClasses.LiveImplementation
                     }
                 }
                 returnValue.Add(new Command(true, abilityCommands, false, 0, 0, "Abilities", false, 0, false, abilityDisabled));
-                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false, false));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false, !(combatData.doubleSelectionState == PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None)));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Double", false, 0, false, !(combatData.doubleSelectionState == PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None) || combatData.isFirstTurn(pcs[uniqBridge[currentCharacter]].name)));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false, !combatData.canFlee));
             }
             return returnValue;
@@ -387,6 +388,15 @@ namespace CombatDataClasses.LiveImplementation
         public ICombatStatus executeCommand(SelectedCommand command)
         {
             FullCombatCharacter source = currentCharacter;
+
+            if (command.commandName == "Double")
+            {
+                combatData.doubleSelectionState = PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.First;
+                currentEffects.Clear();
+                currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
+                return getStatus();
+            }
+
             List<FullCombatCharacter> targets = new List<FullCombatCharacter>();
             SelectedCommand testCommand = command;
             while (testCommand != null)

@@ -18,6 +18,8 @@ namespace PlayerModels.CombatDataModels
         public bool combatInitalized { get; set; }
         public List<CooldownModel> cooldowns { get; set; }
         public bool canFlee { get; set; }
+        public DoubleSelectionState doubleSelectionState { get; set; }
+        public int doubleSelectionDelay { get; set; }
 
         public class TurnOverModel
         {
@@ -25,6 +27,13 @@ namespace PlayerModels.CombatDataModels
             [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
             public int uniq { get; set; }
             public string name { get; set; }
+        }
+
+        public enum DoubleSelectionState
+        {
+            None,
+            First,
+            Second
         }
     }
 }

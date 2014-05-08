@@ -26,7 +26,7 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing.Goblins
             effects.Add(new Effect(EffectTypes.Attack, source.combatUniq, string.Empty, 0));
             effects.Add(new Effect(EffectTypes.DealDamage, target.combatUniq, string.Empty, dmg));
             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target.name + " for " + dmg.ToString() + " damage!", 0));
-            GeneralProcessor.calculateNextAttackTime(source, coefficient);
+            GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
 
             return effects;
         }

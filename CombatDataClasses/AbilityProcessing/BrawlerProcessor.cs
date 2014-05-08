@@ -154,7 +154,7 @@ namespace CombatDataClasses.AbilityProcessing
                                 effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a disarming blow.", 0));
 
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                            GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                             return effects;
                         });
                 case "One-Two Punch":
@@ -189,7 +189,7 @@ namespace CombatDataClasses.AbilityProcessing
                             effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt 2x" + dmg + " damage to " + t.name + " with a One-Two Punch.", 0));
 
                         }
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         return effects;
                     });
                 case "Sweep":
@@ -218,7 +218,7 @@ namespace CombatDataClasses.AbilityProcessing
                             time = (source.nextAttackTime + 180)
                         });
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt damage to all enemies with a sweeping blow!", 0));
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         return effects;
                     });
                 case "Preemptive Strike":
@@ -252,7 +252,7 @@ namespace CombatDataClasses.AbilityProcessing
                             time = (source.nextAttackTime + 120)
                         });
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt " + dmg + " damage to " + currentTarget.name + " with a preemptive strike!", 0));
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         return effects;
                     });
                 case "Vicious Blow":
@@ -288,8 +288,8 @@ namespace CombatDataClasses.AbilityProcessing
                             name = "Vicious Blow",
                             time = (source.nextAttackTime + 180)
                         });
-                        
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         return effects;
                     });
                 case "Adrenaline":
@@ -305,7 +305,7 @@ namespace CombatDataClasses.AbilityProcessing
 
                         source.mods.Add(BasicModificationsGeneration.getAdrenalineModification((source.nextAttackTime + 60).ToString()));
 
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient);
+                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
                         return effects;
                     });
                 default:

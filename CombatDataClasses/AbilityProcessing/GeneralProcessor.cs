@@ -30,15 +30,41 @@ namespace CombatDataClasses.ClassProcessor
             return startTime + ((int)(60 * (abilityCoefficient * Math.Log10(10) / (Math.Log10(agi)))));
         }
 
-        public static void calculateNextAttackTime(FullCombatCharacter character, float abilityCoefficient)
+        public static void calculateNextAttackTime(FullCombatCharacter character, float abilityCoefficient, CombatData combatData)
         {
+            int nextAttackTime;
+            if (combatData.doubleSelectionState != PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None)
+            {
+                abilityCoefficient = abilityCoefficient * 1.5f;
+            }
+
             if (BasicModificationsGeneration.hasMod(character, "Adrenaline"))
             {
-                character.nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient / 3, character.agility);
+                nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient / 3, character.agility);
             }
             else
             {
-                character.nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient, character.agility);
+                nextAttackTime = calculateNextAttackTime(character.nextAttackTime, abilityCoefficient, character.agility);
+            }
+
+            if (combatData.doubleSelectionState == PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None)
+            {
+                character.nextAttackTime = nextAttackTime;
+            }
+            else
+            {
+                if (combatData.doubleSelectionState == PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.First)
+                {
+                    combatData.doubleSelectionDelay = nextAttackTime;
+                    combatData.doubleSelectionState = PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.Second;
+                }
+                else
+                {
+                    combatData.doubleSelectionDelay += (nextAttackTime - character.nextAttackTime);
+
+                    character.nextAttackTime = combatData.doubleSelectionDelay;
+                    combatData.doubleSelectionState = PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None;
+                }
             }
         }
 
@@ -99,7 +125,7 @@ namespace CombatDataClasses.ClassProcessor
                         effects.Add(new Effect(EffectTypes.DealDamage, target[0].combatUniq, string.Empty, dmg));
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target[0].name + " for " + dmg.ToString() + " damage!", 0));
 
-                        GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                        GeneralProcessor.calculateNextAttackTime(source, 1.0f, combatData);
                         return effects;
                     });
                 case "Guard":
@@ -108,7 +134,7 @@ namespace CombatDataClasses.ClassProcessor
                         List<IEffect> effects = new List<IEffect>();
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is guarding!", 0));
 
-                        GeneralProcessor.calculateNextAttackTime(source, 1.0f);
+                        GeneralProcessor.calculateNextAttackTime(source, 1.0f, combatData);
                         source.mods.Add(BasicModificationsGeneration.getGuardModification(source.name));
                         return effects;
                     });
@@ -136,7 +162,7 @@ namespace CombatDataClasses.ClassProcessor
                             {
                                 effects.Add(new Effect(EffectTypes.Message, 0, "You were unable to run away!  (Keep trying, believe in yourself)", 0));
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, .8f);
+                            GeneralProcessor.calculateNextAttackTime(source, .8f, combatData);
                             return effects;
                         });
                 case "Abilities":

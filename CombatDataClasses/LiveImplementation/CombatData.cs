@@ -73,6 +73,30 @@ namespace CombatDataClasses.LiveImplementation
             }
         }
 
+        public PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState doubleSelectionState
+        {
+            get
+            {
+                return combatData.doubleSelectionState;
+            }
+            set
+            {
+                combatData.doubleSelectionState = value;
+            }
+        }
+
+        public int doubleSelectionDelay
+        {
+            get
+            {
+                return combatData.doubleSelectionDelay;
+            }
+            set
+            {
+                combatData.doubleSelectionDelay = value;
+            }
+        }
+
         public CombatData(CombatModel combat, bool canFlee)
         {
             if (combat.combatData == null)
@@ -84,6 +108,7 @@ namespace CombatDataClasses.LiveImplementation
             }
             
             this.combatData = combat.combatData;
+            this.doubleSelectionState = PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None;
 
             if (this.combatData.firstTurnOver == null)
             {

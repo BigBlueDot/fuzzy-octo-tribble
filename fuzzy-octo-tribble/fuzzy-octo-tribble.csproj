@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201405010201222_AdditionalCanFleeUpdate.Designer.cs">
       <DependentUpon>201405010201222_AdditionalCanFleeUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405080248571_DoubleAbility.cs" />
+    <Compile Include="Migrations\201405080248571_DoubleAbility.Designer.cs">
+      <DependentUpon>201405080248571_DoubleAbility.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -517,6 +521,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405010201222_AdditionalCanFleeUpdate.resx">
       <DependentUpon>201405010201222_AdditionalCanFleeUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405080248571_DoubleAbility.resx">
+      <DependentUpon>201405080248571_DoubleAbility.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

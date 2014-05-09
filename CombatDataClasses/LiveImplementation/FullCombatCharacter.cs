@@ -1,4 +1,5 @@
-﻿using PlayerModels.CombatDataModels;
+﻿using CombatDataClasses.AbilityProcessing.ModificationsGeneration;
+using PlayerModels.CombatDataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,16 +49,29 @@ namespace CombatDataClasses.LiveImplementation
 
             if (this.className == "Brawler" && this.classLevel >= 5)
             {
-                return HitEffect.Unbalance;
+                if (BasicModificationsGeneration.hasMod(this, "Ranged"))
+                {
+                    return HitEffect.RangedUnbalance;
+                }
+                else
+                {
+                    return HitEffect.Unbalance;
+                }
             }
 
+            if (BasicModificationsGeneration.hasMod(this, "Ranged"))
+            {
+                return HitEffect.Ranged;
+            }
             return HitEffect.None;
         }
 
         public enum HitEffect
         {
             None,
-            Unbalance
+            Unbalance,
+            Ranged,
+            RangedUnbalance
         }
     }
 }

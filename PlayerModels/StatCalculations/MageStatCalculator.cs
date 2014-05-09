@@ -103,8 +103,8 @@ namespace PlayerModels.StatCalculations
             });
             abilities.Add(new AbilityDescription()
             {
-                name = "Gem Missle",
-                description = "Casts Magic Missle using Gem Dust as a reagant."
+                name = "Ash Missle",
+                description = "Casts Magic Missle using Arcane Ash as a reagant."
             });
             abilities.Add(new AbilityDescription()
             {

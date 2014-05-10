@@ -43,35 +43,26 @@ namespace CombatDataClasses.LiveImplementation
                 {
                     damage = (int)(damage * 1.5);
                 }
+                if (cmm.name == "Ranged")
+                {
+                    damage = damage / 4;
+                }
             }
 
             hp -= damage;
 
             if (this.className == "Brawler" && this.classLevel >= 5)
             {
-                if (BasicModificationsGeneration.hasMod(this, "Ranged"))
-                {
-                    return HitEffect.RangedUnbalance;
-                }
-                else
-                {
-                    return HitEffect.Unbalance;
-                }
+                return HitEffect.Unbalance;
             }
 
-            if (BasicModificationsGeneration.hasMod(this, "Ranged"))
-            {
-                return HitEffect.Ranged;
-            }
             return HitEffect.None;
         }
 
         public enum HitEffect
         {
             None,
-            Unbalance,
-            Ranged,
-            RangedUnbalance
+            Unbalance
         }
     }
 }

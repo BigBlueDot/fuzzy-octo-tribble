@@ -112,6 +112,26 @@ namespace CombatDataClasses.ClassProcessor
             });
         }
 
+        public static void preCommand(FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, bool isRanged = false)
+        {
+            float coeff = 0.0f;
+            preCommand(source, target, combatData, effects, ref coeff, isRanged);
+        }
+
+        public static void preCommand(FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, ref float coefficient, bool isRanged = false)
+        {
+            if (BasicModificationsGeneration.hasMod(source, "Ranged"))
+            {
+                coefficient = coefficient * .75f;
+
+                if (!isRanged)
+                {
+                    effects.Add(new Effect(EffectTypes.Message, 0, "Using a melee attack has removed the ranged advantage!", 0));
+                    CombatCalculator.removeRanged(source);
+                }
+            }
+        }
+
         public static Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)
         {
             switch (command.commandName)
@@ -120,7 +140,9 @@ namespace CombatDataClasses.ClassProcessor
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {
                         List<IEffect> effects = new List<IEffect>();
-                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / target[0].vitality));
+                        float damageCoefficient = 1.0f;
+                        GeneralProcessor.preCommand(source, target, combatData, effects, ref damageCoefficient);
+                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient / target[0].vitality));
                         target[0].inflictDamage(ref dmg);
                         effects.Add(new Effect(EffectTypes.DealDamage, target[0].combatUniq, string.Empty, dmg));
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has attacked " + target[0].name + " for " + dmg.ToString() + " damage!", 0));
@@ -132,6 +154,7 @@ namespace CombatDataClasses.ClassProcessor
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {
                         List<IEffect> effects = new List<IEffect>();
+                        GeneralProcessor.preCommand(source, target, combatData, effects, true);
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is guarding!", 0));
 
                         GeneralProcessor.calculateNextAttackTime(source, 1.0f, combatData);
@@ -142,6 +165,7 @@ namespace CombatDataClasses.ClassProcessor
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                         {
                             List<IEffect> effects = new List<IEffect>();
+                            GeneralProcessor.preCommand(source, target, combatData, effects, true);
                             if (!combatData.canFlee)
                             {
                                 return effects;
@@ -163,6 +187,19 @@ namespace CombatDataClasses.ClassProcessor
                                 effects.Add(new Effect(EffectTypes.Message, 0, "You were unable to run away!  (Keep trying, believe in yourself)", 0));
                             }
                             GeneralProcessor.calculateNextAttackTime(source, .8f, combatData);
+                            return effects;
+                        });
+                case "Range":
+                    return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                        {
+                            List<IEffect> effects = new List<IEffect>();
+                            effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has moved a distance from combat.", 0));
+                            source.mods.Add(new PlayerModels.CombatDataModels.CombatModificationsModel()
+                            {
+                                name = "Ranged",
+                                conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>()
+                            });
+                            GeneralProcessor.calculateNextAttackTime(source, 1.0f, combatData);
                             return effects;
                         });
                 case "Abilities":

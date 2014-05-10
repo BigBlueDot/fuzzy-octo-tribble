@@ -333,6 +333,7 @@ namespace CombatDataClasses.LiveImplementation
                 }
                 returnValue.Add(new Command(true, abilityCommands, false, 0, 0, "Abilities", false, 0, false, abilityDisabled));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guard", false, 0, false, !(combatData.doubleSelectionState == PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None)));
+                returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Range", false, 0, false, BasicModificationsGeneration.hasMod(pcs[uniqBridge[currentCharacter]], "Ranged")));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Double", false, 0, false, !(combatData.doubleSelectionState == PlayerModels.CombatDataModels.CombatDataModel.DoubleSelectionState.None) || combatData.isFirstTurn(pcs[uniqBridge[currentCharacter]].name)));
                 returnValue.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Flee", false, 0, false, !combatData.canFlee));
             }

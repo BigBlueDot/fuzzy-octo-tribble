@@ -1,4 +1,5 @@
 ﻿using CombatDataClasses.LiveImplementation;
+using PlayerModels.CombatDataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,23 @@ namespace CombatDataClasses.AbilityProcessing
             }
 
             return attackValue;
+        }
+
+        public static void removeRanged(FullCombatCharacter fcc)
+        {
+            CombatModificationsModel toRemove = null;
+            foreach(CombatModificationsModel mod in fcc.mods)
+            {
+                if (mod.name == "Ranged")
+                {
+                    toRemove = mod;
+                }
+            }
+
+            if (toRemove != null)
+            {
+                fcc.mods.Remove(toRemove);
+            }
         }
     }
 }

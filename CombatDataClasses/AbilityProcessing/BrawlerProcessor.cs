@@ -125,9 +125,11 @@ namespace CombatDataClasses.AbilityProcessing
                             }
                             List<IEffect> effects = new List<IEffect>();
                             float coefficient = 1.0f;
+                            float damageCoefficient = 1.0f;
+                            GeneralProcessor.preCommand(source, target, combatData, effects, ref damageCoefficient);
                             foreach (FullCombatCharacter t in target)
                             {
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 / t.vitality));
+                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient / t.vitality));
                                 if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
                                 {
                                     coefficient = coefficient * 2;
@@ -166,9 +168,11 @@ namespace CombatDataClasses.AbilityProcessing
                         }
                         List<IEffect> effects = new List<IEffect>();
                         float coefficient = 1.0f;
+                        float damageCoefficient = 1.0f;
+                        GeneralProcessor.preCommand(source, target, combatData, effects, ref damageCoefficient);
                         foreach (FullCombatCharacter t in target)
                         {
-                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * .75f / t.vitality));
+                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient * .75f / t.vitality));
                             if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
                             {
                                 coefficient = coefficient * 2;
@@ -200,13 +204,15 @@ namespace CombatDataClasses.AbilityProcessing
                             return new List<IEffect>();
                         }
                         List<IEffect> effects = new List<IEffect>();
-                        float coefficient = 1.5f;
+                        float attackTimeCoefficient = 1.5f;
+                        float damageCoefficient = .5f;
+                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
                         foreach (FullCombatCharacter t in targets)
                         {
-                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * .5f / t.vitality));
+                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient / t.vitality));
                             if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
                             {
-                                coefficient = coefficient * 2;
+                                attackTimeCoefficient = attackTimeCoefficient * 2;
                             }
 
                             effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
@@ -218,7 +224,7 @@ namespace CombatDataClasses.AbilityProcessing
                             time = (source.nextAttackTime + 180)
                         });
                         effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt damage to all enemies with a sweeping blow!", 0));
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
+                        GeneralProcessor.calculateNextAttackTime(source, attackTimeCoefficient, combatData);
                         return effects;
                     });
                 case "Preemptive Strike":
@@ -230,6 +236,8 @@ namespace CombatDataClasses.AbilityProcessing
                         }
                         List<IEffect> effects = new List<IEffect>();
                         float coefficient = 1.0f;
+                        float damageCoefficient = 1.0f;
+                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
                         FullCombatCharacter currentTarget = targets[0];
                         foreach (FullCombatCharacter t in targets)
                         {
@@ -238,7 +246,7 @@ namespace CombatDataClasses.AbilityProcessing
                                 currentTarget = t;
                             }
                         }
-                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f / currentTarget.vitality));
+                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f * damageCoefficient / currentTarget.vitality));
                         if (currentTarget.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
                         {
                             coefficient = coefficient * 2;
@@ -264,11 +272,13 @@ namespace CombatDataClasses.AbilityProcessing
                         }
                         List<IEffect> effects = new List<IEffect>();
                         float coefficient = 1.0f;
+                        float damageCoefficient = 1.0f;
+                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
                         foreach (FullCombatCharacter t in targets)
                         {
                             if (t.hp < t.maxHP / 2)
                             {
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f / t.vitality));
+                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f * damageCoefficient / t.vitality));
                                 if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
                                 {
                                     coefficient = coefficient * 2;
@@ -300,6 +310,7 @@ namespace CombatDataClasses.AbilityProcessing
                             return new List<IEffect>();
                         }
                         List<IEffect> effects = new List<IEffect>();
+                        GeneralProcessor.preCommand(source, targets, combatData, effects, true);
                         float coefficient = 1.0f;
                         source.usedAbilities.Add("Adrenaline");
 

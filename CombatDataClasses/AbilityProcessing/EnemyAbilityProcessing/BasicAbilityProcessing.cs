@@ -49,6 +49,11 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing
                 weakness = weakness * 2;
             }
 
+            if (ModificationsGeneration.BasicModificationsGeneration.hasMod(fcc, "Ranged"))
+            {
+                weakness = (int)(weakness * 3.5f);
+            }
+
             if (ModificationsGeneration.BasicModificationsGeneration.hasMod(fcc, "Reckless"))
             {
                 weakness = weakness / 4;

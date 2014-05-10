@@ -14,7 +14,8 @@ namespace CombatDataClasses.AbilityProcessing
         public bool isType(string name)
         {
             if (name == "Magic Dart"
-                || name == "Magic Missile")
+                || name == "Magic Missile"
+                || name == "Arcane Prison")
             {
                 return true;
             }
@@ -25,6 +26,10 @@ namespace CombatDataClasses.AbilityProcessing
         public bool isDisabled(string abilityName, LiveImplementation.FullCombatCharacter source, LiveImplementation.CombatData combatData)
         {
             if (abilityName == "Magic Missile" && source.mp == 0)
+            {
+                return true;
+            }
+            else if (combatData.hasCooldown(source.name, abilityName))
             {
                 return true;
             }
@@ -50,6 +55,10 @@ namespace CombatDataClasses.AbilityProcessing
             if (level >= 3)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Magic Missile", true, 1, true, isDisabled("Magic Missile", source, combatData)));
+            }
+            if (level >= 7)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Arcane Prison", false, 0, true, isDisabled("Arcane Prison", source, combatData)));
             }
 
             return commands;
@@ -81,7 +90,42 @@ namespace CombatDataClasses.AbilityProcessing
                         damageMultiplier = 15,
                         maxTargets = 1,
                         mpCost = 1,
+                        requiredClassLevel = 3,
                         damageType = AbilityInfo.DamageType.Magical
+                    };
+
+                    return ai.getCommand();
+                case "Arcane Prison":
+                    ai = new AbilityInfo()
+                    {
+                        name = "Arcane Prison",
+                        message = "{Name} has sealed {Target} in an arcane prison.",
+                        ranged = false,
+                        maxTargets = 1,
+                        cooldown = "Arcane Prison",
+                        cooldownDuration = 180,
+                        requiredClassLevel = 7,
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
+                        {
+                            foreach (FullCombatCharacter t in target)
+                            {
+                                if (!BasicModificationsGeneration.hasMod(t, "Disarmed"))
+                                {
+                                    List<PlayerModels.CombatDataModels.CombatConditionModel> conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>();
+                                    conditions.Add(new PlayerModels.CombatDataModels.CombatConditionModel()
+                                    {
+                                        name = "Time",
+                                        state = (source.nextAttackTime + 100).ToString()
+                                    });
+                                    t.mods.Add(new PlayerModels.CombatDataModels.CombatModificationsModel()
+                                    {
+                                        name = "Arcane Prison",
+                                        conditions = conditions
+                                    });
+                                }
+                            }
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
                     };
 
                     return ai.getCommand();

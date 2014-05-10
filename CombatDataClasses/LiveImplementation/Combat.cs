@@ -505,21 +505,33 @@ namespace CombatDataClasses.LiveImplementation
                 currentEffects.Clear();
             }
 
-            if (currentCharacterIsPC)
+            if (BasicModificationsGeneration.hasMod(currentCharacter, "Arcane Prison"))
             {
-                currentEffects.Add(new Effect(EffectTypes.ShowCommand, 0, string.Empty, 0));
-            }
-            else
-            {
-                List<IEffect> enemyEffects = BasicAbilityProcessing.getCommand(currentCharacter, getAllPcsAsList(), combatData);
+                currentCharacter.nextAttackTime += 50;
+                currentEffects.Add(new Effect(EffectTypes.Message, 0, currentCharacter.name + " is unable to move!", 0));
                 combatData.setFirstTurnOver(currentCharacter.name);
                 BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
                 BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
-                foreach (IEffect e in enemyEffects)
-                {
-                    currentEffects.Add(e);
-                }
                 currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
+            }
+            else
+            {
+                if (currentCharacterIsPC)
+                {
+                    currentEffects.Add(new Effect(EffectTypes.ShowCommand, 0, string.Empty, 0));
+                }
+                else
+                {
+                    List<IEffect> enemyEffects = BasicAbilityProcessing.getCommand(currentCharacter, getAllPcsAsList(), combatData);
+                    combatData.setFirstTurnOver(currentCharacter.name);
+                    BasicModificationsGeneration.endTurnForUser(getAllPcsAsList(), currentCharacter.name);
+                    BasicModificationsGeneration.endTurnForUser(getAllNpcsAsList(), currentCharacter.name);
+                    foreach (IEffect e in enemyEffects)
+                    {
+                        currentEffects.Add(e);
+                    }
+                    currentEffects.Add(new Effect(EffectTypes.TurnEnded, 0, string.Empty, 0));
+                }
             }
 
             //Update Combat Data Models

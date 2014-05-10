@@ -35,6 +35,11 @@ namespace CombatDataClasses.LiveImplementation
         {
             foreach (CombatModificationsModel cmm in mods)
             {
+                if (cmm.name == "Arcane Prison")
+                {
+                    damage = 0;
+                    return HitEffect.Nullified;
+                }
                 if (cmm.name == "Guard")
                 {
                     damage = damage / 2;
@@ -62,7 +67,8 @@ namespace CombatDataClasses.LiveImplementation
         public enum HitEffect
         {
             None,
-            Unbalance
+            Unbalance,
+            Nullified
         }
     }
 }

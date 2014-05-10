@@ -13,7 +13,8 @@ namespace CombatDataClasses.AbilityProcessing
     {
         public bool isType(string name)
         {
-            if (name == "Magic Dart")
+            if (name == "Magic Dart"
+                || name == "Magic Missile")
             {
                 return true;
             }
@@ -23,6 +24,10 @@ namespace CombatDataClasses.AbilityProcessing
 
         public bool isDisabled(string abilityName, LiveImplementation.FullCombatCharacter source, LiveImplementation.CombatData combatData)
         {
+            if (abilityName == "Magic Missile" && source.mp == 0)
+            {
+                return true;
+            }
             return false;
         }
 
@@ -42,6 +47,10 @@ namespace CombatDataClasses.AbilityProcessing
 
             int level = source.classLevel;
             commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Magic Dart", false, 0, true, isDisabled("Magic Dart", source, combatData)));
+            if (level >= 3)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Magic Missile", true, 1, true, isDisabled("Magic Missile", source, combatData)));
+            }
 
             return commands;
         }
@@ -59,6 +68,19 @@ namespace CombatDataClasses.AbilityProcessing
                         ranged = true,
                         damageMultiplier = 5,
                         maxTargets = 1,
+                        damageType = AbilityInfo.DamageType.Magical
+                    };
+
+                    return ai.getCommand();
+                case "Magic Missile":
+                    ai = new AbilityInfo()
+                    {
+                        name = "Magic Dart",
+                        message = "{Name} has dealt {Damage} to {Target} with a Magic Missile.",
+                        ranged = true,
+                        damageMultiplier = 15,
+                        maxTargets = 1,
+                        mpCost = 1,
                         damageType = AbilityInfo.DamageType.Magical
                     };
 

@@ -26,6 +26,7 @@ namespace CombatDataClasses.AbilityProcessing
         public string cooldown { get; set; }
         public int cooldownDuration { get; set; }
         public string oncePerRest { get; set; }
+        public int mpCost { get; set; }
         public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>, AbilityInfo, ProcessResult> init { get; set; }
         public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>, AbilityInfo, ProcessResult> preExecute { get; set; }
         public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>, AbilityInfo, ProcessResult> postExecute { get; set; }
@@ -41,6 +42,7 @@ namespace CombatDataClasses.AbilityProcessing
             cooldownDuration = 60;
             oncePerRest = string.Empty;
             cooldown = string.Empty;
+            mpCost = 0;
         }
 
         public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> getCommand()
@@ -183,7 +185,12 @@ namespace CombatDataClasses.AbilityProcessing
             {
                 source.usedAbilities.Add(oncePerRest);
             }
-            
+
+            if (mpCost != 0)
+            {
+                source.mp = source.mp - mpCost;
+            }
+
             return ProcessResult.Normal;
         }
 

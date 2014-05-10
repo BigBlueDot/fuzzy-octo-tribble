@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbilityProcessing\AbilityInfo.cs" />
     <Compile Include="AbilityProcessing\AdventurerProcessor.cs" />
     <Compile Include="AbilityProcessing\AbilityDirector.cs" />
     <Compile Include="AbilityProcessing\BrawlerProcessor.cs" />

@@ -545,6 +545,18 @@ namespace CombatDataClasses.LiveImplementation
                 }
             }
 
+            foreach (PartyCharacterModel pcm in playerModel.getActiveParty().characters)
+            {
+                foreach (int key in pcs.Keys)
+                {
+                    FullCombatCharacter fcc = pcs[key];
+                    if (fcc.characterUniq == pcm.characterUniq)
+                    {
+                        pcm.usedAbilities = fcc.usedAbilities;
+                    }
+                }
+            }
+
             foreach (CombatCharacterModel ccm in combatNPCModels)
             {
                 foreach (int key in npcs.Keys)

@@ -106,7 +106,7 @@ namespace CombatDataClasses.AbilityProcessing
             }
             if (level >= 17)
             {
-                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Adrenaline", false, 0, true, isDisabled("Adrenaline", source, combatData)));
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Adrenaline", false, 0, false, isDisabled("Adrenaline", source, combatData)));
             }
 
             return commands;
@@ -114,211 +114,146 @@ namespace CombatDataClasses.AbilityProcessing
 
         public Func<LiveImplementation.FullCombatCharacter, List<LiveImplementation.FullCombatCharacter>, LiveImplementation.CombatData, List<Interfaces.IEffect>> executeCommand(Interfaces.SelectedCommand command)
         {
+            AbilityInfo ai;
             switch (command.commandName)
             {
                 case "Disarming Blow":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                    ai = new AbilityInfo()
+                    {
+                        name = "Disarming Blow",
+                        message = "{Name} has dealt {Damage} damage to {Target} with a disarming blow.",
+                        requiredClassLevel = 3,
+                        damageMultiplier = 5,
+                        damageType = AbilityInfo.DamageType.Physical,
+                        cooldown = "Disarming Blow",
+                        cooldownDuration = 60,
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            if (source.classLevel < 3 || combatData.hasCooldown(source.name, "Disarming Blow"))
-                            {
-                                return new List<IEffect>();
-                            }
-                            List<IEffect> effects = new List<IEffect>();
-                            float coefficient = 1.0f;
-                            float damageCoefficient = 1.0f;
-                            GeneralProcessor.preCommand(source, target, combatData, effects, ref damageCoefficient);
                             foreach (FullCombatCharacter t in target)
                             {
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient / t.vitality));
-                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                if (!BasicModificationsGeneration.hasMod(t, "Disarmed"))
                                 {
-                                    coefficient = coefficient * 2;
+                                    List<PlayerModels.CombatDataModels.CombatConditionModel> conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>();
+                                    conditions.Add(new PlayerModels.CombatDataModels.CombatConditionModel()
+                                    {
+                                        name = "Time",
+                                        state = (source.nextAttackTime + 60).ToString()
+                                    });
+                                    t.mods.Add(new PlayerModels.CombatDataModels.CombatModificationsModel()
+                                    {
+                                        name = "Disarmed",
+                                        conditions = conditions
+                                    });
                                 }
-                                List<PlayerModels.CombatDataModels.CombatConditionModel> conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>();
-                                conditions.Add(new PlayerModels.CombatDataModels.CombatConditionModel()
-                                {
-                                    name = "Time",
-                                    state = (source.nextAttackTime + 60).ToString()
-                                });
-                                t.mods.Add(new PlayerModels.CombatDataModels.CombatModificationsModel()
-                                {
-                                    name = "Disarmed",
-                                    conditions = conditions
-                                });
-                                combatData.cooldowns.Add(new CooldownModel
-                                {
-                                    character = source.name,
-                                    name = "Disarming Blow",
-                                    time = (source.nextAttackTime + 120)
-                                });
-                                
-                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a disarming blow.", 0));
-
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                            return effects;
-                        });
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
                 case "One-Two Punch":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                    ai = new AbilityInfo()
                     {
-                        if (source.classLevel < 7 || combatData.hasCooldown(source.name, "One-Two Punch"))
-                        {
-                            return new List<IEffect>();
-                        }
-                        List<IEffect> effects = new List<IEffect>();
-                        float coefficient = 1.0f;
-                        float damageCoefficient = 1.0f;
-                        GeneralProcessor.preCommand(source, target, combatData, effects, ref damageCoefficient);
-                        foreach (FullCombatCharacter t in target)
-                        {
-                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient * .75f / t.vitality));
-                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                            {
-                                coefficient = coefficient * 2;
-                            }
-                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                            {
-                                coefficient = coefficient * 2;
-                            }
-                            combatData.cooldowns.Add(new CooldownModel()
-                            {
-                                character = source.name,
-                                name = "One-Two Punch",
-                                time = (source.nextAttackTime + 120)
-                            });
+                        name = "One-Two Punch",
+                        message = "{Name} has dealt {HitCount}x{Damage} damage to {Target} with a One-Two Punch.",
+                        requiredClassLevel = 7,
+                        damageMultiplier = 5,
+                        damageCoefficient = 0.75f,
+                        damageType = AbilityInfo.DamageType.Physical,
+                        cooldown = "One-Two Punch",
+                        cooldownDuration = 120,
+                        hits = 2
+                    };
 
-                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                            effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt 2x" + dmg + " damage to " + t.name + " with a One-Two Punch.", 0));
-
-                        }
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                        return effects;
-                    });
+                    return ai.getCommand();
                 case "Sweep":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    ai = new AbilityInfo()
                     {
-                        if (source.classLevel < 9 || combatData.hasCooldown(source.name, "Sweep"))
-                        {
-                            return new List<IEffect>();
-                        }
-                        List<IEffect> effects = new List<IEffect>();
-                        float attackTimeCoefficient = 1.5f;
-                        float damageCoefficient = .5f;
-                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
-                        foreach (FullCombatCharacter t in targets)
-                        {
-                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient / t.vitality));
-                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                            {
-                                attackTimeCoefficient = attackTimeCoefficient * 2;
-                            }
+                        name = "Sweep",
+                        message = "{Name} dealt damage to all enemies with a sweeping blow!",
+                        requiredClassLevel = 9,
+                        maxTargets = 10,
+                        damageMultiplier = 5,
+                        damageCoefficient = 0.5f,
+                        attackTimeCoefficient = 1.5f,
+                        damageType = AbilityInfo.DamageType.Physical,
+                        cooldown = "Sweep",
+                        cooldownDuration = 180
+                    };
 
-                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                        }
-                        combatData.cooldowns.Add(new CooldownModel()
-                        {
-                            character = source.name,
-                            name = "Sweep",
-                            time = (source.nextAttackTime + 180)
-                        });
-                        effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt damage to all enemies with a sweeping blow!", 0));
-                        GeneralProcessor.calculateNextAttackTime(source, attackTimeCoefficient, combatData);
-                        return effects;
-                    });
+                    return ai.getCommand();
                 case "Preemptive Strike":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    ai = new AbilityInfo()
                     {
-                        if (source.classLevel < 13 || isDisabled("Preemptive Strike", source, combatData))
+                        name = "Preemptive Strike",
+                        message = "{Name} dealt {Damage} damage to {Target} with a Preemptive Strike!",
+                        requiredClassLevel = 13,
+                        damageMultiplier = 5,
+                        damageCoefficient = 1.5f,
+                        damageType = AbilityInfo.DamageType.Physical,
+                        cooldown = "Preemptive Strike",
+                        cooldownDuration = 120,
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            return new List<IEffect>();
-                        }
-                        List<IEffect> effects = new List<IEffect>();
-                        float coefficient = 1.0f;
-                        float damageCoefficient = 1.0f;
-                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
-                        FullCombatCharacter currentTarget = targets[0];
-                        foreach (FullCombatCharacter t in targets)
-                        {
-                            if (currentTarget.nextAttackTime > t.nextAttackTime)
+                            FullCombatCharacter currentTarget = target[0];
+                            foreach (FullCombatCharacter t in target)
                             {
-                                currentTarget = t;
-                            }
-                        }
-                        int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f * damageCoefficient / currentTarget.vitality));
-                        if (currentTarget.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                        {
-                            coefficient = coefficient * 2;
-                        }
-
-                        effects.Add(new Effect(EffectTypes.DealDamage, currentTarget.combatUniq, string.Empty, dmg));
-                        combatData.cooldowns.Add(new CooldownModel()
-                        {
-                            character = source.name,
-                            name = "Preemptive Strike",
-                            time = (source.nextAttackTime + 120)
-                        });
-                        effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt " + dmg + " damage to " + currentTarget.name + " with a preemptive strike!", 0));
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                        return effects;
-                    });
-                case "Vicious Blow":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
-                    {
-                        if (source.classLevel < 15 || isDisabled("Vicious Blow", source, combatData))
-                        {
-                            return new List<IEffect>();
-                        }
-                        List<IEffect> effects = new List<IEffect>();
-                        float coefficient = 1.0f;
-                        float damageCoefficient = 1.0f;
-                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
-                        foreach (FullCombatCharacter t in targets)
-                        {
-                            if (t.hp < t.maxHP / 2)
-                            {
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * 1.5f * damageCoefficient / t.vitality));
-                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
+                                if (currentTarget.nextAttackTime > t.nextAttackTime)
                                 {
-                                    coefficient = coefficient * 2;
+                                    currentTarget = t;
                                 }
-                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + " dealt " + dmg + " damage to " + t.name + " with a vicious blow!", 0));
                             }
-                            else
-                            {
-                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + "'s Vicious Blow Missed!", 0));
-                            }
-                        }
 
-                        combatData.cooldowns.Add(new CooldownModel()
-                        {
-                            character = source.name,
-                            name = "Vicious Blow",
-                            time = (source.nextAttackTime + 180)
-                        });
+                            target.Clear();
+                            target.Add(currentTarget);
 
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                        return effects;
-                    });
-                case "Adrenaline":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
+                case "Vicious Blow":
+                    ai = new AbilityInfo()
                     {
-                        if (source.classLevel < 17 || isDisabled("Adrenaline", source, combatData))
+                        name = "Vicious Blow",
+                        message = "{Name} dealt {Damage} damage to {Target} with a Vicious Blow!",
+                        requiredClassLevel = 15,
+                        damageMultiplier = 5,
+                        damageCoefficient = 1.5f,
+                        damageType = AbilityInfo.DamageType.Physical,
+                        cooldown = "Vicious Blow",
+                        cooldownDuration = 180,
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            return new List<IEffect>();
-                        }
-                        List<IEffect> effects = new List<IEffect>();
-                        GeneralProcessor.preCommand(source, targets, combatData, effects, true);
-                        float coefficient = 1.0f;
-                        source.usedAbilities.Add("Adrenaline");
+                            FullCombatCharacter currentTarget = target[0];
 
-                        source.mods.Add(BasicModificationsGeneration.getAdrenalineModification((source.nextAttackTime + 60).ToString()));
+                            if (currentTarget.hp * 2 > currentTarget.maxHP)
+                            {
+                                abilityInfo.message = "{Name}'s vicious blow missed {Target}!";
+                                abilityInfo.damageCoefficient = 0.0f;
+                            }
 
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                        return effects;
-                    });
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
+                case "Adrenaline":
+                    ai = new AbilityInfo()
+                    {
+                        name = "Adrenaline",
+                        message = "Adrenaline pumps through {Name}!",
+                        requiredClassLevel = 17,
+                        oncePerRest = "Adrenaline",
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
+                        {
+                            source.mods.Add(BasicModificationsGeneration.getAdrenalineModification((source.nextAttackTime + 60).ToString()));
+
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

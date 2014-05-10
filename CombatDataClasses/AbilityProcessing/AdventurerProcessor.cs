@@ -91,13 +91,17 @@ namespace CombatDataClasses.ClassProcessor
 
         public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> executeCommand(SelectedCommand command)
         {
+            AbilityInfo ai;
             switch (command.commandName)
             {
                 case "Glance":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
+                    ai = new AbilityInfo()
+                    {
+                        attackTimeCoefficient = .5f,
+                        name = "Glance",
+                        message = "{Target} has been glanced!",
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            List<IEffect> effects = new List<IEffect>();
-                            GeneralProcessor.preCommand(source, target, combatData, effects, true);
                             foreach (FullCombatCharacter t in target)
                             {
                                 if (!BasicModificationsGeneration.hasMod(t, "Glance"))
@@ -107,124 +111,95 @@ namespace CombatDataClasses.ClassProcessor
                                         name = "Glance",
                                         conditions = new List<PlayerModels.CombatDataModels.CombatConditionModel>()
                                     });
-                                    effects.Add(new Effect(EffectTypes.Message, 0, t.name + " has been glanced!", 0));
                                 }
                             }
-                            GeneralProcessor.calculateNextAttackTime(source, .5f, combatData);
-                            return effects;
-                        });
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
                 case "Guarded Strike":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    ai = new AbilityInfo()
+                    {
+                        name = "Guarded Strike",
+                        damageType = AbilityInfo.DamageType.Physical,
+                        requiredClassLevel = 3,
+                        message = "{Name} has dealt {Damage} damage to {Target}.",
+                        damageMultiplier = 5,
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            if (source.classLevel < 3) //Verify that they have the level to use this skill
-                            {
-                                return new List<IEffect>();
-                            }
-                            List<IEffect> effects = new List<IEffect>();
-                            float attackTimeCoefficient = 1.0f;
-                            float damageCoefficient = 1.0f;
-                            GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
-                            string preMessage = string.Empty;
                             if (BasicModificationsGeneration.hasMod(source, "Guard"))
                             {
-                                attackTimeCoefficient = .75f;
-                                preMessage = source.name + " attacks quicker due to guarding!  ";
+                                abilityInfo.attackTimeCoefficient = .75f;
+                                abilityInfo.message = "{Name} attacks quicker due to guarding!  " + abilityInfo.message;
                             }
-                            foreach (FullCombatCharacter t in targets)
-                            {
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 5 * damageCoefficient / t.vitality));
-                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                                {
-                                    attackTimeCoefficient = attackTimeCoefficient * 2;
-                                }
-                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                                effects.Add(new Effect(EffectTypes.Message, 0, preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + ".", 0));
-                            }
-                            GeneralProcessor.calculateNextAttackTime(source, attackTimeCoefficient, combatData);
-                            return effects;
-                        });
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
                 case "Reckless Hit":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    ai = new AbilityInfo()
                     {
-                        if (source.classLevel < 5)
+                        name = "Reckless Hit",
+                        damageType = AbilityInfo.DamageType.Physical,
+                        requiredClassLevel = 5,
+                        attackTimeCoefficient = 1.2f,
+                        damageMultiplier = 8,
+                        message = "{Name} has dealt {Damage} damage to {Target} with a reckless attack.",
+                        postExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            return new List<IEffect>();
-                        }
-                        float coefficient = 1.2f;
-                        float damageCoefficient = 1.0f;
-                        List<IEffect> effects = new List<IEffect>();
-                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
-                        foreach(FullCombatCharacter t in targets){
-                            int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * 8 * damageCoefficient / t.vitality));
-                            if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                            {
-                                coefficient = coefficient * 2;
-                            }
-                            effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                            effects.Add(new Effect(EffectTypes.Message, 0, source.name + " has dealt " + dmg + " damage to " + t.name + " with a reckless attack.", 0));
-                        }
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                        source.mods.Add(BasicModificationsGeneration.getRecklessModification(source.name));
-                        return effects;
-                    });
+                            source.mods.Add(BasicModificationsGeneration.getRecklessModification(source.name));
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
                 case "Guided Strike":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
-                        {
-                            if (source.classLevel < 7)
-                            {
-                                return new List<IEffect>();
-                            }
-                            List<IEffect> effects = new List<IEffect>();
-                            float coefficient = 1.0f;
-                            float damageCoefficient = 1.0f;
-                            GeneralProcessor.preCommand(source, targets, combatData, effects, ref coefficient);
-                            foreach (FullCombatCharacter t in targets)
-                            {
-                                float dmgMod = .8f;
-                                string preMessage = string.Empty;
-                                if (BasicModificationsGeneration.hasMod(t, "Glance"))
-                                {
-                                    dmgMod = 1.2f;
-                                    preMessage = source.name + " is locked on!  ";
-                                }
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * dmgMod * damageCoefficient * 5 / t.vitality));
-                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                                {
-                                    coefficient = coefficient * 2;
-                                }
-                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                                effects.Add(new Effect(EffectTypes.Message, 0,preMessage + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
-                            }
-                            GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                            return effects;
-                        });
-                case "First Strike":
-                    return ((FullCombatCharacter source, List<FullCombatCharacter> targets, CombatData combatData) =>
+                    ai = new AbilityInfo()
                     {
-                        if (source.classLevel < 15)
+                        name = "Guided Strike",
+                        damageType = AbilityInfo.DamageType.Physical,
+                        requiredClassLevel = 7,
+                        damageMultiplier = 5,
+                        message = "{Name} has dealt {Damage} damage to {Target} with a guided strike.",
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
                         {
-                            return new List<IEffect>();
-                        }
-                        List<IEffect> effects = new List<IEffect>();
-                        float coefficient = 1.0f;
-                        float damageCoefficient = 1.0f;
-                        GeneralProcessor.preCommand(source, targets, combatData, effects, ref damageCoefficient);
-                        if (combatData.isFirstTurn(source.name))
-                        {
-                            foreach (FullCombatCharacter t in targets)
+                            abilityInfo.damageCoefficient = 0.8f;
+                            string preMessage = string.Empty;
+                            if (BasicModificationsGeneration.hasMod(target[0], "Glance"))
                             {
-                                int dmg = (int)((CombatCalculator.getNormalAttackValue(source) * damageCoefficient * 1.5 * 5 / t.vitality));
-                                if (t.inflictDamage(ref dmg) == FullCombatCharacter.HitEffect.Unbalance)
-                                {
-                                    coefficient = coefficient * 2;
-                                }
-                                effects.Add(new Effect(EffectTypes.DealDamage, t.combatUniq, string.Empty, dmg));
-                                effects.Add(new Effect(EffectTypes.Message, 0, source.name + " is well rested.  " + source.name + " has dealt " + dmg + " damage to " + t.name + " with a guided strike.", 0));
+                                abilityInfo.damageCoefficient = 1.2f;
+                                abilityInfo.message = "{Name} is locked on!  " + abilityInfo.message;
                             }
-                        }
-                        GeneralProcessor.calculateNextAttackTime(source, coefficient, combatData);
-                        return effects;
-                    });
+                            return AbilityInfo.ProcessResult.Normal;
+                        })
+                    };
+
+                    return ai.getCommand();
+                case "First Strike":
+                    ai = new AbilityInfo()
+                    {
+                        name = "First Strike",
+                        damageType = AbilityInfo.DamageType.Physical,
+                        requiredClassLevel = 15,
+                        damageMultiplier = 5,
+                        damageCoefficient = 1.5f,
+                        message = "{Name} is well rested.  {Name} has dealt {Damage} damage to {Target}",
+                        preExecute = ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData, List<IEffect> effects, AbilityInfo abilityInfo) =>
+                        {
+                            if (combatData.isFirstTurn(source.name))
+                            {
+                                return AbilityInfo.ProcessResult.Normal;
+                            }
+                            else
+                            {
+                                return AbilityInfo.ProcessResult.EndTurn;
+                            }
+                        })
+                    };
+
+                    return ai.getCommand();
                 default:
                     return ((FullCombatCharacter source, List<FullCombatCharacter> target, CombatData combatData) =>
                     {

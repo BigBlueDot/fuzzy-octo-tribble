@@ -27,6 +27,13 @@ namespace CombatDataClasses.AbilityProcessing
             return attackValue;
         }
 
+        public static int getMagicAttackValue(FullCombatCharacter fcc)
+        {
+            int attackValue = fcc.intellect;
+
+            return attackValue;
+        }
+
         public static void removeRanged(FullCombatCharacter fcc)
         {
             CombatModificationsModel toRemove = null;

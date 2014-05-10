@@ -266,6 +266,7 @@ namespace PlayerModels
             {
                 classes.Add("Brawler");
             }
+            classes.Add("Mage");
             return classes;
         }
 

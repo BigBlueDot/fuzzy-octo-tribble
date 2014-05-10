@@ -83,7 +83,7 @@ namespace PlayerModels.StatCalculations
             });
             abilities.Add(new AbilityDescription()
             {
-                name = "Magic Missle",
+                name = "Magic Missile",
                 description = "Deals 300% normal magic damage.  Costs 1 MP to use.  Can be used from range.  Note that ranged attacks deal 25% less damage."
             });
             abilities.Add(new AbilityDescription()
@@ -103,8 +103,8 @@ namespace PlayerModels.StatCalculations
             });
             abilities.Add(new AbilityDescription()
             {
-                name = "Ash Missle",
-                description = "Casts Magic Missle using Arcane Ash as a reagant."
+                name = "Ash Missile",
+                description = "Casts Magic Missile using Arcane Ash as a reagant."
             });
             abilities.Add(new AbilityDescription()
             {

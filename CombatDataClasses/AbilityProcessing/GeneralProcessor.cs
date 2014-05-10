@@ -19,6 +19,7 @@ namespace CombatDataClasses.ClassProcessor
             processors = new Dictionary<string, IProcessor>();
             processors.Add("Adventurer", new AdventurerProcessor());
             processors.Add("Brawler", new BrawlerProcessor());
+            processors.Add("Mage", new MageProcessor());
         }
 
         public static int calculateNextAttackTime(int startTime, float abilityCoefficient, int agi)

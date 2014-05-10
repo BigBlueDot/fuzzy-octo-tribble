@@ -48,6 +48,7 @@
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\Goblins\GoblinAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\GeneralProcessor.cs" />
     <Compile Include="AbilityProcessing\IProcessor.cs" />
+    <Compile Include="AbilityProcessing\MageProcessor.cs" />
     <Compile Include="AbilityProcessing\ModificationsGeneration\BasicModificationsGeneration.cs" />
     <Compile Include="CombatDirector.cs" />
     <Compile Include="CombatEndType.cs" />

@@ -40,6 +40,7 @@ namespace CombatDataClasses.AbilityProcessing
             maxTargets = 1;
             cooldownDuration = 60;
             oncePerRest = string.Empty;
+            cooldown = string.Empty;
         }
 
         public Func<FullCombatCharacter, List<FullCombatCharacter>, CombatData, List<IEffect>> getCommand()

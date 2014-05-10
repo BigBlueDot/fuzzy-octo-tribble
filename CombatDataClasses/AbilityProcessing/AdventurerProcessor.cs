@@ -15,7 +15,7 @@ namespace CombatDataClasses.ClassProcessor
     {
         public bool isType(string name)
         {
-            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit" || name == "Guided Strike" || name == "First Strike")
+            if (name == "Glance" || name == "Guarded Strike" || name == "Reckless Hit" || name == "Guided Strike" || name == "First Strike" || name == "Throw Rock")
             {
                 return true;
             }
@@ -79,6 +79,10 @@ namespace CombatDataClasses.ClassProcessor
             if (level >= 7)
             {
                 commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Guided Strike", false, 0, true, isDisabled("Guided Strike", source, combatData)));
+            }
+            if (level >= 9)
+            {
+                commands.Add(new Command(false, new List<ICommand>(), false, 0, 0, "Throw Rock", false, 0, true, isDisabled("Throw Rock", source, combatData)));
             }
             if (level >= 15)
             {
@@ -174,6 +178,18 @@ namespace CombatDataClasses.ClassProcessor
                             }
                             return AbilityInfo.ProcessResult.Normal;
                         })
+                    };
+
+                    return ai.getCommand();
+                case "Throw Rock":
+                    ai = new AbilityInfo()
+                    {
+                        name = "Throw Rock",
+                        damageType = AbilityInfo.DamageType.Physical,
+                        requiredClassLevel = 9,
+                        damageMultiplier = 5,
+                        message = "{Name} has dealt {Damage} damage to {Target} by throwing a rock.",
+                        ranged = true
                     };
 
                     return ai.getCommand();

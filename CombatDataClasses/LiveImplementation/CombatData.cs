@@ -156,6 +156,11 @@ namespace CombatDataClasses.LiveImplementation
 
         public bool hasCooldown(string characterName, string attack)
         {
+            if (attack == string.Empty)
+            {
+                return false;
+            }
+
             foreach (CooldownModel cd in combatData.cooldowns)
             {
                 if (cd.character == characterName && cd.name == attack)

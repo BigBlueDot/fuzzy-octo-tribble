@@ -10,7 +10,7 @@ namespace EnemyDataClasses.Slimes
     {
         public bool isType(string name)
         {
-            if (name == "Goblin" || name == "Boss Goblin")
+            if (name == "Blue Slime")
             {
                 return true;
             }
@@ -21,10 +21,8 @@ namespace EnemyDataClasses.Slimes
         {
             switch (type)
             {
-                case "Goblin":
-                    return "Goblins are generally nocturnal creatures.  Once a year, during the Festival of Light, there is a competition to see which Goblin can stay awake the longest in a well-lit room.";
-                case "Boss Goblin":
-                    return "The name \"Boss Goblin\" actually comes from a mistranslation of the Goblin word for \"Stylish.\"";
+                case "Blue Slime":
+                    return "Blue Slimes come from a far away land.  They are not very fast.";
                 default:
                     return string.Empty;
             }

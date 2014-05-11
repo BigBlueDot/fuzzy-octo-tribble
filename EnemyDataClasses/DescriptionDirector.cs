@@ -14,6 +14,7 @@ namespace EnemyDataClasses
         {
             descriptions = new List<IDescriptions>();
             descriptions.Add(new Goblins.Descriptions());
+            descriptions.Add(new Slimes.Descriptions());
         }
 
         public static string getDescription(string type)

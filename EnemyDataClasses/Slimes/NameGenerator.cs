@@ -22,6 +22,7 @@ namespace EnemyDataClasses.Slimes
             names.Add("Blubba");
             names.Add("Goobly");
             names.Add("Roger");
+            names.Add("Gel Oh");
             names.Add("Boodly");
             names.Add("Goozanna");
             names.Add("Riggy");

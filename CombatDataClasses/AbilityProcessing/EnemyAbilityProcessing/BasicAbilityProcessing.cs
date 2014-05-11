@@ -48,6 +48,11 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing
         {
             int weakness = fcc.hp;
 
+            if (fcc.hp <= 0)
+            {
+                weakness = int.MaxValue;
+            }
+
             if (ModificationsGeneration.BasicModificationsGeneration.hasMod(fcc, "Guard"))
             {
                 weakness = weakness * 2;

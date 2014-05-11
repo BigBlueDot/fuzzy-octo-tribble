@@ -355,7 +355,7 @@ namespace CombatDataClasses.LiveImplementation
                 CharacterDisplay cd = new CharacterDisplay(current.name, current.hp, current.maxHP, current.mp, current.maxMP, statuses, current.combatUniq, current.turnOrder, current.className, current.level);
                 cd.setGlanceStats(current.strength, current.vitality, current.intellect, current.wisdom, current.agility, string.Empty);
                 pcDisplays.Add(cd);
-                if (pcs[key].turnOrder < fastestPCTime)
+                if (pcs[key].turnOrder < fastestPCTime && pcs[key].hp > 0)
                 {
                     fastestPCTime = pcs[key].turnOrder;
                     fastestPCName = pcs[key].name;
@@ -435,7 +435,7 @@ namespace CombatDataClasses.LiveImplementation
             int fastestPCTime = int.MaxValue;
             foreach (int key in pcs.Keys)
             {
-                if (pcs[key].turnOrder < fastestPCTime)
+                if (pcs[key].turnOrder < fastestPCTime && pcs[key].hp > 0)
                 {
                     fastestPCTime = pcs[key].turnOrder;
                     combatUniq = pcs[key].combatUniq;
@@ -456,7 +456,7 @@ namespace CombatDataClasses.LiveImplementation
                 foreach (int key in npcs.Keys)
                 {
                     FullCombatCharacter npc = npcs[key];
-                    if (!usedUniqs.Contains(npc.combatUniq) && npc.nextAttackTime < fastestTime)
+                    if (!usedUniqs.Contains(npc.combatUniq) && npc.nextAttackTime < fastestTime && npc.hp != 0)
                     {
                         currentFastestUniq = npc.combatUniq;
                         fastestTime = npc.nextAttackTime;
@@ -472,7 +472,7 @@ namespace CombatDataClasses.LiveImplementation
                 foreach (int key in pcs.Keys)
                 {
                     FullCombatCharacter pc = pcs[key];
-                    if (!usedUniqs.Contains(pc.combatUniq) && pc.nextAttackTime < fastestTime)
+                    if (!usedUniqs.Contains(pc.combatUniq) && pc.nextAttackTime < fastestTime && pc.hp != 0)
                     {
                         currentFastestUniq = pc.combatUniq;
                         fastestTime = pc.nextAttackTime;

@@ -381,14 +381,14 @@ namespace MapDataClasses
         }
 
 
-        public static Enemy getEnemy(string mapName, string enemyType)
+        public static Enemy getEnemy(string mapName, string enemyType, bool needName = true)
         {
             switch (mapName)
             {
                 case "Emergence Cavern":
-                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType);
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType, needName);
                 case "Emergence Cavern F2":
-                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType);
+                    return TutorialMapGenerators.EmergenceCavernGenerator.Implementation.getEnemy(enemyType, needName);
                 default:
                     return new Enemy();
             }

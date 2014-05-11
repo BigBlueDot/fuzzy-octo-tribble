@@ -644,7 +644,7 @@ namespace CombatDataClasses.LiveImplementation
                         if (isNPC)
                         {
                             //Calculate xp and cp
-                            MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, characters[key].className);
+                            MapDataClasses.MapDataClasses.Enemy enemy = MapDataClasses.MapDataManager.getEnemy(map, characters[key].className, false);
                             getXPAndCP(enemy.xp, enemy.cp);
                         }
                     }

@@ -284,16 +284,16 @@ namespace MapDataClasses.TutorialMapGenerators
             return encounter;
         }
 
-        public Enemy getEnemy(string enemyType)
+        public Enemy getEnemy(string enemyType, bool needName = true)
         {
             switch (enemyType)
             {
                 case "Goblin":
-                    return new MapDataClasses.Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin", xp = 5, cp = 5 };
+                    return new MapDataClasses.Enemy() { name = (needName ? EnemyDataClasses.Goblins.NameGenerator.getGoblinName() : string.Empty), maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin", xp = 5, cp = 5 };
                 case "Blue Slime":
-                    return new MapDataClasses.Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 40, maxMP = 1, strength = 8, vitality = 8, agility = 10, intellect = 8, wisdom = 5, level = 1, type = "Blue Slime", xp = 8, cp = 8 };
+                    return new MapDataClasses.Enemy() { name = (needName ? EnemyDataClasses.Slimes.NameGenerator.getSlimeName() : string.Empty), maxHP = 40, maxMP = 1, strength = 8, vitality = 8, agility = 10, intellect = 8, wisdom = 5, level = 1, type = "Blue Slime", xp = 8, cp = 8 };
                 case "Boss Goblin":
-                    return new Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 50, maxMP = 1, strength = 10, vitality = 10, agility = 10, intellect = 10, wisdom = 10, level = 3, type = "Boss Goblin", xp = 10, cp = 10 };
+                    return new Enemy() { name = (needName ? EnemyDataClasses.Goblins.NameGenerator.getGoblinName() : string.Empty), maxHP = 50, maxMP = 1, strength = 10, vitality = 10, agility = 10, intellect = 10, wisdom = 10, level = 3, type = "Boss Goblin", xp = 10, cp = 10 };
                 default:
                     return getEnemy("Goblin");
             }

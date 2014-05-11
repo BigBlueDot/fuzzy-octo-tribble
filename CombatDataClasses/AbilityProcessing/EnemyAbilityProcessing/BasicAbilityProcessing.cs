@@ -35,7 +35,7 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing
             foreach (FullCombatCharacter fcc in characters)
             {
                 int newWeakLevel = getWeakness(fcc);
-                if (newWeakLevel < currentWeakLevel)
+                if (newWeakLevel < currentWeakLevel && fcc.hp > 0)
                 {
                     currentCharacter = fcc;
                     currentWeakLevel = newWeakLevel;

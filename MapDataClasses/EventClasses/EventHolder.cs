@@ -15,39 +15,30 @@ namespace MapDataClasses.EventClasses
         {
             List<Enemy> enemies = new List<Enemy>();
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
             events.Add(1, EventDataModel.getCombatEvent(new Encounter(isEvent:true)
             {
                 enemies = enemies,
-                message = "A single goblin blocks your path!",
+                message = "A horde of Goblins attacks!",
             }, ObjectiveType.EmergenceCavernAdditionalAdventurer));
 
             enemies = new List<Enemy>();
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Blue Slime"));
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Blue Slime"));
             events.Add(2, EventDataModel.getCombatEvent(new Encounter(isEvent:true)
             {
                 enemies = enemies,
-                message = "A horde of angry Goblins attacks!"
+                message = "Twin Slimes appear!"
             }, ObjectiveType.EmergenceCavernB2));
 
             enemies = new List<Enemy>();
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            List<Encounter> encounters = new List<Encounter>();
-            encounters.Add(new Encounter(isEvent:true)
+            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Boss Goblin"));
+            events.Add(3, EventDataModel.getCombatEvent(new Encounter(isEvent: true)
             {
                 enemies = enemies,
-                message = "A single goblin blocks your path!",
-            });
-            enemies = new List<Enemy>();
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            encounters.Add(new Encounter(isEvent:true)
-            {
-                enemies = enemies,
-                message = "Another goblin has appeared!",
-            });
-            events.Add(3, EventDataModel.getMultiCombatEvent(encounters, ObjectiveType.Brawler));
-            events.Add(4, EventDataModel.getTrapEvent(EventDataType.EmergenceCavernCeilingCollapse, string.Empty));
+                message = "A well dressed Goblin appears!"
+            }, ObjectiveType.EmergenceCavernB2));
         }
 
         public static EventDataModel getMapEvent(int uniq)

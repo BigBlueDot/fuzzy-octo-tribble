@@ -43,14 +43,17 @@ namespace MapDataClasses.TutorialMapGenerators
                 for (var y = 0; y < 40; y++)
                 {
                     mm.map[x, y] = "CaveEmpty";
-                    if (x == 26)
+                    if (x == 26 && y >= 27)
                     {
                         mm.map[x, y] = "CaveEmptyThree";
                     }
-                    if (y == 38)
-                    {
-                        mm.map[x, y] = "CaveEmptyTwo";
-                    }
+                }
+                if (x >= 29)
+                {
+                    mm.map[x, 38] = "CaveEmptyTwo";
+                    mm.map[x, 37] = "CaveEmptyTwo";
+                    mm.map[x, 36] = "CaveEmptyTwo";
+                    mm.map[x, 35] = "CaveEmptyTwo";
                 }
                 mm.map[x, 0] = "CaveWall";
                 mm.map[x, 39] = "CaveWall";
@@ -312,7 +315,7 @@ namespace MapDataClasses.TutorialMapGenerators
             });
             mm.eventCollection.addEvent(new MapEventModel()
             {
-                x = 12,
+                x = 3,
                 y = 37,
                 rewardType = ClientEvent.RewardType.Objective,
                 eventData = EventHolder.getMapEvent(2),
@@ -320,19 +323,11 @@ namespace MapDataClasses.TutorialMapGenerators
             });
             mm.eventCollection.addEvent(new MapEventModel()
             {
-                x = 28,
-                y = 37,
+                x = 45,
+                y = 12,
                 rewardType = ClientEvent.RewardType.Objective,
                 eventData = EventHolder.getMapEvent(3),
                 rewardValue = 0
-            });
-            mm.eventCollection.addEvent(new MapEventModel()
-            {
-                x = 28,
-                y = 38,
-                rewardType = ClientEvent.RewardType.CP,
-                eventData = EventHolder.getMapEvent(4),
-                rewardValue = 500
             });
 
             //Add an "event wall" on the left and two on the right

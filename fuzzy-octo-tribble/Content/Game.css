@@ -282,6 +282,66 @@
 }
 
 
+.Blue.Slime {
+    background-image: url('/Images/Game/Combat/BlueSlime.png');
+    background-size: 80px, 108px;
+    width: 80px !important;
+    height: 108px !important;
+}
+
+.Wounded > .Blue.Slime {
+    background-image: url('/Images/Game/Combat/BlueSlimeInjured.png');
+}
+
+.Blue.Slime.Idle {
+    background-image: url('/Images/Game/Combat/BlueSlimeIdle.png');
+}
+
+.Wounded > .Blue.Slime.Idle {
+    background-image: url('/Images/Game/Combat/BlueSlimeInjuredIdle.png');
+}
+
+.Blue.Slime.Left {
+    background-image: url('/Images/Game/Combat/BlueSlimeLeft.png');
+}
+
+.Wounded > .Blue.Slime.Left {
+    background-image: url('/Images/Game/Combat/BlueSlimeInjuredLeft.png');
+}
+
+.Blue.Slime.WalkOne {
+    background-image: url('/Images/Game/Combat/BlueSlimeWalkOne.png');
+}
+
+.Wounded > .Blue.Slime.WalkOne {
+    background-image: url('/Images/Game/Combat/BlueSlimeInjuredWalkOne.png');
+}
+
+.Blue.Slime.WalkOne.Left {
+    background-image: url('/Images/Game/Combat/BlueSlimeLeftWalkOne.png');
+}
+
+.Wounded > .Blue.Slime.WalkOne.Left {
+    background-image: url('/Images/Game/Combat/BlueSlimeLeftInjuredWalkOne.png');
+}
+
+.PreAttack > .Blue.Slime {
+    background-image: url('/Images/Game/Combat/BlueSlimePreAttack.png') !important;
+}
+
+.PreAttack.Wounded > .Blue.Slime {
+    background-image: url('/Images/Game/Combat/BlueSlimeInjuredPreAttack.png') !important;
+}
+
+.Attack > .Blue.Slime {
+    background-image: url('/Images/Game/Combat/BlueSlimeAttack.png') !important;
+}
+
+.Attack.Wounded > .Blue.Slime {
+    background-image: url('/Images/Game/Combat/BlueSlimeInjuredAttack.png') !important;
+}
+
+
 .Boss.Goblin {
     background-image: url('/Images/Game/Combat/BossGoblin.png');
     background-size: 84px, 152px;

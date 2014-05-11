@@ -46,6 +46,7 @@
     <Compile Include="AbilityProcessing\CombatCalculator.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\BasicAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\EnemyAbilityProcessing\Goblins\GoblinAbilityProcessing.cs" />
+    <Compile Include="AbilityProcessing\EnemyAbilityProcessing\Slimes\SlimeAbilityProcessing.cs" />
     <Compile Include="AbilityProcessing\GeneralProcessor.cs" />
     <Compile Include="AbilityProcessing\IProcessor.cs" />
     <Compile Include="AbilityProcessing\MageProcessor.cs" />

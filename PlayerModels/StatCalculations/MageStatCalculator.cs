@@ -43,7 +43,7 @@ namespace PlayerModels.StatCalculations
                         }
                         if (currentNumber == 10)
                         {
-                            cm.stats.strength++;
+                            cm.stats.maxMP++;
                         }
                         if (currentNumber == 12)
                         {
@@ -69,7 +69,7 @@ namespace PlayerModels.StatCalculations
             statIncreases.Add("Vitality has increased.");
             statIncreases.Add("Intellect has increased.");
             statIncreases.Add("Agility has increased.");
-            statIncreases.Add("Strength has increased.");
+            statIncreases.Add("Max MP has increased.");
             statIncreases.Add("Wisdom has increased.");
             statIncreases.Add("Intellect has increased.");
             statIncreases.Add("Vitality has increased.");

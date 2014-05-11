@@ -251,8 +251,8 @@ namespace MapDataClasses.TutorialMapGenerators
         {
             Encounter encounter = new Encounter();
             encounter.enemies = new List<MapDataClasses.Enemy>();
-            encounter.enemies.Add(getEnemy("Goblin"));
-            encounter.message = "A lone goblin appears!";
+            encounter.enemies.Add(getEnemy("Blue Slime"));
+            encounter.message = "A lone Blue Slime appears!";
             return encounter;
         }
 
@@ -290,6 +290,8 @@ namespace MapDataClasses.TutorialMapGenerators
             {
                 case "Goblin":
                     return new MapDataClasses.Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 25, maxMP = 1, strength = 5, vitality = 5, agility = 5, intellect = 5, wisdom = 5, level = 1, type = "Goblin", xp = 5, cp = 5 };
+                case "Blue Slime":
+                    return new MapDataClasses.Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 40, maxMP = 1, strength = 8, vitality = 8, agility = 10, intellect = 8, wisdom = 5, level = 1, type = "Blue Slime", xp = 8, cp = 8 };
                 case "Boss Goblin":
                     return new Enemy() { name = EnemyDataClasses.Goblins.NameGenerator.getGoblinName(), maxHP = 50, maxMP = 1, strength = 10, vitality = 10, agility = 10, intellect = 10, wisdom = 10, level = 3, type = "Boss Goblin", xp = 10, cp = 10 };
                 default:

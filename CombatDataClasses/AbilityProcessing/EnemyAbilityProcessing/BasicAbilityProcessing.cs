@@ -20,6 +20,10 @@ namespace CombatDataClasses.AbilityProcessing.EnemyAbilityProcessing
             {
                 return Goblins.GoblinAbilityProcessing.getCommand(source, targets, combatData);
             }
+            if (source.className == "Blue Slime")
+            {
+                return Slimes.SlimeAbilityProcessing.getCommand(source, targets, combatData);
+            }
 
             return new List<IEffect>();
         }

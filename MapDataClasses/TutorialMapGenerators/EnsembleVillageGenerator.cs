@@ -106,7 +106,7 @@ namespace MapDataClasses.TutorialMapGenerators
                 {
                     mi.options.Add(new MapOption() { text = "Emergence Cavern F2", value = "Emergence Cavern F2" });
                 }
-                ((DungeonSelectInteraction)mi).maxPartySize = 2;
+                ((DungeonSelectInteraction)mi).maxPartySize = 3;
             }
             else if (mm.map[x, y] == "ClassTrainer")
             {

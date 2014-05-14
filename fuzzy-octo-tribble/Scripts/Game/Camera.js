@@ -132,11 +132,14 @@
             init();
         }
         else {
-            //Recalculate px, py
-            px = playerCoordinates.x * squareSize;
-            py = playerCoordinates.y * squareSize;
+            //Recalculate px, py if it's outside a certain threshold
+            if (Math.abs((playerCoordinates.x * squareSize) - px) > squareSize ||
+                Math.abs((playerCoordinates.y * squareSize) - py) > squareSize) {
+                px = playerCoordinates.x * squareSize;
+                py = playerCoordinates.y * squareSize;
 
-            checkCamera();
+                checkCamera();
+            }
         }
         that.draw();
     }

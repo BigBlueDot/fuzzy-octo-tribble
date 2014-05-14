@@ -35,23 +35,35 @@
         var timeChange = newTime - lastTime;
         lastTime = newTime;
         var move = totalMove * (timeChange / 300);
-        currentMove += move;
         if (totalMove < 0) {
-            if (currentMove <= totalMove) {
-                move = move + (currentMove - totalMove);
+            if (currentMove + move <= totalMove) {
+                move = totalMove - currentMove;
                 moveAllowed = true;
+                if (horizontal) {
+                    FuzzyOctoTribble.Camera.movePlayer(move, 0);
+                }
+                else {
+                    FuzzyOctoTribble.Camera.movePlayer(0, move);
+                }
                 calcNextAnimation();
                 return;
             }
         }
         else {
-            if (currentMove >= totalMove) {
-                move = move - (currentMove - totalMove);
+            if (currentMove + move >= totalMove) {
+                move = totalMove - currentMove;
                 moveAllowed = true;
+                if (horizontal) {
+                    FuzzyOctoTribble.Camera.movePlayer(move, 0);
+                }
+                else {
+                    FuzzyOctoTribble.Camera.movePlayer(0, move);
+                }
                 calcNextAnimation();
                 return;
             }
         }
+        currentMove += move;
         if (horizontal) {
             FuzzyOctoTribble.Camera.movePlayer(move, 0);
         }

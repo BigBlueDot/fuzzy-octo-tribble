@@ -77,8 +77,8 @@
         MapIndexY = Math.floor(cy / squareSize);
 
         //MapWidth and MapHeight are the width and height using "Map Squares" as the unit
-        MapWidth = (Math.floor((width + tx) / squareSize)) + 1;
-        MapHeight = (Math.floor((height + ty) / squareSize)) + 1;
+        MapWidth = (Math.floor((width + tx) / squareSize)) + 3;
+        MapHeight = (Math.floor((height + ty) / squareSize)) + 3;
     }
 
     var drawSquare = function (url, x, y, classes) {
@@ -162,8 +162,8 @@
             for (var x = startX; x < maxX; x++) {
                 for (var y = startY; y < maxY; y++) {
                     drawSquare(map.mapUrl[map.mapSquares[x][y].i],
-                        (x * squareSize) - cx - tx,
-                        (y * squareSize) - cy - ty);
+                        (x * squareSize) - cx + tx,
+                        (y * squareSize) - cy + ty);
                 }
             }
 
@@ -180,16 +180,16 @@
 
     var drawPlayer = function () {
         if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
-            drawSquare("/Images/Game/Map/PlayerDown.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerDown.png", px - cx + tx, py - cy + ty, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 1) {
-            drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx + tx, py - cy + ty, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 2) {
-            drawSquare("/Images/Game/Map/PlayerUp.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerUp.png", px - cx + tx, py - cy + ty, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 3) {
-            drawSquare("/Images/Game/Map/PlayerRight.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerRight.png", px - cx + tx, py - cy + ty, "player-square");
         }
     }
 

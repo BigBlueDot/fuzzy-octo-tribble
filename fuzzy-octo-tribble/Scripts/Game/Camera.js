@@ -4,7 +4,7 @@
     var playerCoordinates;
     var squareSize = 64;
 
-    var px, py, cx, cy, tx, ty, MapIndexX, MapIndexY, MapWidth, MapHeight;
+    var px, py, cx, cy, bx, by, bxr, byr, tx, ty, MapIndexX, MapIndexY, MapWidth, MapHeight;
 
     var init = function () {
         var height = $('.game-map').height();
@@ -12,6 +12,7 @@
         
         var centerX = (width / 2) - (squareSize / 2);
         var centerY = (height / 2) - (squareSize / 2);
+
         //px and py are the player offsets relative to the screen
         px = playerCoordinates.x * squareSize;
         py = playerCoordinates.y * squareSize;
@@ -19,12 +20,48 @@
         //cx and cy are the camera offsets for the upper left-hand point
         cx = px - centerX;
         cy = py - centerY;
+
+        //bx and by represent the upper left-hand point for the bounding box
+        bx = cx + Math.floor(width / 4);
+        by = cy + Math.floor(height / 4);
+        bxr = cx + Math.floor(3 * width / 4);
+        byr = cy + Math.floor(3 * height / 4);
         
         calcValues();
     }
 
     var checkCamera = function () {
         //Check to see if the camera should move
+        if (px < bx) {
+            cx -= (bx - px);
+            bxr -= (bx - px);
+            bx = px;
+            calcValues();
+            that.draw();
+        } else if(px > bxr) {
+            cx += (px - bxr);
+            bx += (px - bxr);
+            bxr = px;
+            calcValues();
+            that.draw();
+        }
+
+        if (py < by) {
+            cy -= (by - py);
+            byr -= (by - py);
+            by = py;
+            calcValues();
+            that.draw();
+        }
+        else if (py > byr) {
+            cy += (py - byr);
+            by += (py - byr);
+            byr = py;
+            calcValues();
+            that.draw();
+        }
+
+        
     }
 
     var calcValues = function () {

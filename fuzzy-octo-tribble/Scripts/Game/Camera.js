@@ -44,9 +44,12 @@
         MapHeight = (Math.floor((height + ty) / squareSize)) + 1;
     }
 
-    var drawSquare = function (url, x, y) {
+    var drawSquare = function (url, x, y, classes) {
         $square = $(document.createElement('div'));
         $square.addClass('map-square');
+        if (classes) {
+            $square.addClass(classes);
+        }
         $square.css({
             'top': y + 'px',
             'left': x + 'px',
@@ -105,6 +108,8 @@
         px += deltaX;
         py += deltaY;
         checkCamera();
+        removePlayer();
+        drawPlayer();
     }
 
     that.draw = function () {
@@ -127,21 +132,32 @@
 
             //Draw events
 
+            drawPlayer();
 
-
-            if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
-                drawSquare("/Images/Game/Map/PlayerDown.png", px - cx, py - cy);
-            }
-            else if (FuzzyOctoTribble.PlayerDirection === 1) {
-                drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx, py - cy);
-            }
-            else if (FuzzyOctoTribble.PlayerDirection === 2) {
-                drawSquare("/Images/Game/Map/PlayerUp.png", px - cx, py - cy);
-            }
-            else if (FuzzyOctoTribble.PlayerDirection === 3) {
-                drawSquare("/Images/Game/Map/PlayerRight.png", px - cx, py - cy);
-            }
         }
+    }
+    
+    var removePlayer = function () {
+        $('.player-square').remove();
+    }
+
+    var drawPlayer = function () {
+        if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
+            drawSquare("/Images/Game/Map/PlayerDown.png", px - cx, py - cy, "player-square");
+        }
+        else if (FuzzyOctoTribble.PlayerDirection === 1) {
+            drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx, py - cy, "player-square");
+        }
+        else if (FuzzyOctoTribble.PlayerDirection === 2) {
+            drawSquare("/Images/Game/Map/PlayerUp.png", px - cx, py - cy, "player-square");
+        }
+        else if (FuzzyOctoTribble.PlayerDirection === 3) {
+            drawSquare("/Images/Game/Map/PlayerRight.png", px - cx, py - cy, "player-square");
+        }
+    }
+
+    that.getSquareSize = function () {
+        return squareSize;
     }
 
     $(window).resize(function (e) {

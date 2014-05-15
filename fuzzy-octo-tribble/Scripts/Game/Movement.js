@@ -30,11 +30,20 @@
     var totalMove = 0;
     var currentMove = 0;
     var horizontal = true;
+    var walkingCountdown = 100;
     var animate = function () {
         var newTime = Date.now();
         var timeChange = newTime - lastTime;
         lastTime = newTime;
         var move = totalMove * (timeChange / 300);
+
+        //Walking animation
+        walkingCountdown = walkingCountdown - timeChange;
+        if (walkingCountdown < 0) {
+            walkingCountdown += 100;
+            FuzzyOctoTribble.Camera.animateWalk();
+        }
+        
         if (totalMove < 0) {
             if (currentMove + move <= totalMove) {
                 move = totalMove - currentMove;
@@ -125,6 +134,9 @@
         }
         else if (timer40) {
             moveDown();
+        }
+        else {
+            FuzzyOctoTribble.Camera.endWalkAnimate();
         }
     }
 

@@ -3,6 +3,7 @@
     var map;
     var playerCoordinates;
     var squareSize = 64;
+    var walkingAnimation = 0;
 
     var px, py, cx, cy, bx, by, bxr, byr, MapIndexX, MapIndexY, MapWidth, MapHeight;
 
@@ -147,6 +148,16 @@
         drawPlayer();
     }
 
+    that.animateWalk = function () {
+        walkingAnimation = (walkingAnimation + 1) % 3;
+        removePlayer();
+        drawPlayer();
+    }
+
+    that.endWalkAnimate = function () {
+        walkingAnimation = 0;
+    }
+
     that.draw = function () {
         if (map && playerCoordinates) {
             $('.game-map').empty();
@@ -186,17 +197,24 @@
     }
 
     var drawPlayer = function () {
+        var WalkingPostFix = "";
+        if (walkingAnimation == 1) {
+            WalkingPostFix = "WalkOne";
+        }
+        else if (walkingAnimation == 2) {
+            WalkingPostFix = "WalkTwo";
+        }
         if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
-            drawSquare("/Images/Game/Map/PlayerDown.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerDown" + WalkingPostFix + ".png", px - cx, py - cy, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 1) {
-            drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerLeft" + WalkingPostFix + ".png", px - cx, py - cy, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 2) {
-            drawSquare("/Images/Game/Map/PlayerUp.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerUp" + WalkingPostFix + ".png", px - cx, py - cy, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 3) {
-            drawSquare("/Images/Game/Map/PlayerRight.png", px - cx, py - cy, "player-square");
+            drawSquare("/Images/Game/Map/PlayerRight" + WalkingPostFix + ".png", px - cx, py - cy, "player-square");
         }
     }
 

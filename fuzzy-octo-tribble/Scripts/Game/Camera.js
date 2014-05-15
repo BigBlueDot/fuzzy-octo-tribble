@@ -4,7 +4,7 @@
     var playerCoordinates;
     var squareSize = 64;
 
-    var px, py, cx, cy, bx, by, bxr, byr, tx, ty, MapIndexX, MapIndexY, MapWidth, MapHeight;
+    var px, py, cx, cy, bx, by, bxr, byr, MapIndexX, MapIndexY, MapWidth, MapHeight;
 
     var init = function () {
         var height = $('.game-map').height();
@@ -24,8 +24,8 @@
         //bx and by represent the upper left-hand point for the bounding box
         bx = cx + Math.floor(width / 4);
         by = cy + Math.floor(height / 4);
-        bxr = cx + Math.floor(3 * width / 4);
-        byr = cy + Math.floor(3 * height / 4);
+        bxr = cx + Math.floor(3 * width / 4) - squareSize;
+        byr = cy + Math.floor(3 * height / 4) - squareSize;
         
         calcValues();
     }
@@ -37,13 +37,11 @@
             bxr -= (bx - px);
             bx = px;
             calcValues();
-            that.draw();
         } else if(px > bxr) {
             cx += (px - bxr);
             bx += (px - bxr);
             bxr = px;
             calcValues();
-            that.draw();
         }
 
         if (py < by) {
@@ -51,14 +49,12 @@
             byr -= (by - py);
             by = py;
             calcValues();
-            that.draw();
         }
         else if (py > byr) {
             cy += (py - byr);
             by += (py - byr);
             byr = py;
             calcValues();
-            that.draw();
         }
 
         
@@ -68,19 +64,17 @@
         var height = $('.game-map').height();
         var width = $('.game-map').width();
 
-        //tx and ty represent the offset of tiles being displayed based loosely on window size
-        tx = Math.abs(cx % squareSize);
-        ty = Math.abs(cy % squareSize);
-
         //MapIndexX and MapIndexY are the indices of the top left most visible block
+        var previousX = MapIndexX;
+        var previousY = MapIndexY;
         MapIndexX = Math.floor(cx / squareSize);
         MapIndexY = Math.floor(cy / squareSize);
 
-        console.log("tx: " + tx + " ty: " + ty + " MapIndexX: " + MapIndexX + " MapIndexY: " + MapIndexY);
-
         //MapWidth and MapHeight are the width and height using "Map Squares" as the unit
-        MapWidth = (Math.floor((width + tx) / squareSize)) + 3;
-        MapHeight = (Math.floor((height + ty) / squareSize)) + 3;
+        MapWidth = (Math.floor((width) / squareSize)) + 3;
+        MapHeight = (Math.floor((height) / squareSize)) + 3;
+
+        that.draw();
     }
 
     var drawSquare = function (url, x, y, classes) {
@@ -143,7 +137,6 @@
                 checkCamera();
             }
         }
-        that.draw();
     }
 
     that.movePlayer = function(deltaX, deltaY) {
@@ -167,8 +160,8 @@
             for (var x = startX; x < maxX; x++) {
                 for (var y = startY; y < maxY; y++) {
                     drawSquare(map.mapUrl[map.mapSquares[x][y].i],
-                        (x * squareSize) - cx - tx,
-                        (y * squareSize) - cy - ty);
+                        (x * squareSize) - cx,
+                        (y * squareSize) - cy);
                 }
             }
 
@@ -185,16 +178,16 @@
 
     var drawPlayer = function () {
         if (!FuzzyOctoTribble.PlayerDirection || FuzzyOctoTribble.PlayerDirection === 4) {
-            drawSquare("/Images/Game/Map/PlayerDown.png", px - cx - tx, py - cy - ty, "player-square");
+            drawSquare("/Images/Game/Map/PlayerDown.png", px - cx, py - cy, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 1) {
-            drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx - tx, py - cy - ty, "player-square");
+            drawSquare("/Images/Game/Map/PlayerLeft.png", px - cx, py - cy, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 2) {
-            drawSquare("/Images/Game/Map/PlayerUp.png", px - cx - tx, py - cy - ty, "player-square");
+            drawSquare("/Images/Game/Map/PlayerUp.png", px - cx, py - cy, "player-square");
         }
         else if (FuzzyOctoTribble.PlayerDirection === 3) {
-            drawSquare("/Images/Game/Map/PlayerRight.png", px - cx - tx, py - cy - ty, "player-square");
+            drawSquare("/Images/Game/Map/PlayerRight.png", px - cx, py - cy, "player-square");
         }
     }
 
@@ -203,8 +196,8 @@
     }
 
     $(window).resize(function (e) {
+        removePlayer();
         init();
-        that.draw();
     });
 
     return that;

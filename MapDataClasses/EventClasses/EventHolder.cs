@@ -16,7 +16,6 @@ namespace MapDataClasses.EventClasses
             List<Enemy> enemies = new List<Enemy>();
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
             enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
-            enemies.Add(MapDataManager.getEnemy("Emergence Cavern", "Goblin"));
             events.Add(1, EventDataModel.getCombatEvent(new Encounter(isEvent:true)
             {
                 enemies = enemies,

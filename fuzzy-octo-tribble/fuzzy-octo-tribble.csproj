@@ -377,6 +377,14 @@
     <Content Include="Images\Game\Map\GrassTwo.png" />
     <Content Include="Images\Game\Map\Objective.png" />
     <Content Include="Images\Game\Map\ObjectiveComplete.png" />
+    <Content Include="Images\Game\Map\PlayerDownWalkOne.png" />
+    <Content Include="Images\Game\Map\PlayerDownWalkTwo.png" />
+    <Content Include="Images\Game\Map\PlayerLeftWalkOne.png" />
+    <Content Include="Images\Game\Map\PlayerLeftWalkTwo.png" />
+    <Content Include="Images\Game\Map\PlayerRightWalkOne.png" />
+    <Content Include="Images\Game\Map\PlayerRightWalkTwo.png" />
+    <Content Include="Images\Game\Map\PlayerUpWalkOne.png" />
+    <Content Include="Images\Game\Map\PlayerUpWalkTwo.png" />
     <Content Include="Images\Game\Map\XpEvent.png" />
     <Content Include="Images\Game\Player.png" />
     <Content Include="Images\Game\PlayerDown.png" />

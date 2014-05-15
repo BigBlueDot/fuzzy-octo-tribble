@@ -145,7 +145,10 @@ FuzzyOctoTribble.MenuHandler = (function () {
                             FuzzyOctoTribble.KeyControl.addController(FuzzyOctoTribble.CharacterScreenCreator.getPartyAbilityScreen())
                     }
                 }
-            ]
+            ],
+            closeOnMenu: true,
+            header: "Menu",
+            additionalDisplays: [$goldDisplay]
         });
     }
 

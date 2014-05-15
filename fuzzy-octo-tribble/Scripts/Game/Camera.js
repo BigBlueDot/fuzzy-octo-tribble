@@ -166,6 +166,15 @@
             }
 
             //Draw events
+            for (var i = 0; i < map.events.length; i++) {
+                var currentEvent = map.events[i];
+                if (currentEvent.x >= MapIndexX && currentEvent.x <= MapIndexX + MapWidth
+                    && currentEvent.y >= MapIndexY && currentEvent.y <= MapIndexY + MapHeight) {
+                    drawEvent((currentEvent.x * squareSize) - cx,
+                        (currentEvent.y * squareSize) - cy,
+                        currentEvent.rewardType);
+                }
+            }
 
             drawPlayer();
 
